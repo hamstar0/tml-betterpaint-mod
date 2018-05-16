@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperPaint", "SuperPaint\SuperPaint.csproj", "{8EDFD162-8CD8-46A8-8E80-6208432B7223}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterPaint", "BetterPaint.csproj", "{8EDFD162-8CD8-46A8-8E80-6208432B7223}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {020407D7-D88E-4FCD-BC34-42617C1CE511}
+		SolutionGuid = {DCB87B17-9A85-4FFB-92CC-C3527561F898}
 	EndGlobalSection
 EndGlobal

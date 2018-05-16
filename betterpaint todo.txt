@@ -1,0 +1,19 @@
+v1
+-	Implement painting
+	-	Flood mode
+	-	Spray mode
+	-	Basic painting (stream mode)
+-	Implement Color Cartridge
+	-	Implement cartridge mixing
+	-	Display capacity
+	-	Display color on sprite and tooltip
+-	Implement Paint Blaster
+	-	Implement cartridge picking
+	-	Implement mode picking (stream mode, spray mode, flood mode)
+
+	-	Implement basic item use behavior
+	-	Define item
+-	Implement Paint Mixer
+-	Add cheat command to get random paint
+-	Define classes
+-	Setup mod

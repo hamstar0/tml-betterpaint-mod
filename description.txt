@@ -1,0 +1,1 @@
+Adds magic paint to the game, letting you paint with exacting (and overlapping) color on any times.
