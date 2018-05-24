@@ -47,7 +47,7 @@ namespace BetterPaint.Items {
 				overrideColor = data.MyColor
 			};
 			var tip2 = new TooltipLine( this.mod, "BetterPaint: Capacity", "Capacity: " + (int)( percent * 100 ) + "%" ) {
-				overrideColor = percent < 0.15f ? Color.White : Color.Red
+				overrideColor = percent > 0.15f ? Color.White : Color.Red
 			};
 
 			tooltips.Add( tip1 );

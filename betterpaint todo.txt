@@ -1,10 +1,11 @@
 v1
+-	Make 'easy' version of recipes; use inbox to alert to 'hard' mode
 -	Implement painting
 	-	Flood mode
 	-	Spray mode
 	-	Basic painting (stream mode)
 -	Implement full mode picking
--	Implement full color picking
+-	Implement proper paint blaster color picking
 -	Implement paint mixer
 
 -	Implement Color Cartridge

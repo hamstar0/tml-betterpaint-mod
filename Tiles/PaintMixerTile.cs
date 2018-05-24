@@ -12,22 +12,33 @@ namespace BetterPaint.Tiles {
 			Main.tileFrameImportant[ this.Type ] = true;
 			Main.tileNoAttach[ this.Type ] = true;
 			Main.tileTable[ this.Type ] = true;
-			Main.tileLavaDeath[ this.Type ] = true;
+			Main.tileLavaDeath[ this.Type ] = false;
 			TileObjectData.newTile.CopyFrom( TileObjectData.Style2x2 );
-			TileObjectData.newTile.CoordinateHeights = new int[] { 18 };
+			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };
 			TileObjectData.addTile( this.Type );
-
-			this.AddToArray( ref TileID.Sets.RoomNeeds.CountsAsTable );
 
 			ModTranslation name = this.CreateMapEntryName();
 			name.SetDefault( "Paint Mixer" );
 
 			this.AddMapEntry( new Color( 200, 200, 200 ), name );
-			this.dustType = mod.DustType( "Sparkle" );
+			this.dustType = 1;
 			this.disableSmartCursor = true;
-			//this.adjTiles = new int[] { TileID.WorkBenches };
 			this.adjTiles = new int[] { this.Type };
+
+			this.animationFrameHeight = 36;
 		}
+
+
+		public override void AnimateTile( ref int frame, ref int frame_counter ) {
+			if( ++Main.tileFrameCounter[ this.Type ] >= 2 ) {
+				Main.tileFrameCounter[ this.Type ] = 0;
+
+				if( ++Main.tileFrame[ this.Type ] >= 2 ) {
+					Main.tileFrame[ this.Type ] = 0;
+				}
+			}
+		}
+
 
 		public override void NumDust( int i, int j, bool fail, ref int num ) {
 			num = fail ? 1 : 3;

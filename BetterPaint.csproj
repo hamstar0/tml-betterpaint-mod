@@ -58,7 +58,6 @@
     <Compile Include="Config.cs" />
     <Compile Include="Items\ColorCartridgeItem_Recipe.cs" />
     <Compile Include="Items\ColorCartridgeItemData.cs" />
-    <Compile Include="Items\PaintBlasterItem_Use.cs" />
     <Compile Include="Items\PaintBlasterItem_Def.cs" />
     <Compile Include="Items\PaintMixerItem_Def.cs" />
     <Compile Include="Items\ColorCartridgeItem_Def.cs" />

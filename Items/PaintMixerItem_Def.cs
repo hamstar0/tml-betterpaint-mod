@@ -1,12 +1,13 @@
 ﻿using BetterPaint.Tiles;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 
 namespace BetterPaint.Items {
 	class PaintMixerItem : ModItem {
-		public const int Width = 24;
-		public const int Height = 24;
+		public const int Width = 26;
+		public const int Height = 22;
 
 
 		////////////////
@@ -20,7 +21,26 @@ namespace BetterPaint.Items {
 			this.item.width = ColorCartridgeItem.Width;
 			this.item.height = ColorCartridgeItem.Height;
 			this.item.value = Item.buyPrice( 0, 1, 0, 0 );
-			this.item.createTile = this.mod.TileType<PaintMixerTile>();
+			this.item.maxStack = 99;
+			this.item.useTurn = true;
+			this.item.autoReuse = true;
+			this.item.useAnimation = 15;
+			this.item.useTime = 10;
+			this.item.useStyle = 1;
+			this.item.consumable = true;
+			this.item.value = 500;
+			this.item.createTile = mod.TileType( "PaintMixerTile" );
+		}
+
+
+		public override void AddRecipes() {
+			ModRecipe recipe = new ModRecipe( mod );
+			recipe.AddTile( TileID.HeavyWorkBench );
+			recipe.AddIngredient( ItemID.DyeVat, 1 );
+			recipe.AddIngredient( ItemID.BlendOMatic, 1 );
+			recipe.AddIngredient( ItemID.Extractinator, 1 );
+			recipe.SetResult( this );
+			recipe.AddRecipe();
 		}
 	}
 }

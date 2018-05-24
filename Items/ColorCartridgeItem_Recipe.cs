@@ -20,7 +20,7 @@ namespace BetterPaint.Items {
 	class ColorCartridgeRecipe : ModRecipe {
 		public ColorCartridgeRecipe( BetterPaintMod mymod, ColorCartridgeItem myitem ) : base ( mymod ) {
 			this.AddTile( mymod.TileType<PaintMixerTile>() );
-			this.AddIngredient( ItemID.Nanites, mymod.Config.PaintRecipeNaniteIngredientQuantity );
+			this.AddIngredient( ItemID.Gel, mymod.Config.PaintRecipeGelIngredientQuantity );
 			this.AddRecipeGroup( "HamstarHelpers:Paints", mymod.Config.PaintRecipePaintIngredientQuantity );
 			this.SetResult( myitem, 1 );
 		}

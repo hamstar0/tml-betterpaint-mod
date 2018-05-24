@@ -16,7 +16,7 @@ namespace BetterPaint {
 		public bool DebugModeCheats = false;
 
 		public bool PaintRecipeEnabled = true;
-		public int PaintRecipeNaniteIngredientQuantity = 5;
+		public int PaintRecipeGelIngredientQuantity = 5;
 		public int PaintRecipePaintIngredientQuantity = 25;
 		public int PaintCartridgeCapacity = 100;
 

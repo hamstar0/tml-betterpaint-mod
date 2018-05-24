@@ -10,10 +10,6 @@ namespace BetterPaint.Items {
 		public const int Height = 18;
 
 
-		public int Mode { get; private set; }
-		private bool IsModeSwitching = false;
-
-
 		////////////////
 		
 		public override void SetStaticDefaults() {
