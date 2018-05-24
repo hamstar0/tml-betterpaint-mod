@@ -3,14 +3,17 @@ v1
 	-	Flood mode
 	-	Spray mode
 	-	Basic painting (stream mode)
+-	Implement full mode picking
+-	Implement full color picking
+-	Implement paint mixer
 -	Implement Color Cartridge
-	-	Implement cartridge mixing
 	-	Display capacity
 	-	Display color on sprite and tooltip
--	Implement Paint Blaster
-	-	Implement cartridge picking
-	-	Implement mode picking (stream mode, spray mode, flood mode, eraser)
+	-	Implement icon
 
+-	Implement Paint Blaster
+	-	Implement basic mode picking (stream mode, spray mode, flood mode, eraser)
+	-	Implement basic color picking
 	-	Implement basic painting
 	-	Implement basic item use behavior
 	-	Define item
