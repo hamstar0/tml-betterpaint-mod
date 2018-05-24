@@ -56,7 +56,7 @@ namespace BetterPaint.Items {
 
 			var mypaint_data = mypaint_item.GetGlobalItem<ColorCartridgeItemData>();
 
-			int idx = Dust.NewDust( pos, 8, 8, 2, vel_x, vel_y, 0, mypaint_data.MyColor, 1f );
+			Dust.NewDust( pos, 8, 8, 2, vel_x, vel_y, 0, mypaint_data.MyColor, 1f );
 
 			return false;
 		}

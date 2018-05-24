@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
+
 namespace BetterPaint.Tiles {
 	class PaintMixerTile : ModTile {
 		public override void SetDefaults() {

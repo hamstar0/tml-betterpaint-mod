@@ -1,7 +1,7 @@
 ﻿using BetterPaint.Items;
+using HamstarHelpers.UIHelpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
@@ -31,20 +31,30 @@ namespace BetterPaint {
 				} else if( this.IsModeSelecting ) {
 					this.IsModeSelecting = false;
 				}
+				
+				if( Main.mouseLeft ) {
+					Vector2 tile_pos = UIHelpers.GetWorldMousePosition() / 16f;
+					int x = (int)tile_pos.X;
+					int y = (int)tile_pos.Y;
+
+					if( !BetterPaintTile.Colors.ContainsKey(x) ) {
+						BetterPaintTile.Colors[x] = new Dictionary<int, Color>();
+					}
+					BetterPaintTile.Colors[x][y] = Color.Red;
+				}
 			}
 		}
 
 
 		////////////////
 
-		private IList<int> GetPaintColors() {
-
-		}
+		//private IList<int> GetPaintColors() {
+		//}
 
 		////////////////
 
 		public void DrawPainterUI( SpriteBatch sb ) {
-			IList<int> icons = this.GetPaintColors();
+			/*IList<int> icons = this.GetPaintColors();
 			int icon_count = icons.Count;
 
 			float angle_step = 360f / (float)icon_count;
@@ -60,7 +70,7 @@ namespace BetterPaint {
 				this.DrawPaintIcon( data.MyColor, x, y );
 
 				angle += angle_step;
-			}
+			}*/
 		}
 
 

@@ -9,8 +9,9 @@ v1
 	-	Display color on sprite and tooltip
 -	Implement Paint Blaster
 	-	Implement cartridge picking
-	-	Implement mode picking (stream mode, spray mode, flood mode)
+	-	Implement mode picking (stream mode, spray mode, flood mode, eraser)
 
+	-	Implement basic painting
 	-	Implement basic item use behavior
 	-	Define item
 -	Implement Paint Mixer
