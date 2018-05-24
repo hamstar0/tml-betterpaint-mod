@@ -74,6 +74,7 @@
     <Content Include="build.txt" />
     <Content Include="description.txt" />
     <Content Include="Items\ColorCartridgeItem.png" />
+    <Content Include="Items\ColorCartridgeItem_Color.png" />
     <Content Include="Items\PaintMixerItem.png" />
     <Content Include="Items\PaintBlasterItem.png" />
     <Content Include="Tiles\PaintMixerTile.png" />

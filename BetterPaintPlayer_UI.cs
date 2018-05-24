@@ -1,4 +1,5 @@
 ﻿using BetterPaint.Items;
+using HamstarHelpers.Utilities.Messages;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -64,19 +65,16 @@ namespace BetterPaint {
 			
 			if( this.CurrentMode != PaintMode.Stream && brush_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CurrentMode = PaintMode.Stream;
-				Main.NewText( "Paint mode: Stream", Color.Aquamarine );
+				PlayerMessages.AddPlayerLabel( this.player, "Paint mode: Stream", Color.Aquamarine, 60, true );
 			} else
 			if( this.CurrentMode != PaintMode.Spray && spray_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-				this.CurrentMode = PaintMode.Spray;
-				Main.NewText( "Paint mode: Spray", Color.Aquamarine );
+				PlayerMessages.AddPlayerLabel( this.player, "Paint mode: Spray", Color.Aquamarine, 60, true );
 			} else
 			if( this.CurrentMode != PaintMode.Flood && bucket_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-				this.CurrentMode = PaintMode.Flood;
-				Main.NewText( "Paint mode: Flood", Color.Aquamarine );
+				PlayerMessages.AddPlayerLabel( this.player, "Paint mode: Flood", Color.Aquamarine, 60, true );
 			} else
 			if( this.CurrentMode != PaintMode.Erase && scrape_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-				this.CurrentMode = PaintMode.Erase;
-				Main.NewText( "Paint mode: Erase", Color.Aquamarine );
+				PlayerMessages.AddPlayerLabel( this.player, "Paint mode: Erase", Color.Aquamarine, 60, true );
 			}
 		}
 

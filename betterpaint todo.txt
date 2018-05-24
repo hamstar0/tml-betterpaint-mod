@@ -6,11 +6,11 @@ v1
 -	Implement full mode picking
 -	Implement full color picking
 -	Implement paint mixer
+
 -	Implement Color Cartridge
 	-	Display capacity
 	-	Display color on sprite and tooltip
 	-	Implement icon
-
 -	Implement Paint Blaster
 	-	Implement basic mode picking (stream mode, spray mode, flood mode, eraser)
 	-	Implement basic color picking
