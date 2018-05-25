@@ -10,8 +10,5 @@ namespace BetterPaint {
 		public static void SaveModSettingsChanges() {
 			BetterPaintMod.Instance.JsonConfig.SaveFile();
 		}
-
-
-		// TODO Set RGB for current blaster
 	}
 }

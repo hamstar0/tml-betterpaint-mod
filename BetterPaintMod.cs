@@ -1,12 +1,12 @@
 ﻿using BetterPaint.Items;
 using HamstarHelpers.Utilities.Config;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
+
 
 namespace BetterPaint {
     public class BetterPaintMod : Mod {
@@ -95,10 +95,16 @@ namespace BetterPaint {
 
 			GameInterfaceDrawMethod func = delegate {
 				Player player = Main.LocalPlayer;
-				var myplayer = player.GetModPlayer<BetterPaintPlayer>();
+				Item held_item = player.HeldItem;
 
-				if( myplayer.IsModeSelecting ) {
-					myplayer.DrawPainterUI( Main.spriteBatch );
+				if( held_item == null || held_item.IsAir || held_item.type != this.ItemType<PaintBlasterItem>() ) {
+					return true;
+				}
+
+				var myitem = (PaintBlasterItem)held_item.modItem;
+
+				if( myitem.IsModeSelecting ) {
+					myitem.DrawPainterUI( Main.spriteBatch );
 				}
 
 				return true;

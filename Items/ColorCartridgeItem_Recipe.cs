@@ -35,7 +35,7 @@ namespace BetterPaint.Items {
 		public override void OnCraft( Item item ) {
 			var mymod = (BetterPaintMod)this.mod;
 			ISet<int> paints = ItemIdentityHelpers.Paints.Item2;
-			var myitem_data = item.GetGlobalItem<ColorCartridgeItemData>();
+			var myitem = (ColorCartridgeItem)item.modItem;
 			var inv = Main.LocalPlayer.inventory;
 			
 			int max_paints = mymod.Config.PaintRecipePaintIngredientQuantity;
@@ -72,7 +72,7 @@ namespace BetterPaint.Items {
 
 			var clr = new Color( r / max_paints, g / max_paints, b / max_paints, a / max_paints );
 
-			myitem_data.SetColor( clr );
+			myitem.SetColor( clr );
 		}
 	}
 }

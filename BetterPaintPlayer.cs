@@ -11,8 +11,8 @@ namespace BetterPaint {
 			Item held_item = this.player.HeldItem;
 
 			if( held_item != null && !held_item.IsAir && held_item.type == this.mod.ItemType<PaintBlasterItem>() ) {
-				held_item.GetGlobalItem<ColorCartridgeItemData>();
-				held_item.CheckInteractions();
+				var blaster_data = (PaintBlasterItem)held_item.modItem;
+				blaster_data.CheckUse();
 			}
 		}
 	}

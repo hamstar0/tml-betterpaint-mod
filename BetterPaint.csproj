@@ -30,7 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HamstarHelpers">
+    <Reference Include="HamstarHelpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Helpers\HamstarHelpers\bin\Release\HamstarHelpers.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -51,15 +52,14 @@
   <ItemGroup>
     <Compile Include="API.cs" />
     <Compile Include="API_Call.cs" />
-    <Compile Include="Items\ColorCartridgeItemData_UI.cs" />
+    <Compile Include="Items\PaintBlasterItem_UI.cs" />
     <Compile Include="BetterPaintPlayer.cs" />
     <Compile Include="BetterPaintTile.cs" />
     <Compile Include="Commands\CheatGiveRandomPaintCommand.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Items\ColorCartridgeItemData_Use.cs" />
+    <Compile Include="Items\PaintBlasterItem_Use.cs" />
     <Compile Include="Items\ColorCartridgeItem_Draw.cs" />
     <Compile Include="Items\ColorCartridgeItem_Recipe.cs" />
-    <Compile Include="Items\ColorCartridgeItemData.cs" />
     <Compile Include="Items\PaintBlasterItem_Def.cs" />
     <Compile Include="Items\PaintMixerItem_Def.cs" />
     <Compile Include="Items\ColorCartridgeItem_Def.cs" />

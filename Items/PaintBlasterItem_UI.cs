@@ -1,5 +1,4 @@
-﻿using BetterPaint.Items;
-using HamstarHelpers.Utilities.Messages;
+﻿using HamstarHelpers.Utilities.Messages;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -19,16 +18,19 @@ namespace BetterPaint.Items {
 
 
 
-	partial class ColorCartridgeItemData : GlobalItem {
+	partial class PaintBlasterItem : ModItem {
 		private IDictionary<int, Color> GetPaints( Player player ) {
 			IDictionary<int, Color> colors = new Dictionary<int, Color>();
 			Item[] inv = player.inventory;
+			int cartridge_type = this.mod.ItemType<ColorCartridgeItem>();
 
 			for( int i=0; i< inv.Length; i++ ) {
 				Item item = inv[i];
-				if( item == null || item.IsAir || item.type != this.mod.ItemType<ColorCartridgeItem>() ) { continue; }
+				if( item == null || item.IsAir || item.type != cartridge_type ) { continue; }
+
+				var myitem = (ColorCartridgeItem)item.modItem;
 				
-				colors[ this.Uses ] = this.MyColor;
+				colors[ myitem.TimesUsed ] = myitem.MyColor;
 			}
 
 			return colors;
@@ -37,9 +39,8 @@ namespace BetterPaint.Items {
 		////////////////
 
 		public void DrawPainterUI( SpriteBatch sb ) {
-			this.DrawColorPalette();
-
-			Player plr = Main.LocalPlayer;
+			IDictionary<int, Rectangle> palette_rects = this.DrawColorPalette();
+			
 			int x = Main.screenWidth / 2;
 			int y = Main.screenHeight / 2;
 
@@ -62,50 +63,81 @@ namespace BetterPaint.Items {
 			sb.Draw( tex_spray, spray_rect, Color.White * (this.CurrentMode == PaintMode.Spray ? 0.1f : 0.5f) );
 			sb.Draw( tex_bucket, bucket_rect, Color.White * (this.CurrentMode == PaintMode.Flood ? 0.1f : 0.5f) );
 			sb.Draw( tex_scrape, scrape_rect, Color.White * (this.CurrentMode == PaintMode.Erase ? 0.1f : 0.5f) );
-			
-			if( this.CurrentMode != PaintMode.Stream && brush_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-				this.CurrentMode = PaintMode.Stream;
-				PlayerMessages.AddPlayerLabel( plr, "Paint mode: Stream", Color.Aquamarine, 60, true );
-			} else
-			if( this.CurrentMode != PaintMode.Spray && spray_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-				this.CurrentMode = PaintMode.Spray;
-				PlayerMessages.AddPlayerLabel( plr, "Paint mode: Spray", Color.Aquamarine, 60, true );
-			} else
-			if( this.CurrentMode != PaintMode.Flood && bucket_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-				this.CurrentMode = PaintMode.Flood;
-				PlayerMessages.AddPlayerLabel( plr, "Paint mode: Flood", Color.Aquamarine, 60, true );
-			} else
-			if( this.CurrentMode != PaintMode.Erase && scrape_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-				this.CurrentMode = PaintMode.Erase;
-				PlayerMessages.AddPlayerLabel( plr, "Paint mode: Erase", Color.Aquamarine, 60, true );
-			}
+
+			this.CheckUIModeInteractions( ref brush_rect, ref spray_rect, ref bucket_rect, ref scrape_rect );
+			this.CheckUIColorInteractions( palette_rects );
 		}
 
 
-		public void DrawColorPalette() {
+		public IDictionary<int, Rectangle> DrawColorPalette() {
 			IDictionary<int, Color> icons = this.GetPaints( Main.LocalPlayer );
+			IDictionary<int, Rectangle> rects = new Dictionary<int, Rectangle>();
 
 			float angle_step = 360f / (float)icons.Count;
 			float angle = 0f;
-
+			
 			foreach( var kv in icons ) {
 				int x = ( Main.screenWidth / 2 ) + (int)( 128d * Math.Cos( angle ) );
 				int y = ( Main.screenHeight / 2 ) + (int)( 128d * Math.Sin( angle ) );
 
-				this.DrawPaintIcon( kv.Value, kv.Key, x, y );
+				rects[ kv.Key ] = this.DrawPaintIcon( kv.Value, kv.Key, x, y );
 
 				angle += angle_step;
 			}
+
+			return rects;
 		}
-
-
-		public void DrawPaintIcon( Color color, int uses, int x, int y ) {
+		
+		public Rectangle DrawPaintIcon( Color color, int uses, int x, int y ) {
 			float fill = (float)uses / 100f;
 			Texture2D cart_tex = ColorCartridgeItem.CartridgeTex;
 			Texture2D over_tex = ColorCartridgeItem.OverlayTex;
 
-			Main.spriteBatch.Draw( cart_tex, new Rectangle( x, y, cart_tex.Width, cart_tex.Height ), Color.White );
-			Main.spriteBatch.Draw( over_tex, new Rectangle( x, y, over_tex.Width, over_tex.Height ), color );
+			Rectangle rect = new Rectangle( x, y, cart_tex.Width, cart_tex.Height );
+
+			Main.spriteBatch.Draw( cart_tex, rect, Color.White );
+			Main.spriteBatch.Draw( over_tex, rect, color );
+
+			return rect;
+		}
+
+
+		////////////////
+
+		private void CheckUIModeInteractions( ref Rectangle brush_rect, ref Rectangle spray_rect, ref Rectangle bucket_rect, ref Rectangle scrape_rect ) {
+			Player player = Main.LocalPlayer;
+
+			if( this.CurrentMode != PaintMode.Stream && brush_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+				this.CurrentMode = PaintMode.Stream;
+				PlayerMessages.AddPlayerLabel( player, "Paint mode: Stream", Color.Aquamarine, 60, true );
+			} else
+			if( this.CurrentMode != PaintMode.Spray && spray_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+				this.CurrentMode = PaintMode.Spray;
+				PlayerMessages.AddPlayerLabel( player, "Paint mode: Spray", Color.Aquamarine, 60, true );
+			} else
+			if( this.CurrentMode != PaintMode.Flood && bucket_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+				this.CurrentMode = PaintMode.Flood;
+				PlayerMessages.AddPlayerLabel( player, "Paint mode: Flood", Color.Aquamarine, 60, true );
+			} else
+			if( this.CurrentMode != PaintMode.Erase && scrape_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+				this.CurrentMode = PaintMode.Erase;
+				PlayerMessages.AddPlayerLabel( player, "Paint mode: Erase", Color.Aquamarine, 60, true );
+			}
+		}
+
+		private void CheckUIColorInteractions( IDictionary<int, Rectangle> palette_rects ) {
+			int inv_idx = -1;
+
+			foreach( var kv in palette_rects ) {
+				if( kv.Value.Contains(Main.mouseX, Main.mouseY) ) {
+					inv_idx = kv.Key;
+					break;
+				}
+			}
+
+			if( inv_idx != -1 ) {
+
+			}
 		}
 	}
 }

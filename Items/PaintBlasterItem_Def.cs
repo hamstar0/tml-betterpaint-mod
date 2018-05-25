@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -9,9 +8,15 @@ namespace BetterPaint.Items {
 		public const int Width = 50;
 		public const int Height = 18;
 
+		////////////////
+
+		public bool IsModeSelecting { get; private set; }
+		public PaintMode CurrentMode { get; private set; }
+		public int CurrentCartridgeInventoryIndex { get; private set; }
+
 
 		////////////////
-		
+
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Paint Blaster" );
 			this.Tooltip.SetDefault( "Paints with color cartridges in various ways." + '\n' +
@@ -20,6 +25,10 @@ namespace BetterPaint.Items {
 		}
 
 		public override void SetDefaults() {
+			this.IsModeSelecting = false;
+			this.CurrentMode = PaintMode.Stream;
+			this.CurrentCartridgeInventoryIndex = -1;
+
 			this.item.width = PaintBlasterItem.Width;
 			this.item.height = PaintBlasterItem.Height;
 			this.item.useStyle = 5;
@@ -45,30 +54,28 @@ namespace BetterPaint.Items {
 			recipe.AddRecipe();
 		}
 
-		
-		public override bool Shoot( Player player, ref Vector2 pos, ref float vel_x, ref float vel_y, ref int type, ref int dmg, ref float kb ) {
-			Item mypaint_item = this.GetMyPaintItem();
-			if( mypaint_item == null ) { return false; }
-
-			var mypaint_data = mypaint_item.GetGlobalItem<ColorCartridgeItemData>();
-
-			Dust.NewDust( pos, 8, 8, 2, vel_x, vel_y, 0, mypaint_data.MyColor, 1f );
-
-			return false;
-		}
 
 		////////////////
 
-		public Item GetMyPaintItem() {
-			int paint_type = this.mod.ItemType<ColorCartridgeItem>();
-			var inv = Main.LocalPlayer.inventory;
+		public Item GetCurrentPaintItem() {
+			Player plr = Main.LocalPlayer;
 
-			for( int i=0; i<inv.Length; i++ ) {
-				if( inv[i] != null && !inv[i].IsAir && inv[i].type == paint_type ) {
-					return inv[i];
+			if( this.CurrentCartridgeInventoryIndex == -1 ) {
+				int cart_type = this.mod.ItemType<ColorCartridgeItem>();
+
+				for( int i=0; i<plr.inventory.Length; i++ ) {
+					Item item = plr.inventory[i];
+					if( item == null || item.IsAir || item.type != cart_type ) { continue; }
+
+					this.CurrentCartridgeInventoryIndex = i;
+					break;
+				}
+
+				if( this.CurrentCartridgeInventoryIndex == -1 ) {
+					return null;
 				}
 			}
-			return null;
+			return plr.inventory[ this.CurrentCartridgeInventoryIndex ];
 		}
 	}
 }
