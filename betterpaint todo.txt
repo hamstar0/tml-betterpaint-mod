@@ -1,4 +1,5 @@
 v1
+-	Give credit for paint mixer tile sprite
 -	Make 'easy' version of recipes; use inbox to alert to 'hard' mode
 -	Implement painting
 	-	Flood mode
@@ -6,8 +7,8 @@ v1
 	-	Basic painting (stream mode)
 -	Implement full mode picking
 -	Implement proper paint blaster color picking
--	Implement paint mixer
 
+-	Implement paint mixer
 -	Implement Color Cartridge
 	-	Display capacity
 	-	Display color on sprite and tooltip

@@ -11,20 +11,30 @@ namespace BetterPaint.Items {
 		public const int Width = 12;
 		public const int Height = 16;
 
-		public static Texture2D Overlay { get; internal set; }
+		public static Texture2D OverlayTex { get; internal set; }
+		public static Texture2D CartridgeTex { get; internal set; }
+
+		static ColorCartridgeItem() {
+			ColorCartridgeItem.OverlayTex = null;
+			ColorCartridgeItem.CartridgeTex = null;
+		}
 
 
 		////////////////
-
+		
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Color Cartridge" );
 			this.Tooltip.SetDefault( "Needs a paint blaster to use" + '\n' +
 				"Mix cartridges at a paint mixer station" );
 
-			ColorCartridgeItem.Overlay = this.mod.GetTexture( "Items/ColorCartridgeItem_Color" );
+			if( ColorCartridgeItem.OverlayTex == null ) {
+				ColorCartridgeItem.OverlayTex = this.mod.GetTexture( "Items/ColorCartridgeItem_Color" );
+				ColorCartridgeItem.CartridgeTex = this.mod.GetTexture( "Items/ColorCartridgeItem" );
+			}
 
 			TmlLoadHelpers.AddModUnloadPromise( () => {
-				ColorCartridgeItem.Overlay = null;
+				ColorCartridgeItem.OverlayTex = null;
+				ColorCartridgeItem.CartridgeTex = null;
 			} );
 		}
 
@@ -52,24 +62,6 @@ namespace BetterPaint.Items {
 
 			tooltips.Add( tip1 );
 			tooltips.Add( tip2 );
-		}
-
-
-		////////////////
-
-		public override void PostDrawInInventory( SpriteBatch sb, Vector2 pos, Rectangle frame, Color draw_color, Color item_color, Vector2 origin, float scale ) {
-			var data = this.item.GetGlobalItem<ColorCartridgeItemData>();
-			var mymod = (BetterPaintMod)this.mod;
-			
-			sb.Draw( ColorCartridgeItem.Overlay, pos, frame, data.MyColor, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f );
-		}
-
-		public override void PostDrawInWorld( SpriteBatch sb, Color light_color, Color alpha_color, float rotation, float scale, int whoAmI ) {
-			var data = this.item.GetGlobalItem<ColorCartridgeItemData>();
-			var mymod = (BetterPaintMod)this.mod;
-			var pos = new Vector2( this.item.position.X - Main.screenPosition.X, this.item.position.Y - Main.screenPosition.Y );
-
-			sb.Draw( ColorCartridgeItem.Overlay, pos, light_color.MultiplyRGBA( data.MyColor ) );
 		}
 
 

@@ -9,7 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 
-namespace BetterPaint {
+namespace BetterPaint.Items {
 	enum PaintMode : int {
 		Stream,
 		Spray,
@@ -19,17 +19,16 @@ namespace BetterPaint {
 
 
 
-	partial class BetterPaintPlayer : ModPlayer {
-		private IDictionary<int, Color> GetPaints() {
+	partial class ColorCartridgeItemData : GlobalItem {
+		private IDictionary<int, Color> GetPaints( Player player ) {
 			IDictionary<int, Color> colors = new Dictionary<int, Color>();
-			Item[] inv = this.player.inventory;
+			Item[] inv = player.inventory;
 
 			for( int i=0; i< inv.Length; i++ ) {
 				Item item = inv[i];
 				if( item == null || item.IsAir || item.type != this.mod.ItemType<ColorCartridgeItem>() ) { continue; }
-
-				var data = item.GetGlobalItem<ColorCartridgeItemData>();
-				colors[ data.Uses ] = data.MyColor;
+				
+				colors[ this.Uses ] = this.MyColor;
 			}
 
 			return colors;
@@ -40,6 +39,7 @@ namespace BetterPaint {
 		public void DrawPainterUI( SpriteBatch sb ) {
 			this.DrawColorPalette();
 
+			Player plr = Main.LocalPlayer;
 			int x = Main.screenWidth / 2;
 			int y = Main.screenHeight / 2;
 
@@ -65,22 +65,25 @@ namespace BetterPaint {
 			
 			if( this.CurrentMode != PaintMode.Stream && brush_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CurrentMode = PaintMode.Stream;
-				PlayerMessages.AddPlayerLabel( this.player, "Paint mode: Stream", Color.Aquamarine, 60, true );
+				PlayerMessages.AddPlayerLabel( plr, "Paint mode: Stream", Color.Aquamarine, 60, true );
 			} else
 			if( this.CurrentMode != PaintMode.Spray && spray_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-				PlayerMessages.AddPlayerLabel( this.player, "Paint mode: Spray", Color.Aquamarine, 60, true );
+				this.CurrentMode = PaintMode.Spray;
+				PlayerMessages.AddPlayerLabel( plr, "Paint mode: Spray", Color.Aquamarine, 60, true );
 			} else
 			if( this.CurrentMode != PaintMode.Flood && bucket_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-				PlayerMessages.AddPlayerLabel( this.player, "Paint mode: Flood", Color.Aquamarine, 60, true );
+				this.CurrentMode = PaintMode.Flood;
+				PlayerMessages.AddPlayerLabel( plr, "Paint mode: Flood", Color.Aquamarine, 60, true );
 			} else
 			if( this.CurrentMode != PaintMode.Erase && scrape_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-				PlayerMessages.AddPlayerLabel( this.player, "Paint mode: Erase", Color.Aquamarine, 60, true );
+				this.CurrentMode = PaintMode.Erase;
+				PlayerMessages.AddPlayerLabel( plr, "Paint mode: Erase", Color.Aquamarine, 60, true );
 			}
 		}
 
 
 		public void DrawColorPalette() {
-			IDictionary<int, Color> icons = this.GetPaints();
+			IDictionary<int, Color> icons = this.GetPaints( Main.LocalPlayer );
 
 			float angle_step = 360f / (float)icons.Count;
 			float angle = 0f;
@@ -98,8 +101,11 @@ namespace BetterPaint {
 
 		public void DrawPaintIcon( Color color, int uses, int x, int y ) {
 			float fill = (float)uses / 100f;
+			Texture2D cart_tex = ColorCartridgeItem.CartridgeTex;
+			Texture2D over_tex = ColorCartridgeItem.OverlayTex;
 
-			Main.spriteBatch.Draw( Main.magicPixel, new Rectangle( x, y, 16, 16 ), color );
+			Main.spriteBatch.Draw( cart_tex, new Rectangle( x, y, cart_tex.Width, cart_tex.Height ), Color.White );
+			Main.spriteBatch.Draw( over_tex, new Rectangle( x, y, over_tex.Width, over_tex.Height ), color );
 		}
 	}
 }

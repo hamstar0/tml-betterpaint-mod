@@ -6,9 +6,12 @@ using Terraria.ModLoader.IO;
 
 
 namespace BetterPaint.Items {
-	class ColorCartridgeItemData : GlobalItem {
+	partial class ColorCartridgeItemData : GlobalItem {
 		public int Uses { get; private set; }
 		public Color MyColor { get; private set; }
+
+		public bool IsModeSelecting { get; private set; }
+		public PaintMode CurrentMode { get; private set; }
 
 
 		////////////////
@@ -16,6 +19,9 @@ namespace BetterPaint.Items {
 		public ColorCartridgeItemData() : base() {
 			this.Uses = 0;
 			this.MyColor = Color.White;
+
+			this.IsModeSelecting = false;
+			this.CurrentMode = PaintMode.Stream;
 		}
 		
 
