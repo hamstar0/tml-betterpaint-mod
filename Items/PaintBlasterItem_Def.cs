@@ -20,8 +20,8 @@ namespace BetterPaint.Items {
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Paint Blaster" );
 			this.Tooltip.SetDefault( "Paints with color cartridges in various ways." + '\n' +
-				"Overlaps all existing regular paint" + '\n' +
-				"Switch spray modes with right-click" );
+				"Overlays all existing paint" + '\n' +
+				"Right-click to adjust settings" );
 		}
 
 		public override void SetDefaults() {
@@ -58,24 +58,10 @@ namespace BetterPaint.Items {
 		////////////////
 
 		public Item GetCurrentPaintItem() {
-			Player plr = Main.LocalPlayer;
-
 			if( this.CurrentCartridgeInventoryIndex == -1 ) {
-				int cart_type = this.mod.ItemType<ColorCartridgeItem>();
-
-				for( int i=0; i<plr.inventory.Length; i++ ) {
-					Item item = plr.inventory[i];
-					if( item == null || item.IsAir || item.type != cart_type ) { continue; }
-
-					this.CurrentCartridgeInventoryIndex = i;
-					break;
-				}
-
-				if( this.CurrentCartridgeInventoryIndex == -1 ) {
-					return null;
-				}
+				return null;
 			}
-			return plr.inventory[ this.CurrentCartridgeInventoryIndex ];
+			return Main.LocalPlayer.inventory[ this.CurrentCartridgeInventoryIndex ];
 		}
 	}
 }

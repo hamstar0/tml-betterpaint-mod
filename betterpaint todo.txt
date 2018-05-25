@@ -6,8 +6,8 @@ v1
 	-	Spray mode
 	-	Basic painting (stream mode)
 -	Implement full mode picking
--	Implement proper paint blaster color picking
 
+-	Implement proper paint blaster color picking
 -	Implement paint mixer
 -	Implement Color Cartridge
 	-	Display capacity

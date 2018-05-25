@@ -24,6 +24,24 @@ namespace BetterPaint.Items {
 
 		////////////////
 
+		public static IList<int> GetPaintCartridges( Player player ) {
+			IList<int> colors_idxs = new List<int>();
+			Item[] inv = player.inventory;
+			int cartridge_type = BetterPaintMod.Instance.ItemType<ColorCartridgeItem>();
+
+			for( int i = 0; i < inv.Length; i++ ) {
+				Item item = inv[i];
+				if( item == null || item.IsAir || item.type != cartridge_type ) { continue; }
+
+				colors_idxs.Add( i );
+			}
+
+			return colors_idxs;
+		}
+
+
+		////////////////
+
 		public int TimesUsed { get; private set; }
 		public Color MyColor { get; private set; }
 
