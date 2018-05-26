@@ -2,10 +2,12 @@ v1
 -	Give credit for paint mixer tile sprite
 -	Make 'easy' version of recipes; use inbox to alert to 'hard' mode
 -	Implement painting
+	-	Erase mode
 	-	Flood mode
 	-	Spray mode
 	-	Basic painting (stream mode)
--	Implement full mode picking
+-	Implement size setting
+-	Implement background/foreground setting
 
 -	Implement proper paint blaster color picking
 -	Implement paint mixer

@@ -30,20 +30,20 @@ namespace BetterPaint.Items {
 			Texture2D tex_bucket = Main.itemTexture[ItemID.HoneyBucket];
 			Texture2D tex_scrape = Main.itemTexture[ItemID.PaintScraper];
 
-			var brush_off = new Vector2( tex_brush.Width, tex_brush.Height ) * 0.5f;
-			var spray_off = new Vector2( tex_spray.Width, tex_spray.Height ) * 0.5f;
-			var bucket_off = new Vector2( tex_bucket.Width, tex_bucket.Height ) * 0.5f;
-			var scrape_off = new Vector2( tex_scrape.Width, tex_scrape.Height ) * 0.5f;
+			var brush_offset = new Vector2( tex_brush.Width, tex_brush.Height ) * 0.5f;
+			var spray_offset = new Vector2( tex_spray.Width, tex_spray.Height ) * 0.5f;
+			var bucket_offset = new Vector2( tex_bucket.Width, tex_bucket.Height ) * 0.5f;
+			var scrape_offset = new Vector2( tex_scrape.Width, tex_scrape.Height ) * 0.5f;
 
-			var brush_rect = new Rectangle( (int)(brush_off.X + (x - 64)), (int)(brush_off.Y + y), tex_brush.Width, tex_brush.Height );
-			var spray_rect = new Rectangle( (int)(brush_off.X + x), (int)(brush_off.Y + (y - 64)), tex_spray.Width, tex_spray.Height );
-			var bucket_rect = new Rectangle( (int)(brush_off.X + (x + 64)), (int)(brush_off.Y + y), tex_bucket.Width, tex_bucket.Height );
-			var scrape_rect = new Rectangle( (int)(scrape_off.X + x), (int)(brush_off.Y + (y + 64)), tex_scrape.Width, tex_scrape.Height );
+			var brush_rect = new Rectangle( (int)(brush_offset.X + (x - 64)), (int)(brush_offset.Y + y), tex_brush.Width, tex_brush.Height );
+			var spray_rect = new Rectangle( (int)(spray_offset.X + x), (int)(spray_offset.Y + (y - 64)), tex_spray.Width, tex_spray.Height );
+			var bucket_rect = new Rectangle( (int)(bucket_offset.X + (x + 64)), (int)(bucket_offset.Y + y), tex_bucket.Width, tex_bucket.Height );
+			var scrape_rect = new Rectangle( (int)(scrape_offset.X + x), (int)(scrape_offset.Y + (y + 64)), tex_scrape.Width, tex_scrape.Height );
 
-			sb.Draw( tex_brush, brush_rect, Color.White * (this.CurrentMode == PaintMode.Stream ? 0.5f : 0.2f) );
-			sb.Draw( tex_spray, spray_rect, Color.White * (this.CurrentMode == PaintMode.Spray ? 0.5f : 0.2f) );
-			sb.Draw( tex_bucket, bucket_rect, Color.White * (this.CurrentMode == PaintMode.Flood ? 0.5f : 0.2f) );
-			sb.Draw( tex_scrape, scrape_rect, Color.White * (this.CurrentMode == PaintMode.Erase ? 0.5f : 0.2f) );
+			sb.Draw( tex_brush, brush_rect, Color.White * (this.CurrentMode == PaintMode.Stream ? 3f / 4f : 1f / 4f) );
+			sb.Draw( tex_spray, spray_rect, Color.White * (this.CurrentMode == PaintMode.Spray ? 3f / 4f : 1f / 4f) );
+			sb.Draw( tex_bucket, bucket_rect, Color.White * (this.CurrentMode == PaintMode.Flood ? 3f / 4f : 1f / 4f) );
+			sb.Draw( tex_scrape, scrape_rect, Color.White * (this.CurrentMode == PaintMode.Erase ? 3f / 4f : 1f / 4f) );
 
 			this.CheckUIModeInteractions( ref brush_rect, ref spray_rect, ref bucket_rect, ref scrape_rect );
 			this.CheckUIColorInteractions( palette_rects );

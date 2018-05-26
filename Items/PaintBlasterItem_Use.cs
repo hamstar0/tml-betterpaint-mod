@@ -7,13 +7,18 @@ using Terraria.ModLoader;
 
 namespace BetterPaint.Items {
 	partial class PaintBlasterItem : ModItem {
+		public override bool CanUseItem( Player player ) {
+			return !this.IsModeSelecting && this.GetCurrentPaintItem() != null;
+		}
+
+
 		public override bool Shoot( Player player, ref Vector2 pos, ref float vel_x, ref float vel_y, ref int type, ref int dmg, ref float kb ) {
-			Item mypaint_item = this.GetCurrentPaintItem();
-			if( mypaint_item == null ) { return false; }
+			Item paint_item = this.GetCurrentPaintItem();
+			if( paint_item == null ) { return false; }
 
-			var mypaint = (ColorCartridgeItem)mypaint_item.modItem;
+			var myitem = (ColorCartridgeItem)paint_item.modItem;
 
-			Dust.NewDust( pos, 8, 8, 2, vel_x, vel_y, 0, mypaint.MyColor, 1f );
+			Dust.NewDust( pos, 8, 8, 2, vel_x, vel_y, 0, myitem.MyColor, 1f );
 
 			return false;
 		}
@@ -27,14 +32,20 @@ namespace BetterPaint.Items {
 			}
 
 			if( Main.mouseLeft ) {
-				Vector2 tile_pos = UIHelpers.GetWorldMousePosition() / 16f;
-				int x = (int)tile_pos.X;
-				int y = (int)tile_pos.Y;
+				Item paint_item = this.GetCurrentPaintItem();
 
-				if( !BetterPaintTile.Colors.ContainsKey( x ) ) {
-					BetterPaintTile.Colors[x] = new Dictionary<int, Color>();
+				if( paint_item != null ) {
+					var myitem = (ColorCartridgeItem)paint_item.modItem;
+
+					Vector2 tile_pos = UIHelpers.GetWorldMousePosition() / 16f;
+					int x = (int)tile_pos.X;
+					int y = (int)tile_pos.Y;
+
+					var myworld = this.mod.GetModWorld<BetterPaintWorld>();
+					myworld.AddColor( myitem.MyColor, x, y );
+
+					myitem.SetTimesUsed( myitem.TimesUsed + 1 );
 				}
-				BetterPaintTile.Colors[x][y] = Color.Red;
 			}
 		}
 	}

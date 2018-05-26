@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using HamstarHelpers.TmlHelpers;
 using Microsoft.Xna.Framework;
@@ -48,6 +49,18 @@ namespace BetterPaint.Items {
 
 		////////////////
 
+		public override bool CloneNewInstances { get { return true; } }
+
+		public override ModItem Clone() {
+			var clone = (ColorCartridgeItem)base.Clone();
+			clone.TimesUsed = this.TimesUsed;
+			clone.MyColor = this.MyColor;
+			return clone;
+		}
+
+
+		////////////////
+
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Color Cartridge" );
 			this.Tooltip.SetDefault( "Needs a paint blaster to use" + '\n' +
@@ -79,7 +92,7 @@ namespace BetterPaint.Items {
 		public override void ModifyTooltips( List<TooltipLine> tooltips ) {
 			var mymod = (BetterPaintMod)this.mod;
 			float capacity = mymod.Config.PaintCartridgeCapacity;
-			float percent = (capacity - (float)this.TimesUsed) / capacity;
+			float percent = ( capacity - (float)this.TimesUsed ) / capacity;
 
 			var tip1 = new TooltipLine( this.mod, "BetterPaint: Color Indicator", "Color value: " + this.MyColor.ToString() ) {
 				overrideColor = this.MyColor

@@ -36,7 +36,7 @@ namespace BetterPaint.Items {
 			this.item.useAnimation = 3;
 			this.item.useTime = 6;
 			this.item.shoot = ProjectileID.PainterPaintball;
-			this.item.UseSound = SoundID.Item34;
+			this.item.UseSound = SoundID.Item34.WithVolume( 0.5f );
 			this.item.shootSpeed = 6f;
 			this.item.noMelee = true;
 			this.item.value = Item.buyPrice( 2, 50, 0, 0 );

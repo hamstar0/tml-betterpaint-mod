@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="API.cs" />
     <Compile Include="API_Call.cs" />
+    <Compile Include="BetterPaintWorld.cs" />
     <Compile Include="Items\PaintBlasterItem_UI.cs" />
     <Compile Include="BetterPaintPlayer.cs" />
     <Compile Include="BetterPaintTile.cs" />
