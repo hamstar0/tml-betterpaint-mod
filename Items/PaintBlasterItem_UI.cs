@@ -26,9 +26,10 @@ namespace BetterPaint.Items {
 			int x = Main.screenWidth / 2;
 			int y = Main.screenHeight / 2;
 			int mode_dist = 72;
+			int setting_dist = 28;
 			float hilit = 0.85f;
-			float lit = 0.5f;
-			float unlit = 0.15f;
+			float lit = 0.45f;
+			float unlit = 0.25f;
 
 			///
 
@@ -47,41 +48,78 @@ namespace BetterPaint.Items {
 			var bucket_rect = new Rectangle( (int)((x + mode_dist) - bucket_offset.X), (int)(y - bucket_offset.Y), tex_bucket.Width, tex_bucket.Height );
 			var scrape_rect = new Rectangle( (int)(x - scrape_offset.X), (int)((y + mode_dist) - scrape_offset.Y), tex_scrape.Width, tex_scrape.Height );
 
-			bool brush_lit = brush_rect.Contains( Main.mouseX, Main.mouseY );
-			bool spray_lit = brush_lit ? false : spray_rect.Contains( Main.mouseX, Main.mouseY );
-			bool bucket_lit = spray_lit ? false : bucket_rect.Contains( Main.mouseX, Main.mouseY );
-			bool scrape_lit = bucket_lit ? false : scrape_rect.Contains( Main.mouseX, Main.mouseY );
+			bool brush_hover = brush_rect.Contains( Main.mouseX, Main.mouseY );
+			bool spray_hover = brush_hover ? false : spray_rect.Contains( Main.mouseX, Main.mouseY );
+			bool bucket_hover = spray_hover ? false : bucket_rect.Contains( Main.mouseX, Main.mouseY );
+			bool scrape_hover = bucket_hover ? false : scrape_rect.Contains( Main.mouseX, Main.mouseY );
 
-			sb.Draw( tex_brush, brush_rect, Color.White * (this.CurrentMode == PaintMode.Stream ? hilit : (brush_lit ? lit : unlit)) );
-			sb.Draw( tex_spray, spray_rect, Color.White * (this.CurrentMode == PaintMode.Spray ? hilit : (spray_lit ? lit : unlit)) );
-			sb.Draw( tex_bucket, bucket_rect, Color.White * (this.CurrentMode == PaintMode.Flood ? hilit : (bucket_lit ? lit : unlit)) );
-			sb.Draw( tex_scrape, scrape_rect, Color.White * (this.CurrentMode == PaintMode.Erase ? hilit : (scrape_lit ? lit : unlit)) );
+			sb.Draw( tex_brush, brush_rect, Color.White * (this.CurrentMode == PaintMode.Stream ? hilit : (brush_hover ? lit : unlit)) );
+			sb.Draw( tex_spray, spray_rect, Color.White * (this.CurrentMode == PaintMode.Spray ? hilit : (spray_hover ? lit : unlit)) );
+			sb.Draw( tex_bucket, bucket_rect, Color.White * (this.CurrentMode == PaintMode.Flood ? hilit : (bucket_hover ? lit : unlit)) );
+			sb.Draw( tex_scrape, scrape_rect, Color.White * (this.CurrentMode == PaintMode.Erase ? hilit : (scrape_hover ? lit : unlit)) );
 
-			if( brush_lit ) {
-				sb.DrawString( Main.fontMouseText, "Stream Mode", new Vector2(brush_rect.X, brush_rect.Y+brush_rect.Height), Color.Green );
-			} else if( spray_lit ) {
-				sb.DrawString( Main.fontMouseText, "Spray Mode", new Vector2(spray_rect.X, spray_rect.Y+spray_rect.Height), Color.Green );
-			} else if( bucket_lit ) {
-				sb.DrawString( Main.fontMouseText, "Flood Fill Mode", new Vector2(bucket_rect.X, bucket_rect.Y+bucket_rect.Height), Color.Green );
-			} else if( scrape_lit ) {
-				sb.DrawString( Main.fontMouseText, "Erasor Mode", new Vector2(scrape_rect.X, scrape_rect.Y+scrape_rect.Height), Color.Green );
+			if( brush_hover ) {
+				var tool_color = this.CurrentMode == PaintMode.Stream ? Color.White : Color.LightGray;
+				sb.DrawString( Main.fontMouseText, "Stream Mode", new Vector2(brush_rect.X, brush_rect.Y+brush_rect.Height), tool_color );
+			} else if( spray_hover ) {
+				var tool_color = this.CurrentMode == PaintMode.Spray ? Color.White : Color.LightGray;
+				sb.DrawString( Main.fontMouseText, "Spray Mode", new Vector2(spray_rect.X, spray_rect.Y+spray_rect.Height), tool_color );
+			} else if( bucket_hover ) {
+				var tool_color = this.CurrentMode == PaintMode.Flood ? Color.White : Color.LightGray;
+				sb.DrawString( Main.fontMouseText, "Flood Fill Mode", new Vector2(bucket_rect.X, bucket_rect.Y+bucket_rect.Height), tool_color );
+			} else if( scrape_hover ) {
+				var tool_color = this.CurrentMode == PaintMode.Erase ? Color.White : Color.LightGray;
+				sb.DrawString( Main.fontMouseText, "Erasor Mode", new Vector2(scrape_rect.X, scrape_rect.Y+scrape_rect.Height), tool_color );
 			}
 
 			///
 
-			Texture2D bg_but_tex = PaintBlasterItem.BackgroundButtonTex;
+			Texture2D bg_tex = this.Foreground ? PaintBlasterItem.BgOffButtonTex : PaintBlasterItem.BgOnButtonTex;
 
-			var bg_but_offset = new Vector2( bg_but_tex.Width, bg_but_tex.Height ) * 0.5f;
+			var bg_offset = new Vector2( bg_tex.Width, bg_tex.Height ) * 0.5f;
 
-			var bg_but_rect = new Rectangle( (int)((x - 40) - bg_but_offset.X), (int)((y - 40) - bg_but_offset.Y), bg_but_tex.Width, bg_but_tex.Height );
+			int bg_x = (x - setting_dist) - (int)bg_offset.X;
+			int bg_y = (y - setting_dist) - (int)bg_offset.Y;
+			var bg_rect = new Rectangle( bg_x, bg_y, bg_tex.Width, bg_tex.Height );
 
-			sb.Draw( bg_but_tex, bg_but_rect, Color.White * (this.Foreground ? hilit : unlit) );
+			bool bg_hover = bg_rect.Contains( Main.mouseX, Main.mouseY );
+
+			sb.Draw( bg_tex, bg_rect, Color.White * (bg_hover ? hilit : lit) );
+
+			if( bg_hover ) {
+				string bg_str = this.Foreground ? "Foreground Only" : "Background Only";
+				sb.DrawString( Main.fontMouseText, bg_str, new Vector2(bg_rect.X, bg_rect.Y - 16), Color.White );
+			}
+
+			///
+
+			Texture2D size_tex = this.BrushSize == 1 ? PaintBlasterItem.BrushSmallTex : PaintBlasterItem.BrushLargeTex;
+
+			var size_offset = new Vector2( size_tex.Width, size_tex.Height ) * 0.5f;
+
+			int size_x = (x + setting_dist) - (int)size_offset.X;
+			int size_y = (y + setting_dist) - (int)size_offset.Y;
+			var size_rect = new Rectangle( size_x, size_y, size_tex.Width, size_tex.Height );
+
+			bool size_hover = size_rect.Contains( Main.mouseX, Main.mouseY );
+
+			sb.Draw( size_tex, size_rect, Color.White * (size_hover ? hilit : lit) );
+
+			if( size_hover ) {
+				string size_str = this.BrushSize > 1 ? "Large brush" : "Small brush";
+				sb.DrawString( Main.fontMouseText, size_str, new Vector2(size_rect.X, size_rect.Y + size_rect.Height), Color.White );
+			}
 
 			///
 
 			if( Main.mouseLeft ) {
-				this.CheckUIModeInteractions( ref brush_rect, ref spray_rect, ref bucket_rect, ref scrape_rect );
-				this.CheckUIColorInteractions( palette_rects );
+				if( !this.IsInteractingWithUI ) {
+					this.IsInteractingWithUI = true;
+					this.CheckUIModeInteractions( ref bg_rect, ref size_rect, ref brush_rect, ref spray_rect, ref bucket_rect, ref scrape_rect );
+					this.CheckUIColorInteractions( palette_rects );
+				}
+			} else {
+				this.IsInteractingWithUI = false;
 			}
 		}
 
@@ -128,12 +166,13 @@ namespace BetterPaint.Items {
 					)
 				);
 				
-				Main.spriteBatch.DrawString( Main.fontMouseText, "Capacity: ", new Vector2(Main.mouseX, Main.mouseY-16), Color.White );
+				Main.spriteBatch.DrawString( Main.fontMouseText, "Capacity:", new Vector2(Main.mouseX, Main.mouseY-16), Color.White );
 				Main.spriteBatch.DrawString( Main.fontMouseText, (int)(percent * 100)+"%", new Vector2(Main.mouseX+72, Main.mouseY-16), text_color );
 
 				string color_str = "R:"+color.R+" G:"+color.G+" B:"+color.B+" A:"+color.A;
 
-				Main.spriteBatch.DrawString( Main.fontMouseText, color_str, new Vector2( Main.mouseX, Main.mouseY + 8 ), color );
+				Main.spriteBatch.DrawString( Main.fontMouseText, "Color:", new Vector2( Main.mouseX, Main.mouseY + 8 ), Color.White );
+				Main.spriteBatch.DrawString( Main.fontMouseText, color_str, new Vector2( Main.mouseX+56, Main.mouseY + 8 ), color );
 			}
 
 			return rect;
@@ -142,9 +181,15 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		private void CheckUIModeInteractions( ref Rectangle brush_rect, ref Rectangle spray_rect, ref Rectangle bucket_rect, ref Rectangle scrape_rect ) {
+		private void CheckUIModeInteractions( ref Rectangle bg_rect, ref Rectangle size_rect, ref Rectangle brush_rect, ref Rectangle spray_rect, ref Rectangle bucket_rect, ref Rectangle scrape_rect ) {
 			Player player = Main.LocalPlayer;
 
+			if( bg_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+				this.Foreground = !this.Foreground;
+			} else
+			if( size_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+				this.BrushSize = this.BrushSize == 1 ? 6 : 1;
+			} else
 			if( this.CurrentMode != PaintMode.Stream && brush_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CurrentMode = PaintMode.Stream;
 			} else

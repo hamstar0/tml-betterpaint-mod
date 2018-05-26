@@ -80,7 +80,10 @@
     <Content Include="description.txt" />
     <Content Include="Items\ColorCartridgeItem.png" />
     <Content Include="Items\ColorCartridgeItem_Color.png" />
-    <Content Include="Items\PaintBlasterItem_BgButton.png" />
+    <Content Include="Items\PaintBlasterItem_BgOffButton.png" />
+    <Content Include="Items\PaintBlasterItem_BgOnButton.png" />
+    <Content Include="Items\PaintBlasterItem_BrushLarge.png" />
+    <Content Include="Items\PaintBlasterItem_BrushSmall.png" />
     <Content Include="Items\PaintMixerItem.png" />
     <Content Include="Items\PaintBlasterItem.png" />
     <Content Include="Tiles\PaintMixerTile.png" />

@@ -6,9 +6,12 @@ v1
 	-	Flood mode
 	-	Spray mode
 	-	Basic painting (stream mode)
--	Implement size setting
--	Implement background/foreground setting
+-	Implement world tile color data
+-	Implement background vs foreground painting
 
+-	Implement UI interactivity
+	-	Implement size setting
+	-	Implement background/foreground setting
 -	Implement proper paint blaster color picking
 -	Implement paint mixer
 -	Implement Color Cartridge

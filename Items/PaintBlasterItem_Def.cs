@@ -10,22 +10,38 @@ namespace BetterPaint.Items {
 		public const int Width = 50;
 		public const int Height = 18;
 
-		public static Texture2D BackgroundButtonTex { get; internal set; }
-
+		public static Texture2D BgOffButtonTex { get; internal set; }
+		public static Texture2D BgOnButtonTex { get; internal set; }
+		public static Texture2D BrushSmallTex { get; internal set; }
+		public static Texture2D BrushLargeTex { get; internal set; }
+		
 		static PaintBlasterItem() {
-			PaintBlasterItem.BackgroundButtonTex = null;
+			PaintBlasterItem.BgOffButtonTex = null;
+			PaintBlasterItem.BgOnButtonTex = null;
+			PaintBlasterItem.BrushSmallTex = null;
+			PaintBlasterItem.BrushLargeTex = null;
 		}
 
 		////////////////
 
 		public bool IsModeSelecting { get; private set; }
+		public bool IsInteractingWithUI { get; private set; }
 
 		public PaintMode CurrentMode { get; private set; }
 		public int CurrentCartridgeInventoryIndex { get; private set; }
 		public bool Foreground { get; private set; }
+		public int BrushSize { get; private set; }
 
 
 		////////////////
+
+		public PaintBlasterItem() : base() {
+			this.IsModeSelecting = false;
+			this.CurrentMode = PaintMode.Stream;
+			this.CurrentCartridgeInventoryIndex = -1;
+			this.Foreground = true;
+			this.BrushSize = 1;
+		}
 
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Paint Blaster" );
@@ -33,22 +49,23 @@ namespace BetterPaint.Items {
 				"Overlays all existing paint" + '\n' +
 				"Right-click to adjust settings" );
 
-			if( PaintBlasterItem.BackgroundButtonTex == null ) {
-				PaintBlasterItem.BackgroundButtonTex = this.mod.GetTexture( "Items/PaintBlasterItem_BgButton" );
+			if( PaintBlasterItem.BgOffButtonTex == null ) {
+				PaintBlasterItem.BgOffButtonTex = this.mod.GetTexture( "Items/PaintBlasterItem_BgOffButton" );
+				PaintBlasterItem.BgOnButtonTex = this.mod.GetTexture( "Items/PaintBlasterItem_BgOnButton" );
+				PaintBlasterItem.BrushSmallTex = this.mod.GetTexture( "Items/PaintBlasterItem_BrushSmall" );
+				PaintBlasterItem.BrushLargeTex = this.mod.GetTexture( "Items/PaintBlasterItem_BrushLarge" );
 			}
 
 			TmlLoadHelpers.AddModUnloadPromise( () => {
-				PaintBlasterItem.BackgroundButtonTex = null;
+				PaintBlasterItem.BgOffButtonTex = null;
+				PaintBlasterItem.BgOnButtonTex = null;
+				PaintBlasterItem.BrushSmallTex = null;
+				PaintBlasterItem.BrushLargeTex = null;
 			} );
 		}
 
 
 		public override void SetDefaults() {
-			this.IsModeSelecting = false;
-			this.CurrentMode = PaintMode.Stream;
-			this.CurrentCartridgeInventoryIndex = -1;
-			this.Foreground = true;
-
 			this.item.width = PaintBlasterItem.Width;
 			this.item.height = PaintBlasterItem.Height;
 			this.item.useStyle = 5;
