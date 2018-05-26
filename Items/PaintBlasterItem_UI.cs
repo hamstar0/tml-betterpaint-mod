@@ -1,6 +1,7 @@
 ﻿using HamstarHelpers.Utilities.Messages;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -24,6 +25,12 @@ namespace BetterPaint.Items {
 			
 			int x = Main.screenWidth / 2;
 			int y = Main.screenHeight / 2;
+			int mode_dist = 72;
+			float hilit = 0.85f;
+			float lit = 0.5f;
+			float unlit = 0.15f;
+
+			///
 
 			Texture2D tex_brush = Main.itemTexture[ItemID.Paintbrush];
 			Texture2D tex_spray = Main.itemTexture[ItemID.PaintSprayer];
@@ -35,36 +42,65 @@ namespace BetterPaint.Items {
 			var bucket_offset = new Vector2( tex_bucket.Width, tex_bucket.Height ) * 0.5f;
 			var scrape_offset = new Vector2( tex_scrape.Width, tex_scrape.Height ) * 0.5f;
 
-			var brush_rect = new Rectangle( (int)(brush_offset.X + (x - 64)), (int)(brush_offset.Y + y), tex_brush.Width, tex_brush.Height );
-			var spray_rect = new Rectangle( (int)(spray_offset.X + x), (int)(spray_offset.Y + (y - 64)), tex_spray.Width, tex_spray.Height );
-			var bucket_rect = new Rectangle( (int)(bucket_offset.X + (x + 64)), (int)(bucket_offset.Y + y), tex_bucket.Width, tex_bucket.Height );
-			var scrape_rect = new Rectangle( (int)(scrape_offset.X + x), (int)(scrape_offset.Y + (y + 64)), tex_scrape.Width, tex_scrape.Height );
+			var brush_rect = new Rectangle( (int)((x - mode_dist) - brush_offset.X), (int)(y - brush_offset.Y), tex_brush.Width, tex_brush.Height );
+			var spray_rect = new Rectangle( (int)(x - spray_offset.X), (int)((y - mode_dist) - spray_offset.Y), tex_spray.Width, tex_spray.Height );
+			var bucket_rect = new Rectangle( (int)((x + mode_dist) - bucket_offset.X), (int)(y - bucket_offset.Y), tex_bucket.Width, tex_bucket.Height );
+			var scrape_rect = new Rectangle( (int)(x - scrape_offset.X), (int)((y + mode_dist) - scrape_offset.Y), tex_scrape.Width, tex_scrape.Height );
 
-			sb.Draw( tex_brush, brush_rect, Color.White * (this.CurrentMode == PaintMode.Stream ? 3f / 4f : 1f / 4f) );
-			sb.Draw( tex_spray, spray_rect, Color.White * (this.CurrentMode == PaintMode.Spray ? 3f / 4f : 1f / 4f) );
-			sb.Draw( tex_bucket, bucket_rect, Color.White * (this.CurrentMode == PaintMode.Flood ? 3f / 4f : 1f / 4f) );
-			sb.Draw( tex_scrape, scrape_rect, Color.White * (this.CurrentMode == PaintMode.Erase ? 3f / 4f : 1f / 4f) );
+			bool brush_lit = brush_rect.Contains( Main.mouseX, Main.mouseY );
+			bool spray_lit = brush_lit ? false : spray_rect.Contains( Main.mouseX, Main.mouseY );
+			bool bucket_lit = spray_lit ? false : bucket_rect.Contains( Main.mouseX, Main.mouseY );
+			bool scrape_lit = bucket_lit ? false : scrape_rect.Contains( Main.mouseX, Main.mouseY );
 
-			this.CheckUIModeInteractions( ref brush_rect, ref spray_rect, ref bucket_rect, ref scrape_rect );
-			this.CheckUIColorInteractions( palette_rects );
+			sb.Draw( tex_brush, brush_rect, Color.White * (this.CurrentMode == PaintMode.Stream ? hilit : (brush_lit ? lit : unlit)) );
+			sb.Draw( tex_spray, spray_rect, Color.White * (this.CurrentMode == PaintMode.Spray ? hilit : (spray_lit ? lit : unlit)) );
+			sb.Draw( tex_bucket, bucket_rect, Color.White * (this.CurrentMode == PaintMode.Flood ? hilit : (bucket_lit ? lit : unlit)) );
+			sb.Draw( tex_scrape, scrape_rect, Color.White * (this.CurrentMode == PaintMode.Erase ? hilit : (scrape_lit ? lit : unlit)) );
+
+			if( brush_lit ) {
+				sb.DrawString( Main.fontMouseText, "Stream Mode", new Vector2(brush_rect.X, brush_rect.Y+brush_rect.Height), Color.Green );
+			} else if( spray_lit ) {
+				sb.DrawString( Main.fontMouseText, "Spray Mode", new Vector2(spray_rect.X, spray_rect.Y+spray_rect.Height), Color.Green );
+			} else if( bucket_lit ) {
+				sb.DrawString( Main.fontMouseText, "Flood Fill Mode", new Vector2(bucket_rect.X, bucket_rect.Y+bucket_rect.Height), Color.Green );
+			} else if( scrape_lit ) {
+				sb.DrawString( Main.fontMouseText, "Erasor Mode", new Vector2(scrape_rect.X, scrape_rect.Y+scrape_rect.Height), Color.Green );
+			}
+
+			///
+
+			Texture2D bg_but_tex = PaintBlasterItem.BackgroundButtonTex;
+
+			var bg_but_offset = new Vector2( bg_but_tex.Width, bg_but_tex.Height ) * 0.5f;
+
+			var bg_but_rect = new Rectangle( (int)((x - 40) - bg_but_offset.X), (int)((y - 40) - bg_but_offset.Y), bg_but_tex.Width, bg_but_tex.Height );
+
+			sb.Draw( bg_but_tex, bg_but_rect, Color.White * (this.Foreground ? hilit : unlit) );
+
+			///
+
+			if( Main.mouseLeft ) {
+				this.CheckUIModeInteractions( ref brush_rect, ref spray_rect, ref bucket_rect, ref scrape_rect );
+				this.CheckUIColorInteractions( palette_rects );
+			}
 		}
 
 
 		public IDictionary<int, Rectangle> DrawColorPalette() {
 			IList<int> item_idxs = ColorCartridgeItem.GetPaintCartridges( Main.LocalPlayer );
-			IDictionary<int, Rectangle> rects = new Dictionary<int, Rectangle>();
+			var rects = new Dictionary<int, Rectangle>();
 
-			float angle_step = 360f / (float)item_idxs.Count;
-			float angle = 0f;
+			double angle_step = 360d / (double)item_idxs.Count;
+			double angle = 0d;
 			
 			foreach( int idx in item_idxs ) {
-				int x = ( Main.screenWidth / 2 ) + (int)( 128d * Math.Cos( angle ) );
-				int y = ( Main.screenHeight / 2 ) + (int)( 128d * Math.Sin( angle ) );
+				int x = ( Main.screenWidth / 2 ) + (int)( 128d * Math.Cos( angle * (Math.PI / 180d) ) );
+				int y = ( Main.screenHeight / 2 ) + (int)( 128d * Math.Sin( angle * (Math.PI / 180d) ) );
 
 				Item item = Main.LocalPlayer.inventory[ idx ];
 				var myitem = (ColorCartridgeItem)item.modItem;
 
-				rects[ idx ] = this.DrawPaintIcon( myitem.MyColor, myitem.TimesUsed, x, y, idx == this.CurrentCartridgeInventoryIndex );
+				rects[ idx ] = this.DrawPaintIcon( myitem.MyColor, myitem.TimesUsed, x, y, (idx == this.CurrentCartridgeInventoryIndex) );
 
 				angle += angle_step;
 			}
@@ -72,15 +108,33 @@ namespace BetterPaint.Items {
 			return rects;
 		}
 		
-		public Rectangle DrawPaintIcon( Color color, int uses, int x, int y, bool is_highlighted ) {
-			float fill = (float)uses / 100f;
+		public Rectangle DrawPaintIcon( Color color, int uses, int x, int y, bool is_selected ) {
+			var mymod = (BetterPaintMod)this.mod;
 			Texture2D cart_tex = ColorCartridgeItem.CartridgeTex;
 			Texture2D over_tex = ColorCartridgeItem.OverlayTex;
 
-			Rectangle rect = new Rectangle( x, y, cart_tex.Width, cart_tex.Height );
+			var rect = new Rectangle( x - (cart_tex.Width / 2), y - (cart_tex.Height / 2), cart_tex.Width, cart_tex.Height );
+			bool is_hover = rect.Contains( Main.mouseX, Main.mouseY );
+			float color_mul = is_selected ? 1f : is_hover ? 0.65f : 0.25f;
+			
+			Main.spriteBatch.Draw( cart_tex, rect, Color.White * color_mul );
+			Main.spriteBatch.Draw( over_tex, rect, color * color_mul );
 
-			Main.spriteBatch.Draw( cart_tex, rect, Color.White * (is_highlighted ? 1f : 0.5f) );
-			Main.spriteBatch.Draw( over_tex, rect, color * (is_highlighted ? 1f : 0.5f) );
+			if( is_hover ) {
+				float percent = 1f - ((float)uses / (float)mymod.Config.PaintCartridgeCapacity);
+				Color text_color = percent < 0.15f ? Color.Red : (
+					percent < 0.35f ? Color.Yellow : (
+						percent < 1.0f ? Color.White : Color.LimeGreen
+					)
+				);
+				
+				Main.spriteBatch.DrawString( Main.fontMouseText, "Capacity: ", new Vector2(Main.mouseX, Main.mouseY-16), Color.White );
+				Main.spriteBatch.DrawString( Main.fontMouseText, (int)(percent * 100)+"%", new Vector2(Main.mouseX+72, Main.mouseY-16), text_color );
+
+				string color_str = "R:"+color.R+" G:"+color.G+" B:"+color.B+" A:"+color.A;
+
+				Main.spriteBatch.DrawString( Main.fontMouseText, color_str, new Vector2( Main.mouseX, Main.mouseY + 8 ), color );
+			}
 
 			return rect;
 		}
@@ -91,40 +145,32 @@ namespace BetterPaint.Items {
 		private void CheckUIModeInteractions( ref Rectangle brush_rect, ref Rectangle spray_rect, ref Rectangle bucket_rect, ref Rectangle scrape_rect ) {
 			Player player = Main.LocalPlayer;
 
-			if( Main.mouseLeft ) {
-				if( this.CurrentMode != PaintMode.Stream && brush_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-					this.CurrentMode = PaintMode.Stream;
-					PlayerMessages.AddPlayerLabel( player, "Paint mode: Stream", Color.Aquamarine, 60, true );
-				} else
-				if( this.CurrentMode != PaintMode.Spray && spray_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-					this.CurrentMode = PaintMode.Spray;
-					PlayerMessages.AddPlayerLabel( player, "Paint mode: Spray", Color.Aquamarine, 60, true );
-				} else
-				if( this.CurrentMode != PaintMode.Flood && bucket_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-					this.CurrentMode = PaintMode.Flood;
-					PlayerMessages.AddPlayerLabel( player, "Paint mode: Flood", Color.Aquamarine, 60, true );
-				} else
-				if( this.CurrentMode != PaintMode.Erase && scrape_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-					this.CurrentMode = PaintMode.Erase;
-					PlayerMessages.AddPlayerLabel( player, "Paint mode: Erase", Color.Aquamarine, 60, true );
-				}
+			if( this.CurrentMode != PaintMode.Stream && brush_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+				this.CurrentMode = PaintMode.Stream;
+			} else
+			if( this.CurrentMode != PaintMode.Spray && spray_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+				this.CurrentMode = PaintMode.Spray;
+			} else
+			if( this.CurrentMode != PaintMode.Flood && bucket_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+				this.CurrentMode = PaintMode.Flood;
+			} else
+			if( this.CurrentMode != PaintMode.Erase && scrape_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+				this.CurrentMode = PaintMode.Erase;
 			}
 		}
 
 		private void CheckUIColorInteractions( IDictionary<int, Rectangle> palette_rects ) {
 			int inv_idx = -1;
-
-			if( Main.mouseLeft ) {
-				foreach( var kv in palette_rects ) {
-					if( kv.Value.Contains( Main.mouseX, Main.mouseY ) ) {
-						inv_idx = kv.Key;
-						break;
-					}
+			
+			foreach( var kv in palette_rects ) {
+				if( kv.Value.Contains( Main.mouseX, Main.mouseY ) ) {
+					inv_idx = kv.Key;
+					break;
 				}
+			}
 
-				if( inv_idx != -1 ) {
-					this.CurrentCartridgeInventoryIndex = inv_idx;
-				}
+			if( inv_idx != -1 ) {
+				this.CurrentCartridgeInventoryIndex = inv_idx;
 			}
 		}
 	}

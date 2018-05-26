@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using HamstarHelpers.TmlHelpers;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,11 +10,19 @@ namespace BetterPaint.Items {
 		public const int Width = 50;
 		public const int Height = 18;
 
+		public static Texture2D BackgroundButtonTex { get; internal set; }
+
+		static PaintBlasterItem() {
+			PaintBlasterItem.BackgroundButtonTex = null;
+		}
+
 		////////////////
 
 		public bool IsModeSelecting { get; private set; }
+
 		public PaintMode CurrentMode { get; private set; }
 		public int CurrentCartridgeInventoryIndex { get; private set; }
+		public bool Foreground { get; private set; }
 
 
 		////////////////
@@ -22,12 +32,22 @@ namespace BetterPaint.Items {
 			this.Tooltip.SetDefault( "Paints with color cartridges in various ways." + '\n' +
 				"Overlays all existing paint" + '\n' +
 				"Right-click to adjust settings" );
+
+			if( PaintBlasterItem.BackgroundButtonTex == null ) {
+				PaintBlasterItem.BackgroundButtonTex = this.mod.GetTexture( "Items/PaintBlasterItem_BgButton" );
+			}
+
+			TmlLoadHelpers.AddModUnloadPromise( () => {
+				PaintBlasterItem.BackgroundButtonTex = null;
+			} );
 		}
+
 
 		public override void SetDefaults() {
 			this.IsModeSelecting = false;
 			this.CurrentMode = PaintMode.Stream;
 			this.CurrentCartridgeInventoryIndex = -1;
+			this.Foreground = true;
 
 			this.item.width = PaintBlasterItem.Width;
 			this.item.height = PaintBlasterItem.Height;

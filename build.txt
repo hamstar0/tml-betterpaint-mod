@@ -1,5 +1,5 @@
 author = hamstar
-version = 0.8.1
+version = 0.8.2
 displayName = Better Paint
 modReferences = HamstarHelpers@1.4.13
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*

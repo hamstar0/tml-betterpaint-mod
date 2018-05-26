@@ -92,7 +92,7 @@ namespace BetterPaint.Items {
 		public override void ModifyTooltips( List<TooltipLine> tooltips ) {
 			var mymod = (BetterPaintMod)this.mod;
 			float capacity = mymod.Config.PaintCartridgeCapacity;
-			float percent = ( capacity - (float)this.TimesUsed ) / capacity;
+			float percent = 1f - ((float)this.TimesUsed / capacity);
 
 			var tip1 = new TooltipLine( this.mod, "BetterPaint: Color Indicator", "Color value: " + this.MyColor.ToString() ) {
 				overrideColor = this.MyColor

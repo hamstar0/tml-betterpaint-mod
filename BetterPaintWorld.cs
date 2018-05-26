@@ -9,7 +9,7 @@ namespace BetterPaint {
 			if( !BetterPaintTile.Colors.ContainsKey( x ) ) {
 				BetterPaintTile.Colors[x] = new Dictionary<int, Color>();
 			}
-			BetterPaintTile.Colors[x][y] = Color.Red;
+			BetterPaintTile.Colors[x][y] = color;
 		}
 	}
 }

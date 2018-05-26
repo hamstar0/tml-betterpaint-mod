@@ -32,19 +32,21 @@ namespace BetterPaint.Items {
 			}
 
 			if( Main.mouseLeft ) {
-				Item paint_item = this.GetCurrentPaintItem();
+				if( this.CanUseItem( Main.LocalPlayer ) ) {
+					Item paint_item = this.GetCurrentPaintItem();
 
-				if( paint_item != null ) {
-					var myitem = (ColorCartridgeItem)paint_item.modItem;
+					if( paint_item != null ) {
+						var myitem = (ColorCartridgeItem)paint_item.modItem;
 
-					Vector2 tile_pos = UIHelpers.GetWorldMousePosition() / 16f;
-					int x = (int)tile_pos.X;
-					int y = (int)tile_pos.Y;
+						Vector2 tile_pos = UIHelpers.GetWorldMousePosition() / 16f;
+						int x = (int)tile_pos.X;
+						int y = (int)tile_pos.Y;
 
-					var myworld = this.mod.GetModWorld<BetterPaintWorld>();
-					myworld.AddColor( myitem.MyColor, x, y );
+						var myworld = this.mod.GetModWorld<BetterPaintWorld>();
+						myworld.AddColor( myitem.MyColor, x, y );
 
-					myitem.SetTimesUsed( myitem.TimesUsed + 1 );
+						myitem.SetTimesUsed( myitem.TimesUsed + 1 );
+					}
 				}
 			}
 		}
