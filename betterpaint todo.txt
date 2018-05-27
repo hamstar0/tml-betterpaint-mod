@@ -6,9 +6,9 @@ v1
 	-	Flood mode
 	-	Spray mode
 	-	Basic painting (stream mode)
--	Implement world tile color data
--	Implement background vs foreground painting
 
+-	Implement background vs foreground painting
+-	Implement world tile color data
 -	Implement UI interactivity
 	-	Implement size setting
 	-	Implement background/foreground setting

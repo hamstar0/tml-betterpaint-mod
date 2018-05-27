@@ -67,7 +67,7 @@ namespace BetterPaint.Items {
 				return false;
 			}
 
-			if( myworld.HasColor(cartridge.MyColor, x, y) ) {
+			if( myworld.HasFgColor(cartridge.MyColor, x, y) ) {
 				return false;
 			}
 
@@ -81,9 +81,9 @@ namespace BetterPaint.Items {
 			int uses = 0;
 
 			if( this.Foreground ) {
-				uses = myworld.AddForegroundColor( color_cartridge.MyColor, this.BrushSize, this.CurrentMode, x, y );
+				uses = myworld.AddForegroundColor( color_cartridge.MyColor, this.BrushSize, this.CurrentMode, (ushort)x, (ushort)y );
 			} else {
-				uses = myworld.AddBackgroundColor( color_cartridge.MyColor, this.BrushSize, this.CurrentMode, x, y );
+				uses = myworld.AddBackgroundColor( color_cartridge.MyColor, this.BrushSize, this.CurrentMode, (ushort)x, (ushort)y );
 			}
 
 			int total_uses = color_cartridge.TimesUsed + uses;

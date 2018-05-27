@@ -7,13 +7,14 @@ using Terraria.ModLoader;
 
 namespace BetterPaint {
 	class BetterPaintTile : GlobalTile {
-		public static IDictionary<int, IDictionary<int, Color>> Colors = new Dictionary<int, IDictionary<int, Color>>();
-
-
 		public override void DrawEffects( int i, int j, int type, SpriteBatch sb, ref Color draw_color, ref int next_special_draw_idx ) {
-			if( BetterPaintTile.Colors.ContainsKey(i) ) {
-				if( BetterPaintTile.Colors[i].ContainsKey(j) ) {
-					draw_color = Lighting.GetColor( i, j, BetterPaintTile.Colors[i][j] );
+			var myworld = this.mod.GetModWorld<BetterPaintWorld>();
+			ushort x = (ushort)i;
+			ushort y = (ushort)j;
+
+			if( myworld.FgColors.ContainsKey(x) ) {
+				if( myworld.FgColors[x].ContainsKey(y) ) {
+					draw_color = Lighting.GetColor( i, j, myworld.FgColors[x][y] );
 				}
 			}
 		}
@@ -25,14 +26,18 @@ namespace BetterPaint {
 
 
 		public override bool PreDraw( int i, int j, int type, SpriteBatch sb ) {
-			if( BetterPaintTile.Colors.ContainsKey( i ) ) {
-				if( BetterPaintTile.Colors[i].ContainsKey( j ) ) {
+			var myworld = this.mod.GetModWorld<BetterPaintWorld>();
+			ushort x = (ushort)i;
+			ushort y = (ushort)j;
+
+			if( myworld.BgColors.ContainsKey( x ) ) {
+				if( myworld.BgColors[x].ContainsKey( y ) ) {
 					Vector2 zero = new Vector2( (float)Main.offScreenRange, (float)Main.offScreenRange );
 					if( Main.drawToScreen ) {
 						zero = Vector2.Zero;
 					}
 
-					Color color = Lighting.GetColor( i, j, BetterPaintTile.Colors[i][j] );
+					Color color = Lighting.GetColor( i, j, myworld.BgColors[x][y] );
 
 					var pos = (new Vector2( (i * 16) - 8, (j * 16) - 8 ) - Main.screenPosition) + zero;
 
