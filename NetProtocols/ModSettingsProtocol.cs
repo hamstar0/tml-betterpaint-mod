@@ -1,0 +1,18 @@
+﻿using HamstarHelpers.Utilities.Network;
+
+
+namespace BetterPaint.NetProtocols {
+	class ModSettingsProtocol : PacketProtocol {
+		public BetterPaintConfigData Data;
+
+		////////////////
+
+		public override void SetServerDefaults() {
+			this.Data = BetterPaintMod.Instance.Config;
+		}
+
+		protected override void ReceiveWithClient() {
+			BetterPaintMod.Instance.JsonConfig.SetData( this.Data );
+		}
+	}
+}

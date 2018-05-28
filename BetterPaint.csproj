@@ -68,6 +68,8 @@
     <Compile Include="Items\PaintMixerItem_Def.cs" />
     <Compile Include="Items\ColorCartridgeItem_Def.cs" />
     <Compile Include="BetterPaintMod.cs" />
+    <Compile Include="NetProtocols\ModSettingsProtocol.cs" />
+    <Compile Include="NetProtocols\PaintStrokeProtocol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tiles\PaintMixerTile.cs" />
   </ItemGroup>

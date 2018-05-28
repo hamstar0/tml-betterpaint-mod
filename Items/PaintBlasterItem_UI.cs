@@ -20,6 +20,12 @@ namespace BetterPaint.Items {
 
 
 	partial class PaintBlasterItem : ModItem {
+		public const float SelectedScale = 0.85f;
+		public const float HoveredScale = 0.6f;
+		public const float IdleScale = 0.85f;
+
+
+
 		public void DrawPainterUI( SpriteBatch sb ) {
 			IDictionary<int, Rectangle> palette_rects = this.DrawColorPalette();
 			
@@ -27,9 +33,9 @@ namespace BetterPaint.Items {
 			int y = Main.screenHeight / 2;
 			int mode_dist = 72;
 			int setting_dist = 28;
-			float hilit = 0.85f;
-			float lit = 0.45f;
-			float unlit = 0.25f;
+			float hilit = PaintBlasterItem.SelectedScale;
+			float lit = PaintBlasterItem.HoveredScale;
+			float unlit = PaintBlasterItem.IdleScale;
 
 			///
 
@@ -153,7 +159,8 @@ namespace BetterPaint.Items {
 
 			var rect = new Rectangle( x - (cart_tex.Width / 2), y - (cart_tex.Height / 2), cart_tex.Width, cart_tex.Height );
 			bool is_hover = rect.Contains( Main.mouseX, Main.mouseY );
-			float color_mul = is_selected ? 1f : is_hover ? 0.65f : 0.25f;
+			float color_mul = is_selected ? PaintBlasterItem.SelectedScale :
+				( is_hover ? PaintBlasterItem.HoveredScale : PaintBlasterItem.IdleScale );
 			
 			Main.spriteBatch.Draw( cart_tex, rect, Color.White * color_mul );
 			Main.spriteBatch.Draw( over_tex, rect, color * color_mul );
@@ -164,14 +171,15 @@ namespace BetterPaint.Items {
 					percent < 0.35f ? Color.Yellow : (
 						percent < 1.0f ? Color.White : Color.LimeGreen
 					)
-				);
+				) * PaintBlasterItem.HoveredScale;
+				Color label_color = Color.White * PaintBlasterItem.HoveredScale;
 				
-				Main.spriteBatch.DrawString( Main.fontMouseText, "Capacity:", new Vector2(Main.mouseX, Main.mouseY-16), Color.White );
+				Main.spriteBatch.DrawString( Main.fontMouseText, "Capacity:", new Vector2(Main.mouseX, Main.mouseY-16), label_color );
 				Main.spriteBatch.DrawString( Main.fontMouseText, (int)(percent * 100)+"%", new Vector2(Main.mouseX+72, Main.mouseY-16), text_color );
 
 				string color_str = "R:"+color.R+" G:"+color.G+" B:"+color.B+" A:"+color.A;
 
-				Main.spriteBatch.DrawString( Main.fontMouseText, "Color:", new Vector2( Main.mouseX, Main.mouseY + 8 ), Color.White );
+				Main.spriteBatch.DrawString( Main.fontMouseText, "Color:", new Vector2( Main.mouseX, Main.mouseY + 8 ), label_color );
 				Main.spriteBatch.DrawString( Main.fontMouseText, color_str, new Vector2( Main.mouseX+56, Main.mouseY + 8 ), color );
 			}
 
