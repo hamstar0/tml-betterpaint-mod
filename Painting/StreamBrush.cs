@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-
+using Terraria;
 
 namespace BetterPaint.Painting {
 	class StreamBrush {

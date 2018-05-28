@@ -1,10 +1,7 @@
-﻿using BetterPaint.Items;
-using BetterPaint.NetProtocols;
+﻿using BetterPaint.NetProtocols;
 using BetterPaint.Painting;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -25,58 +22,16 @@ namespace BetterPaint {
 
 		////////////////
 
-		private void LoadLayer( TagCompound tags, string prefix, PaintData storage ) {
-			storage.Clear();
-
-			if( tags.ContainsKey( prefix+"_x" ) ) {
-				int[] fg_x = tags.GetIntArray( prefix+"_x" );
-
-				for( int i = 0; i < fg_x.Length; i++ ) {
-					ushort x = (ushort)fg_x[i];
-					int[] fg_y = tags.GetIntArray( prefix+"_" + x + "_y" );
-
-					for( int j = 0; j < fg_y.Length; j++ ) {
-						ushort y = (ushort)fg_y[j];
-
-						byte[] clr_arr = tags.GetByteArray( prefix+"_" + x + "_" + y );
-						Color color = new Color( clr_arr[0], clr_arr[1], clr_arr[2], clr_arr[3] );
-
-						storage.AddColorAt( color, x, y );
-					}
-				}
-			}
-		}
-
 		public override void Load( TagCompound tags ) {
-			this.LoadLayer( tags, "bg", this.BgColors );
-			this.LoadLayer( tags, "fg", this.FgColors );
-		}
-
-
-		private void SaveLayer( TagCompound tags, string prefix, PaintData data ) {
-			IDictionary<ushort, IDictionary<ushort, Color>> raw_data = data.Colors;
-			tags[prefix+"_x"] = raw_data.Keys.ToArray();
-
-			foreach( var kv in raw_data ) {
-				ushort x = kv.Key;
-				IDictionary<ushort, Color> y_col = kv.Value;
-
-				tags[prefix+"_" + x + "_y"] = y_col.Keys.ToArray();
-
-				foreach( var kv2 in y_col ) {
-					ushort y = kv2.Key;
-					Color clr = kv2.Value;
-
-					tags[prefix+"_" + x + "_" + y] = new byte[] { clr.R, clr.G, clr.B, clr.A };
-				}
-			}
+			this.BgColors.Load( tags, "bg" );
+			this.FgColors.Load( tags, "fg" );
 		}
 
 		public override TagCompound Save() {
 			var tags = new TagCompound();
 
-			this.SaveLayer( tags, "fg", this.FgColors );
-			this.SaveLayer( tags, "bg", this.BgColors );
+			this.FgColors.Save( tags, "fg" );
+			this.BgColors.Save( tags, "bg" );
 
 			return tags;
 		}
@@ -125,13 +80,25 @@ namespace BetterPaint {
 				//EraserBrush.Paint( this.FgColors, color, size, x, y );
 				break;
 			}
-			this.FgColors.AddColorAt( color, x, y );
 
 			return 1;
 		}
 		
 		public int AddBackgroundColorNoSync( Color color, int size, PaintMode mode, ushort x, ushort y ) {
-			this.BgColors.AddColorAt( color, x, y );
+			switch( mode ) {
+			case PaintMode.Stream:
+				StreamBrush.Paint( this.BgColors, color, size, x, y );
+				break;
+			case PaintMode.Spray:
+				//SprayBrush.Paint( this.BgColors, color, size, x, y );
+				break;
+			case PaintMode.Flood:
+				//FloodBrush.Paint( this.BgColors, color, size, x, y );
+				break;
+			case PaintMode.Erase:
+				//EraserBrush.Paint( this.BgColors, color, size, x, y );
+				break;
+			}
 
 			return 1;
 		}

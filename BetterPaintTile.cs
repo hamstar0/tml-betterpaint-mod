@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HamstarHelpers.DebugHelpers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -13,7 +14,8 @@ namespace BetterPaint {
 			ushort y = (ushort)j;
 			
 			if( myworld.FgColors.HasColor(x, y) ) {
-				draw_color = Lighting.GetColor( i, j, myworld.FgColors.GetColor( x, y ) );
+				Color painted_color = myworld.FgColors.GetColor( x, y );
+				draw_color = Lighting.GetColor( i, j, painted_color );
 			}
 		}
 	}
@@ -28,8 +30,9 @@ namespace BetterPaint {
 			ushort x = (ushort)i;
 			ushort y = (ushort)j;
 
-			if( myworld.BgColors.HasColor( x, y ) ) {
-				Color color = Lighting.GetColor( i, j, myworld.FgColors.GetColor( x, y ) );
+			/*if( myworld.BgColors.HasColor( x, y ) ) {
+				Color painted_color = myworld.BgColors.GetColor( x, y );
+				Color color = Lighting.GetColor( i, j, painted_color );
 
 				Vector2 zero = new Vector2( (float)Main.offScreenRange, (float)Main.offScreenRange );
 				if( Main.drawToScreen ) {
@@ -44,7 +47,7 @@ namespace BetterPaint {
 
 				Main.spriteBatch.Draw( Main.wallTexture[type], pos, frame, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f );
 				return false;
-			}
+			}*/
 			return true;
 		}
 	}

@@ -13,7 +13,7 @@ namespace BetterPaint.Items {
 	partial class PaintBlasterItem : ModItem {
 		public const float SelectedScale = 0.85f;
 		public const float HoveredScale = 0.6f;
-		public const float IdleScale = 0.85f;
+		public const float IdleScale = 0.35f;
 
 
 		////////////////

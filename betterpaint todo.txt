@@ -5,8 +5,8 @@ v1
 	-	Erase mode
 	-	Flood mode
 	-	Spray mode
-	-	Basic painting (stream mode)
 
+	-	Basic painting (stream mode)
 -	Set UI icons more opaque
 -	Implement background vs foreground painting
 -	Implement world tile color data

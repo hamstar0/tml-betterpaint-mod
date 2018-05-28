@@ -10,5 +10,10 @@ namespace BetterPaint {
 		public static void SaveModSettingsChanges() {
 			BetterPaintMod.Instance.JsonConfig.SaveFile();
 		}
+
+
+		// TODO: Apply specific brush stroke
+
+		// TODO: Reset all paint
 	}
 }
