@@ -70,6 +70,9 @@
     <Compile Include="BetterPaintMod.cs" />
     <Compile Include="NetProtocols\ModSettingsProtocol.cs" />
     <Compile Include="NetProtocols\PaintStrokeProtocol.cs" />
+    <Compile Include="Painting\PaintData.cs" />
+    <Compile Include="Painting\PaintMode.cs" />
+    <Compile Include="Painting\StreamBrush.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tiles\PaintMixerTile.cs" />
   </ItemGroup>

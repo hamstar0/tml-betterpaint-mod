@@ -1,4 +1,4 @@
-﻿using HamstarHelpers.Utilities.Messages;
+﻿using BetterPaint.Painting;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
@@ -10,21 +10,13 @@ using Terraria.ModLoader;
 
 
 namespace BetterPaint.Items {
-	enum PaintMode : int {
-		Stream,
-		Spray,
-		Flood,
-		Erase
-	}
-
-
-
 	partial class PaintBlasterItem : ModItem {
 		public const float SelectedScale = 0.85f;
 		public const float HoveredScale = 0.6f;
 		public const float IdleScale = 0.85f;
 
 
+		////////////////
 
 		public void DrawPainterUI( SpriteBatch sb ) {
 			IDictionary<int, Rectangle> palette_rects = this.DrawColorPalette();

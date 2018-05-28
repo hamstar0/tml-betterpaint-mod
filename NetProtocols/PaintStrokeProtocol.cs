@@ -1,4 +1,4 @@
-﻿using BetterPaint.Items;
+﻿using BetterPaint.Painting;
 using HamstarHelpers.Utilities.Network;
 using Microsoft.Xna.Framework;
 using System;

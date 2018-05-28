@@ -1,5 +1,6 @@
 ﻿using BetterPaint.Items;
 using BetterPaint.NetProtocols;
+using BetterPaint.Painting;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -11,20 +12,20 @@ using Terraria.ModLoader.IO;
 
 namespace BetterPaint {
 	class BetterPaintWorld : ModWorld {
-		public IDictionary<ushort, IDictionary<ushort, Color>> FgColors { get; private set; }
-		public IDictionary<ushort, IDictionary<ushort, Color>> BgColors { get; private set; }
+		public PaintData FgColors { get; private set; }
+		public PaintData BgColors { get; private set; }
 
 
 		////////////////
 
 		public override void Initialize() {
-			this.FgColors = new Dictionary<ushort, IDictionary<ushort, Color>>();
-			this.BgColors = new Dictionary<ushort, IDictionary<ushort, Color>>();
+			this.FgColors = new PaintData();
+			this.BgColors = new PaintData();
 		}
 
 		////////////////
 
-		private void LoadLayer( TagCompound tags, string prefix, IDictionary<ushort, IDictionary<ushort, Color>> storage ) {
+		private void LoadLayer( TagCompound tags, string prefix, PaintData storage ) {
 			storage.Clear();
 
 			if( tags.ContainsKey( prefix+"_x" ) ) {
@@ -34,13 +35,13 @@ namespace BetterPaint {
 					ushort x = (ushort)fg_x[i];
 					int[] fg_y = tags.GetIntArray( prefix+"_" + x + "_y" );
 
-					storage[x] = new Dictionary<ushort, Color>();
-
 					for( int j = 0; j < fg_y.Length; j++ ) {
 						ushort y = (ushort)fg_y[j];
 
-						byte[] clr = tags.GetByteArray( prefix+"_" + x + "_" + y );
-						storage[x][y] = new Color( clr[0], clr[1], clr[2], clr[3] );
+						byte[] clr_arr = tags.GetByteArray( prefix+"_" + x + "_" + y );
+						Color color = new Color( clr_arr[0], clr_arr[1], clr_arr[2], clr_arr[3] );
+
+						storage.ColorAt( color, x, y );
 					}
 				}
 			}
@@ -52,10 +53,11 @@ namespace BetterPaint {
 		}
 
 
-		private void SaveLayer( TagCompound tags, string prefix, IDictionary<ushort, IDictionary<ushort, Color>> data ) {
-			tags[prefix+"_x"] = data.Keys.ToArray();
+		private void SaveLayer( TagCompound tags, string prefix, PaintData data ) {
+			IDictionary<ushort, IDictionary<ushort, Color>> raw_data = data.Colors;
+			tags[prefix+"_x"] = raw_data.Keys.ToArray();
 
-			foreach( var kv in data ) {
+			foreach( var kv in raw_data ) {
 				ushort x = kv.Key;
 				IDictionary<ushort, Color> y_col = kv.Value;
 
@@ -106,8 +108,23 @@ namespace BetterPaint {
 			return paints_used;
 		}
 
+		////
 
 		public int AddForegroundColorNoSync( Color color, int size, PaintMode mode, ushort x, ushort y ) {
+			switch( mode ) {
+			case PaintMode.Stream:
+				StreamBrush.Paint( this.FgColors, color, size, x, y );
+				break;
+			case PaintMode.Spray:
+				SprayBrush.Paint( this.FgColors, color, size, x, y );
+				break;
+			case PaintMode.Flood:
+				FloodBrush.Paint( this.FgColors, color, size, x, y );
+				break;
+			case PaintMode.Erase:
+				EraserBrush.Paint( this.FgColors, color, size, x, y );
+				break;
+			}
 			if( !this.FgColors.ContainsKey( x ) ) {
 				this.FgColors[x] = new Dictionary<ushort, Color>();
 			}
