@@ -41,7 +41,7 @@ namespace BetterPaint {
 						byte[] clr_arr = tags.GetByteArray( prefix+"_" + x + "_" + y );
 						Color color = new Color( clr_arr[0], clr_arr[1], clr_arr[2], clr_arr[3] );
 
-						storage.ColorAt( color, x, y );
+						storage.AddColorAt( color, x, y );
 					}
 				}
 			}
@@ -116,29 +116,22 @@ namespace BetterPaint {
 				StreamBrush.Paint( this.FgColors, color, size, x, y );
 				break;
 			case PaintMode.Spray:
-				SprayBrush.Paint( this.FgColors, color, size, x, y );
+				//SprayBrush.Paint( this.FgColors, color, size, x, y );
 				break;
 			case PaintMode.Flood:
-				FloodBrush.Paint( this.FgColors, color, size, x, y );
+				//FloodBrush.Paint( this.FgColors, color, size, x, y );
 				break;
 			case PaintMode.Erase:
-				EraserBrush.Paint( this.FgColors, color, size, x, y );
+				//EraserBrush.Paint( this.FgColors, color, size, x, y );
 				break;
 			}
-			if( !this.FgColors.ContainsKey( x ) ) {
-				this.FgColors[x] = new Dictionary<ushort, Color>();
-			}
-			this.FgColors[x][y] = color;
+			this.FgColors.AddColorAt( color, x, y );
 
 			return 1;
 		}
 		
 		public int AddBackgroundColorNoSync( Color color, int size, PaintMode mode, ushort x, ushort y ) {
-			if( !this.BgColors.ContainsKey( x ) ) {
-				this.BgColors[x] = new Dictionary<ushort, Color>();
-			}
-
-			this.BgColors[x][y] = color;
+			this.BgColors.AddColorAt( color, x, y );
 
 			return 1;
 		}
@@ -147,21 +140,11 @@ namespace BetterPaint {
 		////////////////
 
 		public bool HasFgColor( Color color, int i, int j ) {
-			ushort x = (ushort)i;
-			ushort y = (ushort)j;
-
-			if( !this.FgColors.ContainsKey(x) ) { return false; }
-			if( !this.FgColors[x].ContainsKey( y ) ) { return false; }
-			return this.FgColors[x][y] == color;
+			return this.FgColors.HasColor( (ushort)i, (ushort)j );
 		}
 
 		public bool HasBgColor( Color color, int i, int j ) {
-			ushort x = (ushort)i;
-			ushort y = (ushort)j;
-
-			if( !this.BgColors.ContainsKey( x ) ) { return false; }
-			if( !this.BgColors[x].ContainsKey( y ) ) { return false; }
-			return this.BgColors[x][y] == color;
+			return this.BgColors.HasColor( (ushort)i, (ushort)j );
 		}
 	}
 }

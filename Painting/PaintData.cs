@@ -26,7 +26,16 @@ namespace BetterPaint.Painting {
 			return !this.Colors.ContainsKey( x ) || !this.Colors[x].ContainsKey( y );
 		}
 
-		public void ColorAt( Color color, ushort x, ushort y ) {
+		public Color GetColor( ushort x, ushort y ) {
+			if( this.Colors.ContainsKey( x ) ) {
+				if( this.Colors.ContainsKey( y ) ) {
+					return this.Colors[x][y];
+				}
+			}
+			return Color.Transparent;
+		}
+
+		public void AddColorAt( Color color, ushort x, ushort y ) {
 			if( !this.Colors.ContainsKey(x) ) {
 				this.Colors[x] = new Dictionary<ushort, Color>();
 			}

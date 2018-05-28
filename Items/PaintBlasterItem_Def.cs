@@ -1,4 +1,5 @@
-﻿using HamstarHelpers.TmlHelpers;
+﻿using BetterPaint.Painting;
+using HamstarHelpers.TmlHelpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;

@@ -12,18 +12,18 @@ namespace BetterPaint.Painting {
 				for( int j = -iter_range; j < iter_range; j++ ) {
 					double dist = Math.Sqrt( ( i * i ) + ( j * j ) );
 
-					if( dist > max_range ) {
+					if( dist >= max_range ) {
 						continue;
 					}
 
-					StreamBrush.PaintAt( data, color, dist, i, j );
+					StreamBrush.PaintAt( data, color, dist, x + i, y + j );
 				}
 			}
 		}
 
 
 		public static void PaintAt( PaintData data, Color color, double range, int x, int y ) {
-			data.ColorAt( color, (ushort)x, (ushort)y );
+			data.AddColorAt( color, (ushort)x, (ushort)y );
 		}
 	}
 }

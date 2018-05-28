@@ -11,11 +11,9 @@ namespace BetterPaint {
 			var myworld = this.mod.GetModWorld<BetterPaintWorld>();
 			ushort x = (ushort)i;
 			ushort y = (ushort)j;
-
-			if( myworld.FgColors.ContainsKey(x) ) {
-				if( myworld.FgColors[x].ContainsKey(y) ) {
-					draw_color = Lighting.GetColor( i, j, myworld.FgColors[x][y] );
-				}
+			
+			if( myworld.FgColors.HasColor(x, y) ) {
+				draw_color = Lighting.GetColor( i, j, myworld.FgColors.GetColor( x, y ) );
 			}
 		}
 	}
@@ -30,24 +28,22 @@ namespace BetterPaint {
 			ushort x = (ushort)i;
 			ushort y = (ushort)j;
 
-			if( myworld.BgColors.ContainsKey( x ) ) {
-				if( myworld.BgColors[x].ContainsKey( y ) ) {
-					Vector2 zero = new Vector2( (float)Main.offScreenRange, (float)Main.offScreenRange );
-					if( Main.drawToScreen ) {
-						zero = Vector2.Zero;
-					}
+			if( myworld.BgColors.HasColor( x, y ) ) {
+				Color color = Lighting.GetColor( i, j, myworld.FgColors.GetColor( x, y ) );
 
-					Color color = Lighting.GetColor( i, j, myworld.BgColors[x][y] );
-
-					var pos = (new Vector2( (i * 16) - 8, (j * 16) - 8 ) - Main.screenPosition) + zero;
-
-					Tile tile = Main.tile[i, j];
-					int y_offset = (int)( Main.wallFrame[type] * 180 );
-					var frame = new Rectangle( tile.wallFrameX(), tile.wallFrameY() + y_offset, 32, 32 );
-
-					Main.spriteBatch.Draw( Main.wallTexture[type], pos, frame, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f );
-					return false;
+				Vector2 zero = new Vector2( (float)Main.offScreenRange, (float)Main.offScreenRange );
+				if( Main.drawToScreen ) {
+					zero = Vector2.Zero;
 				}
+
+				var pos = (new Vector2( (i * 16) - 8, (j * 16) - 8 ) - Main.screenPosition) + zero;
+
+				Tile tile = Main.tile[i, j];
+				int y_offset = (int)( Main.wallFrame[type] * 180 );
+				var frame = new Rectangle( tile.wallFrameX(), tile.wallFrameY() + y_offset, 32, 32 );
+
+				Main.spriteBatch.Draw( Main.wallTexture[type], pos, frame, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f );
+				return false;
 			}
 			return true;
 		}
