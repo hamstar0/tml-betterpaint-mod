@@ -1,4 +1,5 @@
 ﻿using BetterPaint.Items;
+using BetterPaint.Painting;
 using HamstarHelpers.Utilities.Config;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,8 @@ namespace BetterPaint {
 		public JsonConfig<BetterPaintConfigData> JsonConfig { get; private set; }
 		public BetterPaintConfigData Config { get { return this.JsonConfig.Data; } }
 
+		public IDictionary<PaintModeType, PaintMode> Modes { get; private set; }
+
 
 		////////////////
 
@@ -42,6 +45,11 @@ namespace BetterPaint {
 				AutoloadGores = true,
 				AutoloadSounds = true
 			};
+
+			this.Modes[ PaintModeType.Stream ] = new PaintModeStream();
+			this.Modes[ PaintModeType.Spray ] = new PaintModeSpray();
+			this.Modes[ PaintModeType.Fill ] = new PaintModeFill();
+			this.Modes[ PaintModeType.Erase ] = new PaintModeErase();
 
 			this.JsonConfig = new JsonConfig<BetterPaintConfigData>( BetterPaintConfigData.ConfigFileName,
 					ConfigurationDataBase.RelativePath, new BetterPaintConfigData() );

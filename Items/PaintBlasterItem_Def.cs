@@ -28,7 +28,7 @@ namespace BetterPaint.Items {
 		public bool IsModeSelecting { get; private set; }
 		public bool IsInteractingWithUI { get; private set; }
 
-		public PaintMode CurrentMode { get; private set; }
+		public PaintModeType CurrentMode { get; private set; }
 		public int CurrentCartridgeInventoryIndex { get; private set; }
 		public bool Foreground { get; private set; }
 		public int BrushSize { get; private set; }
@@ -38,7 +38,7 @@ namespace BetterPaint.Items {
 
 		public PaintBlasterItem() : base() {
 			this.IsModeSelecting = false;
-			this.CurrentMode = PaintMode.Stream;
+			this.CurrentMode = PaintModeType.Stream;
 			this.CurrentCartridgeInventoryIndex = -1;
 			this.Foreground = true;
 			this.BrushSize = 1;

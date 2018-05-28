@@ -39,7 +39,7 @@ namespace BetterPaint {
 
 		////////////////
 
-		public int AddForegroundColor( Color color, int size, PaintMode mode, ushort x, ushort y ) {
+		public int AddForegroundColor( Color color, int size, PaintModeType mode, ushort x, ushort y ) {
 			if( Main.netMode == 2 ) { throw new Exception( "No server." ); }
 
 			int paints_used = this.AddForegroundColorNoSync( color, size, mode, x, y );
@@ -51,7 +51,7 @@ namespace BetterPaint {
 			return paints_used;
 		}
 
-		public int AddBackgroundColor( Color color, int size, PaintMode mode, ushort x, ushort y ) {
+		public int AddBackgroundColor( Color color, int size, PaintModeType mode, ushort x, ushort y ) {
 			if( Main.netMode == 2 ) { throw new Exception( "No server." ); }
 
 			int paints_used = this.AddBackgroundColorNoSync( color, size, mode, x, y );
@@ -65,42 +65,16 @@ namespace BetterPaint {
 
 		////
 
-		public int AddForegroundColorNoSync( Color color, int size, PaintMode mode, ushort x, ushort y ) {
-			switch( mode ) {
-			case PaintMode.Stream:
-				StreamBrush.Paint( this.FgColors, color, size, x, y );
-				break;
-			case PaintMode.Spray:
-				//SprayBrush.Paint( this.FgColors, color, size, x, y );
-				break;
-			case PaintMode.Flood:
-				//FloodBrush.Paint( this.FgColors, color, size, x, y );
-				break;
-			case PaintMode.Erase:
-				//EraserBrush.Paint( this.FgColors, color, size, x, y );
-				break;
-			}
+		public int AddForegroundColorNoSync( Color color, int size, PaintModeType mode, ushort x, ushort y ) {
+			var mymod = (BetterPaintMod)this.mod;
 
-			return 1;
+			return mymod.Modes[ mode ].Paint( this.FgColors, color, size, x, y );
 		}
 		
-		public int AddBackgroundColorNoSync( Color color, int size, PaintMode mode, ushort x, ushort y ) {
-			switch( mode ) {
-			case PaintMode.Stream:
-				StreamBrush.Paint( this.BgColors, color, size, x, y );
-				break;
-			case PaintMode.Spray:
-				//SprayBrush.Paint( this.BgColors, color, size, x, y );
-				break;
-			case PaintMode.Flood:
-				//FloodBrush.Paint( this.BgColors, color, size, x, y );
-				break;
-			case PaintMode.Erase:
-				//EraserBrush.Paint( this.BgColors, color, size, x, y );
-				break;
-			}
+		public int AddBackgroundColorNoSync( Color color, int size, PaintModeType mode, ushort x, ushort y ) {
+			var mymod = (BetterPaintMod)this.mod;
 
-			return 1;
+			return mymod.Modes[mode].Paint( this.BgColors, color, size, x, y );
 		}
 
 

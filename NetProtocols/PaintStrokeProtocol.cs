@@ -7,7 +7,7 @@ using Terraria;
 
 namespace BetterPaint.NetProtocols {
 	class PaintStrokeProtocol : PacketProtocol {
-		public static void SyncToAll( bool fg_only, Color color, int size, PaintMode mode, ushort x, ushort y ) {
+		public static void SyncToAll( bool fg_only, Color color, int size, PaintModeType mode, ushort x, ushort y ) {
 			if( Main.netMode != 1 ) { throw new Exception( "Not client" ); }
 
 			var protocol = new PaintStrokeProtocol( fg_only, color, size, mode, x, y );
@@ -21,7 +21,7 @@ namespace BetterPaint.NetProtocols {
 		public bool FgOnly = false;
 		public Color MyColor = Color.White;
 		public int Size = -1;
-		public PaintMode Mode = PaintMode.Stream;
+		public PaintModeType Mode = PaintModeType.Stream;
 		public ushort X = 0;
 		public ushort Y = 0;
 
@@ -30,7 +30,7 @@ namespace BetterPaint.NetProtocols {
 
 		public PaintStrokeProtocol() { }
 
-		private PaintStrokeProtocol( bool fg_only, Color color, int size, PaintMode mode, ushort x, ushort y ) {
+		private PaintStrokeProtocol( bool fg_only, Color color, int size, PaintModeType mode, ushort x, ushort y ) {
 			this.FgOnly = fg_only;
 			this.MyColor = color;
 			this.Size = size;

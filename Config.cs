@@ -20,6 +20,9 @@ namespace BetterPaint {
 		public int PaintRecipePaintIngredientQuantity = 25;
 		public int PaintCartridgeCapacity = 100;
 
+		public int BrushSizeSmall = 1;
+		public int BrushSizeLarge = 6;
+
 
 		////////////////
 
