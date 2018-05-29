@@ -38,9 +38,9 @@ namespace BetterPaint.Painting {
 		}
 
 		
-		public override float PaintAt( PaintData data, Color color, float brush_radius, float dist, ushort tile_x, ushort tile_y ) {
+		public float PaintAt( PaintData data, Color color, float brush_radius, float dist, ushort tile_x, ushort tile_y ) {
 			float percent = dist / brush_radius;
-			Color existing_color = data.HasColor(tile_x, tile_y) ? data.GetColor( tile_x, tile_y ) : Color.White;
+			Color existing_color = data.GetColor( tile_x, tile_y );
 			Color lerped_color = Color.Lerp( color, existing_color, percent );
 
 			data.SetColorAt( lerped_color, (ushort)tile_x, (ushort)tile_y );

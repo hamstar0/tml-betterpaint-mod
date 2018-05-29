@@ -77,7 +77,7 @@ namespace BetterPaint.Painting {
 					return this.Colors[x][y];
 				}
 			}
-			return Color.Transparent;
+			return Color.White;
 		}
 
 		public void SetColorAt( Color color, ushort x, ushort y ) {

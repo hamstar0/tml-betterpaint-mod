@@ -53,7 +53,7 @@ namespace BetterPaint.Items {
 
 			sb.Draw( tex_brush, brush_rect, Color.White * (this.CurrentMode == PaintModeType.Stream ? hilit : (brush_hover ? lit : unlit)) );
 			sb.Draw( tex_spray, spray_rect, Color.White * (this.CurrentMode == PaintModeType.Spray ? hilit : (spray_hover ? lit : unlit)) );
-			sb.Draw( tex_bucket, bucket_rect, Color.White * (this.CurrentMode == PaintModeType.Fill ? hilit : (bucket_hover ? lit : unlit)) );
+			sb.Draw( tex_bucket, bucket_rect, Color.White * (this.CurrentMode == PaintModeType.Spatter ? hilit : (bucket_hover ? lit : unlit)) );
 			sb.Draw( tex_scrape, scrape_rect, Color.White * (this.CurrentMode == PaintModeType.Erase ? hilit : (scrape_hover ? lit : unlit)) );
 
 			if( brush_hover ) {
@@ -63,11 +63,11 @@ namespace BetterPaint.Items {
 				var tool_color = this.CurrentMode == PaintModeType.Spray ? Color.White : Color.LightGray;
 				sb.DrawString( Main.fontMouseText, "Spray Mode", new Vector2(spray_rect.X, spray_rect.Y+spray_rect.Height), tool_color );
 			} else if( bucket_hover ) {
-				var tool_color = this.CurrentMode == PaintModeType.Fill ? Color.White : Color.LightGray;
-				sb.DrawString( Main.fontMouseText, "Flood Fill Mode", new Vector2(bucket_rect.X, bucket_rect.Y+bucket_rect.Height), tool_color );
+				var tool_color = this.CurrentMode == PaintModeType.Spatter ? Color.White : Color.LightGray;
+				sb.DrawString( Main.fontMouseText, "Spatter Mode", new Vector2(bucket_rect.X, bucket_rect.Y+bucket_rect.Height), tool_color );
 			} else if( scrape_hover ) {
 				var tool_color = this.CurrentMode == PaintModeType.Erase ? Color.White : Color.LightGray;
-				sb.DrawString( Main.fontMouseText, "Erasor Mode", new Vector2(scrape_rect.X, scrape_rect.Y+scrape_rect.Height), tool_color );
+				sb.DrawString( Main.fontMouseText, "Eraser Mode", new Vector2(scrape_rect.X, scrape_rect.Y+scrape_rect.Height), tool_color );
 			}
 
 			///
@@ -192,8 +192,8 @@ namespace BetterPaint.Items {
 			if( this.CurrentMode != PaintModeType.Spray && spray_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CurrentMode = PaintModeType.Spray;
 			} else
-			if( this.CurrentMode != PaintModeType.Fill && bucket_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-				this.CurrentMode = PaintModeType.Fill;
+			if( this.CurrentMode != PaintModeType.Spatter && bucket_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+				this.CurrentMode = PaintModeType.Spatter;
 			} else
 			if( this.CurrentMode != PaintModeType.Erase && scrape_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CurrentMode = PaintModeType.Erase;

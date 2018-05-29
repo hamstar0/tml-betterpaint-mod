@@ -23,6 +23,8 @@ namespace BetterPaint {
 		public int BrushSizeSmall = 1;
 		public int BrushSizeLarge = 6;
 
+		public float BrushSpatterDensity = 0.15f;
+
 
 		////////////////
 

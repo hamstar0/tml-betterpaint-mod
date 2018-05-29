@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using Terraria;
 
 
 namespace BetterPaint.Painting {
@@ -22,7 +21,7 @@ namespace BetterPaint.Painting {
 						continue;
 					}
 
-					uses += this.PaintAt( data, color, max_range, dist, (ushort)(tile_x + i), (ushort)(tile_y + j) );
+					uses += this.PaintAt( data, color, (ushort)(tile_x + i), (ushort)(tile_y + j) );
 				}
 			}
 
@@ -30,8 +29,8 @@ namespace BetterPaint.Painting {
 		}
 
 
-		public override float PaintAt( PaintData data, Color color, float brush_radius, float dist, ushort tile_x, ushort tile_y ) {
-			data.SetColorAt( Color.Red, tile_x, tile_y );
+		public float PaintAt( PaintData data, Color color, ushort tile_x, ushort tile_y ) {
+			data.SetColorAt( color, tile_x, tile_y );
 			return 1f;
 		}
 	}

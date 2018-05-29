@@ -9,10 +9,12 @@ v1
 -	Implement radial selection
 -	Add sounds to UI and dry fire
 -	Add cartridge capacity display on item and bottom left
+-	Stack redundant cartridges on radial selector
+-	Remove empty cartridges from radial selector
 -	Implement painting
 	-	Erase mode
-	-	Flood mode
 
+	-	Spatter mode
 	-	Spray mode
 	-	Basic painting (stream mode)
 -	Set UI icons more opaque
