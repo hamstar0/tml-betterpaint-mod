@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 
 
 namespace BetterPaint.Painting {
@@ -13,7 +12,7 @@ namespace BetterPaint.Painting {
 
 
 	public abstract class PaintMode {
-		public abstract int Paint( PaintData data, Color color, int size, int x, int y );
-		public abstract int PaintAt( PaintData data, Color color, double dist, int x, int y );
+		public abstract int Paint( PaintData data, Color color, int brush_size, int world_x, int world_y );
+		public abstract double PaintAt( PaintData data, Color color, int brush_size, double dist, ushort tile_x, ushort tile_y );
 	}
 }

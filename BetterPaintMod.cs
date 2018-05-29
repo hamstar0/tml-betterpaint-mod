@@ -48,8 +48,8 @@ namespace BetterPaint {
 
 			this.Modes[ PaintModeType.Stream ] = new PaintModeStream();
 			this.Modes[ PaintModeType.Spray ] = new PaintModeSpray();
-			this.Modes[ PaintModeType.Fill ] = new PaintModeFill();
-			this.Modes[ PaintModeType.Erase ] = new PaintModeErase();
+			//this.Modes[ PaintModeType.Fill ] = new PaintModeFill();
+			//this.Modes[ PaintModeType.Erase ] = new PaintModeErase();
 
 			this.JsonConfig = new JsonConfig<BetterPaintConfigData>( BetterPaintConfigData.ConfigFileName,
 					ConfigurationDataBase.RelativePath, new BetterPaintConfigData() );

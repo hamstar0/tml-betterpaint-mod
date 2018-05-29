@@ -35,7 +35,7 @@ namespace BetterPaint.Painting {
 						byte[] clr_arr = tags.GetByteArray( prefix + "_" + x + "_" + y );
 						Color color = new Color( clr_arr[0], clr_arr[1], clr_arr[2], clr_arr[3] );
 
-						this.AddColorAt( color, x, y );
+						this.SetColorAt( color, x, y );
 					}
 				}
 			}
@@ -80,7 +80,7 @@ namespace BetterPaint.Painting {
 			return Color.Transparent;
 		}
 
-		public void AddColorAt( Color color, ushort x, ushort y ) {
+		public void SetColorAt( Color color, ushort x, ushort y ) {
 			if( !this.Colors.ContainsKey(x) ) {
 				this.Colors[x] = new Dictionary<ushort, Color>();
 			}
