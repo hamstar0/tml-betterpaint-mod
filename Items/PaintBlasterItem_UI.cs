@@ -144,7 +144,7 @@ namespace BetterPaint.Items {
 			return rects;
 		}
 		
-		public Rectangle DrawPaintIcon( Color color, int uses, int x, int y, bool is_selected ) {
+		public Rectangle DrawPaintIcon( Color color, float uses, int x, int y, bool is_selected ) {
 			var mymod = (BetterPaintMod)this.mod;
 			Texture2D cart_tex = ColorCartridgeItem.CartridgeTex;
 			Texture2D over_tex = ColorCartridgeItem.OverlayTex;
@@ -158,14 +158,8 @@ namespace BetterPaint.Items {
 			Main.spriteBatch.Draw( over_tex, rect, color * color_mul );
 
 			if( is_hover ) {
-				float percent = 1f - ((float)uses / (float)mymod.Config.PaintCartridgeCapacity);
-				Color text_color = percent == 0f ? Color.DarkGray : (
-					percent <= 0.15f ? Color.Red : (
-						percent <= 0.35f ? Color.Yellow : (
-							percent < 1.0f ? Color.White : Color.LimeGreen
-						)
-					)
-				) * PaintBlasterItem.HoveredScale;
+				float percent = 1f - (uses / (float)mymod.Config.PaintCartridgeCapacity);
+				Color text_color = ColorCartridgeItem.GetCapacityColor( percent );
 				Color label_color = Color.White * PaintBlasterItem.HoveredScale;
 				
 				Main.spriteBatch.DrawString( Main.fontMouseText, "Capacity:", new Vector2(Main.mouseX, Main.mouseY-16), label_color );

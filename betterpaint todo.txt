@@ -1,13 +1,19 @@
+Future
+-	Add paint tarps
+
+
+
 v1
 -	Give credit for paint mixer tile sprite
 -	Make 'easy' version of recipes; use inbox to alert to 'hard' mode
+-	Implement radial selection
 -	Add sounds to UI and dry fire
 -	Add cartridge capacity display on item and bottom left
 -	Implement painting
 	-	Erase mode
 	-	Flood mode
-	-	Spray mode
 
+	-	Spray mode
 	-	Basic painting (stream mode)
 -	Set UI icons more opaque
 -	Implement background vs foreground painting

@@ -27,7 +27,7 @@ namespace BetterPaint {
 
 			if( held_item != null && !held_item.IsAir && held_item.type == this.mod.ItemType<PaintBlasterItem>() ) {
 				var blaster_data = (PaintBlasterItem)held_item.modItem;
-				blaster_data.CheckUse();
+				blaster_data.CheckMenu();
 			}
 		}
 	}

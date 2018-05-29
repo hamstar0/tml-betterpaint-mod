@@ -6,6 +6,18 @@ using Terraria.ModLoader;
 
 namespace BetterPaint.Items {
 	partial class ColorCartridgeItem : ModItem {
+		public static Color GetCapacityColor( float percent ) {
+			return percent == 0f ? new Color( 64, 64, 64, 255 ) : (
+				percent <= 0.15f ? Color.Red : (
+					percent <= 0.35f ? Color.Yellow : (
+						percent < 1.0f ? Color.White : Color.LimeGreen
+					)
+				)
+			);
+		}
+
+
+
 		public override void PostDrawInInventory( SpriteBatch sb, Vector2 pos, Rectangle frame, Color draw_color, Color item_color, Vector2 origin, float scale ) {
 			var mymod = (BetterPaintMod)this.mod;
 			

@@ -7,10 +7,10 @@ using Terraria;
 
 namespace BetterPaint.NetProtocols {
 	class PaintStrokeProtocol : PacketProtocol {
-		public static void SyncToAll( bool fg_only, Color color, int size, PaintModeType mode, ushort x, ushort y ) {
+		public static void SyncToAll( bool fg_only, Color color, int size, PaintModeType mode, int world_x, int world_y ) {
 			if( Main.netMode != 1 ) { throw new Exception( "Not client" ); }
 
-			var protocol = new PaintStrokeProtocol( fg_only, color, size, mode, x, y );
+			var protocol = new PaintStrokeProtocol( fg_only, color, size, mode, world_x, world_y );
 			protocol.SendToServer( true );
 		}
 
@@ -22,21 +22,21 @@ namespace BetterPaint.NetProtocols {
 		public Color MyColor = Color.White;
 		public int Size = -1;
 		public PaintModeType Mode = PaintModeType.Stream;
-		public ushort X = 0;
-		public ushort Y = 0;
+		public int WorldX = 0;
+		public int WorldY = 0;
 
 
 		////////////////
 
 		public PaintStrokeProtocol() { }
 
-		private PaintStrokeProtocol( bool fg_only, Color color, int size, PaintModeType mode, ushort x, ushort y ) {
+		private PaintStrokeProtocol( bool fg_only, Color color, int size, PaintModeType mode, int world_x, int world_y ) {
 			this.FgOnly = fg_only;
 			this.MyColor = color;
 			this.Size = size;
 			this.Mode = mode;
-			this.X = y;
-			this.Y = y;
+			this.WorldX = world_x;
+			this.WorldY = world_y;
 		}
 
 		////////////////
@@ -49,9 +49,9 @@ namespace BetterPaint.NetProtocols {
 			var myworld = BetterPaintMod.Instance.GetModWorld<BetterPaintWorld>();
 
 			if( this.FgOnly ) {
-				myworld.AddForegroundColorNoSync( this.MyColor, this.Size, this.Mode, this.X, this.Y );
+				myworld.AddForegroundColorNoSync( this.MyColor, this.Size, this.Mode, this.WorldX, this.WorldY );
 			} else {
-				myworld.AddBackgroundColorNoSync( this.MyColor, this.Size, this.Mode, this.X, this.Y );
+				myworld.AddBackgroundColorNoSync( this.MyColor, this.Size, this.Mode, this.WorldX, this.WorldY );
 			}
 		}
 

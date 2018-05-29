@@ -42,7 +42,7 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public int TimesUsed { get; private set; }
+		public float TimesUsed { get; private set; }
 		public Color MyColor { get; private set; }
 
 
@@ -91,13 +91,13 @@ namespace BetterPaint.Items {
 		public override void ModifyTooltips( List<TooltipLine> tooltips ) {
 			var mymod = (BetterPaintMod)this.mod;
 			float capacity = mymod.Config.PaintCartridgeCapacity;
-			float percent = 1f - ((float)this.TimesUsed / capacity);
+			float percent = 1f - (this.TimesUsed / capacity);
 
 			var tip1 = new TooltipLine( this.mod, "BetterPaint: Color Indicator", "Color value: " + this.MyColor.ToString() ) {
 				overrideColor = this.MyColor
 			};
 			var tip2 = new TooltipLine( this.mod, "BetterPaint: Capacity", "Capacity: " + (int)( percent * 100 ) + "%" ) {
-				overrideColor = percent > 0.15f ? Color.White : Color.Red
+				overrideColor = ColorCartridgeItem.GetCapacityColor( percent )
 			};
 
 			tooltips.Add( tip1 );
@@ -113,15 +113,15 @@ namespace BetterPaint.Items {
 
 				this.MyColor = new Color( bytes[0], bytes[1], bytes[2], bytes[3] );
 			}
-			if( tag.ContainsKey( "times_used" ) ) {
-				this.TimesUsed = tag.GetInt( "times_used" );
+			if( tag.ContainsKey( "uses_made" ) ) {
+				this.TimesUsed = tag.GetFloat( "uses_made" );
 			}
 		}
 
 		public override TagCompound Save() {
 			return new TagCompound {
 				{ "color", new byte[] { this.MyColor.R, this.MyColor.G, this.MyColor.B, this.MyColor.A } },
-				{ "times_used", this.TimesUsed }
+				{ "uses_made", this.TimesUsed }
 			};
 		}
 
@@ -147,7 +147,7 @@ namespace BetterPaint.Items {
 			this.MyColor = color;
 		}
 
-		public void SetTimesUsed( int uses ) {
+		public void SetTimesUsed( float uses ) {
 			this.TimesUsed = uses;
 		}
 	}

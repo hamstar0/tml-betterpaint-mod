@@ -46,10 +46,12 @@ namespace BetterPaint {
 				AutoloadSounds = true
 			};
 
-			this.Modes[ PaintModeType.Stream ] = new PaintModeStream();
-			this.Modes[ PaintModeType.Spray ] = new PaintModeSpray();
-			//this.Modes[ PaintModeType.Fill ] = new PaintModeFill();
-			//this.Modes[ PaintModeType.Erase ] = new PaintModeErase();
+			this.Modes = new Dictionary<PaintModeType, PaintMode> {
+				{ PaintModeType.Stream, new PaintModeStream() },
+				{ PaintModeType.Spray, new PaintModeSpray() }
+				//{ PaintModeType.Fill, new PaintModeFill() }
+				//{ PaintModeType.Erase, new PaintModeErase() }
+			};
 
 			this.JsonConfig = new JsonConfig<BetterPaintConfigData>( BetterPaintConfigData.ConfigFileName,
 					ConfigurationDataBase.RelativePath, new BetterPaintConfigData() );

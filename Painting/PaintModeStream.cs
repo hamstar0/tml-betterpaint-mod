@@ -1,37 +1,38 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using Terraria;
 
 
 namespace BetterPaint.Painting {
 	class PaintModeStream : PaintMode {
-		public override int Paint( PaintData data, Color color, int brush_size, int world_x, int world_y ) {
+		public override float Paint( PaintData data, Color color, int brush_size, int world_x, int world_y ) {
 			int iter_range = brush_size / 2;
-			double max_range = (double)brush_size / 2d;
+			float max_range = (float)brush_size / 2f;
 
 			int tile_x = world_x / 16;
 			int tile_y = world_y / 16;
 
-			double uses = 0;
+			float uses = 0;
 
 			for( int i = -iter_range; i <= iter_range; i++ ) {
 				for( int j = -iter_range; j <= iter_range; j++ ) {
-					double dist = Math.Sqrt( (double)(( i * i ) + ( j * j )) );
+					float dist = (float)Math.Sqrt( (double)(( i * i ) + ( j * j )) );
 
 					if( dist > max_range ) {
 						continue;
 					}
 
-					uses += this.PaintAt( data, color, brush_size, dist, (ushort)(tile_x + i), (ushort)(tile_y + j) );
+					uses += this.PaintAt( data, color, max_range, dist, (ushort)(tile_x + i), (ushort)(tile_y + j) );
 				}
 			}
 
-			return (int)uses;
+			return uses;
 		}
 
 
-		public override double PaintAt( PaintData data, Color color, int brush_size, double dist, ushort tile_x, ushort tile_y ) {
-			data.SetColorAt( color, tile_x, tile_y );
-			return 1;
+		public override float PaintAt( PaintData data, Color color, float brush_radius, float dist, ushort tile_x, ushort tile_y ) {
+			data.SetColorAt( Color.Red, tile_x, tile_y );
+			return 1f;
 		}
 	}
 }

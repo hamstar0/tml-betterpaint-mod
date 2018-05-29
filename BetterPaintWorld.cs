@@ -39,25 +39,25 @@ namespace BetterPaint {
 
 		////////////////
 
-		public int AddForegroundColor( Color color, int size, PaintModeType mode, ushort x, ushort y ) {
+		public float AddForegroundColor( Color color, int size, PaintModeType mode, int world_x, int world_y ) {
 			if( Main.netMode == 2 ) { throw new Exception( "No server." ); }
 
-			int paints_used = this.AddForegroundColorNoSync( color, size, mode, x, y );
+			float paints_used = this.AddForegroundColorNoSync( color, size, mode, world_x, world_y );
 
 			if( Main.netMode == 1 ) {
-				PaintStrokeProtocol.SyncToAll( true, color, size, mode, x, y );
+				PaintStrokeProtocol.SyncToAll( true, color, size, mode, world_x, world_y );
 			}
 
 			return paints_used;
 		}
 
-		public int AddBackgroundColor( Color color, int size, PaintModeType mode, ushort x, ushort y ) {
+		public float AddBackgroundColor( Color color, int size, PaintModeType mode, int world_x, int world_y ) {
 			if( Main.netMode == 2 ) { throw new Exception( "No server." ); }
 
-			int paints_used = this.AddBackgroundColorNoSync( color, size, mode, x, y );
+			float paints_used = this.AddBackgroundColorNoSync( color, size, mode, world_x, world_y );
 
 			if( Main.netMode == 1 ) {
-				PaintStrokeProtocol.SyncToAll( false, color, size, mode, x, y );
+				PaintStrokeProtocol.SyncToAll( false, color, size, mode, world_x, world_y );
 			}
 
 			return paints_used;
@@ -65,27 +65,16 @@ namespace BetterPaint {
 
 		////
 
-		public int AddForegroundColorNoSync( Color color, int size, PaintModeType mode, ushort x, ushort y ) {
+		public float AddForegroundColorNoSync( Color color, int size, PaintModeType mode, int world_x, int world_y ) {
 			var mymod = (BetterPaintMod)this.mod;
 
-			return mymod.Modes[ mode ].Paint( this.FgColors, color, size, x, y );
+			return mymod.Modes[ mode ].Paint( this.FgColors, color, size, world_x, world_y );
 		}
 		
-		public int AddBackgroundColorNoSync( Color color, int size, PaintModeType mode, ushort x, ushort y ) {
+		public float AddBackgroundColorNoSync( Color color, int size, PaintModeType mode, int world_x, int world_y ) {
 			var mymod = (BetterPaintMod)this.mod;
 
-			return mymod.Modes[mode].Paint( this.BgColors, color, size, x, y );
-		}
-
-
-		////////////////
-
-		public bool HasFgColor( Color color, int i, int j ) {
-			return this.FgColors.HasColor( (ushort)i, (ushort)j );
-		}
-
-		public bool HasBgColor( Color color, int i, int j ) {
-			return this.BgColors.HasColor( (ushort)i, (ushort)j );
+			return mymod.Modes[mode].Paint( this.BgColors, color, size, world_x, world_y );
 		}
 	}
 }

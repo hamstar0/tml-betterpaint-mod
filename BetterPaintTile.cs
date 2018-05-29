@@ -30,7 +30,7 @@ namespace BetterPaint {
 			ushort x = (ushort)i;
 			ushort y = (ushort)j;
 
-			/*if( myworld.BgColors.HasColor( x, y ) ) {
+			if( myworld.BgColors.HasColor( x, y ) ) {
 				Color painted_color = myworld.BgColors.GetColor( x, y );
 				Color color = Lighting.GetColor( i, j, painted_color );
 
@@ -47,7 +47,8 @@ namespace BetterPaint {
 
 				Main.spriteBatch.Draw( Main.wallTexture[type], pos, frame, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f );
 				return false;
-			}*/
+			}
+
 			return true;
 		}
 	}

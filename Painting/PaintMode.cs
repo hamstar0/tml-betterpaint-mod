@@ -12,7 +12,7 @@ namespace BetterPaint.Painting {
 
 
 	public abstract class PaintMode {
-		public abstract int Paint( PaintData data, Color color, int brush_size, int world_x, int world_y );
-		public abstract double PaintAt( PaintData data, Color color, int brush_size, double dist, ushort tile_x, ushort tile_y );
+		public abstract float Paint( PaintData data, Color color, int brush_size, int world_x, int world_y );
+		public abstract float PaintAt( PaintData data, Color color, float brush_radius, float dist, ushort tile_x, ushort tile_y );
 	}
 }
