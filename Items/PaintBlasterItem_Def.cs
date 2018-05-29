@@ -32,6 +32,7 @@ namespace BetterPaint.Items {
 		public int CurrentCartridgeInventoryIndex { get; private set; }
 		public bool Foreground { get; private set; }
 		public int BrushSize { get; private set; }
+		public float Pressure { get; private set; }
 
 
 		////////////////
@@ -42,6 +43,7 @@ namespace BetterPaint.Items {
 			this.CurrentCartridgeInventoryIndex = -1;
 			this.Foreground = true;
 			this.BrushSize = 1;
+			this.Pressure = 1f;
 		}
 
 		public override void SetStaticDefaults() {

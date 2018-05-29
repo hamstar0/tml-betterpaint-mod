@@ -4,7 +4,7 @@ using System;
 
 namespace BetterPaint.Painting {
 	class PaintModeStream : PaintMode {
-		public override float Paint( PaintData data, Color color, int brush_size, int world_x, int world_y ) {
+		public override float Apply( PaintData data, Color color, int brush_size, float pressure, int rand_seed, int world_x, int world_y ) {
 			int iter_range = brush_size / 2;
 			float max_range = (float)brush_size / 2f;
 
@@ -21,7 +21,7 @@ namespace BetterPaint.Painting {
 						continue;
 					}
 
-					uses += this.PaintAt( data, color, (ushort)(tile_x + i), (ushort)(tile_y + j) );
+					uses += this.PaintAt( data, color, pressure, ( ushort)(tile_x + i), (ushort)(tile_y + j) );
 				}
 			}
 
@@ -29,7 +29,10 @@ namespace BetterPaint.Painting {
 		}
 
 
-		public float PaintAt( PaintData data, Color color, ushort tile_x, ushort tile_y ) {
+		public float PaintAt( PaintData data, Color color, float pressure, ushort tile_x, ushort tile_y ) {
+			Color existing_color = data.GetColor( tile_x, tile_y );
+			Color lerped_color = Color.Lerp( existing_color, color, pressure );
+
 			data.SetColorAt( color, tile_x, tile_y );
 			return 1f;
 		}

@@ -28,7 +28,7 @@ namespace BetterPaint.Commands {
 			}
 
 			Func<byte> rand = () => (byte)Main.rand.Next( 0, 255 );
-			var rand_clr = new Color( rand(), rand(), rand(), rand() );
+			var rand_clr = new Color( rand(), rand(), rand(), 255 );
 
 			var myitem = (ColorCartridgeItem)paint_item.modItem;
 			myitem.SetColor( rand_clr );

@@ -48,9 +48,9 @@ namespace BetterPaint {
 
 			this.Modes = new Dictionary<PaintModeType, PaintMode> {
 				{ PaintModeType.Stream, new PaintModeStream() },
-				{ PaintModeType.Spray, new PaintModeSpray() }
-				//{ PaintModeType.Fill, new PaintModeFill() }
-				//{ PaintModeType.Erase, new PaintModeErase() }
+				{ PaintModeType.Spray, new PaintModeSpray() },
+				{ PaintModeType.Spatter, new PaintModeSpatter() },
+				{ PaintModeType.Erase, new PaintModeErase() }
 			};
 
 			this.JsonConfig = new JsonConfig<BetterPaintConfigData>( BetterPaintConfigData.ConfigFileName,

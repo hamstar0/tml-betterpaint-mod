@@ -4,7 +4,7 @@ using System;
 
 namespace BetterPaint.Painting {
 	class PaintModeSpray : PaintMode {
-		public override float Paint( PaintData data, Color color, int brush_size, int world_x, int world_y ) {
+		public override float Apply( PaintData data, Color color, int brush_size, float pressure, int rand_seed, int world_x, int world_y ) {
 			brush_size += 2;
 
 			int iter_range = brush_size / 2;
@@ -30,7 +30,7 @@ namespace BetterPaint.Painting {
 					ushort x = (ushort)( tile_x + i );
 					ushort y = (ushort)( tile_y + j );
 
-					uses += this.PaintAt( data, color, max_range, dist, x, y );
+					uses += this.PaintAt( data, color, pressure, max_range, dist, x, y );
 				}
 			}
 
@@ -38,10 +38,10 @@ namespace BetterPaint.Painting {
 		}
 
 		
-		public float PaintAt( PaintData data, Color color, float brush_radius, float dist, ushort tile_x, ushort tile_y ) {
-			float percent = dist / brush_radius;
+		public float PaintAt( PaintData data, Color color, float pressure, float brush_radius, float dist, ushort tile_x, ushort tile_y ) {
+			float percent = pressure * dist / brush_radius;
 			Color existing_color = data.GetColor( tile_x, tile_y );
-			Color lerped_color = Color.Lerp( color, existing_color, percent );
+			Color lerped_color = Color.Lerp( existing_color, color, percent );
 
 			data.SetColorAt( lerped_color, (ushort)tile_x, (ushort)tile_y );
 

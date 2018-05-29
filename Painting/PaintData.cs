@@ -80,11 +80,18 @@ namespace BetterPaint.Painting {
 			return Color.White;
 		}
 
+
 		public void SetColorAt( Color color, ushort x, ushort y ) {
 			if( !this.Colors.ContainsKey(x) ) {
 				this.Colors[x] = new Dictionary<ushort, Color>();
 			}
 			this.Colors[x][y] = color;
+		}
+
+		public void RemoveColorAt( ushort x, ushort y ) {
+			if( this.Colors.ContainsKey( x ) ) {
+				this.Colors[x].Remove( y );
+			}
 		}
 	}
 }

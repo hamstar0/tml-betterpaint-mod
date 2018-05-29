@@ -74,6 +74,7 @@
     <Compile Include="Painting\PaintMode.cs" />
     <Compile Include="Painting\PaintModeSpray.cs" />
     <Compile Include="Painting\PaintModeSpatter.cs" />
+    <Compile Include="Painting\PaintModeErase.cs" />
     <Compile Include="Painting\PaintModeStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tiles\PaintMixerTile.cs" />

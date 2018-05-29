@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Terraria;
+using System;
 
 
 namespace BetterPaint.Painting {
 	class PaintModeSpatter : PaintMode {
-		public override float Paint( PaintData data, Color color, int brush_size, int world_x, int world_y ) {
+		public override float Apply( PaintData data, Color color, int brush_size, float pressure, int rand_seed, int world_x, int world_y ) {
 			int tile_x = world_x / 16;
 			int tile_y = world_y / 16;
 
@@ -12,17 +12,18 @@ namespace BetterPaint.Painting {
 			int density = (int)((float)(brush_size * brush_size) * BetterPaintMod.Instance.Config.BrushSpatterDensity);
 			int min_size = brush_size / 4;
 			int rand_range = brush_size / 2;
+			var rand = new Random( rand_seed );
 
 			for( int i=0; i< density; i++ ) {
-				int rand_size = Main.rand.Next( rand_range );
-				int x_off = Main.rand.Next( -(min_size + rand_size), (min_size + rand_size) );
+				int rand_size = rand.Next( rand_range );
+				int x_off = rand.Next( -(min_size + rand_size), (min_size + rand_size) );
 
-				rand_size = Main.rand.Next( rand_range );
-				int y_off = Main.rand.Next( -(min_size + rand_size), (min_size + rand_size) );
+				rand_size = rand.Next( rand_range );
+				int y_off = rand.Next( -(min_size + rand_size), (min_size + rand_size) );
 
-				float pressure = Main.rand.NextFloat();
+				float pressure_rand = 1f - (float)rand.NextDouble();
 
-				this.PaintAt( data, color, pressure, (ushort)(tile_x + x_off), (ushort)(tile_y + y_off) );
+				this.PaintAt( data, color, pressure_rand * pressure, (ushort)(tile_x + x_off), (ushort)(tile_y + y_off) );
 			}
 
 			return uses;

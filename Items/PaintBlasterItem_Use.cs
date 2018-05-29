@@ -103,9 +103,9 @@ namespace BetterPaint.Items {
 			float uses = 0;
 
 			if( this.Foreground ) {
-				uses = myworld.AddForegroundColor( color_cartridge.MyColor, this.BrushSize, this.CurrentMode, world_x, world_y );
+				uses = myworld.AddForegroundColor( this.CurrentMode, color_cartridge.MyColor, this.BrushSize, this.Pressure, world_x, world_y );
 			} else {
-				uses = myworld.AddBackgroundColor( color_cartridge.MyColor, this.BrushSize, this.CurrentMode, world_x, world_y );
+				uses = myworld.AddBackgroundColor( this.CurrentMode, color_cartridge.MyColor, this.BrushSize, this.Pressure, world_x, world_y );
 			}
 
 			float total_uses = color_cartridge.TimesUsed + uses;

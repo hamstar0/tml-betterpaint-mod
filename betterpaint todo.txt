@@ -6,14 +6,16 @@ Future
 v1
 -	Give credit for paint mixer tile sprite
 -	Make 'easy' version of recipes; use inbox to alert to 'hard' mode
--	Implement radial selection
+-	Show color on paint blaster
 -	Add sounds to UI and dry fire
 -	Add cartridge capacity display on item and bottom left
+-	Implement radial selection
 -	Stack redundant cartridges on radial selector
 -	Remove empty cartridges from radial selector
+-	Add pressure setting to UI
+
 -	Implement painting
 	-	Erase mode
-
 	-	Spatter mode
 	-	Spray mode
 	-	Basic painting (stream mode)
