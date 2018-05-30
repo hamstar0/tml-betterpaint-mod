@@ -57,6 +57,8 @@
     <Compile Include="API_Call.cs" />
     <Compile Include="BetterPaintWorld.cs" />
     <Compile Include="Items\PaintBlasterItem_UI.cs" />
+    <Compile Include="Items\PaintBlasterUI\PaintBlasterUI_Use.cs" />
+    <Compile Include="Items\PaintBlasterUI\PaintBlasterUI_Draw.cs" />
     <Compile Include="Items\PaintBlasterUI\PaintBlasterUI.cs" />
     <Compile Include="BetterPaintPlayer.cs" />
     <Compile Include="BetterPaintTile.cs" />
