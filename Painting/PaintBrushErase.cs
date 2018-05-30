@@ -4,10 +4,14 @@ using System;
 
 namespace BetterPaint.Painting {
 	class PaintBrushErase : PaintBrush {
-		public override float Apply( PaintData data, Color color, bool brush_size_small, float pressure, int rand_seed, int world_x, int world_y ) {
+		public override float Apply( PaintData data, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			var mymod = BetterPaintMod.Instance;
-			int iter_range = brush_size_small ? 1 : 3;
-			float radius = brush_size_small ? 0.5f : 3f;
+
+			int diameter = brush_size == PaintBrushSize.Small ? 1 : 6;
+			diameter = (int)( (float)diameter * mymod.Config.BrushSizeMultiplier );
+
+			int iter_range = Math.Max( 1, diameter / 2 );
+			float radius = (float)diameter / 2f;
 
 			int tile_x = world_x / 16;
 			int tile_y = world_y / 16;
@@ -22,7 +26,7 @@ namespace BetterPaint.Painting {
 						continue;
 					}
 
-					this.EraseAt( data, color, pressure, (ushort)(tile_x + i), (ushort)(tile_y + j) );
+					this.EraseAt( data, color, pressure_percent, (ushort)(tile_x + i), (ushort)(tile_y + j) );
 				}
 			}
 

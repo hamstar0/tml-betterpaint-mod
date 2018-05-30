@@ -4,11 +4,13 @@ using System;
 
 namespace BetterPaint.Painting {
 	class PaintBrushSpray : PaintBrush {
-		public override float Apply( PaintData data, Color color, bool brush_size_small, float pressure, int rand_seed, int world_x, int world_y ) {
-			int brush_size = brush_size_small ? 2 : 6;
+		public override float Apply( PaintData data, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+			var mymod = BetterPaintMod.Instance;
+			int diameter = brush_size == PaintBrushSize.Small ? 2 : 6;
+			diameter = (int)((float)diameter * mymod.Config.BrushSizeMultiplier);
 
-			int iter_range = brush_size / 2;
-			float max_range = (float)brush_size / 2f;
+			int iter_range = diameter / 2;
+			float max_range = (float)diameter / 2f;
 			float uses = 0;
 
 			int tile_x = world_x / 16;
@@ -30,7 +32,7 @@ namespace BetterPaint.Painting {
 					ushort x = (ushort)( tile_x + i );
 					ushort y = (ushort)( tile_y + j );
 
-					uses += this.PaintAt( data, color, pressure, max_range, dist, x, y );
+					uses += this.PaintAt( data, color, pressure_percent, max_range, dist, x, y );
 				}
 			}
 

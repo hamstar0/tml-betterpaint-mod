@@ -25,6 +25,6 @@ namespace BetterPaint.Painting {
 
 
 	public abstract class PaintBrush {
-		public abstract float Apply( PaintData data, Color color, PaintBrushSize brush_size, float pressure, int rand_seed, int world_x, int world_y );
+		public abstract float Apply( PaintData data, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y );
 	}
 }

@@ -70,7 +70,7 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public bool CanPaintAt( ColorCartridgeItem cartridge, ushort x, ushort y ) {
+		public bool CanPaintAt( ColorCartridgeItem cartridge, ushort tile_x, ushort tile_y ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
@@ -78,37 +78,64 @@ namespace BetterPaint.Items {
 				return false;
 			}
 
-			Tile tile = Main.tile[x, y];
+			Tile tile = Main.tile[tile_x, tile_y];
 
-			if( this.Foreground ) {
-				if( !TileHelpers.IsSolid( tile, true, true) ) {
+			if( tile == null || TileHelpers.IsAir( tile ) ) {
+				return false;
+			}
+
+			switch( this.Layer ) {
+			case PaintLayer.Foreground:
+				if( !TileHelpers.IsSolid( tile, true, true ) ) {
 					return false;
 				}
-			} else {
+				break;
+			case PaintLayer.Background:
 				if( TileHelpers.IsSolid( tile, true, true ) ) {
 					return false;
 				}
 				if( tile == null || tile.wall == 0 ) {
 					return false;
 				}
+				break;
+			case PaintLayer.Anyground:
+				break;
+			default:
+				throw new NotImplementedException();
 			}
 
 			return true;
 		}
 
 
-		public bool HasMatchingPaintAt( Color color, ushort x, ushort y ) {
+		public bool HasMatchingPaintAt( Color color, ushort tile_x, ushort tile_y ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
-			if( this.Foreground ) {
-				if( myworld.FgColors.GetColor( x, y ) == color ) {
+			switch( this.Layer ) {
+			case PaintLayer.Foreground:
+				if( myworld.FgColors.GetColor( tile_x, tile_y ) == color ) {
 					return true;
 				}
-			} else {
-				if( myworld.BgColors.GetColor( x, y ) == color ) {
+				break;
+			case PaintLayer.Background:
+				if( myworld.BgColors.GetColor( tile_x, tile_y ) == color ) {
 					return true;
 				}
+				break;
+			case PaintLayer.Anyground:
+				if( myworld.FgColors.HasColor(tile_x, tile_y) ) {
+					if( myworld.FgColors.GetColor( tile_x, tile_y ) == color ) {
+						return true;
+					}
+				} else {
+					if( myworld.BgColors.GetColor( tile_x, tile_y ) == color ) {
+						return true;
+					}
+				}
+				break;
+			default:
+				throw new NotImplementedException();
 			}
 
 			return false;
@@ -133,10 +160,22 @@ namespace BetterPaint.Items {
 				color = Color.White;
 			}
 
-			if( this.Foreground ) {
+			switch( this.Layer ) {
+			case PaintLayer.Foreground:
 				uses = myworld.ApplyForegroundColor( this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
-			} else {
+				break;
+			case PaintLayer.Background:
 				uses = myworld.ApplyBackgroundColor( this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
+				break;
+			case PaintLayer.Anyground:
+				if( myworld.FgColors.HasColor( (ushort)(world_x/16), (ushort)(world_y/16) ) ) {
+					uses = myworld.ApplyForegroundColor( this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
+				} else {
+					uses = myworld.ApplyBackgroundColor( this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
+				}
+				break;
+			default:
+				throw new NotImplementedException();
 			}
 
 			if( cartridge != null && uses > 0 ) {
@@ -153,8 +192,25 @@ namespace BetterPaint.Items {
 			ushort tile_x = (ushort)(world_x / 16);
 			ushort tile_y = (ushort)(world_y / 16);
 
-			PaintData data = this.Foreground ? myworld.FgColors : myworld.BgColors;
-			
+			PaintData data;
+			switch( this.Layer ) {
+			case PaintLayer.Foreground:
+				data = myworld.FgColors;
+				break;
+			case PaintLayer.Background:
+				data = myworld.BgColors;
+				break;
+			case PaintLayer.Anyground:
+				if( myworld.FgColors.HasColor( tile_x, tile_y ) ) {
+					data = myworld.FgColors;
+				} else {
+					data = myworld.BgColors;
+				}
+				break;
+			default:
+				throw new NotImplementedException();
+			}
+
 			if( !data.HasColor(tile_x, tile_y) ) {
 				return false;
 			}

@@ -37,8 +37,10 @@ namespace BetterPaint.Items {
 				PaintBlasterUI.LayerFgTex = mymod.GetTexture( "Items/PaintBlasterUI/LayerFg" );
 				PaintBlasterUI.LayerBgTex = mymod.GetTexture( "Items/PaintBlasterUI/LayerBg" );
 				PaintBlasterUI.LayerBothTex = mymod.GetTexture( "Items/PaintBlasterUI/LayerBoth" );
+
 				PaintBlasterUI.BrushSmallTex = mymod.GetTexture( "Items/PaintBlasterUI/BrushSmall" );
 				PaintBlasterUI.BrushLargeTex = mymod.GetTexture( "Items/PaintBlasterUI/BrushLarge" );
+
 				PaintBlasterUI.PressureLowTex = mymod.GetTexture( "Items/PaintBlasterUI/PressureLow" );
 				PaintBlasterUI.PressureMidTex = mymod.GetTexture( "Items/PaintBlasterUI/PressureMid" );
 				PaintBlasterUI.PressureHiTex = mymod.GetTexture( "Items/PaintBlasterUI/PressureHi" );

@@ -1,19 +1,20 @@
 ﻿using BetterPaint.Painting;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using Terraria;
 
 
 namespace BetterPaint.Items {
 	partial class PaintBlasterUI {
-		private void CheckUISettingsInteractions( ref Rectangle bg_rect, ref Rectangle size_rect, ref Rectangle copy_rect ) {
+		private void CheckUISettingsInteractions( ref Rectangle layer_rect, ref Rectangle size_rect, ref Rectangle copy_rect ) {
 			Player player = Main.LocalPlayer;
 
-			if( bg_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-				this.CyclePaintMode();
+			if( layer_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+				this.CycleLayer();
 			} else
 			if( size_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-				this.BrushSize = !this.BrushSize;
+				this.CycleBrushSize();
 			} else
 			if( copy_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.IsCopying = !this.IsCopying;
@@ -55,8 +56,9 @@ namespace BetterPaint.Items {
 		}
 
 
+		////////////////
 
-		public void CyclePaintMode() {
+		public void CycleLayer() {
 			switch( this.Layer ) {
 			case PaintLayer.Foreground:
 				this.Layer = PaintLayer.Background;
@@ -67,6 +69,21 @@ namespace BetterPaint.Items {
 			case PaintLayer.Anyground:
 				this.Layer = PaintLayer.Foreground;
 				break;
+			default:
+				throw new NotImplementedException();
+			}
+		}
+
+		public void CycleBrushSize() {
+			switch( this.BrushSize ) {
+			case PaintBrushSize.Small:
+				this.BrushSize = PaintBrushSize.Large;
+				break;
+			case PaintBrushSize.Large:
+				this.BrushSize = PaintBrushSize.Small;
+				break;
+			default:
+				throw new NotImplementedException();
 			}
 		}
 	}

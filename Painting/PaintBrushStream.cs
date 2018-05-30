@@ -4,10 +4,10 @@ using System;
 
 namespace BetterPaint.Painting {
 	class PaintBrushStream : PaintBrush {
-		public override float Apply( PaintData data, Color color, bool brush_size_small, float pressure, int rand_seed, int world_x, int world_y ) {
+		public override float Apply( PaintData data, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			var mymod = BetterPaintMod.Instance;
-			int iter_range = (int)((brush_size_small ? 1 : 3) * mymod.Config.BrushSizeMultiplier);
-			float radius = (brush_size_small ? 0.5f : 3f) * mymod.Config.BrushSizeMultiplier;
+			int iter_range = (int)((brush_size == PaintBrushSize.Small ? 1 : 3) * mymod.Config.BrushSizeMultiplier);
+			float radius = (brush_size == PaintBrushSize.Small ? 0.5f : 3f) * mymod.Config.BrushSizeMultiplier;
 
 			int tile_x = world_x / 16;
 			int tile_y = world_y / 16;
@@ -22,7 +22,7 @@ namespace BetterPaint.Painting {
 						continue;
 					}
 
-					uses += this.PaintAt( data, color, pressure, ( ushort)(tile_x + i), (ushort)(tile_y + j) );
+					uses += this.PaintAt( data, color, pressure_percent, ( ushort)(tile_x + i), (ushort)(tile_y + j) );
 				}
 			}
 
@@ -30,9 +30,9 @@ namespace BetterPaint.Painting {
 		}
 
 
-		public float PaintAt( PaintData data, Color color, float pressure, ushort tile_x, ushort tile_y ) {
+		public float PaintAt( PaintData data, Color color, float pressure_percent, ushort tile_x, ushort tile_y ) {
 			Color existing_color = data.GetColor( tile_x, tile_y );
-			Color lerped_color = Color.Lerp( existing_color, color, pressure );
+			Color lerped_color = Color.Lerp( existing_color, color, pressure_percent );
 
 			data.SetColorAt( color, tile_x, tile_y );
 			return 1f;
