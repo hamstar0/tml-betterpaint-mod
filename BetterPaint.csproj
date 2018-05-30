@@ -57,6 +57,7 @@
     <Compile Include="API_Call.cs" />
     <Compile Include="BetterPaintWorld.cs" />
     <Compile Include="Items\PaintBlasterItem_UI.cs" />
+    <Compile Include="Items\PaintBlasterUI\PaintBlasterUI.cs" />
     <Compile Include="BetterPaintPlayer.cs" />
     <Compile Include="BetterPaintTile.cs" />
     <Compile Include="Commands\CheatGiveRandomPaintCommand.cs" />
@@ -88,10 +89,14 @@
     <Content Include="description.txt" />
     <Content Include="Items\ColorCartridgeItem.png" />
     <Content Include="Items\ColorCartridgeItem_Color.png" />
-    <Content Include="Items\PaintBlasterItem_BgOffButton.png" />
-    <Content Include="Items\PaintBlasterItem_BgOnButton.png" />
-    <Content Include="Items\PaintBlasterItem_BrushLarge.png" />
-    <Content Include="Items\PaintBlasterItem_BrushSmall.png" />
+    <Content Include="Items\PaintBlasterUI\Eyedropper.png" />
+    <Content Include="Items\PaintBlasterUI\BgOffButton.png" />
+    <Content Include="Items\PaintBlasterUI\BgOnButton.png" />
+    <Content Include="Items\PaintBlasterUI\BrushLarge.png" />
+    <Content Include="Items\PaintBlasterUI\BrushSmall.png" />
+    <Content Include="Items\PaintBlasterUI\PressureHi.png" />
+    <Content Include="Items\PaintBlasterUI\PressureLow.png" />
+    <Content Include="Items\PaintBlasterUI\PressureMid.png" />
     <Content Include="Items\PaintMixerItem.png" />
     <Content Include="Items\PaintBlasterItem.png" />
     <Content Include="Tiles\PaintMixerTile.png" />

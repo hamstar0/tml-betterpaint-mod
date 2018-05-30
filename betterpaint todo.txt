@@ -1,5 +1,7 @@
 Future
 -	Add paint tarps
+-	Implement richer painting
+-	Brush shape?
 
 
 
@@ -12,6 +14,7 @@ v1
 -	Implement radial selection
 -	Stack redundant cartridges on radial selector
 -	Remove empty cartridges from radial selector
+-	Add eyedropper tool + 'Chameleon Color Cartridge'
 -	Add pressure setting to UI
 
 -	Implement painting

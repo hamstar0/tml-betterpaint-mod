@@ -1,6 +1,4 @@
 ﻿using BetterPaint.Painting;
-using HamstarHelpers.TmlHelpers;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,39 +9,25 @@ namespace BetterPaint.Items {
 		public const int Width = 50;
 		public const int Height = 18;
 
-		public static Texture2D BgOffButtonTex { get; internal set; }
-		public static Texture2D BgOnButtonTex { get; internal set; }
-		public static Texture2D BrushSmallTex { get; internal set; }
-		public static Texture2D BrushLargeTex { get; internal set; }
-		
-		static PaintBlasterItem() {
-			PaintBlasterItem.BgOffButtonTex = null;
-			PaintBlasterItem.BgOnButtonTex = null;
-			PaintBlasterItem.BrushSmallTex = null;
-			PaintBlasterItem.BrushLargeTex = null;
-		}
-
 		////////////////
 
+		
 		public bool IsModeSelecting { get; private set; }
-		public bool IsInteractingWithUI { get; private set; }
 
-		public PaintModeType CurrentMode { get; private set; }
-		public int CurrentCartridgeInventoryIndex { get; private set; }
-		public bool Foreground { get; private set; }
-		public int BrushSize { get; private set; }
-		public float Pressure { get; private set; }
+		public PaintModeType CurrentMode { get { return this.UI.CurrentMode; } }
+		public int CurrentCartridgeInventoryIndex { get { return this.UI.CurrentCartridgeInventoryIndex; } }
+		public bool Foreground { get { return this.UI.Foreground; } }
+		public int BrushSize { get { return this.UI.BrushSize; } }
+		public float Pressure { get { return this.UI.Pressure; } }
+
+		private PaintBlasterUI UI;
 
 
 		////////////////
 
 		public PaintBlasterItem() : base() {
 			this.IsModeSelecting = false;
-			this.CurrentMode = PaintModeType.Stream;
-			this.CurrentCartridgeInventoryIndex = -1;
-			this.Foreground = true;
-			this.BrushSize = 1;
-			this.Pressure = 1f;
+			this.UI = new PaintBlasterUI();
 		}
 
 		public override void SetStaticDefaults() {
@@ -52,19 +36,7 @@ namespace BetterPaint.Items {
 				"Overlays all existing paint" + '\n' +
 				"Right-click to adjust settings" );
 
-			if( PaintBlasterItem.BgOffButtonTex == null ) {
-				PaintBlasterItem.BgOffButtonTex = this.mod.GetTexture( "Items/PaintBlasterItem_BgOffButton" );
-				PaintBlasterItem.BgOnButtonTex = this.mod.GetTexture( "Items/PaintBlasterItem_BgOnButton" );
-				PaintBlasterItem.BrushSmallTex = this.mod.GetTexture( "Items/PaintBlasterItem_BrushSmall" );
-				PaintBlasterItem.BrushLargeTex = this.mod.GetTexture( "Items/PaintBlasterItem_BrushLarge" );
-			}
-
-			TmlLoadHelpers.AddModUnloadPromise( () => {
-				PaintBlasterItem.BgOffButtonTex = null;
-				PaintBlasterItem.BgOnButtonTex = null;
-				PaintBlasterItem.BrushSmallTex = null;
-				PaintBlasterItem.BrushLargeTex = null;
-			} );
+			PaintBlasterUI.SetStaticDefaults( (BetterPaintMod)this.mod );
 		}
 
 
