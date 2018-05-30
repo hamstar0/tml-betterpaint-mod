@@ -16,9 +16,9 @@ namespace BetterPaint.Items {
 
 		public PaintBrushType CurrentMode { get { return this.UI.CurrentBrush; } }
 		public int CurrentCartridgeInventoryIndex { get { return this.UI.CurrentCartridgeInventoryIndex; } }
-		public bool Foreground { get { return this.UI.PaintMode; } }
-		public bool BrushSizeSmall { get { return this.UI.BrushSizeSmall; } }
-		public float Pressure { get { return this.UI.Pressure; } }
+		public PaintLayer Layer { get { return this.UI.Layer; } }
+		public PaintBrushSize BrushSize { get { return this.UI.BrushSize; } }
+		public float PressurePercent { get { return this.UI.PressurePercent; } }
 		public bool IsCopying { get { return this.UI.IsCopying; } }
 
 		private PaintBlasterUI UI;

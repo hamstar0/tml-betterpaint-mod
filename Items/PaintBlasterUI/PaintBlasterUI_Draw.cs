@@ -30,7 +30,7 @@ namespace BetterPaint.Items {
 
 			IDictionary<int, Rectangle> palette_rects = this.DrawColorPalette( mymod, sb );
 			this.DrawBrushes( sb, out stream_rect, out spray_rect, out bucket_rect, out scrape_rect );
-			this.DrawOptionBg( sb, x, y, out bg_rect );
+			this.DrawOptionLayer( sb, x, y, out bg_rect );
 			this.DrawOptionSize( sb, x, y, out size_rect );
 			this.DrawOptionCopy( sb, x, y, out copy_rect );
 
@@ -130,27 +130,56 @@ namespace BetterPaint.Items {
 
 		////////////////
 		
-		public void DrawOptionBg( SpriteBatch sb, int origin_x, int origin_y, out Rectangle bg_rect ) {
+		public void DrawOptionLayer( SpriteBatch sb, int origin_x, int origin_y, out Rectangle layer_rect ) {
 			int options_dist = PaintBlasterUI.OptionsRingRadius;
 			float hilit = PaintBlasterUI.SelectedScale;
 			float lit = PaintBlasterUI.HoveredScale;
 			float unlit = PaintBlasterUI.IdleScale;
 
-			Texture2D bg_tex = this.PaintMode ? PaintBlasterUI.BgOffButtonTex : PaintBlasterUI.BgOnButtonTex;
+			Texture2D layer_tex;
 
-			var bg_offset = new Vector2( bg_tex.Width, bg_tex.Height ) * 0.5f;
+			switch( this.Layer ) {
+			case PaintLayer.Foreground:
+				layer_tex = PaintBlasterUI.LayerFgTex;
+				break;
+			case PaintLayer.Background:
+				layer_tex = PaintBlasterUI.LayerBgTex;
+				break;
+			case PaintLayer.Anyground:
+				layer_tex = PaintBlasterUI.LayerBothTex;
+				break;
+			default:
+				throw new NotImplementedException();
+			}
 
-			int bg_x = ( origin_x - options_dist ) - (int)bg_offset.X;
-			int bg_y = ( origin_y - options_dist ) - (int)bg_offset.Y;
-			bg_rect = new Rectangle( bg_x, bg_y, bg_tex.Width, bg_tex.Height );
+			var layer_offset = new Vector2( layer_tex.Width, layer_tex.Height ) * 0.5f;
 
-			bool bg_hover = bg_rect.Contains( Main.mouseX, Main.mouseY );
+			int layer_x = ( origin_x - options_dist ) - (int)layer_offset.X;
+			int layer_y = ( origin_y - options_dist ) - (int)layer_offset.Y;
+			layer_rect = new Rectangle( layer_x, layer_y, layer_tex.Width, layer_tex.Height );
 
-			sb.Draw( bg_tex, bg_rect, Color.White * ( bg_hover ? hilit : lit ) );
+			bool bg_hover = layer_rect.Contains( Main.mouseX, Main.mouseY );
+
+			sb.Draw( layer_tex, layer_rect, Color.White * ( bg_hover ? hilit : lit ) );
 
 			if( bg_hover ) {
-				string bg_str = this.PaintMode ? "Foreground Only" : "Background Only";
-				sb.DrawString( Main.fontMouseText, bg_str, new Vector2( bg_rect.X, bg_rect.Y - 16 ), Color.White );
+				string layer_str;
+
+				switch( this.Layer ) {
+				case PaintLayer.Foreground:
+					layer_str = "Foreground Only";
+					break;
+				case PaintLayer.Background:
+					layer_str = "Background Only";
+					break;
+				case PaintLayer.Anyground:
+					layer_str = "All layers";
+					break;
+				default:
+					throw new NotImplementedException();
+				}
+
+				sb.DrawString( Main.fontMouseText, layer_str, new Vector2( layer_rect.X, layer_rect.Y - 16 ), Color.White );
 			}
 		}
 
@@ -160,7 +189,18 @@ namespace BetterPaint.Items {
 			float lit = PaintBlasterUI.HoveredScale;
 			float unlit = PaintBlasterUI.IdleScale;
 
-			Texture2D size_tex = this.BrushSizeSmall ? PaintBlasterUI.BrushSmallTex : PaintBlasterUI.BrushLargeTex;
+			Texture2D size_tex;
+
+			switch( this.BrushSize ) {
+			case PaintBrushSize.Small:
+				size_tex = PaintBlasterUI.BrushSmallTex;
+				break;
+			case PaintBrushSize.Large:
+				size_tex = PaintBlasterUI.BrushLargeTex;
+				break;
+			default:
+				throw new NotImplementedException();
+			}
 
 			var size_offset = new Vector2( size_tex.Width, size_tex.Height ) * 0.5f;
 
@@ -173,7 +213,19 @@ namespace BetterPaint.Items {
 			sb.Draw( size_tex, size_rect, Color.White * ( size_hover ? hilit : lit ) );
 
 			if( size_hover ) {
-				string size_str = this.BrushSizeSmall ? "Small brush" : "Large brush";
+				string size_str;
+
+				switch( this.BrushSize ) {
+				case PaintBrushSize.Small:
+					size_str = "Small brush";
+					break;
+				case PaintBrushSize.Large:
+					size_str = "Large brush";
+					break;
+				default:
+					throw new NotImplementedException();
+				}
+
 				sb.DrawString( Main.fontMouseText, size_str, new Vector2( size_rect.X, size_rect.Y + size_rect.Height ), Color.White );
 			}
 		}

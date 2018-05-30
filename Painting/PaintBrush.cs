@@ -2,6 +2,13 @@
 
 
 namespace BetterPaint.Painting {
+	public enum PaintLayer : int {
+		Foreground,
+		Background,
+		Anyground
+	}
+
+	
 	public enum PaintBrushType : int {
 		Stream,
 		Spray,
@@ -10,15 +17,14 @@ namespace BetterPaint.Painting {
 	}
 
 
-	public enum PaintMode : int {
-		Foreground,
-		Background,
-		Anyground
+	public enum PaintBrushSize : int {
+		Small,
+		Large
 	}
 
 
 
 	public abstract class PaintBrush {
-		public abstract float Apply( PaintData data, Color color, bool brush_size_small, float pressure, int rand_seed, int world_x, int world_y );
+		public abstract float Apply( PaintData data, Color color, PaintBrushSize brush_size, float pressure, int rand_seed, int world_x, int world_y );
 	}
 }

@@ -134,9 +134,9 @@ namespace BetterPaint.Items {
 			}
 
 			if( this.Foreground ) {
-				uses = myworld.ApplyForegroundColor( this.CurrentMode, color, this.BrushSizeSmall, this.Pressure, world_x, world_y );
+				uses = myworld.ApplyForegroundColor( this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
 			} else {
-				uses = myworld.ApplyBackgroundColor( this.CurrentMode, color, this.BrushSizeSmall, this.Pressure, world_x, world_y );
+				uses = myworld.ApplyBackgroundColor( this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
 			}
 
 			if( cartridge != null && uses > 0 ) {

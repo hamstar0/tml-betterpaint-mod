@@ -13,7 +13,7 @@ namespace BetterPaint.Items {
 				this.CyclePaintMode();
 			} else
 			if( size_rect.Contains( Main.mouseX, Main.mouseY ) ) {
-				this.BrushSizeSmall = !this.BrushSizeSmall;
+				this.BrushSize = !this.BrushSize;
 			} else
 			if( copy_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.IsCopying = !this.IsCopying;
@@ -57,15 +57,15 @@ namespace BetterPaint.Items {
 
 
 		public void CyclePaintMode() {
-			switch( this.PaintMode ) {
-			case PaintMode.Foreground:
-				this.PaintMode = PaintMode.Background;
+			switch( this.Layer ) {
+			case PaintLayer.Foreground:
+				this.Layer = PaintLayer.Background;
 				break;
-			case PaintMode.Background:
-				this.PaintMode = PaintMode.Anyground;
+			case PaintLayer.Background:
+				this.Layer = PaintLayer.Anyground;
 				break;
-			case PaintMode.Anyground:
-				this.PaintMode = PaintMode.Foreground;
+			case PaintLayer.Anyground:
+				this.Layer = PaintLayer.Foreground;
 				break;
 			}
 		}

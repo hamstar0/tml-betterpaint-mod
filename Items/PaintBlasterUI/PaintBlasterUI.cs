@@ -9,8 +9,9 @@ using Terraria;
 
 namespace BetterPaint.Items {
 	partial class PaintBlasterUI {
-		public static Texture2D BgOffButtonTex { get; private set; }
-		public static Texture2D BgOnButtonTex { get; private set; }
+		public static Texture2D LayerFgTex { get; private set; }
+		public static Texture2D LayerBgTex { get; private set; }
+		public static Texture2D LayerBothTex { get; private set; }
 
 		public static Texture2D BrushSmallTex { get; private set; }
 		public static Texture2D BrushLargeTex { get; private set; }
@@ -21,8 +22,9 @@ namespace BetterPaint.Items {
 
 
 		static PaintBlasterUI() {
-			PaintBlasterUI.BgOffButtonTex = null;
-			PaintBlasterUI.BgOnButtonTex = null;
+			PaintBlasterUI.LayerFgTex = null;
+			PaintBlasterUI.LayerBgTex = null;
+			PaintBlasterUI.LayerBothTex = null;
 			PaintBlasterUI.BrushSmallTex = null;
 			PaintBlasterUI.BrushLargeTex = null;
 			PaintBlasterUI.PressureLowTex = null;
@@ -31,9 +33,10 @@ namespace BetterPaint.Items {
 		}
 
 		public static void SetStaticDefaults( BetterPaintMod mymod ) {
-			if( PaintBlasterUI.BgOffButtonTex == null ) {
-				PaintBlasterUI.BgOffButtonTex = mymod.GetTexture( "Items/PaintBlasterUI/BgOffButton" );
-				PaintBlasterUI.BgOnButtonTex = mymod.GetTexture( "Items/PaintBlasterUI/BgOnButton" );
+			if( PaintBlasterUI.LayerFgTex == null ) {
+				PaintBlasterUI.LayerFgTex = mymod.GetTexture( "Items/PaintBlasterUI/LayerFg" );
+				PaintBlasterUI.LayerBgTex = mymod.GetTexture( "Items/PaintBlasterUI/LayerBg" );
+				PaintBlasterUI.LayerBothTex = mymod.GetTexture( "Items/PaintBlasterUI/LayerBoth" );
 				PaintBlasterUI.BrushSmallTex = mymod.GetTexture( "Items/PaintBlasterUI/BrushSmall" );
 				PaintBlasterUI.BrushLargeTex = mymod.GetTexture( "Items/PaintBlasterUI/BrushLarge" );
 				PaintBlasterUI.PressureLowTex = mymod.GetTexture( "Items/PaintBlasterUI/PressureLow" );
@@ -41,8 +44,9 @@ namespace BetterPaint.Items {
 				PaintBlasterUI.PressureHiTex = mymod.GetTexture( "Items/PaintBlasterUI/PressureHi" );
 
 				TmlLoadHelpers.AddModUnloadPromise( () => {
-					PaintBlasterUI.BgOffButtonTex = null;
-					PaintBlasterUI.BgOnButtonTex = null;
+					PaintBlasterUI.LayerFgTex = null;
+					PaintBlasterUI.LayerBgTex = null;
+					PaintBlasterUI.LayerBothTex = null;
 					PaintBlasterUI.BrushSmallTex = null;
 					PaintBlasterUI.BrushLargeTex = null;
 					PaintBlasterUI.PressureLowTex = null;
@@ -59,9 +63,9 @@ namespace BetterPaint.Items {
 
 		public PaintBrushType CurrentBrush { get; private set; }
 		public int CurrentCartridgeInventoryIndex { get; private set; }
-		public PaintMode PaintMode { get; private set; }
-		public bool BrushSizeSmall { get; private set; }
-		public float Pressure { get; private set; }
+		public PaintLayer Layer { get; private set; }
+		public PaintBrushSize BrushSize { get; private set; }
+		public float PressurePercent { get; private set; }
 		public bool IsCopying { get; private set; }
 
 
@@ -70,9 +74,9 @@ namespace BetterPaint.Items {
 		public PaintBlasterUI() : base() {
 			this.CurrentBrush = PaintBrushType.Stream;
 			this.CurrentCartridgeInventoryIndex = -1;
-			this.PaintMode = PaintMode.Foreground;
-			this.BrushSizeSmall = false;
-			this.Pressure = 1f;
+			this.Layer = PaintLayer.Foreground;
+			this.BrushSize = PaintBrushSize.Small;
+			this.PressurePercent = 1f;
 		}
 
 
