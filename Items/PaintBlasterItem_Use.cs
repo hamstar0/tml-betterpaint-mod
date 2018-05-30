@@ -22,30 +22,36 @@ namespace BetterPaint.Items {
 
 
 		public override bool Shoot( Player player, ref Vector2 pos, ref float vel_x, ref float vel_y, ref int type, ref int dmg, ref float kb ) {
-			Item paint_item = this.GetCurrentPaintItem();
-			if( paint_item == null ) { return false; }
-
-			var cartridge = (ColorCartridgeItem)paint_item.modItem;
-			
 			Vector2 tile_pos = UIHelpers.GetWorldMousePosition();
 			int world_x = (int)tile_pos.X;
 			int world_y = (int)tile_pos.Y;
 			ushort tile_x = (ushort)( world_x / 16 );
 			ushort tile_y = (ushort)( world_y / 16 );
+			Color? dust_color = null;
 
-			if( this.IsEyedropping ) {
+			if( this.IsCopying ) {
 				int copy_type = this.mod.ItemType<CopyCartridgeItem>();
 				int item_idx = ItemFinderHelpers.FindIndexOfFirstOfItemInCollection( player.inventory, new HashSet<int> { copy_type } );
 
 				if( item_idx != -1 ) {
-					this.EyedropAt( player, item_idx, tile_x, tile_y );
+					this.CopyColorAt( player, item_idx, tile_x, tile_y );
 				}
 			} else {
-				if( !this.HasMatchingPaintAt( cartridge.MyColor, tile_x, tile_y ) ) {
-					this.PaintAt( cartridge, world_x, world_y );
+				Item paint_item = this.GetCurrentPaintItem();
 
-					Dust.NewDust( pos, 8, 8, 2, vel_x, vel_y, 0, cartridge.MyColor, 1f );
+				if( paint_item != null ) {
+					var cartridge = (ColorCartridgeItem)paint_item.modItem;
+
+					if( !this.HasMatchingPaintAt( cartridge.MyColor, tile_x, tile_y ) ) {
+						dust_color = cartridge.MyColor;
+					}
 				}
+				
+				this.ApplyAt( world_x, world_y );
+			}
+
+			if( dust_color != null ) {
+				Dust.NewDust( pos, 8, 8, 2, vel_x, vel_y, 0, (Color)dust_color, 1f );
 			}
 
 			return false;
@@ -111,24 +117,37 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public void PaintAt( ColorCartridgeItem color_cartridge, int world_x, int world_y ) {
+		public void ApplyAt( int world_x, int world_y ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 			float uses = 0;
+			Color color;
 
-			if( this.Foreground ) {
-				uses = myworld.AddForegroundColor( this.CurrentMode, color_cartridge.MyColor, this.BrushSize, this.Pressure, world_x, world_y );
+			Item paint_item = this.GetCurrentPaintItem();
+			ColorCartridgeItem cartridge = null;
+
+			if( paint_item != null ) {
+				cartridge = (ColorCartridgeItem)paint_item.modItem;
+				color = cartridge.MyColor;
 			} else {
-				uses = myworld.AddBackgroundColor( this.CurrentMode, color_cartridge.MyColor, this.BrushSize, this.Pressure, world_x, world_y );
+				color = Color.White;
 			}
 
-			float total_uses = color_cartridge.TimesUsed + uses;
+			if( this.Foreground ) {
+				uses = myworld.ApplyForegroundColor( this.CurrentMode, color, this.BrushSizeSmall, this.Pressure, world_x, world_y );
+			} else {
+				uses = myworld.ApplyBackgroundColor( this.CurrentMode, color, this.BrushSizeSmall, this.Pressure, world_x, world_y );
+			}
 
-			color_cartridge.SetTimesUsed( Math.Min(total_uses, (float)mymod.Config.PaintCartridgeCapacity) );
+			if( cartridge != null && uses > 0 ) {
+				float total_uses = cartridge.TimesUsed + uses;
+
+				cartridge.SetTimesUsed( Math.Min( total_uses, (float)mymod.Config.PaintCartridgeCapacity ) );
+			}
 		}
 
 
-		public bool EyedropAt( Player player, int copy_cart_inv_idx, int world_x, int world_y ) {
+		public bool CopyColorAt( Player player, int copy_cart_inv_idx, int world_x, int world_y ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 			ushort tile_x = (ushort)(world_x / 16);

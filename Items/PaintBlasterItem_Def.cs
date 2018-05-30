@@ -9,17 +9,17 @@ namespace BetterPaint.Items {
 		public const int Width = 50;
 		public const int Height = 18;
 
-		////////////////
 
+		////////////////
 		
 		public bool IsModeSelecting { get; private set; }
 
-		public PaintModeType CurrentMode { get { return this.UI.CurrentMode; } }
+		public PaintBrushType CurrentMode { get { return this.UI.CurrentBrush; } }
 		public int CurrentCartridgeInventoryIndex { get { return this.UI.CurrentCartridgeInventoryIndex; } }
-		public bool Foreground { get { return this.UI.Foreground; } }
-		public int BrushSize { get { return this.UI.BrushSize; } }
+		public bool Foreground { get { return this.UI.PaintMode; } }
+		public bool BrushSizeSmall { get { return this.UI.BrushSizeSmall; } }
 		public float Pressure { get { return this.UI.Pressure; } }
-		public bool IsEyedropping { get { return this.UI.IsEyedropping; } }
+		public bool IsCopying { get { return this.UI.IsCopying; } }
 
 		private PaintBlasterUI UI;
 

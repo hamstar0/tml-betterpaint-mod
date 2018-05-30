@@ -1,6 +1,8 @@
-﻿using HamstarHelpers.ItemHelpers;
+﻿using BetterPaint.Tiles;
+using HamstarHelpers.ItemHelpers;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 
@@ -10,7 +12,11 @@ namespace BetterPaint.Items {
 			ItemHelpers.DestroyItem( player.inventory[copy_cart_inv_idx] );
 			
 			player.inventory[copy_cart_inv_idx] = new Item();
-			player.inventory[copy_cart_inv_idx].SetDefaults( BetterPaintMod.Instance.ItemType<CopyCartridgeItem>(), true );
+
+			int idx = ItemHelpers.CreateItem( player.position, BetterPaintMod.Instance.ItemType<ColorCartridgeItem>(), 1,
+				ColorCartridgeItem.Width, ColorCartridgeItem.Height );
+			var myitem = (ColorCartridgeItem)Main.item[ idx ].modItem;
+			myitem.SetColor( color );
 		}
 
 
@@ -33,6 +39,21 @@ namespace BetterPaint.Items {
 			this.item.height = ColorCartridgeItem.Height;
 			this.item.ammo = this.item.type;
 			this.item.value = Item.buyPrice( 0, 1, 0, 0 );
+		}
+
+
+		////////////////
+
+		public override void AddRecipes() {
+			var mymod = (BetterPaintMod)this.mod;
+			var recipe = new ModRecipe( (BetterPaintMod)this.mod );
+
+			recipe.AddTile( TileID.WorkBenches );
+			recipe.AddTile( mymod.TileType<PaintMixerTile>() );
+			recipe.AddIngredient( mymod.GetItem<ColorCartridgeItem>(), 1 );
+			recipe.AddIngredient( ItemID.GreaterHealingPotion, mymod.Config.CopyPaintManaPotionIngredientQuantity );
+			recipe.SetResult( this, 1 );
+			recipe.AddRecipe();
 		}
 	}
 }

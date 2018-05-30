@@ -1,7 +1,7 @@
 author = hamstar
-version = 0.9.3
+version = 0.9.5
 displayName = Better Paint
-modReferences = HamstarHelpers@1.4.13
+modReferences = HamstarHelpers@1.4.15
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
 includePDB = true
 homepage = https://forums.terraria.org/index.php?threads/nihilism-empties-the-game.60333/

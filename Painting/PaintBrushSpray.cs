@@ -3,9 +3,9 @@ using System;
 
 
 namespace BetterPaint.Painting {
-	class PaintModeSpray : PaintMode {
-		public override float Apply( PaintData data, Color color, int brush_size, float pressure, int rand_seed, int world_x, int world_y ) {
-			brush_size += 2;
+	class PaintBrushSpray : PaintBrush {
+		public override float Apply( PaintData data, Color color, bool brush_size_small, float pressure, int rand_seed, int world_x, int world_y ) {
+			int brush_size = brush_size_small ? 2 : 6;
 
 			int iter_range = brush_size / 2;
 			float max_range = (float)brush_size / 2f;

@@ -7,6 +7,7 @@ Future
 
 v1
 -	Give credit for paint mixer tile sprite
+-	Add inbox alert for paint blaster instructions
 -	Make 'easy' version of recipes; use inbox to alert to 'hard' mode
 -	Show color on paint blaster
 -	Add sounds to UI and dry fire
@@ -14,9 +15,16 @@ v1
 -	Implement radial selection
 -	Stack redundant cartridges on radial selector
 -	Remove empty cartridges from radial selector
+-	Add HUD info (mode, cartridge capacity, brush size, pressure)
 -	Add pressure setting to UI
--	Add eyedropper tool + 'Copy Color Cartridge'
+-	Set eraser to work without paint selected
 
+-	Draw rectangle over options
+-	Ensure zoom works
+-	Color copy
+	-	Add copy mouse overlay
+	-	Add copy error about copy cartridge absense
+	-	Add copy tool + 'Copy Color Cartridge'
 -	Implement painting
 	-	Erase mode
 	-	Spatter mode

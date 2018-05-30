@@ -34,7 +34,7 @@ namespace BetterPaint {
 		public JsonConfig<BetterPaintConfigData> JsonConfig { get; private set; }
 		public BetterPaintConfigData Config { get { return this.JsonConfig.Data; } }
 
-		public IDictionary<PaintModeType, PaintMode> Modes { get; private set; }
+		public IDictionary<PaintBrushType, PaintBrush> Modes { get; private set; }
 
 
 		////////////////
@@ -46,11 +46,11 @@ namespace BetterPaint {
 				AutoloadSounds = true
 			};
 
-			this.Modes = new Dictionary<PaintModeType, PaintMode> {
-				{ PaintModeType.Stream, new PaintModeStream() },
-				{ PaintModeType.Spray, new PaintModeSpray() },
-				{ PaintModeType.Spatter, new PaintModeSpatter() },
-				{ PaintModeType.Erase, new PaintModeErase() }
+			this.Modes = new Dictionary<PaintBrushType, PaintBrush> {
+				{ PaintBrushType.Stream, new PaintBrushStream() },
+				{ PaintBrushType.Spray, new PaintBrushSpray() },
+				{ PaintBrushType.Spatter, new PaintBrushSpatter() },
+				{ PaintBrushType.Erase, new PaintBrushErase() }
 			};
 
 			this.JsonConfig = new JsonConfig<BetterPaintConfigData>( BetterPaintConfigData.ConfigFileName,

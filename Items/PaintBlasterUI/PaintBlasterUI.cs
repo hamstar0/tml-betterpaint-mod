@@ -1,6 +1,10 @@
 ﻿using BetterPaint.Painting;
+using HamstarHelpers.PlayerHelpers;
 using HamstarHelpers.TmlHelpers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using Terraria;
 
 
 namespace BetterPaint.Items {
@@ -10,8 +14,6 @@ namespace BetterPaint.Items {
 
 		public static Texture2D BrushSmallTex { get; private set; }
 		public static Texture2D BrushLargeTex { get; private set; }
-
-		public static Texture2D EyedropperTex { get; private set; }
 
 		public static Texture2D PressureLowTex { get; private set; }
 		public static Texture2D PressureMidTex { get; private set; }
@@ -23,7 +25,6 @@ namespace BetterPaint.Items {
 			PaintBlasterUI.BgOnButtonTex = null;
 			PaintBlasterUI.BrushSmallTex = null;
 			PaintBlasterUI.BrushLargeTex = null;
-			PaintBlasterUI.EyedropperTex = null;
 			PaintBlasterUI.PressureLowTex = null;
 			PaintBlasterUI.PressureMidTex = null;
 			PaintBlasterUI.PressureHiTex = null;
@@ -35,7 +36,6 @@ namespace BetterPaint.Items {
 				PaintBlasterUI.BgOnButtonTex = mymod.GetTexture( "Items/PaintBlasterUI/BgOnButton" );
 				PaintBlasterUI.BrushSmallTex = mymod.GetTexture( "Items/PaintBlasterUI/BrushSmall" );
 				PaintBlasterUI.BrushLargeTex = mymod.GetTexture( "Items/PaintBlasterUI/BrushLarge" );
-				PaintBlasterUI.EyedropperTex = mymod.GetTexture( "Items/PaintBlasterUI/Eyedropper" );
 				PaintBlasterUI.PressureLowTex = mymod.GetTexture( "Items/PaintBlasterUI/PressureLow" );
 				PaintBlasterUI.PressureMidTex = mymod.GetTexture( "Items/PaintBlasterUI/PressureMid" );
 				PaintBlasterUI.PressureHiTex = mymod.GetTexture( "Items/PaintBlasterUI/PressureHi" );
@@ -45,7 +45,6 @@ namespace BetterPaint.Items {
 					PaintBlasterUI.BgOnButtonTex = null;
 					PaintBlasterUI.BrushSmallTex = null;
 					PaintBlasterUI.BrushLargeTex = null;
-					PaintBlasterUI.EyedropperTex = null;
 					PaintBlasterUI.PressureLowTex = null;
 					PaintBlasterUI.PressureMidTex = null;
 					PaintBlasterUI.PressureHiTex = null;
@@ -58,22 +57,37 @@ namespace BetterPaint.Items {
 
 		public bool IsInteractingWithUI { get; private set; }
 
-		public PaintModeType CurrentMode { get; private set; }
+		public PaintBrushType CurrentBrush { get; private set; }
 		public int CurrentCartridgeInventoryIndex { get; private set; }
-		public bool Foreground { get; private set; }
-		public int BrushSize { get; private set; }
+		public PaintMode PaintMode { get; private set; }
+		public bool BrushSizeSmall { get; private set; }
 		public float Pressure { get; private set; }
-		public bool IsEyedropping { get; private set; }
+		public bool IsCopying { get; private set; }
 
 
 		////////////////
 
 		public PaintBlasterUI() : base() {
-			this.CurrentMode = PaintModeType.Stream;
+			this.CurrentBrush = PaintBrushType.Stream;
 			this.CurrentCartridgeInventoryIndex = -1;
-			this.Foreground = true;
-			this.BrushSize = 1;
+			this.PaintMode = PaintMode.Foreground;
+			this.BrushSizeSmall = false;
 			this.Pressure = 1f;
+		}
+
+
+		////////////////
+		
+		private void UpdateUI( BetterPaintMod mymod, Player player ) {
+			if( this.IsCopying ) {
+				var set = new HashSet<int> { mymod.ItemType<CopyCartridgeItem>() };
+				var copy_cart_item = PlayerItemFinderHelpers.FindFirstOfItemFor( player, set );
+
+				if( copy_cart_item == null ) {
+					Main.NewText( "Copy Cartridges needed.", Color.Red );
+					this.IsCopying = false;
+				}
+			}
 		}
 	}
 }

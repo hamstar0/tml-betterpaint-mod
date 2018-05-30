@@ -3,10 +3,11 @@ using System;
 
 
 namespace BetterPaint.Painting {
-	class PaintModeStream : PaintMode {
-		public override float Apply( PaintData data, Color color, int brush_size, float pressure, int rand_seed, int world_x, int world_y ) {
-			int iter_range = brush_size / 2;
-			float max_range = (float)brush_size / 2f;
+	class PaintBrushStream : PaintBrush {
+		public override float Apply( PaintData data, Color color, bool brush_size_small, float pressure, int rand_seed, int world_x, int world_y ) {
+			var mymod = BetterPaintMod.Instance;
+			int iter_range = (int)((brush_size_small ? 1 : 3) * mymod.Config.BrushSizeMultiplier);
+			float radius = (brush_size_small ? 0.5f : 3f) * mymod.Config.BrushSizeMultiplier;
 
 			int tile_x = world_x / 16;
 			int tile_y = world_y / 16;
@@ -17,7 +18,7 @@ namespace BetterPaint.Painting {
 				for( int j = -iter_range; j <= iter_range; j++ ) {
 					float dist = (float)Math.Sqrt( (double)(( i * i ) + ( j * j )) );
 
-					if( dist > max_range ) {
+					if( dist > radius ) {
 						continue;
 					}
 
