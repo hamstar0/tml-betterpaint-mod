@@ -68,12 +68,12 @@ namespace BetterPaint.Items {
 			if( ColorCartridgeItem.OverlayTex == null ) {
 				ColorCartridgeItem.OverlayTex = this.mod.GetTexture( "Items/ColorCartridgeItem_Color" );
 				ColorCartridgeItem.CartridgeTex = this.mod.GetTexture( "Items/ColorCartridgeItem" );
-			}
 
-			TmlLoadHelpers.AddModUnloadPromise( () => {
-				ColorCartridgeItem.OverlayTex = null;
-				ColorCartridgeItem.CartridgeTex = null;
-			} );
+				TmlLoadHelpers.AddModUnloadPromise( () => {
+					ColorCartridgeItem.OverlayTex = null;
+					ColorCartridgeItem.CartridgeTex = null;
+				} );
+			}
 		}
 
 

@@ -22,8 +22,8 @@ namespace BetterPaint.Items {
 			
 			int x = Main.screenWidth / 2;
 			int y = Main.screenHeight / 2;
-			int mode_dist = 72;
-			int setting_dist = 28;
+			int brushes_dist = 72;
+			int options_dist = 28;
 			float hilit = PaintBlasterUI.SelectedScale;
 			float lit = PaintBlasterUI.HoveredScale;
 			float unlit = PaintBlasterUI.IdleScale;
@@ -40,10 +40,10 @@ namespace BetterPaint.Items {
 			var bucket_offset = new Vector2( tex_bucket.Width, tex_bucket.Height ) * 0.5f;
 			var scrape_offset = new Vector2( tex_scrape.Width, tex_scrape.Height ) * 0.5f;
 
-			var brush_rect = new Rectangle( (int)((x - mode_dist) - brush_offset.X), (int)(y - brush_offset.Y), tex_brush.Width, tex_brush.Height );
-			var spray_rect = new Rectangle( (int)(x - spray_offset.X), (int)((y - mode_dist) - spray_offset.Y), tex_spray.Width, tex_spray.Height );
-			var bucket_rect = new Rectangle( (int)((x + mode_dist) - bucket_offset.X), (int)(y - bucket_offset.Y), tex_bucket.Width, tex_bucket.Height );
-			var scrape_rect = new Rectangle( (int)(x - scrape_offset.X), (int)((y + mode_dist) - scrape_offset.Y), tex_scrape.Width, tex_scrape.Height );
+			var brush_rect = new Rectangle( (int)((x - brushes_dist) - brush_offset.X), (int)(y - brush_offset.Y), tex_brush.Width, tex_brush.Height );
+			var spray_rect = new Rectangle( (int)(x - spray_offset.X), (int)((y - brushes_dist) - spray_offset.Y), tex_spray.Width, tex_spray.Height );
+			var bucket_rect = new Rectangle( (int)((x + brushes_dist) - bucket_offset.X), (int)(y - bucket_offset.Y), tex_bucket.Width, tex_bucket.Height );
+			var scrape_rect = new Rectangle( (int)(x - scrape_offset.X), (int)((y + brushes_dist) - scrape_offset.Y), tex_scrape.Width, tex_scrape.Height );
 
 			bool brush_hover = brush_rect.Contains( Main.mouseX, Main.mouseY );
 			bool spray_hover = brush_hover ? false : spray_rect.Contains( Main.mouseX, Main.mouseY );
@@ -75,8 +75,8 @@ namespace BetterPaint.Items {
 
 			var bg_offset = new Vector2( bg_tex.Width, bg_tex.Height ) * 0.5f;
 
-			int bg_x = (x - setting_dist) - (int)bg_offset.X;
-			int bg_y = (y - setting_dist) - (int)bg_offset.Y;
+			int bg_x = (x - options_dist) - (int)bg_offset.X;
+			int bg_y = (y - options_dist) - (int)bg_offset.Y;
 			var bg_rect = new Rectangle( bg_x, bg_y, bg_tex.Width, bg_tex.Height );
 
 			bool bg_hover = bg_rect.Contains( Main.mouseX, Main.mouseY );
@@ -94,8 +94,8 @@ namespace BetterPaint.Items {
 
 			var size_offset = new Vector2( size_tex.Width, size_tex.Height ) * 0.5f;
 
-			int size_x = (x + setting_dist) - (int)size_offset.X;
-			int size_y = (y + setting_dist) - (int)size_offset.Y;
+			int size_x = (x + options_dist) - (int)size_offset.X;
+			int size_y = (y + options_dist) - (int)size_offset.Y;
 			var size_rect = new Rectangle( size_x, size_y, size_tex.Width, size_tex.Height );
 
 			bool size_hover = size_rect.Contains( Main.mouseX, Main.mouseY );
@@ -109,9 +109,30 @@ namespace BetterPaint.Items {
 
 			///
 
+			Texture2D eye_tex = PaintBlasterUI.EyedropperTex;
+
+			var eye_offset = new Vector2( eye_tex.Width, eye_tex.Height ) * 0.5f;
+
+			int eye_x = ( x + options_dist ) - (int)eye_offset.X;
+			int eye_y = ( y + options_dist ) - (int)eye_offset.Y;
+			var eye_rect = new Rectangle( eye_x, eye_y, eye_tex.Width, eye_tex.Height );
+
+			bool eye_hover = eye_rect.Contains( Main.mouseX, Main.mouseY );
+			Color eye_color = Color.White * ( this.IsEyedropping ? 1f : (eye_hover ? lit : unlit) );
+
+			sb.Draw( eye_tex, eye_rect, eye_color );
+
+			if( eye_hover ) {
+				string eye_str = "Eyedropper (needs Camo Cartridges)";
+				sb.DrawString( Main.fontMouseText, eye_str, new Vector2( eye_rect.X, eye_rect.Y + eye_rect.Height ), Color.White );
+			}
+
+			///
+
 			if( Main.mouseLeft ) {
 				if( !this.IsInteractingWithUI ) {
 					this.IsInteractingWithUI = true;
+
 					this.CheckUIModeInteractions( ref bg_rect, ref size_rect, ref brush_rect, ref spray_rect, ref bucket_rect, ref scrape_rect );
 					this.CheckUIColorInteractions( palette_rects );
 				}

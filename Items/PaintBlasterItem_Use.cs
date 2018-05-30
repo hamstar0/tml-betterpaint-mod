@@ -1,7 +1,10 @@
-﻿using HamstarHelpers.TileHelpers;
+﻿using BetterPaint.Painting;
+using HamstarHelpers.ItemHelpers;
+using HamstarHelpers.TileHelpers;
 using HamstarHelpers.UIHelpers;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -27,11 +30,22 @@ namespace BetterPaint.Items {
 			Vector2 tile_pos = UIHelpers.GetWorldMousePosition();
 			int world_x = (int)tile_pos.X;
 			int world_y = (int)tile_pos.Y;
+			ushort tile_x = (ushort)( world_x / 16 );
+			ushort tile_y = (ushort)( world_y / 16 );
 
-			if( !this.HasMatchingPaintAt( cartridge, (ushort)(world_x/16), (ushort)(world_y/16) ) ) {
-				this.PaintAt( cartridge, world_x, world_y );
+			if( this.IsEyedropping ) {
+				int copy_type = this.mod.ItemType<CopyCartridgeItem>();
+				int item_idx = ItemFinderHelpers.FindIndexOfFirstOfItemInCollection( player.inventory, new HashSet<int> { copy_type } );
 
-				Dust.NewDust( pos, 8, 8, 2, vel_x, vel_y, 0, cartridge.MyColor, 1f );
+				if( item_idx != -1 ) {
+					this.EyedropAt( player, item_idx, tile_x, tile_y );
+				}
+			} else {
+				if( !this.HasMatchingPaintAt( cartridge.MyColor, tile_x, tile_y ) ) {
+					this.PaintAt( cartridge, world_x, world_y );
+
+					Dust.NewDust( pos, 8, 8, 2, vel_x, vel_y, 0, cartridge.MyColor, 1f );
+				}
 			}
 
 			return false;
@@ -77,16 +91,16 @@ namespace BetterPaint.Items {
 		}
 
 
-		public bool HasMatchingPaintAt( ColorCartridgeItem cartridge, ushort x, ushort y ) {
+		public bool HasMatchingPaintAt( Color color, ushort x, ushort y ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
 			if( this.Foreground ) {
-				if( myworld.FgColors.GetColor( x, y ) == cartridge.MyColor ) {
+				if( myworld.FgColors.GetColor( x, y ) == color ) {
 					return true;
 				}
 			} else {
-				if( myworld.BgColors.GetColor( x, y ) == cartridge.MyColor ) {
+				if( myworld.BgColors.GetColor( x, y ) == color ) {
 					return true;
 				}
 			}
@@ -111,6 +125,26 @@ namespace BetterPaint.Items {
 			float total_uses = color_cartridge.TimesUsed + uses;
 
 			color_cartridge.SetTimesUsed( Math.Min(total_uses, (float)mymod.Config.PaintCartridgeCapacity) );
+		}
+
+
+		public bool EyedropAt( Player player, int copy_cart_inv_idx, int world_x, int world_y ) {
+			var mymod = (BetterPaintMod)this.mod;
+			var myworld = mymod.GetModWorld<BetterPaintWorld>();
+			ushort tile_x = (ushort)(world_x / 16);
+			ushort tile_y = (ushort)(world_y / 16);
+
+			PaintData data = this.Foreground ? myworld.FgColors : myworld.BgColors;
+			
+			if( !data.HasColor(tile_x, tile_y) ) {
+				return false;
+			}
+
+			Color color_at = data.GetColor( tile_x, tile_y );
+
+			CopyCartridgeItem.SetWithColor( player, copy_cart_inv_idx, color_at );
+
+			return true;
 		}
 	}
 }

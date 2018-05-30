@@ -14,8 +14,8 @@ v1
 -	Implement radial selection
 -	Stack redundant cartridges on radial selector
 -	Remove empty cartridges from radial selector
--	Add eyedropper tool + 'Chameleon Color Cartridge'
 -	Add pressure setting to UI
+-	Add eyedropper tool + 'Copy Color Cartridge'
 
 -	Implement painting
 	-	Erase mode

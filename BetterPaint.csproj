@@ -56,6 +56,7 @@
     <Compile Include="API.cs" />
     <Compile Include="API_Call.cs" />
     <Compile Include="BetterPaintWorld.cs" />
+    <Compile Include="Items\CopyCartridgeItem.cs" />
     <Compile Include="Items\PaintBlasterItem_UI.cs" />
     <Compile Include="Items\PaintBlasterUI\PaintBlasterUI_Use.cs" />
     <Compile Include="Items\PaintBlasterUI\PaintBlasterUI_Draw.cs" />
@@ -89,6 +90,7 @@
   <ItemGroup>
     <Content Include="build.txt" />
     <Content Include="description.txt" />
+    <Content Include="Items\CopyCartridgeItem.png" />
     <Content Include="Items\ColorCartridgeItem.png" />
     <Content Include="Items\ColorCartridgeItem_Color.png" />
     <Content Include="Items\PaintBlasterUI\Eyedropper.png" />

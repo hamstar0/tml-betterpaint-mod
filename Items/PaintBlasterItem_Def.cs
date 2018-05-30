@@ -19,6 +19,7 @@ namespace BetterPaint.Items {
 		public bool Foreground { get { return this.UI.Foreground; } }
 		public int BrushSize { get { return this.UI.BrushSize; } }
 		public float Pressure { get { return this.UI.Pressure; } }
+		public bool IsEyedropping { get { return this.UI.IsEyedropping; } }
 
 		private PaintBlasterUI UI;
 
