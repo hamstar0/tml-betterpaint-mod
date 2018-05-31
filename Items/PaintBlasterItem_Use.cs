@@ -42,11 +42,11 @@ namespace BetterPaint.Items {
 				if( paint_item != null ) {
 					var cartridge = (ColorCartridgeItem)paint_item.modItem;
 
-					if( !this.HasMatchingPaintAt( cartridge.MyColor, tile_x, tile_y ) ) {
+					if( this.HasMatchingPaintAt( cartridge.MyColor, tile_x, tile_y ) ) {
 						dust_color = cartridge.MyColor;
 					}
 				}
-				
+
 				this.ApplyAt( world_x, world_y );
 			}
 
@@ -74,13 +74,13 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
-			if( cartridge.TimesUsed >= mymod.Config.PaintCartridgeCapacity ) {
+			if( cartridge.RemainingCapacity() <= 0f ) {
 				return false;
 			}
 
 			Tile tile = Main.tile[tile_x, tile_y];
 
-			if( tile == null || TileHelpers.IsAir( tile ) ) {
+			if( TileHelpers.IsAir( tile ) ) {
 				return false;
 			}
 

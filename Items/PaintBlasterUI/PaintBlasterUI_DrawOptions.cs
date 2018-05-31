@@ -67,6 +67,7 @@ namespace BetterPaint.Items {
 			rect.Height += 8;
 		}
 
+
 		public void DrawOptionSize( SpriteBatch sb, int origin_x, int origin_y, out Rectangle rect ) {
 			int options_dist = PaintBlasterUI.OptionsRingRadius;
 			float hilit = PaintBlasterUI.SelectedScale;
@@ -119,6 +120,7 @@ namespace BetterPaint.Items {
 			rect.Height += 8;
 		}
 		
+
 		public void DrawOptionCopy( SpriteBatch sb, int origin_x, int origin_y, out Rectangle rect ) {
 			int options_dist = PaintBlasterUI.OptionsRingRadius;
 			float hilit = PaintBlasterUI.SelectedScale;
@@ -148,6 +150,7 @@ namespace BetterPaint.Items {
 			rect.Width += 8;
 			rect.Height += 8;
 		}
+
 
 		public void DrawOptionPressure( SpriteBatch sb, int origin_x, int origin_y, out Rectangle rect ) {
 			int options_dist = PaintBlasterUI.OptionsRingRadius;

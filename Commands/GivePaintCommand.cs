@@ -8,10 +8,17 @@ using Terraria.ModLoader;
 
 
 namespace BetterPaint.Commands {
-	class CheatGiveRandomPaintCommand : ModCommand {
-		public override CommandType Type { get { return CommandType.Chat; } }
-		public override string Command { get { return "cheatpaint"; } }
-		public override string Usage { get { return "/cheatpaint"; } }
+	class GivePaintCommand : ModCommand {
+		public override CommandType Type {
+			get {
+				if( Main.netMode == 0 ) {
+					return CommandType.World;
+				}
+				return CommandType.Console;
+			}
+		}
+		public override string Command { get { return "paintgive"; } }
+		public override string Usage { get { return "/paintgive"; } }
 		public override string Description { get { return "Gives player a random-hued color cartridge."; } }
 
 

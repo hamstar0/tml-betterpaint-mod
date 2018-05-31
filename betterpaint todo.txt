@@ -11,6 +11,7 @@ v1
 -	Make 'easy' version of recipes; use inbox to alert to 'hard' mode
 -	Show color on paint blaster
 -	Add sounds to UI and dry fire
+-	@Test layers, copy, spatter, per-color erase
 
 -	Add HUD info
 -	Implement radial angular selection
