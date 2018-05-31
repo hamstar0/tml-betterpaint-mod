@@ -58,6 +58,9 @@
     <Compile Include="BetterPaintWorld.cs" />
     <Compile Include="Items\CopyCartridgeItem.cs" />
     <Compile Include="Items\PaintBlasterItem_UI.cs" />
+    <Compile Include="Items\PaintBlasterUI\PaintBlasterUI_DrawPaints.cs" />
+    <Compile Include="Items\PaintBlasterUI\PaintBlasterUI_DrawOptions.cs" />
+    <Compile Include="Items\PaintBlasterUI\PaintBlasterUI_DrawBrushes.cs" />
     <Compile Include="Items\PaintBlasterUI\PaintBlasterUI_Use.cs" />
     <Compile Include="Items\PaintBlasterUI\PaintBlasterUI_Draw.cs" />
     <Compile Include="Items\PaintBlasterUI\PaintBlasterUI.cs" />
