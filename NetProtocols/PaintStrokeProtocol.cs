@@ -7,10 +7,10 @@ using Terraria;
 
 namespace BetterPaint.NetProtocols {
 	class PaintStrokeProtocol : PacketProtocol {
-		public static void SyncToAll( bool fg_only, PaintBrushType mode, Color color, PaintBrushSize brush_size, float pressure, int rand_seed, int world_x, int world_y ) {
+		public static void SyncToAll( PaintLayer layer, PaintBrushType brush_type, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			if( Main.netMode != 1 ) { throw new Exception( "Not client" ); }
 
-			var protocol = new PaintStrokeProtocol( fg_only, mode, color, brush_size, pressure, rand_seed, world_x, world_y );
+			var protocol = new PaintStrokeProtocol( layer, brush_type, color, brush_size, pressure_percent, rand_seed, world_x, world_y );
 			protocol.SendToServer( true );
 		}
 
@@ -18,7 +18,7 @@ namespace BetterPaint.NetProtocols {
 
 		////////////////
 		
-		public bool FgOnly = false;
+		public int Layer = (int)PaintLayer.Foreground;
 		public int BrushType = (int)PaintBrushType.Stream;
 		public Color MyColor = Color.White;
 		public int BrushSize = (int)PaintBrushSize.Small;
@@ -32,12 +32,12 @@ namespace BetterPaint.NetProtocols {
 
 		public PaintStrokeProtocol() { }
 
-		private PaintStrokeProtocol( bool fg_only, PaintBrushType brush_type, Color color, PaintBrushSize brush_size, float pressure, int rand_seed, int world_x, int world_y ) {
-			this.FgOnly = fg_only;
+		private PaintStrokeProtocol( PaintLayer layer, PaintBrushType brush_type, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+			this.Layer = (int)layer;
 			this.BrushType = (int)brush_type;
 			this.MyColor = color;
 			this.BrushSize = (int)brush_size;
-			this.PressurePercent = pressure;
+			this.PressurePercent = pressure_percent;
 			this.WorldX = world_x;
 			this.WorldY = world_y;
 		}
@@ -51,10 +51,18 @@ namespace BetterPaint.NetProtocols {
 		private void Receive() {
 			var myworld = BetterPaintMod.Instance.GetModWorld<BetterPaintWorld>();
 
-			if( this.FgOnly ) {
+			switch( (PaintLayer)this.Layer ) {
+			case PaintLayer.Foreground:
 				myworld.AddForegroundColorNoSync( (PaintBrushType)this.BrushType, this.MyColor, (PaintBrushSize)this.BrushSize, this.PressurePercent, this.RandSeed, this.WorldX, this.WorldY );
-			} else {
+				break;
+			case PaintLayer.Background:
 				myworld.AddBackgroundColorNoSync( (PaintBrushType)this.BrushType, this.MyColor, (PaintBrushSize)this.BrushSize, this.PressurePercent, this.RandSeed, this.WorldX, this.WorldY );
+				break;
+			case PaintLayer.Anyground:
+				myworld.AddAnygroundColorNoSync( (PaintBrushType)this.BrushType, this.MyColor, (PaintBrushSize)this.BrushSize, this.PressurePercent, this.RandSeed, this.WorldX, this.WorldY );
+				break;
+			default:
+				throw new NotImplementedException();
 			}
 		}
 

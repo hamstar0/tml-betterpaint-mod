@@ -39,27 +39,40 @@ namespace BetterPaint {
 
 		////////////////
 
-		public float ApplyForegroundColor( PaintBrushType mode, Color color, PaintBrushSize brush_size, float pressure, int world_x, int world_y ) {
+		public float ApplyForegroundColor( PaintBrushType brush_type, Color color, PaintBrushSize brush_size, float pressure_precent, int world_x, int world_y ) {
 			if( Main.netMode == 2 ) { throw new Exception( "No server." ); }
 
 			int rand_seed = DateTime.Now.Millisecond;
-			float paints_used = this.AddForegroundColorNoSync( mode, color, brush_size, pressure, rand_seed, world_x, world_y );
+			float paints_used = this.AddForegroundColorNoSync( brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
 
 			if( Main.netMode == 1 ) {
-				PaintStrokeProtocol.SyncToAll( true, mode, color, brush_size, pressure, rand_seed, world_x, world_y );
+				PaintStrokeProtocol.SyncToAll( PaintLayer.Foreground, brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
 			}
 
 			return paints_used;
 		}
 
-		public float ApplyBackgroundColor( PaintBrushType mode, Color color, PaintBrushSize brush_size, float pressure, int world_x, int world_y ) {
+		public float ApplyBackgroundColor( PaintBrushType brush_type, Color color, PaintBrushSize brush_size, float pressure_precent, int world_x, int world_y ) {
 			if( Main.netMode == 2 ) { throw new Exception( "No server." ); }
 
 			int rand_seed = DateTime.Now.Millisecond;
-			float paints_used = this.AddBackgroundColorNoSync( mode, color, brush_size, pressure, rand_seed, world_x, world_y );
+			float paints_used = this.AddBackgroundColorNoSync( brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
 
 			if( Main.netMode == 1 ) {
-				PaintStrokeProtocol.SyncToAll( false, mode, color, brush_size, pressure, rand_seed, world_x, world_y );
+				PaintStrokeProtocol.SyncToAll( PaintLayer.Background, brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
+			}
+
+			return paints_used;
+		}
+
+		public float ApplyAnygroundColor( PaintBrushType brush_type, Color color, PaintBrushSize brush_size, float pressure_precent, int world_x, int world_y ) {
+			if( Main.netMode == 2 ) { throw new Exception( "No server." ); }
+
+			int rand_seed = DateTime.Now.Millisecond;
+			float paints_used = this.AddAnygroundColorNoSync( brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
+
+			if( Main.netMode == 1 ) {
+				PaintStrokeProtocol.SyncToAll( PaintLayer.Anyground, brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
 			}
 
 			return paints_used;
@@ -67,16 +80,28 @@ namespace BetterPaint {
 
 		////
 
-		public float AddForegroundColorNoSync( PaintBrushType mode, Color color, PaintBrushSize brush_size, float pressure, int rand_seed, int world_x, int world_y ) {
+		public float AddForegroundColorNoSync( PaintBrushType brush_type, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			var mymod = (BetterPaintMod)this.mod;
 
-			return mymod.Modes[ mode ].Apply( this.FgColors, color, brush_size, pressure, rand_seed, world_x, world_y );
+			return mymod.Modes[ brush_type ].Apply( this.FgColors, color, brush_size, pressure_percent, rand_seed, world_x, world_y );
 		}
 		
-		public float AddBackgroundColorNoSync( PaintBrushType mode, Color color, PaintBrushSize brush_size, float pressure, int rand_seed, int world_x, int world_y ) {
+		public float AddBackgroundColorNoSync( PaintBrushType brush_type, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			var mymod = (BetterPaintMod)this.mod;
 
-			return mymod.Modes[mode].Apply( this.BgColors, color, brush_size, pressure, rand_seed, world_x, world_y );
+			return mymod.Modes[brush_type].Apply( this.BgColors, color, brush_size, pressure_percent, rand_seed, world_x, world_y );
+		}
+
+		public float AddAnygroundColorNoSync( PaintBrushType brush_type, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+			var mymod = (BetterPaintMod)this.mod;
+			ushort tile_x = (ushort)( world_x / 16 );
+			ushort tile_y = (ushort)( world_y / 16 );
+
+			if( this.FgColors.HasColor(tile_x, tile_y) ) {
+				return this.AddForegroundColorNoSync( brush_type, color, brush_size, pressure_percent, rand_seed, world_x, world_y );
+			} else {
+				return this.AddBackgroundColorNoSync( brush_type, color, brush_size, pressure_percent, rand_seed, world_x, world_y );
+			}
 		}
 	}
 }

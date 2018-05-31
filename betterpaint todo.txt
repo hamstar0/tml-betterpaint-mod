@@ -17,8 +17,8 @@ v1
 -	Remove empty cartridges from radial selector
 -	Add HUD info (mode, cartridge capacity, brush size, pressure)
 -	Add pressure setting to UI
--	Set eraser to work without paint selected
 
+-	Set eraser to work without paint selected
 -	Draw rectangle over options
 -	Ensure zoom works
 -	Color copy

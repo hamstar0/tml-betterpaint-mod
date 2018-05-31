@@ -168,11 +168,7 @@ namespace BetterPaint.Items {
 				uses = myworld.ApplyBackgroundColor( this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
 				break;
 			case PaintLayer.Anyground:
-				if( myworld.FgColors.HasColor( (ushort)(world_x/16), (ushort)(world_y/16) ) ) {
-					uses = myworld.ApplyForegroundColor( this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
-				} else {
-					uses = myworld.ApplyBackgroundColor( this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
-				}
+				uses = myworld.ApplyAnygroundColor( this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
 				break;
 			default:
 				throw new NotImplementedException();
