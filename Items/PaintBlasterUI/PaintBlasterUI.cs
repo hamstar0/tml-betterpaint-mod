@@ -32,7 +32,7 @@ namespace BetterPaint.Items {
 			PaintBlasterUI.PressureHiTex = null;
 		}
 
-		public static void SetStaticDefaults( BetterPaintMod mymod ) {
+		public static void InitializeStatic( BetterPaintMod mymod ) {
 			if( PaintBlasterUI.LayerFgTex == null ) {
 				PaintBlasterUI.LayerFgTex = mymod.GetTexture( "Items/PaintBlasterUI/LayerFg" );
 				PaintBlasterUI.LayerBgTex = mymod.GetTexture( "Items/PaintBlasterUI/LayerBg" );

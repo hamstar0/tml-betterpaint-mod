@@ -117,6 +117,8 @@ namespace BetterPaint {
 					myitem.DrawPainterUI( Main.spriteBatch );
 				}
 
+				myitem.DrawHUD( Main.spriteBatch );
+
 				return true;
 			};
 

@@ -26,6 +26,9 @@ namespace BetterPaint {
 
 		public float BrushSpatterDensity = 0.15f;
 
+		public int HudPaintAmmoOffsetX = -32;
+		public int HudPaintAmmoOffsetY = -160;
+
 
 		////////////////
 

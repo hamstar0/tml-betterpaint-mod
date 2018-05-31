@@ -6,12 +6,6 @@ using Terraria.ModLoader;
 
 namespace BetterPaint.Items {
 	partial class PaintBlasterItem : ModItem {
-		public const int Width = 50;
-		public const int Height = 18;
-
-
-		////////////////
-		
 		public bool IsModeSelecting { get; private set; }
 
 		public PaintBrushType CurrentMode { get { return this.UI.CurrentBrush; } }
@@ -32,12 +26,15 @@ namespace BetterPaint.Items {
 		}
 
 		public override void SetStaticDefaults() {
+			var mymod = (BetterPaintMod)this.mod;
+
 			this.DisplayName.SetDefault( "Paint Blaster" );
 			this.Tooltip.SetDefault( "Paints with color cartridges in various ways." + '\n' +
 				"Overlays all existing paint" + '\n' +
 				"Right-click to adjust settings" );
 
-			PaintBlasterUI.SetStaticDefaults( (BetterPaintMod)this.mod );
+			PaintBlasterItem.InitializeStatic( mymod );
+			PaintBlasterUI.InitializeStatic( mymod );
 		}
 
 

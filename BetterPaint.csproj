@@ -96,6 +96,9 @@
     <Content Include="Items\CopyCartridgeItem.png" />
     <Content Include="Items\ColorCartridgeItem.png" />
     <Content Include="Items\ColorCartridgeItem_Color.png" />
+    <Content Include="Items\PaintBlasterHUD\PaintAmmoBottom.png" />
+    <Content Include="Items\PaintBlasterHUD\PaintAmmoContainer.png" />
+    <Content Include="Items\PaintBlasterHUD\PaintAmmoTop.png" />
     <Content Include="Items\PaintBlasterUI\LayerBoth.png" />
     <Content Include="Items\PaintBlasterUI\LayerFg.png" />
     <Content Include="Items\PaintBlasterUI\LayerBg.png" />
