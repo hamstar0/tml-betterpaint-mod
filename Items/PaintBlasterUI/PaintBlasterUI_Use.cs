@@ -7,7 +7,7 @@ using Terraria;
 
 namespace BetterPaint.Items {
 	partial class PaintBlasterUI {
-		private void CheckUISettingsInteractions( ref Rectangle layer_rect, ref Rectangle size_rect, ref Rectangle copy_rect ) {
+		private void CheckUISettingsInteractions( ref Rectangle layer_rect, ref Rectangle size_rect, ref Rectangle copy_rect, ref Rectangle press_rect ) {
 			Player player = Main.LocalPlayer;
 
 			if( layer_rect.Contains( Main.mouseX, Main.mouseY ) ) {
@@ -18,6 +18,9 @@ namespace BetterPaint.Items {
 			} else
 			if( copy_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.IsCopying = !this.IsCopying;
+			} else
+			if( press_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+				this.CyclePressure();
 			}
 		}
 
@@ -84,6 +87,16 @@ namespace BetterPaint.Items {
 				break;
 			default:
 				throw new NotImplementedException();
+			}
+		}
+
+		public void CyclePressure() {
+			if( this.PressurePercent >= 0.75f ) {
+				this.PressurePercent = 0.25f;
+			} else if( this.PressurePercent <= 0.25f ) {
+				this.PressurePercent = 0.625f;
+			} else {
+				this.PressurePercent = 1f;
 			}
 		}
 	}

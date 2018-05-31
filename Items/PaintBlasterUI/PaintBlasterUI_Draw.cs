@@ -19,7 +19,7 @@ namespace BetterPaint.Items {
 
 		public void DrawUI( BetterPaintMod mymod, SpriteBatch sb ) {
 			Rectangle stream_rect, spray_rect, bucket_rect, scrape_rect;
-			Rectangle bg_rect, size_rect, copy_rect;
+			Rectangle bg_rect, size_rect, copy_rect, press_rect;
 			int x = Main.screenWidth / 2;
 			int y = Main.screenHeight / 2;
 
@@ -28,12 +28,13 @@ namespace BetterPaint.Items {
 			this.DrawOptionLayer( sb, x, y, out bg_rect );
 			this.DrawOptionSize( sb, x, y, out size_rect );
 			this.DrawOptionCopy( sb, x, y, out copy_rect );
+			this.DrawOptionPressure( sb, x, y, out press_rect );
 
 			if( Main.mouseLeft ) {
 				if( !this.IsInteractingWithUI ) {
 					this.IsInteractingWithUI = true;
 
-					this.CheckUISettingsInteractions( ref bg_rect, ref size_rect, ref copy_rect );
+					this.CheckUISettingsInteractions( ref bg_rect, ref size_rect, ref copy_rect, ref press_rect );
 					this.CheckUIBrushInteractions( ref stream_rect, ref spray_rect, ref bucket_rect, ref scrape_rect );
 					this.CheckUIColorInteractions( palette_rects );
 				}
