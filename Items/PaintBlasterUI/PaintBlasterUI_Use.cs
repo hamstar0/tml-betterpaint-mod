@@ -43,11 +43,11 @@ namespace BetterPaint.Items {
 		}
 
 
-		private void CheckUIColorInteractions( IDictionary<int, Rectangle> palette_rects ) {
+		private void CheckUIColorInteractions( IDictionary<int, float> palette_angles ) {
 			int inv_idx = -1;
 			
-			foreach( var kv in palette_rects ) {
-				if( kv.Value.Contains( Main.mouseX, Main.mouseY ) ) {
+			foreach( var kv in palette_angles ) {
+				if( this.IsHoveringIcon( kv.Value, 360 / palette_angles.Count ) ) {
 					inv_idx = kv.Key;
 					break;
 				}

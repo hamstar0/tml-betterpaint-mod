@@ -59,16 +59,16 @@ namespace BetterPaint.Items {
 
 			switch( this.CurrentBrush ) {
 			case PaintBrushType.Stream:
-				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Strobe.CurrentColor, stream_rect, 2 );
+				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor, stream_rect, 2 );
 				break;
 			case PaintBrushType.Spray:
-				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Strobe.CurrentColor, spray_rect, 2 );
+				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor, spray_rect, 2 );
 				break;
 			case PaintBrushType.Spatter:
-				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Strobe.CurrentColor, spatter_rect, 2 );
+				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor, spatter_rect, 2 );
 				break;
 			case PaintBrushType.Erase:
-				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Strobe.CurrentColor, eraser_rect, 2 );
+				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor, eraser_rect, 2 );
 				break;
 			}
 		}

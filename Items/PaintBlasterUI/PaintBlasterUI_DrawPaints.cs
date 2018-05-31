@@ -1,4 +1,5 @@
-﻿using HamstarHelpers.HudHelpers;
+﻿using HamstarHelpers.DebugHelpers;
+using HamstarHelpers.HudHelpers;
 using HamstarHelpers.Utilities.AnimatedColor;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,10 +11,26 @@ using Terraria;
 
 namespace BetterPaint.Items {
 	partial class PaintBlasterUI {
-		public IDictionary<int, Rectangle> DrawColorPalette( BetterPaintMod mymod, SpriteBatch sb ) {
+		public bool IsHoveringIcon( double palette_angle, double angle_step ) {
+			var screen_mid = new Vector2( Main.screenWidth / 2, Main.screenHeight / 2 );
+			var mouse_pos = new Vector2( Main.mouseX, Main.mouseY );
+
+			if( Vector2.Distance(screen_mid, mouse_pos) < PaintBlasterUI.BrushesRingRadius ) {
+				return false;
+			}
+
+			double myangle = Math.Atan2( (double)( mouse_pos.Y - screen_mid.Y ), (double)( mouse_pos.X - screen_mid.X ) ) * ( 180d / Math.PI );
+			myangle = myangle < 0 ? 360d - myangle : myangle;
+
+			return Math.Abs( palette_angle - myangle ) <= ( angle_step * 0.5d ); //rect.Contains( Main.mouseX, Main.mouseY );
+		}
+
+
+
+		public IDictionary<int, float> DrawColorPalette( BetterPaintMod mymod, SpriteBatch sb ) {
 			IList<int> item_idxs = ColorCartridgeItem.GetPaintCartridges( Main.LocalPlayer );
 			var stack_idx_cart = new Dictionary<string, object[]>( item_idxs.Count );
-			var rects = new Dictionary<int, Rectangle>( item_idxs.Count );
+			var angles = new Dictionary<int, float>( item_idxs.Count );
 
 			foreach( int idx in item_idxs ) {
 				Item item = Main.LocalPlayer.inventory[idx];
@@ -31,32 +48,37 @@ namespace BetterPaint.Items {
 
 			double angle_step = 360d / (double)stack_idx_cart.Count;
 			double angle = 0d;
+			double radpi = Math.PI / 180d;
 			
 			foreach( var kv in stack_idx_cart ) {
-				int x = ( Main.screenWidth / 2 ) + (int)( 128d * Math.Cos( angle * (Math.PI / 180d) ) );
-				int y = ( Main.screenHeight / 2 ) + (int)( 128d * Math.Sin( angle * (Math.PI / 180d) ) );
+				int x = ( Main.screenWidth / 2 ) + (int)( 128d * Math.Cos( angle * radpi ) );
+				int y = ( Main.screenHeight / 2 ) + (int)( 128d * Math.Sin( angle * radpi ) );
 
 				var stack = (int)kv.Value[0];
 				var idx = (int)kv.Value[1];
 				var cart = (ColorCartridgeItem)kv.Value[2];
 
-				rects[ idx ] = this.DrawColorIcon( mymod, sb, cart.MyColor, cart.TimesUsed, stack, x, y, (idx == this.CurrentCartridgeInventoryIndex) );
+				this.DrawColorIcon( mymod, sb, cart.MyColor, cart.TimesUsed, stack, x, y, angle, angle_step,
+					( idx == this.CurrentCartridgeInventoryIndex) );
+
+				angles[idx] = (float)angle;
 
 				angle += angle_step;
 			}
 
-			return rects;
+			return angles;
 		}
 
 
 		////////////////
 
-		public Rectangle DrawColorIcon( BetterPaintMod mymod, SpriteBatch sb, Color color, float uses, int stack, int x, int y, bool is_selected ) {
+		public Rectangle DrawColorIcon( BetterPaintMod mymod, SpriteBatch sb, Color color, float uses, int stack, int x, int y, double palette_angle, double angle_step, bool is_selected ) {
 			Texture2D cart_tex = ColorCartridgeItem.CartridgeTex;
 			Texture2D over_tex = ColorCartridgeItem.OverlayTex;
 
+			bool is_hover = this.IsHoveringIcon( palette_angle, angle_step );
+
 			var rect = new Rectangle( x - (cart_tex.Width / 2), y - (cart_tex.Height / 2), cart_tex.Width, cart_tex.Height );
-			bool is_hover = rect.Contains( Main.mouseX, Main.mouseY );
 			float color_mul = is_selected ? PaintBlasterUI.SelectedScale :
 				( is_hover ? PaintBlasterUI.HoveredScale : PaintBlasterUI.IdleScale );
 
@@ -84,7 +106,7 @@ namespace BetterPaint.Items {
 				sel_rect.Width += 6;
 				sel_rect.Height += 6;
 
-				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Strobe.CurrentColor, sel_rect, 2 );
+				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor, sel_rect, 2 );
 			}
 
 			sb.DrawString( Main.fontItemStack, stack+"", new Vector2((rect.X+cart_tex.Width)-4, (rect.Y+cart_tex.Height)-4), Color.White );

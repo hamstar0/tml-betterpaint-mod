@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -23,7 +24,7 @@ namespace BetterPaint.Items {
 			int x = Main.screenWidth / 2;
 			int y = Main.screenHeight / 2;
 
-			IDictionary<int, Rectangle> palette_rects = this.DrawColorPalette( mymod, sb );
+			IDictionary<int, float> palette_angles = this.DrawColorPalette( mymod, sb );
 			this.DrawBrushes( sb, out stream_rect, out spray_rect, out bucket_rect, out scrape_rect );
 			this.DrawOptionLayer( sb, x, y, out bg_rect );
 			this.DrawOptionSize( sb, x, y, out size_rect );
@@ -36,7 +37,7 @@ namespace BetterPaint.Items {
 
 					this.CheckUISettingsInteractions( ref bg_rect, ref size_rect, ref copy_rect, ref press_rect );
 					this.CheckUIBrushInteractions( ref stream_rect, ref spray_rect, ref bucket_rect, ref scrape_rect );
-					this.CheckUIColorInteractions( palette_rects );
+					this.CheckUIColorInteractions( palette_angles );
 				}
 			} else {
 				this.IsInteractingWithUI = false;
