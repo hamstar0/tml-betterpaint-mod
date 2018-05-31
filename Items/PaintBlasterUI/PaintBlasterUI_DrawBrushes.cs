@@ -4,6 +4,7 @@ using HamstarHelpers.Utilities.AnimatedColor;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 
@@ -37,7 +38,7 @@ namespace BetterPaint.Items {
 			bool spray_hover = stream_hover ? false : spray_rect.Contains( Main.mouseX, Main.mouseY );
 			bool spatter_hover = spray_hover ? false : spatter_rect.Contains( Main.mouseX, Main.mouseY );
 			bool eraser_hover = spatter_hover ? false : eraser_rect.Contains( Main.mouseX, Main.mouseY );
-
+			
 			sb.Draw( tex_stream, stream_rect, Color.White * ( this.CurrentBrush == PaintBrushType.Stream ? hilit : ( stream_hover ? lit : unlit ) ) );
 			sb.Draw( tex_spray, spray_rect, Color.White * ( this.CurrentBrush == PaintBrushType.Spray ? hilit : ( spray_hover ? lit : unlit ) ) );
 			sb.Draw( tex_spatter, spatter_rect, Color.White * ( this.CurrentBrush == PaintBrushType.Spatter ? hilit : ( spatter_hover ? lit : unlit ) ) );
@@ -59,16 +60,16 @@ namespace BetterPaint.Items {
 
 			switch( this.CurrentBrush ) {
 			case PaintBrushType.Stream:
-				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor, stream_rect, 2 );
+				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, stream_rect, 2 );
 				break;
 			case PaintBrushType.Spray:
-				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor, spray_rect, 2 );
+				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, spray_rect, 2 );
 				break;
 			case PaintBrushType.Spatter:
-				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor, spatter_rect, 2 );
+				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, spatter_rect, 2 );
 				break;
 			case PaintBrushType.Erase:
-				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor, eraser_rect, 2 );
+				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, eraser_rect, 2 );
 				break;
 			}
 		}

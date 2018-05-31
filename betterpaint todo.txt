@@ -11,10 +11,9 @@ v1
 -	Make 'easy' version of recipes; use inbox to alert to 'hard' mode
 -	Show color on paint blaster
 -	Add sounds to UI and dry fire
--	Add cartridge capacity display on item and bottom left
 -	Add HUD info (mode, cartridge capacity, brush size, pressure)
--	Implement radial angular selection
 
+-	Implement radial angular selection
 -	Stack redundant cartridges on radial selector
 -	Remove empty cartridges from radial selector
 -	Add pressure setting to UI

@@ -60,6 +60,11 @@ namespace BetterPaint.Items {
 
 				sb.DrawString( Main.fontMouseText, str, new Vector2( rect.X, rect.Y - 16 ), Color.White );
 			}
+
+			rect.X -= 4;
+			rect.Y -= 4;
+			rect.Width += 8;
+			rect.Height += 8;
 		}
 
 		public void DrawOptionSize( SpriteBatch sb, int origin_x, int origin_y, out Rectangle rect ) {
@@ -107,6 +112,11 @@ namespace BetterPaint.Items {
 
 				sb.DrawString( Main.fontMouseText, str, new Vector2( rect.X, rect.Y + rect.Height ), Color.White );
 			}
+
+			rect.X -= 4;
+			rect.Y -= 4;
+			rect.Width += 8;
+			rect.Height += 8;
 		}
 		
 		public void DrawOptionCopy( SpriteBatch sb, int origin_x, int origin_y, out Rectangle rect ) {
@@ -132,6 +142,11 @@ namespace BetterPaint.Items {
 				string str = "Copy color";
 				sb.DrawString( Main.fontMouseText, str, new Vector2( rect.X, rect.Y - 16 ), Color.White );
 			}
+
+			rect.X -= 4;
+			rect.Y -= 4;
+			rect.Width += 8;
+			rect.Height += 8;
 		}
 
 		public void DrawOptionPressure( SpriteBatch sb, int origin_x, int origin_y, out Rectangle rect ) {
@@ -140,8 +155,8 @@ namespace BetterPaint.Items {
 			float lit = PaintBlasterUI.HoveredScale;
 			float unlit = PaintBlasterUI.IdleScale;
 
-			Texture2D tex = this.PressurePercent > 0.75 ? PaintBlasterUI.PressureHiTex :
-				(this.PressurePercent < 0.25f ? PaintBlasterUI.PressureLowTex : PaintBlasterUI.PressureMidTex);
+			Texture2D tex = this.PressurePercent >= 0.75 ? PaintBlasterUI.PressureHiTex :
+				(this.PressurePercent <= 0.25f ? PaintBlasterUI.PressureLowTex : PaintBlasterUI.PressureMidTex);
 
 			var offset = new Vector2( tex.Width, tex.Height ) * 0.5f;
 
@@ -158,6 +173,11 @@ namespace BetterPaint.Items {
 				string str = "Brush pressure";
 				sb.DrawString( Main.fontMouseText, str, new Vector2( rect.X, rect.Y + rect.Height ), Color.White );
 			}
+
+			rect.X -= 4;
+			rect.Y -= 4;
+			rect.Width += 8;
+			rect.Height += 8;
 		}
 	}
 }

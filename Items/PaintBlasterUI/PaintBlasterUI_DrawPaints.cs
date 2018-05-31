@@ -15,14 +15,16 @@ namespace BetterPaint.Items {
 			var screen_mid = new Vector2( Main.screenWidth / 2, Main.screenHeight / 2 );
 			var mouse_pos = new Vector2( Main.mouseX, Main.mouseY );
 
-			if( Vector2.Distance(screen_mid, mouse_pos) < PaintBlasterUI.BrushesRingRadius ) {
+			if( Vector2.Distance(screen_mid, mouse_pos) < (PaintBlasterUI.BrushesRingRadius + 16) ) {
 				return false;
 			}
 
 			double myangle = Math.Atan2( (double)( mouse_pos.Y - screen_mid.Y ), (double)( mouse_pos.X - screen_mid.X ) ) * ( 180d / Math.PI );
-			myangle = myangle < 0 ? 360d - myangle : myangle;
+			myangle = myangle < 0 ? 360 + myangle : myangle;
 
-			return Math.Abs( palette_angle - myangle ) <= ( angle_step * 0.5d ); //rect.Contains( Main.mouseX, Main.mouseY );
+			return Math.Abs( palette_angle - myangle ) <= ( angle_step * 0.5d ) ||
+				Math.Abs( (360 + palette_angle) - myangle ) <= ( angle_step * 0.5d );
+			//return rect.Contains( Main.mouseX, Main.mouseY );
 		}
 
 
@@ -106,10 +108,10 @@ namespace BetterPaint.Items {
 				sel_rect.Width += 6;
 				sel_rect.Height += 6;
 
-				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor, sel_rect, 2 );
+				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, sel_rect, 2 );
 			}
 
-			sb.DrawString( Main.fontItemStack, stack+"", new Vector2((rect.X+cart_tex.Width)-4, (rect.Y+cart_tex.Height)-4), Color.White );
+			sb.DrawString( Main.fontItemStack, stack+"", new Vector2((rect.X+cart_tex.Width)-4, (rect.Y+cart_tex.Height)-12), Color.White );
 
 			return rect;
 		}
