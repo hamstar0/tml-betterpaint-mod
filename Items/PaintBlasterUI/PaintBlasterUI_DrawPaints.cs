@@ -12,19 +12,35 @@ namespace BetterPaint.Items {
 	partial class PaintBlasterUI {
 		public IDictionary<int, Rectangle> DrawColorPalette( BetterPaintMod mymod, SpriteBatch sb ) {
 			IList<int> item_idxs = ColorCartridgeItem.GetPaintCartridges( Main.LocalPlayer );
-			var rects = new Dictionary<int, Rectangle>();
+			var stack_idx_cart = new Dictionary<string, object[]>( item_idxs.Count );
+			var rects = new Dictionary<int, Rectangle>( item_idxs.Count );
 
-			double angle_step = 360d / (double)item_idxs.Count;
+			foreach( int idx in item_idxs ) {
+				Item item = Main.LocalPlayer.inventory[idx];
+				var cart = (ColorCartridgeItem)item.modItem;
+				if( cart.RemainingCapacity() == 0 ) { continue; }
+
+				string color_key = cart.MyColor.ToString();
+
+				if( !stack_idx_cart.ContainsKey( color_key ) ) {
+					stack_idx_cart[color_key] = new object[] { 1, idx, cart };
+				} else {
+					stack_idx_cart[color_key][0] = (int)stack_idx_cart[color_key][0] + 1;
+				}
+			}
+
+			double angle_step = 360d / (double)stack_idx_cart.Count;
 			double angle = 0d;
 			
-			foreach( int idx in item_idxs ) {
+			foreach( var kv in stack_idx_cart ) {
 				int x = ( Main.screenWidth / 2 ) + (int)( 128d * Math.Cos( angle * (Math.PI / 180d) ) );
 				int y = ( Main.screenHeight / 2 ) + (int)( 128d * Math.Sin( angle * (Math.PI / 180d) ) );
 
-				Item item = Main.LocalPlayer.inventory[ idx ];
-				var myitem = (ColorCartridgeItem)item.modItem;
+				var stack = (int)kv.Value[0];
+				var idx = (int)kv.Value[1];
+				var cart = (ColorCartridgeItem)kv.Value[2];
 
-				rects[ idx ] = this.DrawColorIcon( mymod, sb, myitem.MyColor, myitem.TimesUsed, x, y, (idx == this.CurrentCartridgeInventoryIndex) );
+				rects[ idx ] = this.DrawColorIcon( mymod, sb, cart.MyColor, cart.TimesUsed, stack, x, y, (idx == this.CurrentCartridgeInventoryIndex) );
 
 				angle += angle_step;
 			}
@@ -35,7 +51,7 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public Rectangle DrawColorIcon( BetterPaintMod mymod, SpriteBatch sb, Color color, float uses, int x, int y, bool is_selected ) {
+		public Rectangle DrawColorIcon( BetterPaintMod mymod, SpriteBatch sb, Color color, float uses, int stack, int x, int y, bool is_selected ) {
 			Texture2D cart_tex = ColorCartridgeItem.CartridgeTex;
 			Texture2D over_tex = ColorCartridgeItem.OverlayTex;
 
@@ -70,6 +86,8 @@ namespace BetterPaint.Items {
 
 				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Strobe.CurrentColor, sel_rect, 2 );
 			}
+
+			sb.DrawString( Main.fontItemStack, stack+"", new Vector2((rect.X+cart_tex.Width)-4, (rect.Y+cart_tex.Height)-4), Color.White );
 
 			return rect;
 		}

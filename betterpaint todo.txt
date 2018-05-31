@@ -12,11 +12,11 @@ v1
 -	Show color on paint blaster
 -	Add sounds to UI and dry fire
 -	Add cartridge capacity display on item and bottom left
--	Implement radial selection
+-	Add HUD info (mode, cartridge capacity, brush size, pressure)
+-	Implement radial angular selection
+
 -	Stack redundant cartridges on radial selector
 -	Remove empty cartridges from radial selector
--	Add HUD info (mode, cartridge capacity, brush size, pressure)
-
 -	Add pressure setting to UI
 -	Set eraser to work without paint selected
 -	Draw rectangle over options

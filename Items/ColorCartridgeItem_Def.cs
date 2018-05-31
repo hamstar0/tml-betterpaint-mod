@@ -143,6 +143,14 @@ namespace BetterPaint.Items {
 
 		////////////////
 
+		public float RemainingCapacity() {
+			var mymod = (BetterPaintMod)this.mod;
+			return mymod.Config.PaintCartridgeCapacity - this.TimesUsed;
+		}
+
+
+		////////////////
+
 		public void SetColor( Color color ) {
 			this.MyColor = color;
 		}
