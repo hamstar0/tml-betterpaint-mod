@@ -82,7 +82,7 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
-			if( this.CurrentMode != PaintBrushType.Erase && cartridge.RemainingCapacity() <= 0f ) {
+			if( this.CurrentMode != PaintBrushType.Erase && cartridge.UsageRemaining <= 0f ) {
 				return false;
 			}
 
@@ -179,9 +179,9 @@ namespace BetterPaint.Items {
 			}
 
 			if( cartridge != null && uses > 0 ) {
-				float total_uses = cartridge.TimesUsed + uses;
-
-				cartridge.SetTimesUsed( Math.Min( total_uses, (float)mymod.Config.PaintCartridgeCapacity ) );
+				float total_uses = cartridge.UsageRemaining - uses;
+				
+				cartridge.SetAmmo( total_uses );
 			}
 
 			return uses;

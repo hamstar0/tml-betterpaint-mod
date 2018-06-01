@@ -47,9 +47,8 @@ namespace BetterPaint.Items {
 			Item cart_item = myblaster.GetCurrentPaintItem();
 			if( cart_item != null ) {
 				var mycart = (ColorCartridgeItem)cart_item.modItem;
-
-				float remaining_capacity = mycart.RemainingCapacity();
-				float capacity_percent = (float)remaining_capacity / (float)mymod.Config.PaintCartridgeCapacity;
+				
+				float capacity_percent = (float)mycart.UsageRemaining / (float)mymod.Config.PaintCartridgeCapacity;
 
 				int height = (int)( capacity_percent * 50f ) * 2;
 				int top = 100 - height;

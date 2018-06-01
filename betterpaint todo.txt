@@ -14,9 +14,9 @@ v1
 -	Add sounds to UI and dry fire
 -	Add hover text for paint ammo HUD
 -	@Test copy, per-color erase, pressure
+
 -	F&T
 	-	Increase cartridge size a bit (increase recipe as well)
-
 	-	Fix small spatter mode not producing paint
 	-	Fix erase mode not working with empty cartridge
 	-	Fix all layers mode (ensure BOTH layers!)

@@ -41,7 +41,8 @@ namespace BetterPaint.Painting {
 			Color lerped_color = Color.Lerp( existing_color, color, pressure_percent );
 
 			data.SetColorAt( color, tile_x, tile_y );
-			return 1f;
+
+			return PaintBrush.ComputeColorChangePercent( existing_color, lerped_color );
 		}
 	}
 }

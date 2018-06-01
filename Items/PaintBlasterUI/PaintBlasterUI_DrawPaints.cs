@@ -37,7 +37,7 @@ namespace BetterPaint.Items {
 			foreach( int idx in item_idxs ) {
 				Item item = Main.LocalPlayer.inventory[idx];
 				var cart = (ColorCartridgeItem)item.modItem;
-				if( cart.RemainingCapacity() == 0 ) { continue; }
+				if( cart.UsageRemaining == 0 ) { continue; }
 
 				string color_key = cart.MyColor.ToString();
 
