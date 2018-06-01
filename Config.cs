@@ -30,6 +30,11 @@ namespace BetterPaint {
 		public int HudPaintAmmoOffsetX = -32;
 		public int HudPaintAmmoOffsetY = -160;
 
+		public bool PainterSellsBlaster = false;
+		public bool PainterSellsRGBCartridges = true;
+		public bool PainterSellsCopyCartridge = false;
+		public bool PainterSellsPaintMixer = false;
+
 
 		////////////////
 

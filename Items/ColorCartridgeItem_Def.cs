@@ -63,7 +63,8 @@ namespace BetterPaint.Items {
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Color Cartridge" );
 			this.Tooltip.SetDefault( "Needs a paint blaster to use" + '\n' +
-				"Mix colored paints at a paint mixer" );
+				"Mix paint to make cartridges at a paint mixer" + '\n' +
+				"Blend cartidges together at a paint mixer" );
 
 			if( ColorCartridgeItem.OverlayTex == null ) {
 				ColorCartridgeItem.OverlayTex = this.mod.GetTexture( "Items/ColorCartridgeItem_Color" );
@@ -86,7 +87,7 @@ namespace BetterPaint.Items {
 			this.item.width = ColorCartridgeItem.Width;
 			this.item.height = ColorCartridgeItem.Height;
 			this.item.ammo = this.item.type;
-			this.item.value = Item.buyPrice( 0, 0, 10, 0 );
+			this.item.value = Item.buyPrice( 0, 0, 5, 0 );
 			this.item.rare = 1;
 		}
 

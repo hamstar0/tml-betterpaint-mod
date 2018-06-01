@@ -27,7 +27,7 @@ namespace BetterPaint.Items {
 			this.item.useTime = 10;
 			this.item.useStyle = 1;
 			this.item.consumable = true;
-			this.item.value = 500;
+			this.item.value = Item.buyPrice( 0, 5, 0, 0 );
 			this.item.createTile = mod.TileType( "PaintMixerTile" );
 		}
 

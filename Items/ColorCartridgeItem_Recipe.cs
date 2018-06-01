@@ -39,7 +39,7 @@ namespace BetterPaint.Items {
 		////////////////
 
 		public override int ConsumeItem( int item_type, int num_required ) {
-			if( !ItemIdentityHelpers.Paints.Item2.Contains(item_type) ) {   // Not paint
+			if( !ItemIdentityHelpers.Paints.Item2.Contains( item_type ) ) {   // Not paint
 				return base.ConsumeItem( item_type, num_required );
 			}
 
