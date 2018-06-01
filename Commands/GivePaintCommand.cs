@@ -28,8 +28,9 @@ namespace BetterPaint.Commands {
 			var mymod = (BetterPaintMod)this.mod;
 			int paint_type = this.mod.ItemType<ColorCartridgeItem>();
 
-			int idx = ItemHelpers.CreateItem( Main.LocalPlayer.position, paint_type, 1, ColorCartridgeItem.Width, ColorCartridgeItem.Height );
-			Item paint_item = Main.item[idx];
+			int item_idx = ItemHelpers.CreateItem( Main.LocalPlayer.position, paint_type, 1, ColorCartridgeItem.Width, ColorCartridgeItem.Height );
+			Item paint_item = Main.item[item_idx];
+
 			if( paint_item == null || paint_item.IsAir ) {
 				throw new Exception( "Could not create cheaty paint." );
 			}

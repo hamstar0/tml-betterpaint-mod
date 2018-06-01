@@ -11,8 +11,8 @@ v1.1
 v1
 -	Give credit for paint mixer tile sprite
 -	Add inbox alert for paint blaster instructions
--	Add cartridge blending
 
+-	Add cartridge blending
 -	Add option to sell from Painter npc
 -	Add sounds to UI and dry fire
 -	Add hover text for paint ammo HUD

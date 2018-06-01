@@ -13,6 +13,7 @@ namespace BetterPaint.Items {
 
 			int cart_idx = ItemHelpers.CreateItem( player.position, BetterPaintMod.Instance.ItemType<ColorCartridgeItem>(), 1,
 				ColorCartridgeItem.Width, ColorCartridgeItem.Height );
+
 			var mycart = (ColorCartridgeItem)Main.item[ cart_idx ].modItem;
 
 			mycart.SetPaint( color, BetterPaintMod.Instance.Config.PaintCartridgeCapacity );
