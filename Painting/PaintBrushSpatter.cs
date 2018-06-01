@@ -15,41 +15,45 @@ namespace BetterPaint.Painting {
 
 			float uses = 0;
 
-			int diameter = brush_size == PaintBrushSize.Small ? 2 : 6;
+			int diameter = brush_size == PaintBrushSize.Small ? 3 : 6;
 			diameter = (int)( (float)diameter * mymod.Config.BrushSizeMultiplier );
 
-			int density = (int)((float)(diameter * diameter) * mymod.Config.BrushSpatterDensity);
+			int spats = (int)( (float)(diameter * diameter) * mymod.Config.BrushSpatterDensity );
 
 			int min_radius = Math.Max( 1, diameter / 3 );
 			int extended_radius_range = diameter - min_radius;
-
-			for( int i=0; i<density; i++ ) {
+			
+			for( int i=0; i<spats; i++ ) {
 				int extended_radius = rand.Next( extended_radius_range );
-				int x_off = rand.Next( -(min_radius + extended_radius), (min_radius + extended_radius) );
+				int radius = min_radius + extended_radius;
 
-				extended_radius = rand.Next( extended_radius_range );
-				int y_off = rand.Next( -(min_radius + extended_radius), (min_radius + extended_radius) );
+				int x_off = rand.Next( -radius, radius );
 
-				float pressure_rand = 1f - (float)rand.NextDouble();
+				radius = min_radius + extended_radius;
+				int y_off = rand.Next( -radius, radius );
 
-				this.PaintAt( data, color, pressure_rand * pressure_percent, (ushort)(tile_x + x_off), (ushort)(tile_y + y_off) );
+				float rand_percent = pressure_percent * (1f - (float)rand.NextDouble());
+
+				if( rand_percent >= 0.01f ) {
+					uses += this.PaintAt( data, color, rand_percent, (ushort)( tile_x + x_off ), (ushort)( tile_y + y_off ) );
+				}
 			}
 
 			return uses;
 		}
 
 
-		public float PaintAt( PaintData data, Color color, float pressure, ushort tile_x, ushort tile_y ) {
+		public float PaintAt( PaintData data, Color color, float pressure_percent, ushort tile_x, ushort tile_y ) {
 			if( TileHelpers.IsAir( Main.tile[tile_x, tile_y] ) ) {
 				return 0f;
 			}
 
 			Color existing_color = data.GetColor( tile_x, tile_y );
-			Color lerped_color = Color.Lerp( existing_color, color, pressure );
+			Color lerped_color = Color.Lerp( existing_color, color, pressure_percent );
 
 			data.SetColorAt( lerped_color, tile_x, tile_y );
 
-			return 1f;
+			return pressure_percent;
 		}
 	}
 }

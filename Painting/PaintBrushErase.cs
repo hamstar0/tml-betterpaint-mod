@@ -6,7 +6,7 @@ using Terraria;
 
 namespace BetterPaint.Painting {
 	class PaintBrushErase : PaintBrush {
-		public override float Apply( PaintData data, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+		public override float Apply( PaintData data, Color _, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			var mymod = BetterPaintMod.Instance;
 
 			int diameter = brush_size == PaintBrushSize.Small ? 1 : 6;
@@ -17,8 +17,6 @@ namespace BetterPaint.Painting {
 
 			int tile_x = world_x / 16;
 			int tile_y = world_y / 16;
-
-			color.A = color.A > 192 ? (byte)192 : (byte)0;
 			
 			for( int i = -iter_range; i <= iter_range; i++ ) {
 				for( int j = -iter_range; j <= iter_range; j++ ) {
@@ -28,7 +26,7 @@ namespace BetterPaint.Painting {
 						continue;
 					}
 
-					this.EraseAt( data, color, pressure_percent, (ushort)(tile_x + i), (ushort)(tile_y + j) );
+					this.EraseAt( data, pressure_percent, (ushort)(tile_x + i), (ushort)(tile_y + j) );
 				}
 			}
 
@@ -36,27 +34,26 @@ namespace BetterPaint.Painting {
 		}
 
 
-		public void EraseAt( PaintData data, Color color, float pressure, ushort tile_x, ushort tile_y ) {
+		public void EraseAt( PaintData data, float pressure_percent, ushort tile_x, ushort tile_y ) {
 			if( TileHelpers.IsAir( Main.tile[tile_x, tile_y] ) ) {
 				return;
 			}
 
-			int tolerance = (int)(pressure * 255f);
+			int tolerance = (int)(pressure_percent * 255f);
 
 			if( data.HasColor(tile_x, tile_y) ) {
-				Color existing_color = data.GetColor( tile_x, tile_y );
+				if( pressure_percent == 1f ) {
+					data.RemoveColorAt( tile_x, tile_y );
+				} else{
+					Color existing_color = data.GetColor( tile_x, tile_y );
+					Color lerped_color = Color.Lerp( existing_color, Color.Transparent, pressure_percent );
 
-				if( Math.Abs((int)existing_color.R - (int)color.R) > tolerance ) {
-					return;
+					if( (lerped_color.R + lerped_color.G + lerped_color.B + lerped_color.A) <= 32 ) {
+						data.RemoveColorAt( tile_x, tile_y );
+					} else {
+						data.SetColorAt( lerped_color, tile_x, tile_y );
+					}
 				}
-				if( Math.Abs((int)existing_color.G - (int)color.G) > tolerance ) {
-					return;
-				}
-				if( Math.Abs((int)existing_color.B - (int)color.B) > tolerance ) {
-					return;
-				}
-
-				data.RemoveColorAt( tile_x, tile_y );
 			}
 		}
 	}

@@ -13,18 +13,25 @@ namespace BetterPaint.Items {
 	partial class PaintBlasterItem : ModItem {
 		public override bool CanUseItem( Player player ) {
 			Item paint_item = this.GetCurrentPaintItem();
+
+			if( this.IsModeSelecting ) {
+				return false;
+			}
+
+			if( paint_item == null ) {
+				return false;
+			}
+
 			Vector2 tile_pos = UIHelpers.GetWorldMousePosition() / 16f;
 
-			return !this.IsModeSelecting &&
-				paint_item != null &&
-				this.CanPaintAt( (ColorCartridgeItem)paint_item.modItem, (ushort)tile_pos.X, (ushort)tile_pos.Y );
+			return this.CanPaintAt( (ColorCartridgeItem)paint_item.modItem, (ushort)tile_pos.X, (ushort)tile_pos.Y );
 		}
 
 
 		public override bool Shoot( Player player, ref Vector2 pos, ref float vel_x, ref float vel_y, ref int type, ref int dmg, ref float kb ) {
-			Vector2 tile_pos = UIHelpers.GetWorldMousePosition();
-			int world_x = (int)tile_pos.X;
-			int world_y = (int)tile_pos.Y;
+			Vector2 world_mouse_pos = UIHelpers.GetWorldMousePosition();
+			int world_x = (int)world_mouse_pos.X;
+			int world_y = (int)world_mouse_pos.Y;
 			ushort tile_x = (ushort)( world_x / 16 );
 			ushort tile_y = (ushort)( world_y / 16 );
 			Color? dust_color = null;
@@ -75,7 +82,7 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
-			if( cartridge.RemainingCapacity() <= 0f ) {
+			if( this.CurrentMode != PaintBrushType.Erase && cartridge.RemainingCapacity() <= 0f ) {
 				return false;
 			}
 
