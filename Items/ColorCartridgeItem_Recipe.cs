@@ -97,8 +97,8 @@ namespace BetterPaint.Items {
 
 		public ColorCartridgePaintRecipe( BetterPaintMod mymod, ColorCartridgeItem myitem ) : base ( mymod ) {
 			this.AddTile( mymod.TileType<PaintMixerTile>() );
-			this.AddIngredient( ItemID.Gel, mymod.Config.PaintRecipeGelIngredientQuantity );
-			this.AddRecipeGroup( "HamstarHelpers:Paints", mymod.Config.PaintRecipePaintIngredientQuantity );
+			this.AddIngredient( ItemID.Gel, mymod.Config.PaintRecipeGels );
+			this.AddRecipeGroup( "HamstarHelpers:Paints", mymod.Config.PaintRecipePaints );
 			this.SetResult( myitem, 1 );
 		}
 
@@ -117,7 +117,7 @@ namespace BetterPaint.Items {
 
 			var mymod = (BetterPaintMod)this.mod;
 			var inv = Main.LocalPlayer.inventory;
-			int max_paints = mymod.Config.PaintRecipePaintIngredientQuantity;
+			int max_paints = mymod.Config.PaintRecipePaints;
 			ISet<int> paints = ItemIdentityHelpers.Paints.Item2;
 			int count = 0;
 

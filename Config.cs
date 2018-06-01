@@ -15,13 +15,19 @@ namespace BetterPaint {
 		public bool DebugModeInfo = false;
 		public bool DebugModeCheats = false;
 
+		public bool PaintMixerRecipeEnabled = true;
+		public bool PaintMixerRecipeBlendOMatic = true;
+
 		public bool PaintRecipeEnabled = true;
-		public int PaintRecipeGelIngredientQuantity = 10;
-		public int PaintRecipePaintIngredientQuantity = 100;
+		public int PaintRecipeGels = 10;
+		public int PaintRecipePaints = 100;
 		public int PaintCartridgeCapacity = 2000;
 
-		public int CopyPaintManaPotionIngredientQuantity = 10;
-		public int CopyPaintNaniteIngredientQuantity = 5;
+		public bool CopyPaintRecipeEnabled = true;
+		public int CopyPaintRecipeManaPotions = 10;
+		public int CopyPaintRecipeNanites = 5;
+
+		public bool PaintBlasterRecipeEnabled = true;
 
 		public float BrushSizeMultiplier = 1;
 

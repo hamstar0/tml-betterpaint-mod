@@ -1,1 +1,4 @@
-Adds magic paint to the game, letting you paint with exacting (and overlapping) color on any tiles.
+Improves the paint function of the game by adding a spray applicator, letting you paint with full, smooth RGB color across your world. Configurable.
+
+Additional credits:
+* dekrypt - Paint Mixer sprite

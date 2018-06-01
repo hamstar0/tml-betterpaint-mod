@@ -6,12 +6,13 @@ Future
 
 
 v1.1
+-	Glowing paints
 -	Implement queued painting
 -	Implement loading paint on server join
 v1
 -	Give credit for paint mixer tile sprite
--	Add inbox alert for paint blaster instructions
 
+-	Add inbox alert for paint blaster instructions
 -	Add cartridge blending
 -	Add option to sell from Painter npc
 -	Add sounds to UI and dry fire

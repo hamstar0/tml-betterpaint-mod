@@ -1,5 +1,4 @@
 ﻿using HamstarHelpers.TileHelpers;
-using HamstarHelpers.XnaHelpers;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -9,7 +8,7 @@ namespace BetterPaint.Painting {
 	class PaintBrushSpray : PaintBrush {
 		public override float Apply( PaintData data, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			var mymod = BetterPaintMod.Instance;
-			int diameter = brush_size == PaintBrushSize.Small ? 3 : 6;
+			int diameter = brush_size == PaintBrushSize.Small ? 3 : 8;
 			diameter = (int)((float)diameter * mymod.Config.BrushSizeMultiplier);
 
 			int iter_range = diameter / 2;

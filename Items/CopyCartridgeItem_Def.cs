@@ -47,23 +47,34 @@ namespace BetterPaint.Items {
 
 		public override void AddRecipes() {
 			var mymod = (BetterPaintMod)this.mod;
-			var recipe = new ModRecipe( (BetterPaintMod)this.mod );
+			var recipe = new CopyCartridgeRecipe( mymod, this );
+			recipe.AddRecipe();
+		}
+	}
 
-			int mana_pot_qt = mymod.Config.CopyPaintManaPotionIngredientQuantity;
-			int nanite_qt = mymod.Config.CopyPaintNaniteIngredientQuantity;
-			
-			recipe.AddTile( mymod.TileType<PaintMixerTile>() );
 
-			recipe.AddIngredient( mymod.ItemType<ColorCartridgeItem>(), 1 );
+
+	class CopyCartridgeRecipe : ModRecipe {
+		public CopyCartridgeRecipe( BetterPaintMod mymod, CopyCartridgeItem mycart ) : base( mymod ) {
+			int mana_pot_qt = mymod.Config.CopyPaintRecipeManaPotions;
+			int nanite_qt = mymod.Config.CopyPaintRecipeNanites;
+
+			this.AddTile( mymod.TileType<PaintMixerTile>() );
+
+			this.AddIngredient( mymod.ItemType<ColorCartridgeItem>(), 1 );
 			if( mana_pot_qt > 0 ) {
-				recipe.AddIngredient( ItemID.GreaterManaPotion, mymod.Config.CopyPaintManaPotionIngredientQuantity );
+				this.AddIngredient( ItemID.GreaterManaPotion, mymod.Config.CopyPaintRecipeManaPotions );
 			}
 			if( nanite_qt > 0 ) {
-				recipe.AddIngredient( ItemID.Nanites, mymod.Config.CopyPaintNaniteIngredientQuantity );
+				this.AddIngredient( ItemID.Nanites, mymod.Config.CopyPaintRecipeNanites );
 			}
 
-			recipe.SetResult( this, 1 );
-			recipe.AddRecipe();
+			this.SetResult( mycart );
+		}
+
+
+		public override bool RecipeAvailable() {
+			return ( (BetterPaintMod)this.mod ).Config.CopyPaintRecipeEnabled;
 		}
 	}
 }

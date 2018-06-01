@@ -60,6 +60,7 @@
     <Compile Include="Commands\ClearAllPaintCommand.cs" />
     <Compile Include="Items\CopyCartridgeItem_Def.cs" />
     <Compile Include="Items\PaintBlasterHUD\PaintBlasterHUD.cs" />
+    <Compile Include="Items\PaintBlasterItem_Recipe.cs" />
     <Compile Include="Items\PaintBlasterItem_UI.cs" />
     <Compile Include="Items\PaintBlasterItem_Action.cs" />
     <Compile Include="Items\PaintBlasterUI\PaintBlasterUI_DrawPaints.cs" />
@@ -98,6 +99,7 @@
   <ItemGroup>
     <Content Include="build.txt" />
     <Content Include="description.txt" />
+    <Content Include="icon.png" />
     <Content Include="Items\CopyCartridgeItem.png" />
     <Content Include="Items\ColorCartridgeItem.png" />
     <Content Include="Items\ColorCartridgeItem_Color.png" />

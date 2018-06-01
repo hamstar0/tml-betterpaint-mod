@@ -33,13 +33,30 @@ namespace BetterPaint.Items {
 
 
 		public override void AddRecipes() {
-			ModRecipe recipe = new ModRecipe( mod );
-			recipe.AddTile( TileID.HeavyWorkBench );
-			recipe.AddIngredient( ItemID.DyeVat, 1 );
-			recipe.AddIngredient( ItemID.BlendOMatic, 1 );
-			recipe.AddIngredient( ItemID.Extractinator, 1 );
-			recipe.SetResult( this );
+			var mymod = (BetterPaintMod)this.mod;
+			var recipe = new PaintMixerRecipe( mymod, this );
 			recipe.AddRecipe();
+		}
+	}
+
+
+
+	class PaintMixerRecipe : ModRecipe {
+		public PaintMixerRecipe( BetterPaintMod mymod, PaintMixerItem mymixer ) : base( mymod ) {
+			this.AddTile( TileID.HeavyWorkBench );
+
+			this.AddIngredient( ItemID.DyeVat, 1 );
+			this.AddIngredient( ItemID.Extractinator, 1 );
+			if( mymod.Config.PaintMixerRecipeBlendOMatic ) {
+				this.AddIngredient( ItemID.BlendOMatic, 1 );
+			}
+
+			this.SetResult( mymixer );
+		}
+
+
+		public override bool RecipeAvailable() {
+			return ((BetterPaintMod)this.mod).Config.PaintMixerRecipeEnabled;
 		}
 	}
 }

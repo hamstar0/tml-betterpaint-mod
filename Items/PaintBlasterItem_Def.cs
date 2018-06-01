@@ -85,16 +85,6 @@ namespace BetterPaint.Items {
 		}
 
 
-		public override void AddRecipes() {
-			var recipe = new ModRecipe( this.mod );
-			recipe.AddIngredient( ItemID.Clentaminator );
-			recipe.AddIngredient( ItemID.Flamethrower );
-			recipe.AddIngredient( ItemID.PaintSprayer );
-			recipe.SetResult( this );
-			recipe.AddRecipe();
-		}
-
-
 		////////////////
 
 		public void CheckSettings( Player player ) {
