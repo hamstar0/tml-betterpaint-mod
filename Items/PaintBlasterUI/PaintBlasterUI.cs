@@ -1,10 +1,6 @@
 ﻿using BetterPaint.Painting;
-using HamstarHelpers.PlayerHelpers;
 using HamstarHelpers.TmlHelpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using Terraria;
 
 
 namespace BetterPaint.Items {
@@ -64,11 +60,12 @@ namespace BetterPaint.Items {
 		public bool IsInteractingWithUI { get; private set; }
 
 		public PaintBrushType CurrentBrush { get; private set; }
-		public int CurrentCartridgeInventoryIndex { get; private set; }
 		public PaintLayer Layer { get; private set; }
 		public PaintBrushSize BrushSize { get; private set; }
 		public float PressurePercent { get; private set; }
-		public bool IsCopying { get; private set; }
+
+		public int CurrentCartridgeInventoryIndex { get; internal set; }
+		public bool IsCopying { get; internal set; }
 
 
 		////////////////
@@ -79,21 +76,6 @@ namespace BetterPaint.Items {
 			this.Layer = PaintLayer.Foreground;
 			this.BrushSize = PaintBrushSize.Small;
 			this.PressurePercent = 1f;
-		}
-
-
-		////////////////
-
-		private void UpdateUI( BetterPaintMod mymod, Player player ) {
-			if( this.IsCopying ) {
-				var set = new HashSet<int> { mymod.ItemType<CopyCartridgeItem>() };
-				var copy_cart_item = PlayerItemFinderHelpers.FindFirstOfItemFor( player, set );
-
-				if( copy_cart_item == null ) {
-					Main.NewText( "Copy Cartridges needed.", Color.Red );
-					this.IsCopying = false;
-				}
-			}
 		}
 	}
 }

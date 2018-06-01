@@ -48,13 +48,14 @@ namespace BetterPaint.Painting {
 				return 0f;
 			}
 
-			float percent = pressure_percent * (1f - (dist / brush_radius));
+			float dist_pressure_percent = pressure_percent * (1f - (dist / brush_radius));
 			Color existing_color = data.GetColor( tile_x, tile_y );
-			Color lerped_color = Color.Lerp( existing_color, color, percent );
+			Color lerped_color = Color.Lerp( existing_color, color, dist_pressure_percent );
 
 			data.SetColorAt( lerped_color, (ushort)tile_x, (ushort)tile_y );
 
-			return PaintBrush.ComputeColorChangePercent( existing_color, lerped_color );
+			return dist_pressure_percent;
+			//return PaintBrush.ComputeColorChangePercent( existing_color, lerped_color );
 		}
 	}
 }

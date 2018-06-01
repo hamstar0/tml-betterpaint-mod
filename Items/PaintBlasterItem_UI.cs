@@ -14,5 +14,10 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 			this.UI.DrawUI( mymod, sb );
 		}
+
+
+		public void DrawScreen( SpriteBatch sb ) {
+			this.UI.DrawScreen( (BetterPaintMod)this.mod, sb );
+		}
 	}
 }

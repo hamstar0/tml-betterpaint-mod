@@ -42,7 +42,7 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public float UsageRemaining { get; private set; }
+		public float PaintQuantity { get; private set; }
 		public Color MyColor { get; private set; }
 
 
@@ -52,7 +52,7 @@ namespace BetterPaint.Items {
 
 		public override ModItem Clone() {
 			var clone = (ColorCartridgeItem)base.Clone();
-			clone.UsageRemaining = this.UsageRemaining;
+			clone.PaintQuantity = this.PaintQuantity;
 			clone.MyColor = this.MyColor;
 			return clone;
 		}
@@ -80,7 +80,7 @@ namespace BetterPaint.Items {
 		public override void SetDefaults() {
 			var mymod = (BetterPaintMod)this.mod;
 
-			this.UsageRemaining = mymod.Config.PaintCartridgeCapacity;
+			this.PaintQuantity = 0;
 			this.MyColor = Color.White;
 
 			this.item.width = ColorCartridgeItem.Width;
@@ -92,7 +92,7 @@ namespace BetterPaint.Items {
 
 		public override void ModifyTooltips( List<TooltipLine> tooltips ) {
 			var mymod = (BetterPaintMod)this.mod;
-			float percent = this.UsageRemaining / mymod.Config.PaintCartridgeCapacity;
+			float percent = this.PaintQuantity / mymod.Config.PaintCartridgeCapacity;
 
 			var tip1 = new TooltipLine( this.mod, "BetterPaint: Color Indicator", "Color value: " + this.MyColor.ToString() ) {
 				overrideColor = this.MyColor
@@ -115,14 +115,14 @@ namespace BetterPaint.Items {
 				this.MyColor = new Color( bytes[0], bytes[1], bytes[2], bytes[3] );
 			}
 			if( tag.ContainsKey( "usage_remaining" ) ) {
-				this.UsageRemaining = tag.GetFloat( "usage_remaining" );
+				this.PaintQuantity = tag.GetFloat( "usage_remaining" );
 			}
 		}
 
 		public override TagCompound Save() {
 			return new TagCompound {
 				{ "color", new byte[] { this.MyColor.R, this.MyColor.G, this.MyColor.B, this.MyColor.A } },
-				{ "usage_remaining", this.UsageRemaining }
+				{ "usage_remaining", this.PaintQuantity }
 			};
 		}
 
@@ -133,30 +133,26 @@ namespace BetterPaint.Items {
 			writer.Write( (byte)this.MyColor.G );
 			writer.Write( (byte)this.MyColor.B );
 			writer.Write( (byte)this.MyColor.A );
-			writer.Write( (float)this.UsageRemaining );
+			writer.Write( (float)this.PaintQuantity );
 		}
 
 		public override void NetRecieve( BinaryReader reader ) {
 			this.MyColor = new Color( reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), reader.ReadByte() );
-			this.UsageRemaining = reader.ReadSingle();
+			this.PaintQuantity = reader.ReadSingle();
 		}
 
 
 		////////////////
-
-		public float RemainingCapacity() {
-			return this.UsageRemaining;
-		}
-
-
-		////////////////
-
-		public void SetColor( Color color ) {
+		
+		public void SetPaint( Color color, float amount ) {
 			this.MyColor = color;
+			this.PaintQuantity = amount;
 		}
 
-		public void SetAmmo( float uses ) {
-			this.TimesUsed = uses;
+
+		public void ConsumePaint( float amount ) {
+			this.PaintQuantity = this.PaintQuantity - amount;
+			if( this.PaintQuantity < 0 ) { this.PaintQuantity = 0; }
 		}
 	}
 }

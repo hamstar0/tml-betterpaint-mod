@@ -48,14 +48,16 @@ namespace BetterPaint.Items {
 			if( cart_item != null ) {
 				var mycart = (ColorCartridgeItem)cart_item.modItem;
 				
-				float capacity_percent = (float)mycart.UsageRemaining / (float)mymod.Config.PaintCartridgeCapacity;
+				float capacity_percent = (float)mycart.PaintQuantity / (float)mymod.Config.PaintCartridgeCapacity;
 
 				int height = (int)( capacity_percent * 50f ) * 2;
 				int top = 100 - height;
 
-				sb.Draw( PaintBlasterHUD.AmmoTop, new Vector2( x, y + 16 + top ), mycart.MyColor );
-				sb.Draw( PaintBlasterHUD.AmmoBot, new Vector2( x, y + 124 ), mycart.MyColor );
-				sb.Draw( Main.magicPixel, new Rectangle( x + 4, y + 24 + top, 16, height ), mycart.MyColor );
+				Color color = capacity_percent >= 0.01f ? mycart.MyColor : mycart.MyColor * 0.25f;
+
+				sb.Draw( PaintBlasterHUD.AmmoTop, new Vector2( x, y + 16 + top ), color );
+				sb.Draw( PaintBlasterHUD.AmmoBot, new Vector2( x, y + 124 ), color );
+				sb.Draw( Main.magicPixel, new Rectangle( x + 4, y + 24 + top, 16, height ), color );
 			}
 		}
 	}

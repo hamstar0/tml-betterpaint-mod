@@ -12,14 +12,33 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public bool IsModeSelecting { get; private set; }
+		public bool IsUsingUI { get; private set; }
 
-		public PaintBrushType CurrentMode { get { return this.UI.CurrentBrush; } }
-		public int CurrentCartridgeInventoryIndex { get { return this.UI.CurrentCartridgeInventoryIndex; } }
-		public PaintLayer Layer { get { return this.UI.Layer; } }
-		public PaintBrushSize BrushSize { get { return this.UI.BrushSize; } }
-		public float PressurePercent { get { return this.UI.PressurePercent; } }
-		public bool IsCopying { get { return this.UI.IsCopying; } }
+		public PaintBrushType CurrentBrush {
+			get { return this.UI.CurrentBrush; }
+			private set { this.UI.CurrentBrush = value; }
+		}
+		public PaintLayer Layer {
+			get { return this.UI.Layer; }
+			private set { this.UI.Layer = value; }
+		}
+		public PaintBrushSize BrushSize {
+			get { return this.UI.BrushSize; }
+			private set { this.UI.BrushSize = value; }
+		}
+		public float PressurePercent {
+			get { return this.UI.PressurePercent; }
+			private set { this.UI.PressurePercent = value; }
+		}
+		public int CurrentCartridgeInventoryIndex {
+			get { return this.UI.CurrentCartridgeInventoryIndex; }
+			private set { this.UI.CurrentCartridgeInventoryIndex = value; }
+		}
+
+		public bool IsCopying {
+			get { return this.UI.IsCopying; }
+			private set { this.UI.IsCopying = value; }
+		}
 
 		private PaintBlasterUI UI;
 		private PaintBlasterHUD HUD;
@@ -28,7 +47,7 @@ namespace BetterPaint.Items {
 		////////////////
 
 		public PaintBlasterItem() : base() {
-			this.IsModeSelecting = false;
+			this.IsUsingUI = false;
 			this.UI = new PaintBlasterUI();
 			this.HUD = new PaintBlasterHUD();
 		}

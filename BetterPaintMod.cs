@@ -113,10 +113,10 @@ namespace BetterPaint {
 
 				var myitem = (PaintBlasterItem)held_item.modItem;
 
-				if( myitem.IsModeSelecting ) {
+				if( myitem.IsUsingUI ) {
 					myitem.DrawPainterUI( Main.spriteBatch );
 				}
-
+				myitem.DrawScreen( Main.spriteBatch );
 				myitem.DrawHUD( Main.spriteBatch );
 
 				return true;

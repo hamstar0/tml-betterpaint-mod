@@ -42,7 +42,8 @@ namespace BetterPaint.Painting {
 
 			data.SetColorAt( color, tile_x, tile_y );
 
-			return PaintBrush.ComputeColorChangePercent( existing_color, lerped_color );
+			return pressure_percent;
+			//return PaintBrush.ComputeColorChangePercent( existing_color, lerped_color );
 		}
 	}
 }

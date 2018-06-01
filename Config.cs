@@ -21,6 +21,7 @@ namespace BetterPaint {
 		public int PaintCartridgeCapacity = 1500;
 
 		public int CopyPaintManaPotionIngredientQuantity = 5;
+		public int CopyPaintNaniteIngredientQuantity = 5;
 
 		public float BrushSizeMultiplier = 1;
 

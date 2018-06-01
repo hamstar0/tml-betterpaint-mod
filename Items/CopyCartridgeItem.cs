@@ -8,15 +8,14 @@ using Terraria.ModLoader;
 
 namespace BetterPaint.Items {
 	class CopyCartridgeItem : ModItem {
-		public static void SetWithColor( Player player, int copy_cart_inv_idx, Color color ) {
-			ItemHelpers.DestroyItem( player.inventory[copy_cart_inv_idx] );
-			
-			player.inventory[copy_cart_inv_idx] = new Item();
+		public static void SetWithColor( Player player, Item copy_cart_item, Color color ) {
+			ItemHelpers.DestroyItem( copy_cart_item );
 
-			int idx = ItemHelpers.CreateItem( player.position, BetterPaintMod.Instance.ItemType<ColorCartridgeItem>(), 1,
+			int cart_idx = ItemHelpers.CreateItem( player.position, BetterPaintMod.Instance.ItemType<ColorCartridgeItem>(), 1,
 				ColorCartridgeItem.Width, ColorCartridgeItem.Height );
-			var myitem = (ColorCartridgeItem)Main.item[ idx ].modItem;
-			myitem.SetColor( color );
+			var mycart = (ColorCartridgeItem)Main.item[ cart_idx ].modItem;
+
+			mycart.SetPaint( color, BetterPaintMod.Instance.Config.PaintCartridgeCapacity );
 		}
 
 
@@ -48,10 +47,18 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 			var recipe = new ModRecipe( (BetterPaintMod)this.mod );
 
+			int mana_pot_qt = mymod.Config.CopyPaintManaPotionIngredientQuantity;
+			int nanite_qt = mymod.Config.CopyPaintNaniteIngredientQuantity;
+
 			recipe.AddTile( TileID.WorkBenches );
 			recipe.AddTile( mymod.TileType<PaintMixerTile>() );
 			recipe.AddIngredient( mymod.GetItem<ColorCartridgeItem>(), 1 );
-			recipe.AddIngredient( ItemID.GreaterHealingPotion, mymod.Config.CopyPaintManaPotionIngredientQuantity );
+			if( mana_pot_qt > 0 ) {
+				recipe.AddIngredient( ItemID.GreaterManaPotion, mymod.Config.CopyPaintManaPotionIngredientQuantity );
+			}
+			if( nanite_qt > 0 ) {
+				recipe.AddIngredient( ItemID.Nanites, mymod.Config.CopyPaintNaniteIngredientQuantity );
+			}
 			recipe.SetResult( this, 1 );
 			recipe.AddRecipe();
 		}

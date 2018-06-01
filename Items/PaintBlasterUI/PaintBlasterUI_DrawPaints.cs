@@ -37,7 +37,7 @@ namespace BetterPaint.Items {
 			foreach( int idx in item_idxs ) {
 				Item item = Main.LocalPlayer.inventory[idx];
 				var cart = (ColorCartridgeItem)item.modItem;
-				if( cart.UsageRemaining == 0 ) { continue; }
+				if( cart.PaintQuantity == 0 ) { continue; }
 
 				string color_key = cart.MyColor.ToString();
 
@@ -60,7 +60,7 @@ namespace BetterPaint.Items {
 				var idx = (int)kv.Value[1];
 				var cart = (ColorCartridgeItem)kv.Value[2];
 
-				this.DrawColorIcon( mymod, sb, cart.MyColor, cart.TimesUsed, stack, x, y, angle, angle_step,
+				this.DrawColorIcon( mymod, sb, cart.MyColor, cart.PaintQuantity, stack, x, y, angle, angle_step,
 					( idx == this.CurrentCartridgeInventoryIndex) );
 
 				angles[idx] = (float)angle;
@@ -74,7 +74,7 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public Rectangle DrawColorIcon( BetterPaintMod mymod, SpriteBatch sb, Color color, float uses, int stack, int x, int y, double palette_angle, double angle_step, bool is_selected ) {
+		public Rectangle DrawColorIcon( BetterPaintMod mymod, SpriteBatch sb, Color color, float paint_amount, int stack, int x, int y, double palette_angle, double angle_step, bool is_selected ) {
 			Texture2D cart_tex = ColorCartridgeItem.CartridgeTex;
 			Texture2D over_tex = ColorCartridgeItem.OverlayTex;
 
@@ -88,7 +88,7 @@ namespace BetterPaint.Items {
 			sb.Draw( over_tex, rect, color * color_mul );
 
 			if( is_hover ) {
-				float percent = 1f - (uses / (float)mymod.Config.PaintCartridgeCapacity);
+				float percent = paint_amount / (float)mymod.Config.PaintCartridgeCapacity;
 				Color text_color = ColorCartridgeItem.GetCapacityColor( percent );
 				Color label_color = Color.White * PaintBlasterUI.HoveredScale;
 

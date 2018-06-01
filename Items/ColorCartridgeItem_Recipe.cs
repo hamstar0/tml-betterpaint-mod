@@ -72,7 +72,7 @@ namespace BetterPaint.Items {
 
 			var clr = new Color( r / max_paints, g / max_paints, b / max_paints, a / max_paints );
 
-			myitem.SetColor( clr );
+			myitem.SetPaint( clr, mymod.Config.PaintCartridgeCapacity );
 		}
 	}
 }

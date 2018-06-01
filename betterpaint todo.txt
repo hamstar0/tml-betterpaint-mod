@@ -13,8 +13,12 @@ v1
 -	Show color on paint blaster
 -	Add sounds to UI and dry fire
 -	Add hover text for paint ammo HUD
--	@Test copy, per-color erase, pressure
+-	Adjust rarity for cartridges
+-	@Test
+	-	Crafting
+	-	Copy
 
+	-	Pressure
 -	F&T
 	-	Increase cartridge size a bit (increase recipe as well)
 	-	Fix small spatter mode not producing paint

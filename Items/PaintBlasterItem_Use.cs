@@ -1,4 +1,5 @@
 ﻿using BetterPaint.Painting;
+using HamstarHelpers.DebugHelpers;
 using HamstarHelpers.ItemHelpers;
 using HamstarHelpers.TileHelpers;
 using HamstarHelpers.UIHelpers;
@@ -14,11 +15,14 @@ namespace BetterPaint.Items {
 		public override bool CanUseItem( Player player ) {
 			Item paint_item = this.GetCurrentPaintItem();
 
-			if( this.IsModeSelecting ) {
+			if( this.IsUsingUI ) {
 				return false;
 			}
 
 			if( paint_item == null ) {
+				if( this.CurrentBrush == PaintBrushType.Erase || this.IsCopying ) {
+					return true;
+				}
 				return false;
 			}
 
@@ -38,12 +42,11 @@ namespace BetterPaint.Items {
 			float uses = 0f;
 
 			if( this.IsCopying ) {
-				int copy_type = this.mod.ItemType<CopyCartridgeItem>();
-				int item_idx = ItemFinderHelpers.FindIndexOfFirstOfItemInCollection( player.inventory, new HashSet<int> { copy_type } );
-
-				if( item_idx != -1 ) {
-					this.CopyColorAt( player, item_idx, tile_x, tile_y );
+				if( !this.AttemptCopyColorAt( player, tile_x, tile_y ) ) {
+					Main.NewText( "No color found to copy from.", Color.Yellow );
 				}
+
+				this.IsCopying = false;
 			} else {
 				Item paint_item = this.GetCurrentPaintItem();
 
@@ -55,7 +58,7 @@ namespace BetterPaint.Items {
 					}
 				}
 
-				uses = this.ApplyAt( world_x, world_y );
+				uses = this.ApplyBrushAt( world_x, world_y );
 			}
 
 			if( uses > 0 && dust_color != null ) {
@@ -70,9 +73,9 @@ namespace BetterPaint.Items {
 
 		public void CheckMenu() {
 			if( Main.mouseRight ) {
-				this.IsModeSelecting = true;
-			} else if( this.IsModeSelecting ) {
-				this.IsModeSelecting = false;
+				this.IsUsingUI = true;
+			} else if( this.IsUsingUI ) {
+				this.IsUsingUI = false;
 			}
 		}
 
@@ -82,7 +85,7 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
-			if( this.CurrentMode != PaintBrushType.Erase && cartridge.UsageRemaining <= 0f ) {
+			if( this.CurrentBrush != PaintBrushType.Erase && cartridge.PaintQuantity <= 0f ) {
 				return false;
 			}
 
@@ -148,7 +151,7 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public float ApplyAt( int world_x, int world_y ) {
+		public float ApplyBrushAt( int world_x, int world_y ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 			float uses = 0;
@@ -166,34 +169,36 @@ namespace BetterPaint.Items {
 
 			switch( this.Layer ) {
 			case PaintLayer.Foreground:
-				uses = myworld.Layers.ApplyForegroundColor( mymod, this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
+				uses = myworld.Layers.ApplyForegroundColor( mymod, this.CurrentBrush, color, this.BrushSize, this.PressurePercent, world_x, world_y );
 				break;
 			case PaintLayer.Background:
-				uses = myworld.Layers.ApplyBackgroundColor( mymod, this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
+				uses = myworld.Layers.ApplyBackgroundColor( mymod, this.CurrentBrush, color, this.BrushSize, this.PressurePercent, world_x, world_y );
 				break;
 			case PaintLayer.Anyground:
-				uses = myworld.Layers.ApplyAnygroundColor( mymod, this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
+				uses = myworld.Layers.ApplyAnygroundColor( mymod, this.CurrentBrush, color, this.BrushSize, this.PressurePercent, world_x, world_y );
 				break;
 			default:
 				throw new NotImplementedException();
 			}
 
 			if( cartridge != null && uses > 0 ) {
-				float total_uses = cartridge.UsageRemaining - uses;
-				
-				cartridge.SetAmmo( total_uses );
+				cartridge.ConsumePaint( uses );
 			}
 
 			return uses;
 		}
 
-
-		public bool CopyColorAt( Player player, int copy_cart_inv_idx, int world_x, int world_y ) {
+		
+		public bool AttemptCopyColorAt( Player player, ushort tile_x, ushort tile_y ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
-			ushort tile_x = (ushort)(world_x / 16);
-			ushort tile_y = (ushort)(world_y / 16);
 			PaintData data;
+
+			int copy_type = this.mod.ItemType<CopyCartridgeItem>();
+			int copy_item_idx = ItemFinderHelpers.FindIndexOfFirstOfItemInCollection( player.inventory, new HashSet<int> { copy_type } );
+			if( copy_item_idx == -1 ) {
+				return false;
+			}
 
 			switch( this.Layer ) {
 			case PaintLayer.Foreground:
@@ -218,8 +223,9 @@ namespace BetterPaint.Items {
 			}
 
 			Color color_at = data.GetColor( tile_x, tile_y );
+			color_at.A = 255;
 
-			CopyCartridgeItem.SetWithColor( player, copy_cart_inv_idx, color_at );
+			CopyCartridgeItem.SetWithColor( player, player.inventory[copy_item_idx], color_at );
 
 			return true;
 		}

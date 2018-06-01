@@ -1,4 +1,5 @@
 ﻿using HamstarHelpers.HudHelpers;
+using HamstarHelpers.PlayerHelpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -46,14 +47,20 @@ namespace BetterPaint.Items {
 			} else {
 				this.IsInteractingWithUI = false;
 			}
-			
-			this.UpdateUI( mymod, Main.LocalPlayer );
-
-			this.PostDrawUI( sb );
 		}
 
 
-		private void PostDrawUI( SpriteBatch sb ) {
+		public void DrawScreen( BetterPaintMod mymod, SpriteBatch sb ) {
+			if( this.IsCopying ) {
+				var set = new HashSet<int> { mymod.ItemType<CopyCartridgeItem>() };
+				var copy_cart_item = PlayerItemFinderHelpers.FindFirstOfItemFor( Main.LocalPlayer, set );
+
+				if( copy_cart_item == null ) {
+					Main.NewText( "Copy Cartridges needed.", Color.Red );
+					this.IsCopying = false;
+				}
+			}
+
 			if( this.IsCopying ) {
 				Texture2D copy_tex = Main.itemTexture[ItemID.EmptyDropper];
 				var mouse_pos = new Vector2( Main.mouseX, Main.mouseY );

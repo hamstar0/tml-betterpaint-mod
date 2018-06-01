@@ -1,4 +1,5 @@
 ﻿using HamstarHelpers.TileHelpers;
+using HamstarHelpers.XnaHelpers;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -39,16 +40,16 @@ namespace BetterPaint.Painting {
 				return;
 			}
 
-			int tolerance = (int)(pressure_percent * 255f);
-
 			if( data.HasColor(tile_x, tile_y) ) {
+				int tolerance = (int)( pressure_percent * 255f );
+
 				if( pressure_percent == 1f ) {
 					data.RemoveColorAt( tile_x, tile_y );
 				} else{
 					Color existing_color = data.GetColor( tile_x, tile_y );
-					Color lerped_color = Color.Lerp( existing_color, Color.Transparent, pressure_percent );
+					Color lerped_color = Color.Lerp( existing_color, Color.White, pressure_percent );
 
-					if( (lerped_color.R + lerped_color.G + lerped_color.B + lerped_color.A) <= 32 ) {
+					if( XnaColorHelpers.AvgRGBA(lerped_color) >= 240 ) {
 						data.RemoveColorAt( tile_x, tile_y );
 					} else {
 						data.SetColorAt( lerped_color, tile_x, tile_y );

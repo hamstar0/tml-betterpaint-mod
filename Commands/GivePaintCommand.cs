@@ -38,7 +38,7 @@ namespace BetterPaint.Commands {
 			var rand_clr = new Color( rand(), rand(), rand(), 255 );
 
 			var myitem = (ColorCartridgeItem)paint_item.modItem;
-			myitem.SetColor( rand_clr );
+			myitem.SetPaint( rand_clr, mymod.Config.PaintCartridgeCapacity );
 
 			caller.Reply( "Random color cartridge created: " + rand_clr, rand_clr );
 		}
