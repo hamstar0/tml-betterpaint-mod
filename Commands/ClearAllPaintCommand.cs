@@ -23,8 +23,8 @@ namespace BetterPaint.Commands {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
-			myworld.BgColors.Colors.Clear();
-			myworld.FgColors.Colors.Clear();
+			myworld.Layers.Background.Colors.Clear();
+			myworld.Layers.Foreground.Colors.Clear();
 
 			caller.Reply( "All world paint reset." );
 		}

@@ -13,7 +13,7 @@ namespace BetterPaint.Items {
 			int options_dist = PaintBlasterUI.OptionsRingRadius;
 			float hilit = PaintBlasterUI.SelectedScale;
 			float lit = PaintBlasterUI.HoveredScale;
-			float unlit = PaintBlasterUI.IdleScale;
+			//float unlit = PaintBlasterUI.IdleScale;
 
 			Texture2D tex;
 
@@ -72,7 +72,7 @@ namespace BetterPaint.Items {
 			int options_dist = PaintBlasterUI.OptionsRingRadius;
 			float hilit = PaintBlasterUI.SelectedScale;
 			float lit = PaintBlasterUI.HoveredScale;
-			float unlit = PaintBlasterUI.IdleScale;
+			//float unlit = PaintBlasterUI.IdleScale;
 
 			Texture2D tex;
 
@@ -123,7 +123,7 @@ namespace BetterPaint.Items {
 
 		public void DrawOptionCopy( SpriteBatch sb, int origin_x, int origin_y, out Rectangle rect ) {
 			int options_dist = PaintBlasterUI.OptionsRingRadius;
-			float hilit = PaintBlasterUI.SelectedScale;
+			//float hilit = PaintBlasterUI.SelectedScale;
 			float lit = PaintBlasterUI.HoveredScale;
 			float unlit = PaintBlasterUI.IdleScale;
 
@@ -156,7 +156,7 @@ namespace BetterPaint.Items {
 			int options_dist = PaintBlasterUI.OptionsRingRadius;
 			float hilit = PaintBlasterUI.SelectedScale;
 			float lit = PaintBlasterUI.HoveredScale;
-			float unlit = PaintBlasterUI.IdleScale;
+			//float unlit = PaintBlasterUI.IdleScale;
 
 			Texture2D tex = this.PressurePercent >= 0.75 ? PaintBlasterUI.PressureHiTex :
 				(this.PressurePercent <= 0.25f ? PaintBlasterUI.PressureLowTex : PaintBlasterUI.PressureMidTex);

@@ -1,12 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HamstarHelpers.TileHelpers;
+using Microsoft.Xna.Framework;
 using System;
+using Terraria;
 
 
 namespace BetterPaint.Painting {
 	class PaintBrushSpray : PaintBrush {
 		public override float Apply( PaintData data, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			var mymod = BetterPaintMod.Instance;
-			int diameter = brush_size == PaintBrushSize.Small ? 2 : 6;
+			int diameter = brush_size == PaintBrushSize.Small ? 3 : 6;
 			diameter = (int)((float)diameter * mymod.Config.BrushSizeMultiplier);
 
 			int iter_range = diameter / 2;
@@ -40,8 +42,12 @@ namespace BetterPaint.Painting {
 		}
 
 		
-		public float PaintAt( PaintData data, Color color, float pressure, float brush_radius, float dist, ushort tile_x, ushort tile_y ) {
-			float percent = pressure * dist / brush_radius;
+		public float PaintAt( PaintData data, Color color, float pressure_percent, float brush_radius, float dist, ushort tile_x, ushort tile_y ) {
+			if( TileHelpers.IsAir( Main.tile[tile_x, tile_y] ) ) {
+				return 0f;
+			}
+
+			float percent = pressure_percent * (1f - (dist / brush_radius));
 			Color existing_color = data.GetColor( tile_x, tile_y );
 			Color lerped_color = Color.Lerp( existing_color, color, percent );
 

@@ -83,7 +83,7 @@ namespace BetterPaint.Items {
 
 
 		////////////////
-		
+
 		private void UpdateUI( BetterPaintMod mymod, Player player ) {
 			if( this.IsCopying ) {
 				var set = new HashSet<int> { mymod.ItemType<CopyCartridgeItem>() };

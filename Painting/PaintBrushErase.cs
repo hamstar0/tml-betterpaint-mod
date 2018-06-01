@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HamstarHelpers.TileHelpers;
+using Microsoft.Xna.Framework;
 using System;
+using Terraria;
 
 
 namespace BetterPaint.Painting {
@@ -35,6 +37,10 @@ namespace BetterPaint.Painting {
 
 
 		public void EraseAt( PaintData data, Color color, float pressure, ushort tile_x, ushort tile_y ) {
+			if( TileHelpers.IsAir( Main.tile[tile_x, tile_y] ) ) {
+				return;
+			}
+
 			int tolerance = (int)(pressure * 255f);
 
 			if( data.HasColor(tile_x, tile_y) ) {

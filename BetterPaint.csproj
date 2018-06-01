@@ -58,6 +58,7 @@
     <Compile Include="BetterPaintWorld.cs" />
     <Compile Include="Commands\ClearAllPaintCommand.cs" />
     <Compile Include="Items\CopyCartridgeItem.cs" />
+    <Compile Include="Items\PaintBlasterHUD\PaintBlasterHUD.cs" />
     <Compile Include="Items\PaintBlasterItem_UI.cs" />
     <Compile Include="Items\PaintBlasterUI\PaintBlasterUI_DrawPaints.cs" />
     <Compile Include="Items\PaintBlasterUI\PaintBlasterUI_DrawOptions.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Painting\PaintBrushSpatter.cs" />
     <Compile Include="Painting\PaintBrushErase.cs" />
     <Compile Include="Painting\PaintBrushStream.cs" />
+    <Compile Include="Painting\PaintLayers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tiles\PaintMixerTile.cs" />
   </ItemGroup>

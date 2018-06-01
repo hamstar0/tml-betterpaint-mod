@@ -28,6 +28,7 @@ namespace BetterPaint.Items {
 			ushort tile_x = (ushort)( world_x / 16 );
 			ushort tile_y = (ushort)( world_y / 16 );
 			Color? dust_color = null;
+			float uses = 0f;
 
 			if( this.IsCopying ) {
 				int copy_type = this.mod.ItemType<CopyCartridgeItem>();
@@ -47,10 +48,10 @@ namespace BetterPaint.Items {
 					}
 				}
 
-				this.ApplyAt( world_x, world_y );
+				uses = this.ApplyAt( world_x, world_y );
 			}
 
-			if( dust_color != null ) {
+			if( uses > 0 && dust_color != null ) {
 				Dust.NewDust( pos, 8, 8, 2, vel_x, vel_y, 0, (Color)dust_color, 1f );
 			}
 
@@ -80,10 +81,6 @@ namespace BetterPaint.Items {
 
 			Tile tile = Main.tile[tile_x, tile_y];
 
-			if( TileHelpers.IsAir( tile ) ) {
-				return false;
-			}
-
 			switch( this.Layer ) {
 			case PaintLayer.Foreground:
 				if( !TileHelpers.IsSolid( tile, true, true ) ) {
@@ -91,14 +88,14 @@ namespace BetterPaint.Items {
 				}
 				break;
 			case PaintLayer.Background:
-				if( TileHelpers.IsSolid( tile, true, true ) ) {
-					return false;
-				}
-				if( tile == null || tile.wall == 0 ) {
+				if( TileHelpers.IsAir( tile ) || TileHelpers.IsSolid( tile, true, true ) ) {
 					return false;
 				}
 				break;
 			case PaintLayer.Anyground:
+				if( TileHelpers.IsAir( tile ) ) {
+					return false;
+				}
 				break;
 			default:
 				throw new NotImplementedException();
@@ -114,22 +111,22 @@ namespace BetterPaint.Items {
 
 			switch( this.Layer ) {
 			case PaintLayer.Foreground:
-				if( myworld.FgColors.GetColor( tile_x, tile_y ) == color ) {
+				if( myworld.Layers.Foreground.GetColor( tile_x, tile_y ) == color ) {
 					return true;
 				}
 				break;
 			case PaintLayer.Background:
-				if( myworld.BgColors.GetColor( tile_x, tile_y ) == color ) {
+				if( myworld.Layers.Background.GetColor( tile_x, tile_y ) == color ) {
 					return true;
 				}
 				break;
 			case PaintLayer.Anyground:
-				if( myworld.FgColors.HasColor(tile_x, tile_y) ) {
-					if( myworld.FgColors.GetColor( tile_x, tile_y ) == color ) {
+				if( myworld.Layers.Foreground.HasColor(tile_x, tile_y) ) {
+					if( myworld.Layers.Foreground.GetColor( tile_x, tile_y ) == color ) {
 						return true;
 					}
-				} else {
-					if( myworld.BgColors.GetColor( tile_x, tile_y ) == color ) {
+				} else if( myworld.Layers.Background.HasColor( tile_x, tile_y ) ) {
+					if( myworld.Layers.Background.GetColor( tile_x, tile_y ) == color ) {
 						return true;
 					}
 				}
@@ -144,7 +141,7 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public void ApplyAt( int world_x, int world_y ) {
+		public float ApplyAt( int world_x, int world_y ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 			float uses = 0;
@@ -162,13 +159,13 @@ namespace BetterPaint.Items {
 
 			switch( this.Layer ) {
 			case PaintLayer.Foreground:
-				uses = myworld.ApplyForegroundColor( this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
+				uses = myworld.Layers.ApplyForegroundColor( mymod, this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
 				break;
 			case PaintLayer.Background:
-				uses = myworld.ApplyBackgroundColor( this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
+				uses = myworld.Layers.ApplyBackgroundColor( mymod, this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
 				break;
 			case PaintLayer.Anyground:
-				uses = myworld.ApplyAnygroundColor( this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
+				uses = myworld.Layers.ApplyAnygroundColor( mymod, this.CurrentMode, color, this.BrushSize, this.PressurePercent, world_x, world_y );
 				break;
 			default:
 				throw new NotImplementedException();
@@ -179,6 +176,8 @@ namespace BetterPaint.Items {
 
 				cartridge.SetTimesUsed( Math.Min( total_uses, (float)mymod.Config.PaintCartridgeCapacity ) );
 			}
+
+			return uses;
 		}
 
 
@@ -187,20 +186,20 @@ namespace BetterPaint.Items {
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 			ushort tile_x = (ushort)(world_x / 16);
 			ushort tile_y = (ushort)(world_y / 16);
-
 			PaintData data;
+
 			switch( this.Layer ) {
 			case PaintLayer.Foreground:
-				data = myworld.FgColors;
+				data = myworld.Layers.Foreground;
 				break;
 			case PaintLayer.Background:
-				data = myworld.BgColors;
+				data = myworld.Layers.Background;
 				break;
 			case PaintLayer.Anyground:
-				if( myworld.FgColors.HasColor( tile_x, tile_y ) ) {
-					data = myworld.FgColors;
+				if( myworld.Layers.Foreground.HasColor( tile_x, tile_y ) ) {
+					data = myworld.Layers.Foreground;
 				} else {
-					data = myworld.BgColors;
+					data = myworld.Layers.Background;
 				}
 				break;
 			default:

@@ -4,15 +4,23 @@ Future
 -	Brush shape?
 
 
-
+v1.1
+-	Implement queued painting
 v1
 -	Give credit for paint mixer tile sprite
 -	Add inbox alert for paint blaster instructions
 -	Make 'easy' version of recipes; use inbox to alert to 'hard' mode
 -	Show color on paint blaster
 -	Add sounds to UI and dry fire
--	@Test layers, copy, spatter, per-color erase
+-	Add 'Paint Thinner' cartridges
+-	@Test copy, per-color erase, pressure
+-	F&T
+	-	Increase cartridge size a bit (increase recipe as well)
+	-	Fix small spatter mode not producing paint
+	-	Fix erase mode not working with empty cartridge
 
+	-	Fix all layers mode (ensure BOTH layers!)
+-	@Test spatter, standard use
 -	Add HUD info
 -	Implement radial angular selection
 -	Stack redundant cartridges on radial selector

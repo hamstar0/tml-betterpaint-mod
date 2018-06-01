@@ -49,17 +49,20 @@ namespace BetterPaint.NetProtocols {
 		////////////////
 
 		private void Receive() {
+			var mymod = BetterPaintMod.Instance;
 			var myworld = BetterPaintMod.Instance.GetModWorld<BetterPaintWorld>();
+			var layer = (PaintLayer)this.Layer;
+			var brush_type = (PaintBrushType)this.BrushType;
 
-			switch( (PaintLayer)this.Layer ) {
+			switch( layer ) {
 			case PaintLayer.Foreground:
-				myworld.AddForegroundColorNoSync( (PaintBrushType)this.BrushType, this.MyColor, (PaintBrushSize)this.BrushSize, this.PressurePercent, this.RandSeed, this.WorldX, this.WorldY );
+				myworld.Layers.AddForegroundColorNoSync( mymod, brush_type, this.MyColor, (PaintBrushSize)this.BrushSize, this.PressurePercent, this.RandSeed, this.WorldX, this.WorldY );
 				break;
 			case PaintLayer.Background:
-				myworld.AddBackgroundColorNoSync( (PaintBrushType)this.BrushType, this.MyColor, (PaintBrushSize)this.BrushSize, this.PressurePercent, this.RandSeed, this.WorldX, this.WorldY );
+				myworld.Layers.AddBackgroundColorNoSync( mymod, brush_type, this.MyColor, (PaintBrushSize)this.BrushSize, this.PressurePercent, this.RandSeed, this.WorldX, this.WorldY );
 				break;
 			case PaintLayer.Anyground:
-				myworld.AddAnygroundColorNoSync( (PaintBrushType)this.BrushType, this.MyColor, (PaintBrushSize)this.BrushSize, this.PressurePercent, this.RandSeed, this.WorldX, this.WorldY );
+				myworld.Layers.AddAnygroundColorNoSync( mymod, brush_type, this.MyColor, (PaintBrushSize)this.BrushSize, this.PressurePercent, this.RandSeed, this.WorldX, this.WorldY );
 				break;
 			default:
 				throw new NotImplementedException();

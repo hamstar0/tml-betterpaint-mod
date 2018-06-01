@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HamstarHelpers.TileHelpers;
+using Microsoft.Xna.Framework;
 using System;
+using Terraria;
 
 
 namespace BetterPaint.Painting {
@@ -38,6 +40,10 @@ namespace BetterPaint.Painting {
 
 
 		public float PaintAt( PaintData data, Color color, float pressure, ushort tile_x, ushort tile_y ) {
+			if( TileHelpers.IsAir( Main.tile[tile_x, tile_y] ) ) {
+				return 0f;
+			}
+
 			Color existing_color = data.GetColor( tile_x, tile_y );
 			Color lerped_color = Color.Lerp( existing_color, color, pressure );
 

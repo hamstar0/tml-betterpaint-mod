@@ -13,8 +13,8 @@ namespace BetterPaint {
 			ushort x = (ushort)i;
 			ushort y = (ushort)j;
 			
-			if( myworld.FgColors.HasColor(x, y) ) {
-				Color painted_color = myworld.FgColors.GetColor( x, y );
+			if( myworld.Layers.Foreground.HasColor(x, y) ) {
+				Color painted_color = myworld.Layers.Foreground.GetColor( x, y );
 				draw_color = Lighting.GetColor( i, j, painted_color );
 			}
 		}
@@ -27,11 +27,11 @@ namespace BetterPaint {
 
 		public override bool PreDraw( int i, int j, int type, SpriteBatch sb ) {
 			var myworld = this.mod.GetModWorld<BetterPaintWorld>();
-			ushort x = (ushort)i;
-			ushort y = (ushort)j;
+			ushort tile_x = (ushort)i;
+			ushort tile_y = (ushort)j;
 
-			if( myworld.BgColors.HasColor( x, y ) ) {
-				Color painted_color = myworld.BgColors.GetColor( x, y );
+			if( myworld.Layers.Background.HasColor( tile_x, tile_y ) ) {
+				Color painted_color = myworld.Layers.Background.GetColor( tile_x, tile_y );
 				Color color = Lighting.GetColor( i, j, painted_color );
 
 				Vector2 zero = new Vector2( (float)Main.offScreenRange, (float)Main.offScreenRange );
