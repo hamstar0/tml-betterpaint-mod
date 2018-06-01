@@ -87,6 +87,7 @@ namespace BetterPaint.Items {
 			this.item.height = ColorCartridgeItem.Height;
 			this.item.ammo = this.item.type;
 			this.item.value = Item.buyPrice( 0, 0, 10, 0 );
+			this.item.rare = 1;
 		}
 
 
@@ -114,15 +115,15 @@ namespace BetterPaint.Items {
 
 				this.MyColor = new Color( bytes[0], bytes[1], bytes[2], bytes[3] );
 			}
-			if( tag.ContainsKey( "usage_remaining" ) ) {
-				this.PaintQuantity = tag.GetFloat( "usage_remaining" );
+			if( tag.ContainsKey( "paint_quantity" ) ) {
+				this.PaintQuantity = tag.GetFloat( "paint_quantity" );
 			}
 		}
 
 		public override TagCompound Save() {
 			return new TagCompound {
 				{ "color", new byte[] { this.MyColor.R, this.MyColor.G, this.MyColor.B, this.MyColor.A } },
-				{ "usage_remaining", this.PaintQuantity }
+				{ "paint_quantity", this.PaintQuantity }
 			};
 		}
 

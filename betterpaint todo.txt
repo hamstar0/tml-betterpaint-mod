@@ -1,4 +1,5 @@
 Future
+-	Show color on paint blaster
 -	Add paint tarps
 -	Implement richer painting
 -	Brush shape?
@@ -6,18 +7,18 @@ Future
 
 v1.1
 -	Implement queued painting
+-	Implement loading paint on server join
 v1
 -	Give credit for paint mixer tile sprite
 -	Add inbox alert for paint blaster instructions
--	Make 'easy' version of recipes; use inbox to alert to 'hard' mode
--	Show color on paint blaster
+-	Add option to sell from Painter npc
+
 -	Add sounds to UI and dry fire
 -	Add hover text for paint ammo HUD
 -	Add sprite for Paint Mixer item
 -	Adjust rarity for cartridges
 -	@Test
 	-	Crafting
-
 	-	Copy
 	-	Pressure
 -	F&T

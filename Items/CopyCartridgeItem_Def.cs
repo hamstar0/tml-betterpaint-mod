@@ -29,7 +29,7 @@ namespace BetterPaint.Items {
 
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Copy Cartridge" );
-			this.Tooltip.SetDefault( "Fill with eyedropper mode (via. Paint Blaster)" );
+			this.Tooltip.SetDefault( "Set color with Paint Blaster's copy function" );
 		}
 
 
@@ -37,7 +37,8 @@ namespace BetterPaint.Items {
 			this.item.width = ColorCartridgeItem.Width;
 			this.item.height = ColorCartridgeItem.Height;
 			this.item.ammo = this.item.type;
-			this.item.value = Item.buyPrice( 0, 1, 0, 0 );
+			this.item.value = Item.buyPrice( 0, 0, 5, 0 );
+			this.item.rare = 3;
 		}
 
 

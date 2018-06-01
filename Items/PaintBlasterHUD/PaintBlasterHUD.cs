@@ -1,6 +1,9 @@
 ﻿using HamstarHelpers.TmlHelpers;
+using HamstarHelpers.Utilities.AnimatedColor;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Graphics;
+using System.Globalization;
 using Terraria;
 
 
@@ -47,7 +50,7 @@ namespace BetterPaint.Items {
 			Item cart_item = myblaster.GetCurrentPaintItem();
 			if( cart_item != null ) {
 				var mycart = (ColorCartridgeItem)cart_item.modItem;
-				
+
 				float capacity_percent = (float)mycart.PaintQuantity / (float)mymod.Config.PaintCartridgeCapacity;
 
 				int height = (int)( capacity_percent * 50f ) * 2;
@@ -58,6 +61,15 @@ namespace BetterPaint.Items {
 				sb.Draw( PaintBlasterHUD.AmmoTop, new Vector2( x, y + 16 + top ), color );
 				sb.Draw( PaintBlasterHUD.AmmoBot, new Vector2( x, y + 124 ), color );
 				sb.Draw( Main.magicPixel, new Rectangle( x + 4, y + 24 + top, 16, height ), color );
+
+				if( Main.mouseX >= x && Main.mouseX < ( x + PaintBlasterHUD.AmmoCan.Width ) ) {
+					if( Main.mouseY >= y && Main.mouseY < ( y + PaintBlasterHUD.AmmoCan.Height ) ) {
+						string percent_str = capacity_percent.ToString( "P", CultureInfo.InvariantCulture );
+
+						Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, percent_str, Main.mouseX-32, Main.mouseY+24, Color.White, Color.Black, default(Vector2), 1f );
+						//sb.DrawString( Main.fontMouseText, percent_str, new Vector2(Main.mouseX, Main.mouseY), Color.White );
+					}
+				}
 			}
 		}
 	}

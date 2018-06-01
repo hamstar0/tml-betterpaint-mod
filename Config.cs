@@ -18,7 +18,7 @@ namespace BetterPaint {
 		public bool PaintRecipeEnabled = true;
 		public int PaintRecipeGelIngredientQuantity = 10;
 		public int PaintRecipePaintIngredientQuantity = 100;
-		public int PaintCartridgeCapacity = 2500;
+		public int PaintCartridgeCapacity = 2000;
 
 		public int CopyPaintManaPotionIngredientQuantity = 10;
 		public int CopyPaintNaniteIngredientQuantity = 5;

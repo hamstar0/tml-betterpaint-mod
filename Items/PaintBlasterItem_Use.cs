@@ -62,6 +62,7 @@ namespace BetterPaint.Items {
 			}
 
 			if( uses > 0 && dust_color != null ) {
+				pos = PlayerItemHelpers.TipOfHeldItem( player ) - Main.screenPosition;
 				Dust.NewDust( pos, 8, 8, 2, vel_x, vel_y, 0, (Color)dust_color, 1f );
 			}
 

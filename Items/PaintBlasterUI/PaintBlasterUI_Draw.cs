@@ -40,9 +40,15 @@ namespace BetterPaint.Items {
 				if( !this.IsInteractingWithUI ) {
 					this.IsInteractingWithUI = true;
 
-					this.CheckUISettingsInteractions( bg_rect, size_rect, copy_rect, press_rect );
-					this.CheckUIBrushInteractions( stream_rect, spray_rect, bucket_rect, scrape_rect );
-					this.CheckUIColorInteractions( palette_angles );
+					bool has_interacted = false;
+
+					has_interacted = this.CheckUISettingsInteractions( bg_rect, size_rect, copy_rect, press_rect );
+					has_interacted = has_interacted | this.CheckUIBrushInteractions( stream_rect, spray_rect, bucket_rect, scrape_rect );
+					has_interacted = has_interacted | this.CheckUIColorInteractions( palette_angles );
+
+					if( has_interacted ) {
+						Main.PlaySound( SoundID.MenuTick );
+					}
 				}
 			} else {
 				this.IsInteractingWithUI = false;

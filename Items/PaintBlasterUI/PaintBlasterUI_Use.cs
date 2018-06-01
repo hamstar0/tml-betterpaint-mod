@@ -7,79 +7,60 @@ using Terraria;
 
 namespace BetterPaint.Items {
 	partial class PaintBlasterUI {
-		private void CheckUISettingsInteractions( Rectangle layer_rect, Rectangle size_rect, Rectangle copy_rect, Rectangle press_rect ) {
+		private bool CheckUISettingsInteractions( Rectangle layer_rect, Rectangle size_rect, Rectangle copy_rect, Rectangle press_rect ) {
 			Player player = Main.LocalPlayer;
-
-			/*layer_rect.X -= 8;
-			size_rect.X -= 8;
-			copy_rect.X -= 8;
-			press_rect.X -= 8;
-			layer_rect.Y -= 8;
-			size_rect.Y -= 8;
-			copy_rect.Y -= 8;
-			press_rect.Y -= 8;
-			layer_rect.Width += 16;
-			size_rect.Width += 16;
-			copy_rect.Width += 16;
-			press_rect.Width += 16;
-			layer_rect.Height += 16;
-			size_rect.Height += 16;
-			copy_rect.Height += 16;
-			press_rect.Height += 16;*/
+			bool has_interacted = false;
 
 			if( layer_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CycleLayer();
+				has_interacted = true;
 			} else
 			if( size_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CycleBrushSize();
+				has_interacted = true;
 			} else
 			if( copy_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.IsCopying = !this.IsCopying;
+				has_interacted = true;
 			} else
 			if( press_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CyclePressure();
+				has_interacted = true;
 			}
+
+			return has_interacted;
 		}
 
 
-		private void CheckUIBrushInteractions( Rectangle brush_rect, Rectangle spray_rect, Rectangle bucket_rect, Rectangle scrape_rect ) {
+		private bool CheckUIBrushInteractions( Rectangle brush_rect, Rectangle spray_rect, Rectangle bucket_rect, Rectangle scrape_rect ) {
 			Player player = Main.LocalPlayer;
-
-			/*brush_rect.X -= 8;
-			spray_rect.X -= 8;
-			bucket_rect.X -= 8;
-			scrape_rect.X -= 8;
-			brush_rect.Y -= 8;
-			spray_rect.Y -= 8;
-			bucket_rect.Y -= 8;
-			scrape_rect.Y -= 8;
-			brush_rect.Width += 16;
-			spray_rect.Width += 16;
-			bucket_rect.Width += 16;
-			scrape_rect.Width += 16;
-			brush_rect.Height += 16;
-			spray_rect.Height += 16;
-			bucket_rect.Height += 16;
-			scrape_rect.Height += 16;*/
+			bool has_interacted = false;
 
 			if( this.CurrentBrush != PaintBrushType.Stream && brush_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CurrentBrush = PaintBrushType.Stream;
+				has_interacted = true;
 			} else
 			if( this.CurrentBrush != PaintBrushType.Spray && spray_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CurrentBrush = PaintBrushType.Spray;
+				has_interacted = true;
 			} else
 			if( this.CurrentBrush != PaintBrushType.Spatter && bucket_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CurrentBrush = PaintBrushType.Spatter;
+				has_interacted = true;
 			} else
 			if( this.CurrentBrush != PaintBrushType.Erase && scrape_rect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CurrentBrush = PaintBrushType.Erase;
+				has_interacted = true;
 			}
+
+			return has_interacted;
 		}
 
 
-		private void CheckUIColorInteractions( IDictionary<int, float> palette_angles ) {
+		private bool CheckUIColorInteractions( IDictionary<int, float> palette_angles ) {
 			int inv_idx = -1;
-			
+			bool has_interacted = false;
+
 			foreach( var kv in palette_angles ) {
 				if( this.IsHoveringIcon( kv.Value, 360 / palette_angles.Count ) ) {
 					inv_idx = kv.Key;
@@ -88,8 +69,11 @@ namespace BetterPaint.Items {
 			}
 
 			if( inv_idx != -1 ) {
+				has_interacted = true;
 				this.CurrentCartridgeInventoryIndex = inv_idx;
 			}
+
+			return has_interacted;
 		}
 
 

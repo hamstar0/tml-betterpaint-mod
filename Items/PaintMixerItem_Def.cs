@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 
 namespace BetterPaint.Items {
 	class PaintMixerItem : ModItem {
-		public const int Width = 26;
-		public const int Height = 22;
+		public const int Width = 30;
+		public const int Height = 30;
 
 
 		////////////////
