@@ -1,6 +1,6 @@
 ﻿using BetterPaint.Painting;
-using HamstarHelpers.DebugHelpers;
 using HamstarHelpers.ItemHelpers;
+using HamstarHelpers.PlayerHelpers;
 using HamstarHelpers.TileHelpers;
 using HamstarHelpers.UIHelpers;
 using Microsoft.Xna.Framework;
@@ -68,16 +68,6 @@ namespace BetterPaint.Items {
 			return false;
 		}
 
-
-		////////////////
-
-		public void CheckMenu() {
-			if( Main.mouseRight ) {
-				this.IsUsingUI = true;
-			} else if( this.IsUsingUI ) {
-				this.IsUsingUI = false;
-			}
-		}
 
 		////////////////
 

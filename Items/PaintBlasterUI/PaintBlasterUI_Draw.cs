@@ -52,16 +52,6 @@ namespace BetterPaint.Items {
 
 		public void DrawScreen( BetterPaintMod mymod, SpriteBatch sb ) {
 			if( this.IsCopying ) {
-				var set = new HashSet<int> { mymod.ItemType<CopyCartridgeItem>() };
-				var copy_cart_item = PlayerItemFinderHelpers.FindFirstOfItemFor( Main.LocalPlayer, set );
-
-				if( copy_cart_item == null ) {
-					Main.NewText( "Copy Cartridges needed.", Color.Red );
-					this.IsCopying = false;
-				}
-			}
-
-			if( this.IsCopying ) {
 				Texture2D copy_tex = Main.itemTexture[ItemID.EmptyDropper];
 				var mouse_pos = new Vector2( Main.mouseX, Main.mouseY );
 

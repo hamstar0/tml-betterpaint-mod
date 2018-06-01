@@ -1,4 +1,7 @@
 ﻿using BetterPaint.Painting;
+using HamstarHelpers.PlayerHelpers;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -94,11 +97,43 @@ namespace BetterPaint.Items {
 
 		////////////////
 
+		public void CheckSettings( Player player ) {
+			var mymod = (BetterPaintMod)this.mod;
+
+			if( this.IsCopying ) {
+				var set = new HashSet<int> { mymod.ItemType<CopyCartridgeItem>() };
+				var copy_cart_item = PlayerItemFinderHelpers.FindFirstOfItemFor( player, set );
+
+				if( copy_cart_item == null ) {
+					Main.NewText( "Copy Cartridges needed.", Color.Red );
+					this.IsCopying = false;
+				}
+			}
+
+			if( this.CurrentCartridgeInventoryIndex >= 0 ) {
+				Item cart_item = player.inventory[ this.CurrentCartridgeInventoryIndex ];
+
+				if( cart_item.type != this.mod.ItemType<ColorCartridgeItem>() ) {
+					this.CurrentCartridgeInventoryIndex = -1;
+				}
+			}
+		}
+
+
+		////////////////
+
 		public Item GetCurrentPaintItem() {
 			if( this.CurrentCartridgeInventoryIndex == -1 ) {
 				return null;
 			}
-			return Main.LocalPlayer.inventory[ this.CurrentCartridgeInventoryIndex ];
+
+			Item cart_item = Main.LocalPlayer.inventory[ this.CurrentCartridgeInventoryIndex ];
+			if( cart_item.type != this.mod.ItemType<ColorCartridgeItem>() ) {
+				this.CurrentCartridgeInventoryIndex = -1;
+				return null;
+			}
+
+			return cart_item;
 		}
 	}
 }

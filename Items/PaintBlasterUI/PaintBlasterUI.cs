@@ -59,23 +59,11 @@ namespace BetterPaint.Items {
 
 		public bool IsInteractingWithUI { get; private set; }
 
-		public PaintBrushType CurrentBrush { get; private set; }
-		public PaintLayer Layer { get; private set; }
-		public PaintBrushSize BrushSize { get; private set; }
-		public float PressurePercent { get; private set; }
-
-		public int CurrentCartridgeInventoryIndex { get; internal set; }
-		public bool IsCopying { get; internal set; }
-
-
-		////////////////
-
-		public PaintBlasterUI() : base() {
-			this.CurrentBrush = PaintBrushType.Stream;
-			this.CurrentCartridgeInventoryIndex = -1;
-			this.Layer = PaintLayer.Foreground;
-			this.BrushSize = PaintBrushSize.Small;
-			this.PressurePercent = 1f;
-		}
+		public PaintBrushType CurrentBrush = PaintBrushType.Stream;
+		public int CurrentCartridgeInventoryIndex = -1;
+		public PaintLayer Layer = PaintLayer.Foreground;
+		public PaintBrushSize BrushSize = PaintBrushSize.Small;
+		public float PressurePercent = 1f;
+		public bool IsCopying = false;
 	}
 }

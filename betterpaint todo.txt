@@ -16,8 +16,8 @@ v1
 -	Adjust rarity for cartridges
 -	@Test
 	-	Crafting
-	-	Copy
 
+	-	Copy
 	-	Pressure
 -	F&T
 	-	Increase cartridge size a bit (increase recipe as well)
