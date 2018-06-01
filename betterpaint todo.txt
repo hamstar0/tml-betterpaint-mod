@@ -13,6 +13,7 @@ v1
 -	Show color on paint blaster
 -	Add sounds to UI and dry fire
 -	Add hover text for paint ammo HUD
+-	Add sprite for Paint Mixer item
 -	Adjust rarity for cartridges
 -	@Test
 	-	Crafting

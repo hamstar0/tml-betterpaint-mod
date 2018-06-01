@@ -57,9 +57,10 @@
     <Compile Include="API_Call.cs" />
     <Compile Include="BetterPaintWorld.cs" />
     <Compile Include="Commands\ClearAllPaintCommand.cs" />
-    <Compile Include="Items\CopyCartridgeItem.cs" />
+    <Compile Include="Items\CopyCartridgeItem_Def.cs" />
     <Compile Include="Items\PaintBlasterHUD\PaintBlasterHUD.cs" />
     <Compile Include="Items\PaintBlasterItem_UI.cs" />
+    <Compile Include="Items\PaintBlasterItem_Action.cs" />
     <Compile Include="Items\PaintBlasterUI\PaintBlasterUI_DrawPaints.cs" />
     <Compile Include="Items\PaintBlasterUI\PaintBlasterUI_DrawOptions.cs" />
     <Compile Include="Items\PaintBlasterUI\PaintBlasterUI_DrawBrushes.cs" />

@@ -16,11 +16,11 @@ namespace BetterPaint {
 		public bool DebugModeCheats = false;
 
 		public bool PaintRecipeEnabled = true;
-		public int PaintRecipeGelIngredientQuantity = 5;
-		public int PaintRecipePaintIngredientQuantity = 50;
-		public int PaintCartridgeCapacity = 1500;
+		public int PaintRecipeGelIngredientQuantity = 10;
+		public int PaintRecipePaintIngredientQuantity = 100;
+		public int PaintCartridgeCapacity = 2500;
 
-		public int CopyPaintManaPotionIngredientQuantity = 5;
+		public int CopyPaintManaPotionIngredientQuantity = 10;
 		public int CopyPaintNaniteIngredientQuantity = 5;
 
 		public float BrushSizeMultiplier = 1;

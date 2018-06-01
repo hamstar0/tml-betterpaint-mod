@@ -49,16 +49,17 @@ namespace BetterPaint.Items {
 
 			int mana_pot_qt = mymod.Config.CopyPaintManaPotionIngredientQuantity;
 			int nanite_qt = mymod.Config.CopyPaintNaniteIngredientQuantity;
-
-			recipe.AddTile( TileID.WorkBenches );
+			
 			recipe.AddTile( mymod.TileType<PaintMixerTile>() );
-			recipe.AddIngredient( mymod.GetItem<ColorCartridgeItem>(), 1 );
+
+			recipe.AddIngredient( mymod.ItemType<ColorCartridgeItem>(), 1 );
 			if( mana_pot_qt > 0 ) {
 				recipe.AddIngredient( ItemID.GreaterManaPotion, mymod.Config.CopyPaintManaPotionIngredientQuantity );
 			}
 			if( nanite_qt > 0 ) {
 				recipe.AddIngredient( ItemID.Nanites, mymod.Config.CopyPaintNaniteIngredientQuantity );
 			}
+
 			recipe.SetResult( this, 1 );
 			recipe.AddRecipe();
 		}

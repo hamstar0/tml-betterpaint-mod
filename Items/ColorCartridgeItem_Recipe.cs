@@ -18,6 +18,11 @@ namespace BetterPaint.Items {
 
 
 	class ColorCartridgeRecipe : ModRecipe {
+		private Color CraftColor;
+
+
+		////////////////
+
 		public ColorCartridgeRecipe( BetterPaintMod mymod, ColorCartridgeItem myitem ) : base ( mymod ) {
 			this.AddTile( mymod.TileType<PaintMixerTile>() );
 			this.AddIngredient( ItemID.Gel, mymod.Config.PaintRecipeGelIngredientQuantity );
@@ -25,20 +30,23 @@ namespace BetterPaint.Items {
 			this.SetResult( myitem, 1 );
 		}
 
-
 		public override bool RecipeAvailable() {
 			var mymod = (BetterPaintMod)this.mod;
 			return mymod.Config.PaintRecipeEnabled;
 		}
 
 
-		public override void OnCraft( Item item ) {
+		////////////////
+
+		public override int ConsumeItem( int item_type, int num_required ) {
+			if( !ItemIdentityHelpers.Paints.Item2.Contains(item_type) ) {   // Not paint
+				return base.ConsumeItem( item_type, num_required );
+			}
+
 			var mymod = (BetterPaintMod)this.mod;
-			ISet<int> paints = ItemIdentityHelpers.Paints.Item2;
-			var myitem = (ColorCartridgeItem)item.modItem;
 			var inv = Main.LocalPlayer.inventory;
-			
 			int max_paints = mymod.Config.PaintRecipePaintIngredientQuantity;
+			ISet<int> paints = ItemIdentityHelpers.Paints.Item2;
 			int count = 0;
 
 			int r = 0;
@@ -46,7 +54,7 @@ namespace BetterPaint.Items {
 			int b = 0;
 			int a = 0;
 
-			for( int i=0; i<inv.Length; i++ ) {
+			for( int i = 0; i < inv.Length; i++ ) {
 				if( inv[i] == null || inv[i].IsAir ) { continue; }
 
 				if( paints.Contains( inv[i].type ) ) {
@@ -70,9 +78,17 @@ namespace BetterPaint.Items {
 				}
 			}
 
-			var clr = new Color( r / max_paints, g / max_paints, b / max_paints, a / max_paints );
+			this.CraftColor = new Color( r / max_paints, g / max_paints, b / max_paints, a / max_paints );
 
-			myitem.SetPaint( clr, mymod.Config.PaintCartridgeCapacity );
+			return base.ConsumeItem( item_type, num_required );
+		}
+
+
+		public override void OnCraft( Item item ) {
+			var mymod = (BetterPaintMod)this.mod;
+			var myitem = (ColorCartridgeItem)item.modItem;
+			
+			myitem.SetPaint( this.CraftColor, mymod.Config.PaintCartridgeCapacity );
 		}
 	}
 }
