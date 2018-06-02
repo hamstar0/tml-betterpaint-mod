@@ -64,8 +64,15 @@ namespace BetterPaint.Items {
 					if( Main.mouseY >= y && Main.mouseY < ( y + PaintBlasterHUD.AmmoCan.Height ) ) {
 						string percent_str = capacity_percent.ToString( "P", CultureInfo.InvariantCulture );
 
-						Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, percent_str, Main.mouseX-40, Main.mouseY+20, Color.White, Color.Black, default(Vector2), 1f );
-						//sb.DrawString( Main.fontMouseText, percent_str, new Vector2(Main.mouseX, Main.mouseY), Color.White );
+						Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, percent_str, Main.mouseX-40, Main.mouseY+16, Color.White, Color.Black, default(Vector2), 1f );
+					}
+				}
+			} else {
+				if( Main.mouseX >= x && Main.mouseX < ( x + PaintBlasterHUD.AmmoCan.Width ) ) {
+					if( Main.mouseY >= y && Main.mouseY < ( y + PaintBlasterHUD.AmmoCan.Height ) ) {
+						string str = "Color Cartridge needed";
+
+						Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, str, Main.mouseX - 160, Main.mouseY + 16, Color.White, Color.Black, default( Vector2 ), 1f );
 					}
 				}
 			}

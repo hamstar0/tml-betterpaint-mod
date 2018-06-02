@@ -3,10 +3,7 @@ using HamstarHelpers.HudHelpers;
 using HamstarHelpers.Utilities.AnimatedColor;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Graphics;
-using System;
 using Terraria;
-using Terraria.ID;
 
 
 namespace BetterPaint.Items {

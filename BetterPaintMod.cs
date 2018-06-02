@@ -1,6 +1,9 @@
 ﻿using BetterPaint.Items;
 using BetterPaint.Painting;
+using HamstarHelpers.DebugHelpers;
+using HamstarHelpers.TmlHelpers;
 using HamstarHelpers.Utilities.Config;
+using HamstarHelpers.Utilities.Messages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -63,6 +66,20 @@ namespace BetterPaint {
 			BetterPaintMod.Instance = this;
 
 			this.LoadConfig();
+
+			TmlLoadHelpers.AddPostWorldLoadEachPromise( () => {
+				string intro1 = "1 of 5 - Eager to try out better painting? You'll need a Paint Blaster, crafted via Clentaminator, Flamethrower, and Paint Sprayer at a Tinkerer's Workshop.";
+				string intro2 = "2 of 5 - To make paint, you'll need a Paint Mixer, crafted via Dye Vat" + ( this.Config.PaintMixerRecipeBlendOMatic ? ", Blend-O-Matic, " : " " ) + "and Extractinator at a Tinkerer's Workshop.";
+				string intro3 = "3 of 5 - To paint, you'll need Color Cartridges, crafted via colored Paints (any " + this.Config.PaintRecipePaints + ") and Gel (" + this.Config.PaintRecipeGels + ") at a Paint Mixer.";
+				string post_intro = "4 of 5 - Use the Control Panel (single player only) to configure settings, including whether the Painter NPC should sell Better Paint items, if crafting isn't your cup of tea.";
+				string pander = "5 of 5 - If you enjoy this mod and want to see more, please give your support at: https://www.patreon.com/hamstar0";
+
+				InboxMessages.SetMessage( "BetterPaintIntro1", intro1, false );
+				InboxMessages.SetMessage( "BetterPaintIntro2", intro2, false );
+				InboxMessages.SetMessage( "BetterPaintIntro3", intro3, false );
+				InboxMessages.SetMessage( "BetterPaintPostIntro", post_intro, false );
+				InboxMessages.SetMessage( "BetterPaintPander", pander, false );
+			} );
 		}
 
 		private void LoadConfig() {
