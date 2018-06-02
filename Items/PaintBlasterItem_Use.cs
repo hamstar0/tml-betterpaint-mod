@@ -1,11 +1,7 @@
 ﻿using BetterPaint.Painting;
-using HamstarHelpers.ItemHelpers;
 using HamstarHelpers.PlayerHelpers;
-using HamstarHelpers.TileHelpers;
 using HamstarHelpers.UIHelpers;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -49,12 +45,25 @@ namespace BetterPaint.Items {
 				this.IsCopying = false;
 			} else {
 				Item paint_item = this.GetCurrentPaintItem();
+				ColorCartridgeItem cartridge = null;
 
 				if( paint_item != null ) {
-					var cartridge = (ColorCartridgeItem)paint_item.modItem;
+					cartridge = (ColorCartridgeItem)paint_item.modItem;
 
-					if( this.HasMatchingPaintAt( cartridge.MyColor, tile_x, tile_y ) ) {
-						dust_color = cartridge.MyColor;
+					if( cartridge.PaintQuantity <= 0 ) {
+						if( this.SwitchToNextMatchingNonemptyCartridge() ) {
+							paint_item = this.GetCurrentPaintItem();
+							cartridge = (ColorCartridgeItem)paint_item.modItem;
+						} else {
+							paint_item = null;
+							cartridge = null;
+						}
+					}
+
+					if( cartridge != null ) {
+						if( this.HasMatchingPaintAt( cartridge.MyColor, tile_x, tile_y ) ) {
+							dust_color = cartridge.MyColor;
+						}
 					}
 				}
 
@@ -67,6 +76,37 @@ namespace BetterPaint.Items {
 			}
 
 			return false;
+		}
+
+
+		////////////////
+
+		public bool SwitchToNextMatchingNonemptyCartridge() {
+			Item paint_item = this.GetCurrentPaintItem();
+			if( paint_item == null ) { return false; }
+
+			var curr_mypaint = (ColorCartridgeItem)paint_item.modItem;
+			Item[] inv = Main.LocalPlayer.inventory;
+			int cart_type = this.mod.ItemType<ColorCartridgeItem>();
+			bool found = false;
+
+			for( int i=0; i<inv.Length; i++ ) {
+				if( i == this.CurrentCartridgeInventoryIndex ) { continue; }
+
+				Item item = inv[i];
+				if( item == null || item.IsAir || item.type != cart_type ) { continue; }
+
+				var mypaint = (ColorCartridgeItem)item.modItem;
+				if( mypaint.PaintQuantity <= 0 ) { continue; }
+				if( mypaint.MyColor != curr_mypaint.MyColor ) { continue; }
+
+				this.CurrentCartridgeInventoryIndex = i;
+				found = true;
+
+				break;
+			}
+
+			return found;
 		}
 	}
 }

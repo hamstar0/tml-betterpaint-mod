@@ -57,8 +57,8 @@ namespace BetterPaint.Items {
 				default:
 					throw new NotImplementedException();
 				}
-
-				sb.DrawString( Main.fontMouseText, str, new Vector2( rect.X, rect.Y - 16 ), Color.White );
+				
+				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, str, rect.X, rect.Y - 16, Color.White, Color.Black, default( Vector2 ), 1f );
 			}
 
 			rect.X -= 4;
@@ -78,10 +78,10 @@ namespace BetterPaint.Items {
 
 			switch( this.BrushSize ) {
 			case PaintBrushSize.Small:
-				tex = PaintBlasterUI.BrushSmallTex;
+				tex = PaintBlasterUI.SizeSmallTex;
 				break;
 			case PaintBrushSize.Large:
-				tex = PaintBlasterUI.BrushLargeTex;
+				tex = PaintBlasterUI.SizeLargeTex;
 				break;
 			default:
 				throw new NotImplementedException();
@@ -110,8 +110,8 @@ namespace BetterPaint.Items {
 				default:
 					throw new NotImplementedException();
 				}
-
-				sb.DrawString( Main.fontMouseText, str, new Vector2( rect.X, rect.Y + rect.Height ), Color.White );
+				
+				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, str, rect.X, rect.Y + rect.Height, Color.White, Color.Black, default( Vector2 ), 1f );
 			}
 
 			rect.X -= 4;
@@ -142,7 +142,7 @@ namespace BetterPaint.Items {
 
 			if( hover ) {
 				string str = "Copy color";
-				sb.DrawString( Main.fontMouseText, str, new Vector2( rect.X, rect.Y - 16 ), Color.White );
+				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, str, rect.X, rect.Y - 16, Color.White, Color.Black, default( Vector2 ), 1f );
 			}
 
 			rect.X -= 4;
@@ -174,7 +174,7 @@ namespace BetterPaint.Items {
 
 			if( hover ) {
 				string str = "Brush pressure";
-				sb.DrawString( Main.fontMouseText, str, new Vector2( rect.X, rect.Y + rect.Height ), Color.White );
+				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, str, rect.X, rect.Y + rect.Height, Color.White, Color.Black, default( Vector2 ), 1f );
 			}
 
 			rect.X -= 4;

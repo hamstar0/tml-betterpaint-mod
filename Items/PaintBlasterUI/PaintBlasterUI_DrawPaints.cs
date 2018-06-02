@@ -91,14 +91,15 @@ namespace BetterPaint.Items {
 				float percent = paint_amount / (float)mymod.Config.PaintCartridgeCapacity;
 				Color text_color = ColorCartridgeItem.GetCapacityColor( percent );
 				Color label_color = Color.White * PaintBlasterUI.HoveredScale;
+				Color bg_color = Color.Black * PaintBlasterUI.HoveredScale;
 
-				sb.DrawString( Main.fontMouseText, "Capacity:", new Vector2(Main.mouseX, Main.mouseY-16), label_color );
-				sb.DrawString( Main.fontMouseText, (int)(percent * 100)+"%", new Vector2(Main.mouseX+72, Main.mouseY-16), text_color );
+				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, "Capacity:", Main.mouseX, Main.mouseY-16, label_color, bg_color, default( Vector2 ), 1f );
+				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, (int)( percent * 100 ) + "%", Main.mouseX+72, Main.mouseY - 16, label_color, bg_color, default( Vector2 ), 1f );
 
 				string color_str = "R:"+color.R+" G:"+color.G+" B:"+color.B+" A:"+color.A;
 
-				sb.DrawString( Main.fontMouseText, "Color:", new Vector2( Main.mouseX, Main.mouseY + 8 ), label_color );
-				sb.DrawString( Main.fontMouseText, color_str, new Vector2( Main.mouseX+56, Main.mouseY + 8 ), color );
+				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, "Color:", Main.mouseX, Main.mouseY + 8, label_color, bg_color, default( Vector2 ), 1f );
+				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, color_str, Main.mouseX + 56, Main.mouseY + 8, color, bg_color, default( Vector2 ), 1f );
 			}
 
 			if( is_selected ) {
@@ -111,7 +112,7 @@ namespace BetterPaint.Items {
 				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, sel_rect, 2 );
 			}
 
-			sb.DrawString( Main.fontItemStack, stack+"", new Vector2((rect.X+cart_tex.Width)-4, (rect.Y+cart_tex.Height)-12), Color.White );
+			Utils.DrawBorderStringFourWay( sb, Main.fontItemStack, stack + "", (rect.X+cart_tex.Width)-4, (rect.Y+cart_tex.Height)-12, Color.White, Color.Black, default( Vector2 ), 1f );
 
 			return rect;
 		}

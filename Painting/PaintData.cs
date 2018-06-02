@@ -1,7 +1,9 @@
 ﻿using HamstarHelpers.DebugHelpers;
+using HamstarHelpers.TileHelpers;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using Terraria;
 using Terraria.ModLoader.IO;
 
 
@@ -19,7 +21,9 @@ namespace BetterPaint.Painting {
 
 		////////////////
 		
-		public void Load( TagCompound tags, string prefix ) {
+		public void Load( BetterPaintMod mymod, TagCompound tags, string prefix, bool is_foreground ) {
+			var myworld = mymod.GetModWorld<BetterPaintWorld>();
+
 			this.Colors.Clear();
 
 			if( tags.ContainsKey( prefix + "_x" ) ) {
@@ -35,7 +39,17 @@ namespace BetterPaint.Painting {
 						byte[] clr_arr = tags.GetByteArray( prefix + "_" + tile_x + "_" + tile_y );
 						Color color = new Color( clr_arr[0], clr_arr[1], clr_arr[2], clr_arr[3] );
 
-						this.SetColorAt( color, tile_x, tile_y );
+						Tile tile = Main.tile[tile_x, tile_y];
+
+						if( is_foreground ) {
+							if( TileHelpers.IsSolid( tile, true, true ) ) {
+								this.SetColorAt( color, tile_x, tile_y );
+							}
+						} else {
+							if( !TileHelpers.IsAir( tile ) && tile.wall != 0 ) {
+								this.SetColorAt( color, tile_x, tile_y );
+							}
+						}
 					}
 				}
 			}

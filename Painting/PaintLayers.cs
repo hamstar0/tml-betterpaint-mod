@@ -20,9 +20,9 @@ namespace BetterPaint.Painting {
 
 		////////////////
 
-		public void Load( TagCompound tags ) {
-			this.Background.Load( tags, "bg" );
-			this.Foreground.Load( tags, "fg" );
+		public void Load( BetterPaintMod mymod, TagCompound tags ) {
+			this.Background.Load( mymod, tags, "bg", false );
+			this.Foreground.Load( mymod, tags, "fg", true );
 		}
 
 		public TagCompound Save() {

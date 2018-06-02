@@ -1,8 +1,6 @@
 ﻿using HamstarHelpers.TmlHelpers;
-using HamstarHelpers.Utilities.AnimatedColor;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Graphics;
 using System.Globalization;
 using Terraria;
 
@@ -66,7 +64,7 @@ namespace BetterPaint.Items {
 					if( Main.mouseY >= y && Main.mouseY < ( y + PaintBlasterHUD.AmmoCan.Height ) ) {
 						string percent_str = capacity_percent.ToString( "P", CultureInfo.InvariantCulture );
 
-						Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, percent_str, Main.mouseX-32, Main.mouseY+24, Color.White, Color.Black, default(Vector2), 1f );
+						Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, percent_str, Main.mouseX-40, Main.mouseY+20, Color.White, Color.Black, default(Vector2), 1f );
 						//sb.DrawString( Main.fontMouseText, percent_str, new Vector2(Main.mouseX, Main.mouseY), Color.White );
 					}
 				}

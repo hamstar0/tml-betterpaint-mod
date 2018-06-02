@@ -17,7 +17,7 @@ namespace BetterPaint {
 		////////////////
 
 		public override void Load( TagCompound tags ) {
-			this.Layers.Load( tags );
+			this.Layers.Load( (BetterPaintMod)this.mod, tags );
 		}
 
 		public override TagCompound Save() {

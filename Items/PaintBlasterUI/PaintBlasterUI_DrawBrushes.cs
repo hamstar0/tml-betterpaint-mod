@@ -19,10 +19,14 @@ namespace BetterPaint.Items {
 			int x = Main.screenWidth / 2;
 			int y = Main.screenHeight / 2;
 
-			Texture2D tex_stream = Main.itemTexture[ItemID.Paintbrush];
+			/*Texture2D tex_stream = Main.itemTexture[ItemID.Paintbrush];
 			Texture2D tex_spray = Main.itemTexture[ItemID.PaintSprayer];
 			Texture2D tex_spatter = Main.itemTexture[ItemID.HoneyBucket];
-			Texture2D tex_eraser = Main.itemTexture[ItemID.PaintScraper];
+			Texture2D tex_eraser = Main.itemTexture[ItemID.PaintScraper];*/
+			Texture2D tex_stream = PaintBlasterUI.BrushStream;
+			Texture2D tex_spray = PaintBlasterUI.BrushSpray;
+			Texture2D tex_spatter = PaintBlasterUI.BrushSpatter;
+			Texture2D tex_eraser = PaintBlasterUI.BrushEraser;
 
 			var stream_offset = new Vector2( tex_stream.Width, tex_stream.Height ) * 0.5f;
 			var spray_offset = new Vector2( tex_spray.Width, tex_spray.Height ) * 0.5f;
@@ -46,16 +50,16 @@ namespace BetterPaint.Items {
 
 			if( stream_hover ) {
 				var tool_color = this.CurrentBrush == PaintBrushType.Stream ? Color.White : Color.LightGray;
-				sb.DrawString( Main.fontMouseText, "Stream Mode", new Vector2( stream_rect.X, stream_rect.Y + stream_rect.Height ), tool_color );
+				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, "Stream Mode", stream_rect.X, stream_rect.Y + stream_rect.Height, tool_color, Color.Black, default( Vector2 ), 1f );
 			} else if( spray_hover ) {
 				var tool_color = this.CurrentBrush == PaintBrushType.Spray ? Color.White : Color.LightGray;
-				sb.DrawString( Main.fontMouseText, "Spray Mode", new Vector2( spray_rect.X, spray_rect.Y + spray_rect.Height ), tool_color );
+				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, "Spray Mode", spray_rect.X, spray_rect.Y + spray_rect.Height, tool_color, Color.Black, default( Vector2 ), 1f );
 			} else if( spatter_hover ) {
 				var tool_color = this.CurrentBrush == PaintBrushType.Spatter ? Color.White : Color.LightGray;
-				sb.DrawString( Main.fontMouseText, "Spatter Mode", new Vector2( spatter_rect.X, spatter_rect.Y + spatter_rect.Height ), tool_color );
+				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, "Spatter Mode", spatter_rect.X, spatter_rect.Y + spatter_rect.Height, tool_color, Color.Black, default( Vector2 ), 1f );
 			} else if( eraser_hover ) {
 				var tool_color = this.CurrentBrush == PaintBrushType.Erase ? Color.White : Color.LightGray;
-				sb.DrawString( Main.fontMouseText, "Eraser Mode", new Vector2( eraser_rect.X, eraser_rect.Y + eraser_rect.Height ), tool_color );
+				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, "Eraser Mode", eraser_rect.X, eraser_rect.Y + eraser_rect.Height, tool_color, Color.Black, default( Vector2 ), 1f );
 			}
 
 			switch( this.CurrentBrush ) {

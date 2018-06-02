@@ -18,7 +18,22 @@ namespace BetterPaint {
 				draw_color = Lighting.GetColor( i, j, painted_color );
 			}
 		}
+
+
+		public override void KillTile( int i, int j, int type, ref bool fail, ref bool effect_only, ref bool no_item ) {
+			if( effect_only ) { return; }
+
+			var myworld = this.mod.GetModWorld<BetterPaintWorld>();
+			ushort tile_x = (ushort)i;
+			ushort tile_y = (ushort)j;
+
+			if( myworld.Layers.Foreground.HasColor( tile_x, tile_y ) ) {
+				myworld.Layers.Foreground.RemoveColorAt( tile_x, tile_y );
+			}
+		}
 	}
+
+
 
 
 	class BetterPaintWall : GlobalWall {
@@ -50,6 +65,17 @@ namespace BetterPaint {
 			}
 
 			return true;
+		}
+
+
+		public override void KillWall( int i, int j, int type, ref bool fail ) {
+			var myworld = this.mod.GetModWorld<BetterPaintWorld>();
+			ushort tile_x = (ushort)i;
+			ushort tile_y = (ushort)j;
+
+			if( myworld.Layers.Background.HasColor( tile_x, tile_y ) ) {
+				myworld.Layers.Background.RemoveColorAt( tile_x, tile_y );
+			}
 		}
 	}
 }

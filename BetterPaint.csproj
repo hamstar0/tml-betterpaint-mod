@@ -106,11 +106,15 @@
     <Content Include="Items\PaintBlasterHUD\PaintAmmoBottom.png" />
     <Content Include="Items\PaintBlasterHUD\PaintAmmoContainer.png" />
     <Content Include="Items\PaintBlasterHUD\PaintAmmoTop.png" />
+    <Content Include="Items\PaintBlasterUI\BrushEraser.png" />
+    <Content Include="Items\PaintBlasterUI\BrushSpatter.png" />
+    <Content Include="Items\PaintBlasterUI\BrushSpray.png" />
+    <Content Include="Items\PaintBlasterUI\BrushStream.png" />
     <Content Include="Items\PaintBlasterUI\LayerBoth.png" />
     <Content Include="Items\PaintBlasterUI\LayerFg.png" />
     <Content Include="Items\PaintBlasterUI\LayerBg.png" />
-    <Content Include="Items\PaintBlasterUI\BrushLarge.png" />
-    <Content Include="Items\PaintBlasterUI\BrushSmall.png" />
+    <Content Include="Items\PaintBlasterUI\SizeLarge.png" />
+    <Content Include="Items\PaintBlasterUI\SizeSmall.png" />
     <Content Include="Items\PaintBlasterUI\PressureHi.png" />
     <Content Include="Items\PaintBlasterUI\PressureLow.png" />
     <Content Include="Items\PaintBlasterUI\PressureMid.png" />
