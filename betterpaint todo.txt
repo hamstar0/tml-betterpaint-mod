@@ -12,10 +12,9 @@ v1.2
 -	Set text to render in its own layer
 -	Implement loading paint on server join
 -	@Test MP
-v1.1
--	Fix pressure modes
--	Render cartridge capacity
 
+v1.1
+-	Render cartridge capacity
 -	Add recipe for copy cartridges to copy existing color cartridges
 -	Add backwards compat with regular paint
 -	Add dry fire message about selecting colors

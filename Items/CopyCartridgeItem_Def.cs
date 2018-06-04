@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 namespace BetterPaint.Items {
 	class CopyCartridgeItem : ModItem {
 		public static void SetWithColor( Player player, Item copy_cart_item, Color color ) {
-			ItemHelpers.DestroyItem( copy_cart_item );
+			ItemHelpers.ReduceStack( copy_cart_item, 1 );
 
 			int cart_idx = ItemHelpers.CreateItem( player.position, BetterPaintMod.Instance.ItemType<ColorCartridgeItem>(), 1,
 				ColorCartridgeItem.Width, ColorCartridgeItem.Height );
