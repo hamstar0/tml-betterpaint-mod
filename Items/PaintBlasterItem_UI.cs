@@ -28,6 +28,8 @@ namespace BetterPaint.Items {
 
 
 		public void DrawPainterUI( SpriteBatch sb ) {
+			if( Main.playerInventory ) { return; }
+
 			var mymod = (BetterPaintMod)this.mod;
 			this.UI.DrawUI( mymod, sb );
 		}

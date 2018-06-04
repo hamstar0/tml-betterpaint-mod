@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using BetterPaint.Painting;
 using HamstarHelpers.ItemHelpers;
 using HamstarHelpers.TmlHelpers;
 using Microsoft.Xna.Framework;
@@ -59,14 +60,13 @@ namespace BetterPaint.Items {
 			var angles = new Dictionary<int, float>( paint_idxs.Count );
 
 			foreach( int idx in paint_idxs ) {
-				Item item = Main.LocalPlayer.inventory[idx];
-				var cart = (ColorCartridgeItem)item.modItem;
-				if( cart.PaintQuantity == 0 ) { continue; }
+				Item item = Main.LocalPlayer.inventory[ idx ];
+				if( PaintData.GetPaintAmount(item) <= 0 ) { continue; }
 
-				string color_key = cart.MyColor.ToString();
+				string color_key = PaintData.GetPaintColor(item).ToString();
 
 				if( !paint_info.ContainsKey( color_key ) ) {
-					paint_info[color_key] = new PaintInfo( idx, item );
+					paint_info[ color_key ] = new PaintInfo( idx, item );
 				} else {
 					paint_info[ color_key ].Copies++;
 				}

@@ -15,8 +15,8 @@ v1.2
 v1.1
 -	Fix pressure modes
 -	Render cartridge capacity
--	Add backwards compat with regular paint
 
+-	Add backwards compat with regular paint
 -	Add dry fire message about selecting colors
 -	Fixed mouse position zoom error
 v1

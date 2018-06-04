@@ -14,7 +14,7 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
-			if( this.CurrentBrush != PaintBrushType.Erase && PaintData.GetPaintAmount(item) <= 0 ) {
+			if( this.CurrentBrush != PaintBrushType.Erase && PaintData.GetPaintAmount(paint_item) <= 0 ) {
 				return false;
 			}
 
@@ -39,7 +39,7 @@ namespace BetterPaint.Items {
 			default:
 				throw new NotImplementedException();
 			}
-
+			
 			return true;
 		}
 

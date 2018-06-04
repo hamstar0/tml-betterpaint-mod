@@ -1,6 +1,5 @@
 ﻿using BetterPaint.Painting;
 using HamstarHelpers.DebugHelpers;
-using HamstarHelpers.ItemHelpers;
 using HamstarHelpers.PlayerHelpers;
 using HamstarHelpers.UIHelpers;
 using HamstarHelpers.Utilities.Timers;
@@ -16,32 +15,31 @@ namespace BetterPaint.Items {
 
 
 		public override bool CanUseItem( Player player ) {
-			Item paint_item = this.GetCurrentPaintItem();
-
 			if( this.IsUsingUI ) {
 				return false;
 			}
+			if( this.CurrentBrush == PaintBrushType.Erase || this.IsCopying ) {
+				return true;
+			}
+
+			Item paint_item = this.GetCurrentPaintItem();
 
 			if( paint_item == null ) {
-				if( this.CurrentBrush == PaintBrushType.Erase || this.IsCopying ) {
-					return true;
-				} else {
-					if( this.DryFireAvailable ) {
-						this.DryFireAvailable = false;
+				if( this.DryFireAvailable ) {
+					this.DryFireAvailable = false;
 
-						Timers.SetTimer( "BetterPaintDryFire", 1 * 60, () => {
-							this.DryFireAvailable = true;
-							return false;
-						} );
+					Timers.SetTimer( "BetterPaintDryFire", 1 * 60, () => {
+						this.DryFireAvailable = true;
+						return false;
+					} );
 
-						Main.NewText( "Select a paint first.", Color.Yellow );
-					}
+					Main.NewText( "Select a paint first.", Color.Yellow );
 				}
 				return false;
 			}
 
 			Vector2 tile_pos = UIHelpers.GetWorldMousePosition() / 16f;
-
+			
 			return this.CanPaintAt( paint_item, (ushort)tile_pos.X, (ushort)tile_pos.Y );
 		}
 
@@ -81,7 +79,7 @@ namespace BetterPaint.Items {
 						}
 					}
 				}
-
+				
 				uses = this.ApplyBrushAt( world_x, world_y );
 			}
 
