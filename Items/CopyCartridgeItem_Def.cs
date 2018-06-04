@@ -37,7 +37,7 @@ namespace BetterPaint.Items {
 		public override void SetDefaults() {
 			this.item.width = ColorCartridgeItem.Width;
 			this.item.height = ColorCartridgeItem.Height;
-			this.item.ammo = this.item.type;
+			this.item.maxStack = 99;
 			this.item.value = Item.buyPrice( 0, 0, 50, 0 );
 			this.item.rare = 3;
 		}
@@ -47,8 +47,11 @@ namespace BetterPaint.Items {
 
 		public override void AddRecipes() {
 			var mymod = (BetterPaintMod)this.mod;
-			var recipe = new CopyCartridgeRecipe( mymod, this );
-			recipe.AddRecipe();
+			var anew_recipe = new CopyCartridgeRecipe( mymod, this );
+			var copy_recipe = new CopyCartridgeCopyRecipe( mymod );
+
+			anew_recipe.AddRecipe();
+			copy_recipe.AddRecipe();
 		}
 	}
 
@@ -70,6 +73,59 @@ namespace BetterPaint.Items {
 			}
 
 			this.SetResult( mycart );
+		}
+
+
+		public override bool RecipeAvailable() {
+			return ( (BetterPaintMod)this.mod ).Config.CopyPaintRecipeEnabled;
+		}
+	}
+
+
+
+	class CopyCartridgeCopyRecipe : ModRecipe {
+		private Color CopyColor;
+
+
+		public CopyCartridgeCopyRecipe( BetterPaintMod mymod ) : base( mymod ) {
+			this.AddTile( mymod.TileType<PaintMixerTile>() );
+
+			this.AddIngredient( mymod.ItemType<CopyCartridgeItem>(), 1 );
+			this.AddIngredient( mymod.ItemType<ColorCartridgeItem>(), 1 );
+
+			this.SetResult( mymod.GetItem<ColorCartridgeItem>() );
+		}
+
+
+		public override int ConsumeItem( int item_type, int num_required ) {
+			var mymod = (BetterPaintMod)this.mod;
+			var inv = Main.LocalPlayer.inventory;
+			int cart_type = mymod.ItemType<ColorCartridgeItem>();
+
+			for( int i = 0; i < inv.Length; i++ ) {
+				if( inv[i] == null || inv[i].IsAir ) { continue; }
+				if( inv[i].type != cart_type ) { continue; }
+
+				var mycart = (ColorCartridgeItem)inv[i].modItem;
+
+				this.CopyColor = mycart.MyColor;
+				break;
+			}
+
+			return base.ConsumeItem( item_type, num_required );
+		}
+
+
+		public override void OnCraft( Item item ) {
+			var mymod = (BetterPaintMod)this.mod;
+			var mycart1 = (ColorCartridgeItem)item.modItem;
+			int cart_type = mymod.ItemType<ColorCartridgeItem>();
+
+			//int item_idx = ItemHelpers.CreateItem( Main.LocalPlayer.position, cart_type, 1, ColorCartridgeItem.Width, ColorCartridgeItem.Height );
+			//var mycart2 = (ColorCartridgeItem)Main.item[ item_idx ].modItem;
+
+			mycart1.SetPaint( this.CopyColor, mymod.Config.PaintCartridgeCapacity );
+			//mycart2.SetPaint( this.CopyColor, mymod.Config.PaintCartridgeCapacity );
 		}
 
 

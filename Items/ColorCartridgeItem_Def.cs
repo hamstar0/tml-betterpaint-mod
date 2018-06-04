@@ -99,7 +99,7 @@ namespace BetterPaint.Items {
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Color Cartridge" );
 			this.Tooltip.SetDefault( "Needs a paint blaster to use" + '\n' +
-				"Mix paint to make cartridges at a paint mixer" + '\n' +
+				"Make cartridges with paint at a paint mixer" + '\n' +
 				"Blend cartidges together at a paint mixer" );
 
 			if( ColorCartridgeItem.OverlayTex == null ) {

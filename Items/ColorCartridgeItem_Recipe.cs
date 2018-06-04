@@ -43,10 +43,15 @@ namespace BetterPaint.Items {
 		public override int ConsumeItem( int item_type, int num_required ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var inv = Main.LocalPlayer.inventory;
+			int cart_type = mymod.ItemType<ColorCartridgeItem>();
+
+			if( item_type != cart_type ) {	// Won't be invoked, but future-proofing won't hurt
+				return base.ConsumeItem( item_type, num_required );
+			}
 
 			for( int i = 0; i < inv.Length; i++ ) {
 				if( inv[i] == null || inv[i].IsAir ) { continue; }
-				if( inv[i].type != item_type ) { continue; }
+				if( inv[i].type != cart_type ) { continue; }
 
 				if( this.First == null ) {
 					this.First = (ColorCartridgeItem)inv[i].modItem;
