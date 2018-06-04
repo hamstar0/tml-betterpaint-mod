@@ -1,4 +1,5 @@
 ﻿using BetterPaint.Painting;
+using HamstarHelpers.ItemHelpers;
 using HamstarHelpers.PlayerHelpers;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -33,9 +34,9 @@ namespace BetterPaint.Items {
 			get { return this.UI.PressurePercent; }
 			private set { this.UI.PressurePercent = value; }
 		}
-		public int CurrentCartridgeInventoryIndex {
-			get { return this.UI.CurrentCartridgeInventoryIndex; }
-			private set { this.UI.CurrentCartridgeInventoryIndex = value; }
+		public int CurrentPaintItemInventoryIndex {
+			get { return this.UI.CurrentPaintItemInventoryIndex; }
+			private set { this.UI.CurrentPaintItemInventoryIndex = value; }
 		}
 
 		public bool IsCopying {
@@ -59,7 +60,7 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 
 			this.DisplayName.SetDefault( "Paint Blaster" );
-			this.Tooltip.SetDefault( "Paints with color cartridges in various ways." + '\n' +
+			this.Tooltip.SetDefault( "Use regular paint or Color Cartridges to paint" + '\n' +
 				"Overlays all existing paint" + '\n' +
 				"Right-click to adjust settings" );
 			
@@ -100,11 +101,10 @@ namespace BetterPaint.Items {
 				}
 			}
 
-			if( this.CurrentCartridgeInventoryIndex >= 0 ) {
-				Item cart_item = player.inventory[ this.CurrentCartridgeInventoryIndex ];
-
-				if( cart_item.type != this.mod.ItemType<ColorCartridgeItem>() ) {
-					this.CurrentCartridgeInventoryIndex = -1;
+			if( this.CurrentPaintItemInventoryIndex >= 0 ) {
+				Item item = this.GetCurrentPaintItem();
+				if( item == null ) {
+					this.CurrentPaintItemInventoryIndex = -1;
 				}
 			}
 		}
@@ -113,17 +113,19 @@ namespace BetterPaint.Items {
 		////////////////
 
 		public Item GetCurrentPaintItem() {
-			if( this.CurrentCartridgeInventoryIndex == -1 ) {
+			if( this.CurrentPaintItemInventoryIndex == -1 ) {
 				return null;
 			}
 
-			Item cart_item = Main.LocalPlayer.inventory[ this.CurrentCartridgeInventoryIndex ];
-			if( cart_item.type != this.mod.ItemType<ColorCartridgeItem>() ) {
-				this.CurrentCartridgeInventoryIndex = -1;
+			Item paint_item = Main.LocalPlayer.inventory[ this.CurrentPaintItemInventoryIndex ];
+
+			if( paint_item.type != this.mod.ItemType<ColorCartridgeItem>()
+					&& !ItemIdentityHelpers.Paints.Item2.Contains(paint_item.type) ) {
+				this.CurrentPaintItemInventoryIndex = -1;
 				return null;
 			}
 
-			return cart_item;
+			return paint_item;
 		}
 	}
 }

@@ -4,15 +4,23 @@ Future
 -	Implement richer painting
 -	Brush shape?
 
-
-v1.1
+v1.2
+-	Debug background prematurely "painting"
 -	Glowing paints
 -	Implement queued painting
+-	Implement API
+-	Set text to render in its own layer
 -	Implement loading paint on server join
 -	@Test MP
+v1.1
+-	Fix pressure modes
+-	Render cartridge capacity
+-	Add backwards compat with regular paint
+
+-	Add dry fire message about selecting colors
+-	Fixed mouse position zoom error
 v1
 -	Release
-
 -	Use minimalist icons
 -	Auto-switch cartridges to like-colors on empty
 -	Remove colors over open air (on load, block break)

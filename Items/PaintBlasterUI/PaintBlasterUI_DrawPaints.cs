@@ -1,9 +1,10 @@
-﻿using HamstarHelpers.DebugHelpers;
+﻿using BetterPaint.Painting;
+using HamstarHelpers.DebugHelpers;
 using HamstarHelpers.HudHelpers;
+using HamstarHelpers.ItemHelpers;
 using HamstarHelpers.Utilities.AnimatedColor;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -30,40 +31,32 @@ namespace BetterPaint.Items {
 
 
 		public IDictionary<int, float> DrawColorPalette( BetterPaintMod mymod, SpriteBatch sb ) {
-			IList<int> item_idxs = ColorCartridgeItem.GetPaintCartridges( Main.LocalPlayer );
-			var stack_idx_cart = new Dictionary<string, object[]>( item_idxs.Count );
-			var angles = new Dictionary<int, float>( item_idxs.Count );
-
-			foreach( int idx in item_idxs ) {
-				Item item = Main.LocalPlayer.inventory[idx];
-				var cart = (ColorCartridgeItem)item.modItem;
-				if( cart.PaintQuantity == 0 ) { continue; }
-
-				string color_key = cart.MyColor.ToString();
-
-				if( !stack_idx_cart.ContainsKey( color_key ) ) {
-					stack_idx_cart[color_key] = new object[] { 1, idx, cart };
-				} else {
-					stack_idx_cart[color_key][0] = (int)stack_idx_cart[color_key][0] + 1;
-				}
-			}
-
-			double angle_step = 360d / (double)stack_idx_cart.Count;
+			IDictionary<string, PaintInfo> info_set = ColorCartridgeItem.GetPaintsByColorKey( Main.LocalPlayer );
+			var angles = new Dictionary<int, float>( info_set.Count );
+			
+			double angle_step = 360d / (double)info_set.Count;
 			double angle = 0d;
 			double radpi = Math.PI / 180d;
 			
-			foreach( var kv in stack_idx_cart ) {
+			foreach( var info in info_set.Values ) {
 				int x = ( Main.screenWidth / 2 ) + (int)( 128d * Math.Cos( angle * radpi ) );
 				int y = ( Main.screenHeight / 2 ) + (int)( 128d * Math.Sin( angle * radpi ) );
 
-				var stack = (int)kv.Value[0];
-				var idx = (int)kv.Value[1];
-				var cart = (ColorCartridgeItem)kv.Value[2];
+				if( info.Paint.modItem is ColorCartridgeItem ) {
+					var cart = (ColorCartridgeItem)info.Paint.modItem;
+					float percent = cart.PaintQuantity / (float)mymod.Config.PaintCartridgeCapacity;
 
-				this.DrawColorIcon( mymod, sb, cart.MyColor, cart.PaintQuantity, stack, x, y, angle, angle_step,
-					( idx == this.CurrentCartridgeInventoryIndex) );
+					this.DrawColorIcon( mymod, sb, info.Paint.type, cart.MyColor, percent, info.Copies, x, y, angle, angle_step,
+						( info.FirstInventoryIndex == this.CurrentPaintItemInventoryIndex ) );
+				} else {
+					Color paint_color = WorldGen.paintColor( info.Paint.paint );
+					float percent = (float)info.Paint.stack / 999f;
 
-				angles[idx] = (float)angle;
+					this.DrawColorIcon( mymod, sb, info.Paint.type, paint_color, percent, info.Paint.stack, x, y, angle, angle_step,
+						( info.FirstInventoryIndex == this.CurrentPaintItemInventoryIndex ) );
+				}
+
+				angles[ info.FirstInventoryIndex ] = (float)angle;
 
 				angle += angle_step;
 			}
@@ -74,9 +67,18 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public Rectangle DrawColorIcon( BetterPaintMod mymod, SpriteBatch sb, Color color, float paint_amount, int stack, int x, int y, double palette_angle, double angle_step, bool is_selected ) {
-			Texture2D cart_tex = ColorCartridgeItem.CartridgeTex;
-			Texture2D over_tex = ColorCartridgeItem.OverlayTex;
+		public Rectangle DrawColorIcon( BetterPaintMod mymod, SpriteBatch sb, int item_type, Color color, float amount_percent, int stack, int x, int y, double palette_angle, double angle_step, bool is_selected ) {
+			Texture2D cart_tex, over_tex;
+
+			if( item_type == mymod.ItemType<ColorCartridgeItem>() ) {
+				cart_tex = ColorCartridgeItem.CartridgeTex;
+				over_tex = ColorCartridgeItem.OverlayTex;
+			} else if( ItemIdentityHelpers.Paints.Item2.Contains(item_type) ) {
+				cart_tex = Main.itemTexture[ item_type ];
+				over_tex = null;
+			} else {
+				throw new NotImplementedException();
+			}
 
 			bool is_hover = this.IsHoveringIcon( palette_angle, angle_step );
 
@@ -85,16 +87,15 @@ namespace BetterPaint.Items {
 				( is_hover ? PaintBlasterUI.HoveredScale : PaintBlasterUI.IdleScale );
 
 			sb.Draw( cart_tex, rect, Color.White * color_mul );
-			sb.Draw( over_tex, rect, color * color_mul );
+			if( over_tex != null ) { sb.Draw( over_tex, rect, color * color_mul ); }
 
 			if( is_hover ) {
-				float percent = paint_amount / (float)mymod.Config.PaintCartridgeCapacity;
-				Color text_color = ColorCartridgeItem.GetCapacityColor( percent );
+				Color text_color = ColorCartridgeItem.GetCapacityColor( amount_percent );
 				Color label_color = Color.White * PaintBlasterUI.HoveredScale;
 				Color bg_color = Color.Black * PaintBlasterUI.HoveredScale;
 
 				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, "Capacity:", Main.mouseX, Main.mouseY-16, label_color, bg_color, default( Vector2 ), 1f );
-				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, (int)( percent * 100 ) + "%", Main.mouseX+72, Main.mouseY - 16, label_color, bg_color, default( Vector2 ), 1f );
+				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, (int)( amount_percent * 100 ) + "%", Main.mouseX+72, Main.mouseY - 16, label_color, bg_color, default( Vector2 ), 1f );
 
 				string color_str = "R:"+color.R+" G:"+color.G+" B:"+color.B+" A:"+color.A;
 

@@ -78,7 +78,7 @@ namespace BetterPaint.Items {
 		public bool IsInteractingWithUI { get; private set; }
 
 		public PaintBrushType CurrentBrush = PaintBrushType.Stream;
-		public int CurrentCartridgeInventoryIndex = -1;
+		public int CurrentPaintItemInventoryIndex = -1;
 		public PaintLayer Layer = PaintLayer.Foreground;
 		public PaintBrushSize BrushSize = PaintBrushSize.Small;
 		public float PressurePercent = 1f;

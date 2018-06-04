@@ -10,11 +10,11 @@ using Terraria.ModLoader;
 
 namespace BetterPaint.Items {
 	partial class PaintBlasterItem : ModItem {
-		public bool CanPaintAt( ColorCartridgeItem cartridge, ushort tile_x, ushort tile_y ) {
+		public bool CanPaintAt( Item paint_item, ushort tile_x, ushort tile_y ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
-			if( this.CurrentBrush != PaintBrushType.Erase && cartridge.PaintQuantity <= 0f ) {
+			if( this.CurrentBrush != PaintBrushType.Erase && PaintData.GetPaintAmount(item) <= 0 ) {
 				return false;
 			}
 
@@ -90,8 +90,11 @@ namespace BetterPaint.Items {
 			ColorCartridgeItem cartridge = null;
 
 			if( paint_item != null ) {
-				cartridge = (ColorCartridgeItem)paint_item.modItem;
-				color = cartridge.MyColor;
+				color = PaintData.GetPaintColor( paint_item );
+
+				if( paint_item.modItem is ColorCartridgeItem ) {
+					cartridge = (ColorCartridgeItem)paint_item.modItem;
+				}
 			} else {
 				color = Color.White;
 			}
@@ -110,8 +113,8 @@ namespace BetterPaint.Items {
 				throw new NotImplementedException();
 			}
 
-			if( cartridge != null && uses > 0 ) {
-				cartridge.ConsumePaint( uses );
+			if( paint_item != null && uses > 0 ) {
+				PaintData.ConsumePaint( paint_item, uses );
 			}
 
 			return uses;

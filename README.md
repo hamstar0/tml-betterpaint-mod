@@ -1,5 +1,5 @@
 # tml-betterpaint-mod
-Improves the paint function of the game by adding a spray applicator, letting you paint with full, smooth RGB color across your world. Configurable.
+Improves the paint function of the game by adding a spray applicator, letting you paint with smooth, fast, full-RGB color across your world. Configurable.
 
 Additional credits:
 * dekrypt - Paint Mixer sprite

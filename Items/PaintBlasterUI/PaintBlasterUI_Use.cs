@@ -70,7 +70,7 @@ namespace BetterPaint.Items {
 
 			if( inv_idx != -1 ) {
 				has_interacted = true;
-				this.CurrentCartridgeInventoryIndex = inv_idx;
+				this.CurrentPaintItemInventoryIndex = inv_idx;
 			}
 
 			return has_interacted;

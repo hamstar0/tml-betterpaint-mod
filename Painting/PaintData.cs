@@ -1,14 +1,96 @@
-﻿using HamstarHelpers.DebugHelpers;
+﻿using BetterPaint.Items;
+using HamstarHelpers.DebugHelpers;
+using HamstarHelpers.ItemHelpers;
 using HamstarHelpers.TileHelpers;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using Terraria;
 using Terraria.ModLoader.IO;
 
 
 namespace BetterPaint.Painting {
+	public enum PaintType {
+		Can,
+		Cartridge
+	}
+
+
+
 	public class PaintData {
+		public static bool IsPaint( Item item ) {
+			if( item == null || item.IsAir ) { return false; }
+
+			if( item.type == BetterPaintMod.Instance.ItemType<ColorCartridgeItem>() ) {
+				return true;
+			}
+			if( ItemIdentityHelpers.Paints.Item2.Contains( item.type ) ) {
+				return true;
+			}
+			return false;
+		}
+
+		public static PaintType GetPaintType( Item paint_item ) {
+			if( paint_item.type == BetterPaintMod.Instance.ItemType<ColorCartridgeItem>() ) {
+				return PaintType.Cartridge;
+			}
+			if( ItemIdentityHelpers.Paints.Item2.Contains( paint_item.type ) ) {
+				return PaintType.Can;
+			} else {
+				throw new NotImplementedException();
+			}
+		}
+
+		public static float GetPaintAmount( Item paint_item ) {
+			PaintType paint_type = PaintData.GetPaintType( paint_item );
+
+			switch( paint_type ) {
+			case PaintType.Can:
+				return paint_item.stack;
+			case PaintType.Cartridge:
+				var mycart = (ColorCartridgeItem)paint_item.modItem;
+				return mycart.PaintQuantity;
+			default:
+				throw new NotImplementedException();
+			}
+		}
+
+		public static Color GetPaintColor( Item paint_item ) {
+			PaintType paint_type = PaintData.GetPaintType( paint_item );
+
+			switch( paint_type ) {
+			case PaintType.Can:
+				return WorldGen.paintColor( paint_item.paint );
+			case PaintType.Cartridge:
+				var mycart = (ColorCartridgeItem)paint_item.modItem;
+				return mycart.MyColor;
+			default:
+				throw new NotImplementedException();
+			}
+		}
+		
+
+		public static void ConsumePaint( Item paint_item, float amount ) {
+			PaintType paint_type = PaintData.GetPaintType( paint_item );
+
+			switch( paint_type ) {
+			case PaintType.Can:
+				paint_item.stack -= (int)amount;
+				if( paint_item.stack < 0 ) { paint_item.stack = 0; }
+				break;
+			case PaintType.Cartridge:
+				var mycart = (ColorCartridgeItem)paint_item.modItem;
+				mycart.ConsumePaint( amount );
+				break;
+			default:
+				throw new NotImplementedException();
+			}
+		}
+
+
+		////////////////
+
 		public IDictionary<ushort, IDictionary<ushort, Color>> Colors { get; private set; }
 
 

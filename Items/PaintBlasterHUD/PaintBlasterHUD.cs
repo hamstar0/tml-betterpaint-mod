@@ -1,6 +1,9 @@
-﻿using HamstarHelpers.TmlHelpers;
+﻿using BetterPaint.Painting;
+using HamstarHelpers.ItemHelpers;
+using HamstarHelpers.TmlHelpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Globalization;
 using Terraria;
 
@@ -45,16 +48,18 @@ namespace BetterPaint.Items {
 
 			sb.Draw( PaintBlasterHUD.AmmoCan, new Vector2( x, y ), Color.White );
 
-			Item cart_item = myblaster.GetCurrentPaintItem();
-			if( cart_item != null ) {
-				var mycart = (ColorCartridgeItem)cart_item.modItem;
+			Item paint_item = myblaster.GetCurrentPaintItem();
 
-				float capacity_percent = (float)mycart.PaintQuantity / (float)mymod.Config.PaintCartridgeCapacity;
+			if( paint_item != null ) {
+				Color paint_color = PaintData.GetPaintColor( paint_item );
+				float quantity = PaintData.GetPaintAmount( paint_item );
+
+				float capacity_percent = (float)quantity / (float)mymod.Config.PaintCartridgeCapacity;
 
 				int height = (int)( capacity_percent * 50f ) * 2;
 				int top = 100 - height;
 
-				Color color = capacity_percent >= 0.01f ? mycart.MyColor : mycart.MyColor * 0.25f;
+				Color color = capacity_percent >= 0.01f ? paint_color : paint_color * 0.25f;
 
 				sb.Draw( PaintBlasterHUD.AmmoTop, new Vector2( x, y + 16 + top ), color );
 				sb.Draw( PaintBlasterHUD.AmmoBot, new Vector2( x, y + 124 ), color );
