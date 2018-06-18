@@ -12,7 +12,8 @@ using Terraria.ModLoader.IO;
 namespace BetterPaint.Painting {
 	public enum PaintType {
 		Can,
-		Cartridge
+		ColorCartridge,
+		GlowCartridge
 	}
 
 
@@ -31,10 +32,16 @@ namespace BetterPaint.Painting {
 		}
 
 		public static PaintType GetPaintType( Item paint_item ) {
-			if( paint_item.type == BetterPaintMod.Instance.ItemType<ColorCartridgeItem>() ) {
-				return PaintType.Cartridge;
+			var mymod = BetterPaintMod.Instance;
+			int paint_type = paint_item.type;
+
+			if( paint_type == mymod.ItemType<ColorCartridgeItem>() ) {
+				return PaintType.ColorCartridge;
 			}
-			if( ItemIdentityHelpers.Paints.Item2.Contains( paint_item.type ) ) {
+			if( paint_type == mymod.ItemType<GlowCartridgeItem>() ) {
+				return PaintType.GlowCartridge;
+			}
+			if( ItemIdentityHelpers.Paints.Item2.Contains( paint_type ) ) {
 				return PaintType.Can;
 			} else {
 				throw new NotImplementedException();
@@ -47,9 +54,12 @@ namespace BetterPaint.Painting {
 			switch( paint_type ) {
 			case PaintType.Can:
 				return paint_item.stack;
-			case PaintType.Cartridge:
-				var mycart = (ColorCartridgeItem)paint_item.modItem;
-				return mycart.PaintQuantity;
+			case PaintType.ColorCartridge:
+				var mycolorcart = (ColorCartridgeItem)paint_item.modItem;
+				return mycolorcart.PaintQuantity;
+			case PaintType.GlowCartridge:
+				var myglowcart = (GlowCartridgeItem)paint_item.modItem;
+				return myglowcart.Quantity;
 			default:
 				throw new NotImplementedException();
 			}
@@ -61,9 +71,11 @@ namespace BetterPaint.Painting {
 			switch( paint_type ) {
 			case PaintType.Can:
 				return WorldGen.paintColor( paint_item.paint );
-			case PaintType.Cartridge:
+			case PaintType.ColorCartridge:
 				var mycart = (ColorCartridgeItem)paint_item.modItem;
 				return mycart.MyColor;
+			case PaintType.GlowCartridge:
+				return Color.White;
 			default:
 				throw new NotImplementedException();
 			}
@@ -78,7 +90,7 @@ namespace BetterPaint.Painting {
 				paint_item.stack -= (int)amount;
 				if( paint_item.stack < 0 ) { paint_item.stack = 0; }
 				break;
-			case PaintType.Cartridge:
+			case PaintType.ColorCartridge:
 				var mycart = (ColorCartridgeItem)paint_item.modItem;
 				mycart.ConsumePaint( amount );
 				break;

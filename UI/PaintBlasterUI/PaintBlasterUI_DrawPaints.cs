@@ -31,7 +31,7 @@ namespace BetterPaint.UI {
 
 
 		public IDictionary<int, float> DrawColorPalette( BetterPaintMod mymod, SpriteBatch sb ) {
-			IDictionary<string, PaintDisplayInfo> info_set = PaintDisplayInfo.GetPaintsByColorKey( Main.LocalPlayer );
+			IDictionary<string, PaintDisplayInfo> info_set = PaintDisplayInfo.GetPaintInfo( Main.LocalPlayer );
 			var angles = new Dictionary<int, float>( info_set.Count );
 			
 			double angle_step = 360d / (double)info_set.Count;
@@ -41,20 +41,14 @@ namespace BetterPaint.UI {
 			foreach( var info in info_set.Values ) {
 				int x = ( Main.screenWidth / 2 ) + (int)( 128d * Math.Cos( angle * radpi ) );
 				int y = ( Main.screenHeight / 2 ) + (int)( 128d * Math.Sin( angle * radpi ) );
+				int stack;
+				float percent;
+				Color color;
 
-				if( info.Paint.modItem is ColorCartridgeItem ) {
-					var cart = (ColorCartridgeItem)info.Paint.modItem;
-					float percent = cart.PaintQuantity / (float)mymod.Config.PaintCartridgeCapacity;
-
-					this.DrawColorIcon( mymod, sb, info.Paint.type, cart.MyColor, percent, info.Copies, x, y, angle, angle_step,
-						( info.FirstInventoryIndex == this.CurrentPaintItemInventoryIndex ) );
-				} else {
-					Color paint_color = WorldGen.paintColor( info.Paint.paint );
-					float percent = (float)info.Paint.stack / 999f;
-
-					this.DrawColorIcon( mymod, sb, info.Paint.type, paint_color, percent, info.Paint.stack, x, y, angle, angle_step,
-						( info.FirstInventoryIndex == this.CurrentPaintItemInventoryIndex ) );
-				}
+				info.GetDrawInfo( mymod, x, y, out color, out percent, out stack );
+				
+				this.DrawColorIcon( mymod, sb, info.PaintItem.type, color, percent, stack, x, y, angle, angle_step,
+					(info.FirstInventoryIndex == this.CurrentPaintItemInventoryIndex) );
 
 				angles[ info.FirstInventoryIndex ] = (float)angle;
 
@@ -67,18 +61,36 @@ namespace BetterPaint.UI {
 
 		////////////////
 
-		public Rectangle DrawColorIcon( BetterPaintMod mymod, SpriteBatch sb, int item_type, Color color, float amount_percent, int stack, int x, int y, double palette_angle, double angle_step, bool is_selected ) {
-			Texture2D cart_tex, over_tex;
-
+		public Texture2D GetPaintTexture( BetterPaintMod mymod, int item_type ) {
 			if( item_type == mymod.ItemType<ColorCartridgeItem>() ) {
-				cart_tex = ColorCartridgeItem.CartridgeTex;
-				over_tex = ColorCartridgeItem.OverlayTex;
-			} else if( ItemIdentityHelpers.Paints.Item2.Contains(item_type) ) {
-				cart_tex = Main.itemTexture[ item_type ];
-				over_tex = null;
+				return ColorCartridgeItem.CartridgeTex;
+			} else if( item_type == mymod.ItemType<GlowCartridgeItem>() ) {
+				return GlowCartridgeItem.CartridgeTex;
+			} else if( ItemIdentityHelpers.Paints.Item2.Contains( item_type ) ) {
+				return Main.itemTexture[item_type];
 			} else {
 				throw new NotImplementedException();
 			}
+		}
+
+		public Texture2D GetPaintOverlayTexture( BetterPaintMod mymod, int item_type ) {
+			if( item_type == mymod.ItemType<ColorCartridgeItem>() ) {
+				return ColorCartridgeItem.OverlayTex;
+			} else if( item_type == mymod.ItemType<GlowCartridgeItem>() ) {
+				return GlowCartridgeItem.OverlayTex;
+			} else if( ItemIdentityHelpers.Paints.Item2.Contains( item_type ) ) {
+				return null;
+			} else {
+				throw new NotImplementedException();
+			}
+		}
+
+
+		////////////////
+
+		public Rectangle DrawColorIcon( BetterPaintMod mymod, SpriteBatch sb, int item_type, Color color, float amount_percent, int stack, int x, int y, double palette_angle, double angle_step, bool is_selected ) {
+			Texture2D cart_tex = this.GetPaintTexture( mymod, item_type );
+			Texture2D over_tex = this.GetPaintOverlayTexture( mymod, item_type );
 
 			bool is_hover = this.IsHoveringIcon( palette_angle, angle_step );
 
@@ -87,7 +99,9 @@ namespace BetterPaint.UI {
 				( is_hover ? PaintBlasterUI.HoveredScale : PaintBlasterUI.IdleScale );
 
 			sb.Draw( cart_tex, rect, Color.White * color_mul );
-			if( over_tex != null ) { sb.Draw( over_tex, rect, color * color_mul ); }
+			if( over_tex != null ) {
+				sb.Draw( over_tex, rect, color * color_mul );
+			}
 
 			if( is_hover ) {
 				Color text_color = ColorCartridgeItem.GetCapacityColor( amount_percent );

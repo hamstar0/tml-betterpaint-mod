@@ -12,8 +12,8 @@ v1.2
 -	Implement queued painting
 -	Glowing paints
 	-	Implement painting
-	-	Add to paint wheel
 
+	-	Add to paint wheel
 	-	Create item
 -	Fix UI opacity
 -	Fix stream mode pressure
