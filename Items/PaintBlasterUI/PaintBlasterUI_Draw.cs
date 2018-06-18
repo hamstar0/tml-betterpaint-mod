@@ -9,9 +9,9 @@ using Terraria.ID;
 
 namespace BetterPaint.Items {
 	partial class PaintBlasterUI {
-		public const float SelectedScale = 0.85f;
-		public const float HoveredScale = 0.65f;
-		public const float IdleScale = 0.3f;
+		public const float SelectedScale = 0.925f;
+		public const float HoveredScale = 0.8f;
+		public const float IdleScale = 0.5f;
 
 		public const int BrushesRingRadius = 72;
 		public const int OptionsRingRadius = 28;

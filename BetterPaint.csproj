@@ -58,6 +58,10 @@
     <Compile Include="BetterPaintNPC.cs" />
     <Compile Include="BetterPaintWorld.cs" />
     <Compile Include="Commands\ClearAllPaintCommand.cs" />
+    <Compile Include="Helpers\XnaHelpers\XnaColorHelpers.cs" />
+    <Compile Include="Items\GlowCartridgeItem_Draw.cs" />
+    <Compile Include="Items\GlowCartridgeItem_Recipe.cs" />
+    <Compile Include="Items\GlowCartridgeItem_Def.cs" />
     <Compile Include="Items\CopyCartridgeItem_Def.cs" />
     <Compile Include="Items\PaintBlasterHUD\PaintBlasterHUD.cs" />
     <Compile Include="Items\PaintBlasterItem_Recipe.cs" />
@@ -101,6 +105,8 @@
     <Content Include="build.txt" />
     <Content Include="description.txt" />
     <Content Include="icon.png" />
+    <Content Include="Items\GlowCartridgeItem.png" />
+    <Content Include="Items\GlowCartridgeItem_Color.png" />
     <Content Include="Items\CopyCartridgeItem.png" />
     <Content Include="Items\ColorCartridgeItem.png" />
     <Content Include="Items\ColorCartridgeItem_Color.png" />
