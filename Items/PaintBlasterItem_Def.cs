@@ -120,8 +120,7 @@ namespace BetterPaint.Items {
 
 			Item paint_item = Main.LocalPlayer.inventory[ this.CurrentPaintItemInventoryIndex ];
 
-			if( paint_item.type != this.mod.ItemType<ColorCartridgeItem>()
-					&& !ItemIdentityHelpers.Paints.Item2.Contains(paint_item.type) ) {
+			if( PaintHelpers.IsPaint(paint_item) ) {
 				this.CurrentPaintItemInventoryIndex = -1;
 				return null;
 			}

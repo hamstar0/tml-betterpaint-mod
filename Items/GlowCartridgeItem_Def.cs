@@ -20,6 +20,7 @@ namespace BetterPaint.Items {
 		}
 
 
+
 		////////////////
 		
 		public float Quantity { get; private set; }
@@ -39,10 +40,10 @@ namespace BetterPaint.Items {
 		////////////////
 
 		public override void SetStaticDefaults() {
-			this.DisplayName.SetDefault( "Color Cartridge" );
-			this.Tooltip.SetDefault( "Needs a paint blaster to use" + '\n' +
-				"Make cartridges with paint at a paint mixer" + '\n' +
-				"Blend cartidges together at a paint mixer" );
+			this.DisplayName.SetDefault( "Glow Cartridge" );
+			this.Tooltip.SetDefault( "Needs a Paint Blaster to use" + '\n' +
+				"Makes surfaces shine through darkness" + '\n' +
+				"Craft with cartidges and glowing spores at a paint mixer" );
 
 			if( GlowCartridgeItem.OverlayTex == null ) {
 				GlowCartridgeItem.OverlayTex = this.mod.GetTexture( "Items/GlowCartridgeItem_Color" );
@@ -95,8 +96,8 @@ namespace BetterPaint.Items {
 			};
 		}
 
+
 		////////////////
-		
 		
 		public void SetQuantity( float amount ) {
 			this.Quantity = amount;

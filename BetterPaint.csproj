@@ -63,6 +63,7 @@
     <Compile Include="Items\GlowCartridgeItem_Recipe.cs" />
     <Compile Include="Items\GlowCartridgeItem_Def.cs" />
     <Compile Include="Items\CopyCartridgeItem_Def.cs" />
+    <Compile Include="Painting\PaintHelpers.cs" />
     <Compile Include="UI\PaintBlasterHUD\PaintBlasterHUD.cs" />
     <Compile Include="Items\PaintBlasterItem_Recipe.cs" />
     <Compile Include="Items\PaintBlasterItem_UI.cs" />

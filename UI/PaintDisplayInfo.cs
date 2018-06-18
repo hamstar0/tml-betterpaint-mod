@@ -14,7 +14,7 @@ namespace BetterPaint.UI {
 			IList<int> paint_idxs = new List<int>();
 			Item[] inv = player.inventory;
 			int color_cartridge_type = mymod.ItemType<ColorCartridgeItem>();
-			int glow_cartridge_type = mymod.ItemType<ColorCartridgeItem>();
+			int glow_cartridge_type = mymod.ItemType<GlowCartridgeItem>();
 
 			for( int i = 0; i < inv.Length; i++ ) {
 				Item item = inv[i];
@@ -34,9 +34,9 @@ namespace BetterPaint.UI {
 
 			foreach( int idx in paint_idxs ) {
 				Item item = Main.LocalPlayer.inventory[idx];
-				if( PaintLayer.GetPaintAmount( item ) <= 0 ) { continue; }
+				if( PaintHelpers.GetPaintAmount( item ) <= 0 ) { continue; }
 
-				string color_key = PaintLayer.GetPaintColor( item ).ToString();
+				string color_key = PaintHelpers.GetPaintColor( item ).ToString();
 
 				if( !paint_info.ContainsKey( color_key ) ) {
 					paint_info[color_key] = new PaintDisplayInfo( idx, item );

@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using BetterPaint.Painting;
-using HamstarHelpers.ItemHelpers;
 using HamstarHelpers.TmlHelpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -46,7 +44,7 @@ namespace BetterPaint.Items {
 
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Color Cartridge" );
-			this.Tooltip.SetDefault( "Needs a paint blaster to use" + '\n' +
+			this.Tooltip.SetDefault( "Needs a Paint Plaster to use" + '\n' +
 				"Make cartridges with paint at a paint mixer" + '\n' +
 				"Blend cartidges together at a paint mixer" );
 

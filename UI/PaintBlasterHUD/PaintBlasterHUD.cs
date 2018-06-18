@@ -22,9 +22,9 @@ namespace BetterPaint.UI {
 
 		public static void InitializeStatic( BetterPaintMod mymod ) {
 			if( PaintBlasterHUD.AmmoCan == null ) {
-				PaintBlasterHUD.AmmoCan = mymod.GetTexture( "Items/PaintBlasterHUD/PaintAmmoContainer" );
-				PaintBlasterHUD.AmmoTop = mymod.GetTexture( "Items/PaintBlasterHUD/PaintAmmoTop" );
-				PaintBlasterHUD.AmmoBot = mymod.GetTexture( "Items/PaintBlasterHUD/PaintAmmoBottom" );
+				PaintBlasterHUD.AmmoCan = mymod.GetTexture( "UI/PaintBlasterHUD/PaintAmmoContainer" );
+				PaintBlasterHUD.AmmoTop = mymod.GetTexture( "UI/PaintBlasterHUD/PaintAmmoTop" );
+				PaintBlasterHUD.AmmoBot = mymod.GetTexture( "UI/PaintBlasterHUD/PaintAmmoBottom" );
 
 				TmlLoadHelpers.AddModUnloadPromise( () => {
 					PaintBlasterHUD.AmmoCan = null;
@@ -50,8 +50,8 @@ namespace BetterPaint.UI {
 			Item paint_item = myblaster.GetCurrentPaintItem();
 
 			if( paint_item != null ) {
-				Color paint_color = PaintLayer.GetPaintColor( paint_item );
-				float quantity = PaintLayer.GetPaintAmount( paint_item );
+				Color paint_color = PaintHelpers.GetPaintColor( paint_item );
+				float quantity = PaintHelpers.GetPaintAmount( paint_item );
 
 				float capacity_percent = (float)quantity / (float)mymod.Config.PaintCartridgeCapacity;
 

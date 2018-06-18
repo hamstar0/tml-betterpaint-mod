@@ -39,21 +39,21 @@ namespace BetterPaint.UI {
 
 		public static void InitializeStatic( BetterPaintMod mymod ) {
 			if( PaintBlasterUI.BrushStream == null ) {
-				PaintBlasterUI.BrushStream = mymod.GetTexture( "Items/PaintBlasterUI/BrushStream" );
-				PaintBlasterUI.BrushSpray = mymod.GetTexture( "Items/PaintBlasterUI/BrushSpray" );
-				PaintBlasterUI.BrushSpatter = mymod.GetTexture( "Items/PaintBlasterUI/BrushSpatter" );
-				PaintBlasterUI.BrushEraser = mymod.GetTexture( "Items/PaintBlasterUI/BrushEraser" );
+				PaintBlasterUI.BrushStream = mymod.GetTexture( "UI/PaintBlasterUI/BrushStream" );
+				PaintBlasterUI.BrushSpray = mymod.GetTexture( "UI/PaintBlasterUI/BrushSpray" );
+				PaintBlasterUI.BrushSpatter = mymod.GetTexture( "UI/PaintBlasterUI/BrushSpatter" );
+				PaintBlasterUI.BrushEraser = mymod.GetTexture( "UI/PaintBlasterUI/BrushEraser" );
 
-				PaintBlasterUI.LayerFgTex = mymod.GetTexture( "Items/PaintBlasterUI/LayerFg" );
-				PaintBlasterUI.LayerBgTex = mymod.GetTexture( "Items/PaintBlasterUI/LayerBg" );
-				PaintBlasterUI.LayerBothTex = mymod.GetTexture( "Items/PaintBlasterUI/LayerBoth" );
+				PaintBlasterUI.LayerFgTex = mymod.GetTexture( "UI/PaintBlasterUI/LayerFg" );
+				PaintBlasterUI.LayerBgTex = mymod.GetTexture( "UI/PaintBlasterUI/LayerBg" );
+				PaintBlasterUI.LayerBothTex = mymod.GetTexture( "UI/PaintBlasterUI/LayerBoth" );
 
-				PaintBlasterUI.SizeSmallTex = mymod.GetTexture( "Items/PaintBlasterUI/SizeSmall" );
-				PaintBlasterUI.SizeLargeTex = mymod.GetTexture( "Items/PaintBlasterUI/SizeLarge" );
+				PaintBlasterUI.SizeSmallTex = mymod.GetTexture( "UI/PaintBlasterUI/SizeSmall" );
+				PaintBlasterUI.SizeLargeTex = mymod.GetTexture( "UI/PaintBlasterUI/SizeLarge" );
 
-				PaintBlasterUI.PressureLowTex = mymod.GetTexture( "Items/PaintBlasterUI/PressureLow" );
-				PaintBlasterUI.PressureMidTex = mymod.GetTexture( "Items/PaintBlasterUI/PressureMid" );
-				PaintBlasterUI.PressureHiTex = mymod.GetTexture( "Items/PaintBlasterUI/PressureHi" );
+				PaintBlasterUI.PressureLowTex = mymod.GetTexture( "UI/PaintBlasterUI/PressureLow" );
+				PaintBlasterUI.PressureMidTex = mymod.GetTexture( "UI/PaintBlasterUI/PressureMid" );
+				PaintBlasterUI.PressureHiTex = mymod.GetTexture( "UI/PaintBlasterUI/PressureHi" );
 
 				TmlLoadHelpers.AddModUnloadPromise( () => {
 					PaintBlasterUI.BrushStream = null;

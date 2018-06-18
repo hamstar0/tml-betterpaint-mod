@@ -20,6 +20,7 @@ namespace BetterPaint.Items {
 
 
 
+
 	class ColorCartridgeBlendRecipe : ModRecipe {
 		private ColorCartridgeItem First = null;
 		private ColorCartridgeItem Second = null;
