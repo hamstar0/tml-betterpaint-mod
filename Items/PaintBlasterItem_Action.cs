@@ -14,24 +14,24 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
-			if( this.CurrentBrush != PaintBrushType.Erase && PaintData.GetPaintAmount(paint_item) <= 0 ) {
+			if( this.CurrentBrush != PaintBrushType.Erase && PaintLayer.GetPaintAmount(paint_item) <= 0 ) {
 				return false;
 			}
 
 			Tile tile = Main.tile[tile_x, tile_y];
 
 			switch( this.Layer ) {
-			case PaintLayer.Foreground:
+			case PaintLayerType.Foreground:
 				if( !TileHelpers.IsSolid( tile, true, true ) ) {
 					return false;
 				}
 				break;
-			case PaintLayer.Background:
+			case PaintLayerType.Background:
 				if( TileHelpers.IsAir( tile ) || TileHelpers.IsSolid( tile, true, true ) ) {
 					return false;
 				}
 				break;
-			case PaintLayer.Anyground:
+			case PaintLayerType.Anyground:
 				if( TileHelpers.IsAir( tile ) ) {
 					return false;
 				}
@@ -49,17 +49,17 @@ namespace BetterPaint.Items {
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
 			switch( this.Layer ) {
-			case PaintLayer.Foreground:
+			case PaintLayerType.Foreground:
 				if( myworld.Layers.Foreground.GetColor( tile_x, tile_y ) == color ) {
 					return true;
 				}
 				break;
-			case PaintLayer.Background:
+			case PaintLayerType.Background:
 				if( myworld.Layers.Background.GetColor( tile_x, tile_y ) == color ) {
 					return true;
 				}
 				break;
-			case PaintLayer.Anyground:
+			case PaintLayerType.Anyground:
 				if( myworld.Layers.Foreground.HasColor(tile_x, tile_y) ) {
 					if( myworld.Layers.Foreground.GetColor( tile_x, tile_y ) == color ) {
 						return true;
@@ -90,7 +90,7 @@ namespace BetterPaint.Items {
 			ColorCartridgeItem cartridge = null;
 
 			if( paint_item != null ) {
-				color = PaintData.GetPaintColor( paint_item );
+				color = PaintLayer.GetPaintColor( paint_item );
 
 				if( paint_item.modItem is ColorCartridgeItem ) {
 					cartridge = (ColorCartridgeItem)paint_item.modItem;
@@ -100,13 +100,13 @@ namespace BetterPaint.Items {
 			}
 
 			switch( this.Layer ) {
-			case PaintLayer.Foreground:
+			case PaintLayerType.Foreground:
 				uses = myworld.Layers.ApplyForegroundColor( mymod, this.CurrentBrush, color, this.BrushSize, this.PressurePercent, world_x, world_y );
 				break;
-			case PaintLayer.Background:
+			case PaintLayerType.Background:
 				uses = myworld.Layers.ApplyBackgroundColor( mymod, this.CurrentBrush, color, this.BrushSize, this.PressurePercent, world_x, world_y );
 				break;
-			case PaintLayer.Anyground:
+			case PaintLayerType.Anyground:
 				uses = myworld.Layers.ApplyAnygroundColor( mymod, this.CurrentBrush, color, this.BrushSize, this.PressurePercent, world_x, world_y );
 				break;
 			default:
@@ -114,7 +114,7 @@ namespace BetterPaint.Items {
 			}
 
 			if( paint_item != null && uses > 0 ) {
-				PaintData.ConsumePaint( paint_item, uses );
+				PaintLayer.ConsumePaint( paint_item, uses );
 			}
 
 			return uses;
@@ -124,7 +124,7 @@ namespace BetterPaint.Items {
 		public bool AttemptCopyColorAt( Player player, ushort tile_x, ushort tile_y ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
-			PaintData data;
+			PaintLayer data;
 
 			int copy_type = this.mod.ItemType<CopyCartridgeItem>();
 			int copy_item_idx = ItemFinderHelpers.FindIndexOfFirstOfItemInCollection( player.inventory, new HashSet<int> { copy_type } );
@@ -133,13 +133,13 @@ namespace BetterPaint.Items {
 			}
 
 			switch( this.Layer ) {
-			case PaintLayer.Foreground:
+			case PaintLayerType.Foreground:
 				data = myworld.Layers.Foreground;
 				break;
-			case PaintLayer.Background:
+			case PaintLayerType.Background:
 				data = myworld.Layers.Background;
 				break;
-			case PaintLayer.Anyground:
+			case PaintLayerType.Anyground:
 				if( myworld.Layers.Foreground.HasColor( tile_x, tile_y ) ) {
 					data = myworld.Layers.Foreground;
 				} else {

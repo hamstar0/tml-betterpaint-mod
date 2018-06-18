@@ -51,8 +51,8 @@ namespace BetterPaint.Items {
 			Item paint_item = myblaster.GetCurrentPaintItem();
 
 			if( paint_item != null ) {
-				Color paint_color = PaintData.GetPaintColor( paint_item );
-				float quantity = PaintData.GetPaintAmount( paint_item );
+				Color paint_color = PaintLayer.GetPaintColor( paint_item );
+				float quantity = PaintLayer.GetPaintAmount( paint_item );
 
 				float capacity_percent = (float)quantity / (float)mymod.Config.PaintCartridgeCapacity;
 

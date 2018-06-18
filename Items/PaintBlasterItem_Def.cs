@@ -22,7 +22,7 @@ namespace BetterPaint.Items {
 			get { return this.UI.CurrentBrush; }
 			private set { this.UI.CurrentBrush = value; }
 		}
-		public PaintLayer Layer {
+		public PaintLayerType Layer {
 			get { return this.UI.Layer; }
 			private set { this.UI.Layer = value; }
 		}

@@ -5,13 +5,13 @@ using Terraria.ModLoader.IO;
 
 namespace BetterPaint {
 	class BetterPaintWorld : ModWorld {
-		public PaintLayers Layers { get; private set; }
+		public WorldPaintLayers Layers { get; private set; }
 
 
 		////////////////
 
 		public override void Initialize() {
-			this.Layers = new PaintLayers();
+			this.Layers = new WorldPaintLayers();
 		}
 
 		////////////////

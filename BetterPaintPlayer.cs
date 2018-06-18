@@ -1,6 +1,6 @@
 ﻿using BetterPaint.Items;
 using BetterPaint.NetProtocols;
-using HamstarHelpers.Utilities.Network;
+using HamstarHelpers.Components.Network;
 using Terraria;
 using Terraria.ModLoader;
 

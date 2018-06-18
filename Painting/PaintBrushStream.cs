@@ -6,7 +6,7 @@ using Terraria;
 
 namespace BetterPaint.Painting {
 	class PaintBrushStream : PaintBrush {
-		public override float Apply( PaintData data, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+		public override float Apply( PaintLayer data, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			var mymod = BetterPaintMod.Instance;
 			int iter_range = (int)((brush_size == PaintBrushSize.Small ? 1 : 3) * mymod.Config.BrushSizeMultiplier);
 			float radius = (brush_size == PaintBrushSize.Small ? 0.5f : 3f) * mymod.Config.BrushSizeMultiplier;
@@ -32,8 +32,8 @@ namespace BetterPaint.Painting {
 		}
 
 
-		public float PaintAt( PaintData data, Color color, float pressure_percent, ushort tile_x, ushort tile_y ) {
-			if( TileHelpers.IsAir( Main.tile[tile_x, tile_y] ) ) {
+		public float PaintAt( PaintLayer data, Color color, float pressure_percent, ushort tile_x, ushort tile_y ) {
+			if( !data.CanPaintAt( Main.tile[tile_x, tile_y] ) ) {
 				return 0f;
 			}
 

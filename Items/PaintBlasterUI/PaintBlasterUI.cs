@@ -79,7 +79,7 @@ namespace BetterPaint.Items {
 
 		public PaintBrushType CurrentBrush = PaintBrushType.Stream;
 		public int CurrentPaintItemInventoryIndex = -1;
-		public PaintLayer Layer = PaintLayer.Foreground;
+		public PaintLayerType Layer = PaintLayerType.Foreground;
 		public PaintBrushSize BrushSize = PaintBrushSize.Small;
 		public float PressurePercent = 1f;
 		public bool IsCopying = false;

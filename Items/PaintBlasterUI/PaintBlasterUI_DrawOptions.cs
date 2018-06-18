@@ -18,13 +18,13 @@ namespace BetterPaint.Items {
 			Texture2D tex;
 
 			switch( this.Layer ) {
-			case PaintLayer.Foreground:
+			case PaintLayerType.Foreground:
 				tex = PaintBlasterUI.LayerFgTex;
 				break;
-			case PaintLayer.Background:
+			case PaintLayerType.Background:
 				tex = PaintBlasterUI.LayerBgTex;
 				break;
-			case PaintLayer.Anyground:
+			case PaintLayerType.Anyground:
 				tex = PaintBlasterUI.LayerBothTex;
 				break;
 			default:
@@ -45,13 +45,13 @@ namespace BetterPaint.Items {
 				string str;
 
 				switch( this.Layer ) {
-				case PaintLayer.Foreground:
+				case PaintLayerType.Foreground:
 					str = "Foreground Only";
 					break;
-				case PaintLayer.Background:
+				case PaintLayerType.Background:
 					str = "Background Only";
 					break;
-				case PaintLayer.Anyground:
+				case PaintLayerType.Anyground:
 					str = "All layers";
 					break;
 				default:

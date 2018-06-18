@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 
 namespace BetterPaint.Painting {
-	public enum PaintLayer : int {
+	public enum PaintLayerType : int {
 		Foreground,
 		Background,
 		Anyground
@@ -36,6 +36,6 @@ namespace BetterPaint.Painting {
 
 		////////////////
 
-		public abstract float Apply( PaintData data, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y );
+		public abstract float Apply( PaintLayer data, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y );
 	}
 }

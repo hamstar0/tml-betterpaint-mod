@@ -61,9 +61,9 @@ namespace BetterPaint.Items {
 
 			foreach( int idx in paint_idxs ) {
 				Item item = Main.LocalPlayer.inventory[ idx ];
-				if( PaintData.GetPaintAmount(item) <= 0 ) { continue; }
+				if( PaintLayer.GetPaintAmount(item) <= 0 ) { continue; }
 
-				string color_key = PaintData.GetPaintColor(item).ToString();
+				string color_key = PaintLayer.GetPaintColor(item).ToString();
 
 				if( !paint_info.ContainsKey( color_key ) ) {
 					paint_info[ color_key ] = new PaintInfo( idx, item );

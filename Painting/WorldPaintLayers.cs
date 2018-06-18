@@ -1,4 +1,5 @@
 ﻿using BetterPaint.NetProtocols;
+using HamstarHelpers.TileHelpers;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -6,23 +7,34 @@ using Terraria.ModLoader.IO;
 
 
 namespace BetterPaint.Painting {
-	class PaintLayers {
-		public PaintData Foreground { get; private set; }
-		public PaintData Background { get; private set; }
+	class WorldPaintLayers {
+		public static bool CanPaintForeground( Tile tile ) {
+			return TileHelpers.IsSolid( tile, true, true );
+		}
+
+		public static bool CanPaintBackground( Tile tile ) {
+			return !TileHelpers.IsAir( tile ) && tile.wall != 0;
+		}
 
 
 		////////////////
 
-		internal PaintLayers() {
-			this.Foreground = new PaintData();
-			this.Background = new PaintData();
+		public PaintLayer Foreground { get; private set; }
+		public PaintLayer Background { get; private set; }
+
+
+		////////////////
+
+		internal WorldPaintLayers() {
+			this.Foreground = new ForegroundPaintLayer();
+			this.Background = new BackgroundPaintLayer();
 		}
 
 		////////////////
 
 		public void Load( BetterPaintMod mymod, TagCompound tags ) {
-			this.Background.Load( mymod, tags, "bg", false );
-			this.Foreground.Load( mymod, tags, "fg", true );
+			this.Background.Load( mymod, tags, "bg" );
+			this.Foreground.Load( mymod, tags, "fg" );
 		}
 
 		public TagCompound Save() {
@@ -44,7 +56,7 @@ namespace BetterPaint.Painting {
 			float paints_used = this.AddForegroundColorNoSync( mymod, brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
 
 			if( Main.netMode == 1 ) {
-				PaintStrokeProtocol.SyncToAll( PaintLayer.Foreground, brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
+				PaintStrokeProtocol.SyncToAll( PaintLayerType.Foreground, brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
 			}
 
 			return paints_used;
@@ -57,7 +69,7 @@ namespace BetterPaint.Painting {
 			float paints_used = this.AddBackgroundColorNoSync( mymod, brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
 
 			if( Main.netMode == 1 ) {
-				PaintStrokeProtocol.SyncToAll( PaintLayer.Background, brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
+				PaintStrokeProtocol.SyncToAll( PaintLayerType.Background, brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
 			}
 
 			return paints_used;
@@ -70,7 +82,7 @@ namespace BetterPaint.Painting {
 			float paints_used = this.AddAnygroundColorNoSync( mymod, brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
 
 			if( Main.netMode == 1 ) {
-				PaintStrokeProtocol.SyncToAll( PaintLayer.Anyground, brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
+				PaintStrokeProtocol.SyncToAll( PaintLayerType.Anyground, brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
 			}
 
 			return paints_used;

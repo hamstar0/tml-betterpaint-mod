@@ -1,10 +1,10 @@
-﻿using HamstarHelpers.Utilities.Config;
+﻿using HamstarHelpers.Components.Config;
 using System;
 
 
 namespace BetterPaint {
 	public class BetterPaintConfigData : ConfigurationDataBase {
-		public readonly static Version ConfigVersion = new Version( 1, 0, 0 );
+		public readonly static Version ConfigVersion = new Version( 1, 2, 0 );
 		public readonly static string ConfigFileName = "Better Paint Config.json";
 
 
@@ -28,6 +28,7 @@ namespace BetterPaint {
 		public int CopyPaintRecipeNanites = 5;
 
 		public bool PaintBlasterRecipeEnabled = true;
+		public bool PaintBlasterRecipeClentaminator = true;
 
 		public float BrushSizeMultiplier = 1;
 

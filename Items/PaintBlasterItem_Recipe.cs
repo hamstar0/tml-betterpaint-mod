@@ -16,8 +16,12 @@ namespace BetterPaint.Items {
 		public PaintBlasterRecipe( BetterPaintMod mymod, PaintBlasterItem myblaster ) : base( mymod ) {
 			this.AddTile( TileID.TinkerersWorkbench );
 
-			this.AddIngredient( ItemID.Clentaminator );
-			this.AddIngredient( ItemID.Flamethrower );
+			if( mymod.Config.PaintBlasterRecipeClentaminator ) {
+				this.AddIngredient( ItemID.Clentaminator );
+			} else {
+				this.AddIngredient( ItemID.IllegalGunParts );
+			}
+			//this.AddIngredient( ItemID.Flamethrower );
 			this.AddIngredient( ItemID.PaintSprayer );
 
 			this.SetResult( myblaster );

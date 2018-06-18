@@ -1,7 +1,6 @@
 ﻿using BetterPaint.Items;
 using HamstarHelpers.DebugHelpers;
 using HamstarHelpers.ItemHelpers;
-using HamstarHelpers.TileHelpers;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +17,7 @@ namespace BetterPaint.Painting {
 
 
 
-	public class PaintData {
+	public abstract class PaintLayer {
 		public static bool IsPaint( Item item ) {
 			if( item == null || item.IsAir ) { return false; }
 
@@ -43,7 +42,7 @@ namespace BetterPaint.Painting {
 		}
 
 		public static float GetPaintAmount( Item paint_item ) {
-			PaintType paint_type = PaintData.GetPaintType( paint_item );
+			PaintType paint_type = PaintLayer.GetPaintType( paint_item );
 
 			switch( paint_type ) {
 			case PaintType.Can:
@@ -57,7 +56,7 @@ namespace BetterPaint.Painting {
 		}
 
 		public static Color GetPaintColor( Item paint_item ) {
-			PaintType paint_type = PaintData.GetPaintType( paint_item );
+			PaintType paint_type = PaintLayer.GetPaintType( paint_item );
 
 			switch( paint_type ) {
 			case PaintType.Can:
@@ -72,7 +71,7 @@ namespace BetterPaint.Painting {
 		
 
 		public static void ConsumePaint( Item paint_item, float amount ) {
-			PaintType paint_type = PaintData.GetPaintType( paint_item );
+			PaintType paint_type = PaintLayer.GetPaintType( paint_item );
 
 			switch( paint_type ) {
 			case PaintType.Can:
@@ -89,6 +88,7 @@ namespace BetterPaint.Painting {
 		}
 
 
+
 		////////////////
 
 		public IDictionary<ushort, IDictionary<ushort, Color>> Colors { get; private set; }
@@ -96,14 +96,14 @@ namespace BetterPaint.Painting {
 
 		////////////////
 
-		public PaintData() {
+		public PaintLayer() {
 			this.Colors = new Dictionary<ushort, IDictionary<ushort, Color>>();
 		}
 
 
 		////////////////
 		
-		public void Load( BetterPaintMod mymod, TagCompound tags, string prefix, bool is_foreground ) {
+		public void Load( BetterPaintMod mymod, TagCompound tags, string prefix ) {
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
 			this.Colors.Clear();
@@ -123,14 +123,8 @@ namespace BetterPaint.Painting {
 
 						Tile tile = Main.tile[tile_x, tile_y];
 
-						if( is_foreground ) {
-							if( TileHelpers.IsSolid( tile, true, true ) ) {
-								this.SetColorAt( color, tile_x, tile_y );
-							}
-						} else {
-							if( !TileHelpers.IsAir( tile ) && tile.wall != 0 ) {
-								this.SetColorAt( color, tile_x, tile_y );
-							}
+						if( this.CanPaintAt(tile) ) {
+							this.SetColorAt( color, tile_x, tile_y );
 						}
 					}
 				}
@@ -175,6 +169,10 @@ namespace BetterPaint.Painting {
 			}
 			return Color.White;
 		}
+
+		////////////////
+
+		public abstract bool CanPaintAt( Tile tile );
 
 
 		public void SetColorAt( Color color, ushort tile_x, ushort tile_y ) {

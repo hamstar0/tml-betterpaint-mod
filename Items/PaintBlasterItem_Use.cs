@@ -1,8 +1,8 @@
 ﻿using BetterPaint.Painting;
 using HamstarHelpers.DebugHelpers;
 using HamstarHelpers.PlayerHelpers;
+using HamstarHelpers.Services.Timers;
 using HamstarHelpers.UIHelpers;
-using HamstarHelpers.Utilities.Timers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -63,7 +63,7 @@ namespace BetterPaint.Items {
 				Item paint_item = this.GetCurrentPaintItem();
 
 				if( paint_item != null ) {
-					if( PaintData.GetPaintAmount(paint_item) <= 0 ) {
+					if( PaintLayer.GetPaintAmount(paint_item) <= 0 ) {
 						if( this.SwitchToNextMatchingNonemptyPaint() ) {
 							paint_item = this.GetCurrentPaintItem();
 						} else {
@@ -72,7 +72,7 @@ namespace BetterPaint.Items {
 					}
 
 					if( paint_item != null ) {
-						Color paint_color = PaintData.GetPaintColor( paint_item );
+						Color paint_color = PaintLayer.GetPaintColor( paint_item );
 
 						if( this.HasMatchingPaintAt( paint_color, tile_x, tile_y ) ) {
 							dust_color = paint_color;
@@ -98,7 +98,7 @@ namespace BetterPaint.Items {
 			Item paint_item = this.GetCurrentPaintItem();
 			if( paint_item == null ) { return false; }
 
-			Color curr_color = PaintData.GetPaintColor( paint_item );
+			Color curr_color = PaintLayer.GetPaintColor( paint_item );
 			
 			Item[] inv = Main.LocalPlayer.inventory;
 			int cart_type = this.mod.ItemType<ColorCartridgeItem>();
@@ -110,9 +110,9 @@ namespace BetterPaint.Items {
 				Item item = inv[i];
 				if( item == null || item.IsAir ) { continue; }
 
-				if( PaintData.IsPaint(item) ) {
-					if( PaintData.GetPaintAmount(item) <= 0 ) { continue; }
-					if( PaintData.GetPaintColor(item) != curr_color ) { continue; }
+				if( PaintLayer.IsPaint(item) ) {
+					if( PaintLayer.GetPaintAmount(item) <= 0 ) { continue; }
+					if( PaintLayer.GetPaintColor(item) != curr_color ) { continue; }
 
 					this.CurrentPaintItemInventoryIndex = i;
 					found = true;

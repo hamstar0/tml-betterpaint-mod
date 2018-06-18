@@ -81,14 +81,14 @@ namespace BetterPaint.Items {
 
 		public void CycleLayer() {
 			switch( this.Layer ) {
-			case PaintLayer.Foreground:
-				this.Layer = PaintLayer.Background;
+			case PaintLayerType.Foreground:
+				this.Layer = PaintLayerType.Background;
 				break;
-			case PaintLayer.Background:
-				this.Layer = PaintLayer.Anyground;
+			case PaintLayerType.Background:
+				this.Layer = PaintLayerType.Anyground;
 				break;
-			case PaintLayer.Anyground:
-				this.Layer = PaintLayer.Foreground;
+			case PaintLayerType.Anyground:
+				this.Layer = PaintLayerType.Foreground;
 				break;
 			default:
 				throw new NotImplementedException();

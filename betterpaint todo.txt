@@ -3,16 +3,19 @@ Future
 -	Add paint tarps
 -	Implement richer painting
 -	Brush shape?
-
+v1.3
+-	@Test MP
+-	Implement API
+-	Implement loading paint on server join
+-	Implement queued painting
+-	@Implement URL parsing from inbox messages
 v1.2
 -	Debug background prematurely "painting"
 -	Glowing paints
--	Implement queued painting
--	Implement API
--	Set text to render in its own layer
--	Implement loading paint on server join
--	@Test MP
+-	Fix UI opacity
+-	Fix furniture paint
 
+-	Remove Flame Thrower from Paint Blaster recipe
 v1.1
 -	Render cartridge capacity
 -	Add recipe for copy cartridges to copy existing color cartridges
