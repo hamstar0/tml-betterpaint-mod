@@ -60,14 +60,14 @@ namespace BetterPaint.UI {
 		private bool CheckUIColorInteractions( IDictionary<int, float> palette_angles ) {
 			int inv_idx = -1;
 			bool has_interacted = false;
-
+			
 			foreach( var kv in palette_angles ) {
 				if( this.IsHoveringIcon( kv.Value, 360 / palette_angles.Count ) ) {
 					inv_idx = kv.Key;
 					break;
 				}
 			}
-
+			
 			if( inv_idx != -1 ) {
 				has_interacted = true;
 				this.CurrentPaintItemInventoryIndex = inv_idx;

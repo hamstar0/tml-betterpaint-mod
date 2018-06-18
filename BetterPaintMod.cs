@@ -79,6 +79,10 @@ namespace BetterPaint {
 				InboxMessages.SetMessage( "BetterPaintIntro3", intro3, false );
 				InboxMessages.SetMessage( "BetterPaintPostIntro", post_intro, false );
 				InboxMessages.SetMessage( "BetterPaintPander", pander, false );
+
+				if( Main.netMode != 0 ) {
+					InboxMessages.SetMessage( "BetterPaintNoMuliYet", "Better Paint (as of v1.2.0) is not yet compatible with multiplayer.", true );
+				}
 			} );
 		}
 

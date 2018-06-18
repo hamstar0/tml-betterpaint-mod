@@ -18,10 +18,16 @@ namespace BetterPaint.Painting {
 		public static bool IsPaint( Item item ) {
 			if( item == null || item.IsAir ) { return false; }
 
-			if( item.type == BetterPaintMod.Instance.ItemType<ColorCartridgeItem>() ) {
+			var mymod = BetterPaintMod.Instance;
+			int paint_type = item.type;
+
+			if( paint_type == mymod.ItemType<ColorCartridgeItem>() ) {
 				return true;
 			}
-			if( ItemIdentityHelpers.Paints.Item2.Contains( item.type ) ) {
+			if( paint_type == mymod.ItemType<GlowCartridgeItem>() ) {
+				return true;
+			}
+			if( ItemIdentityHelpers.Paints.Item2.Contains( paint_type ) ) {
 				return true;
 			}
 			return false;
@@ -89,8 +95,12 @@ namespace BetterPaint.Painting {
 				if( paint_item.stack < 0 ) { paint_item.stack = 0; }
 				break;
 			case PaintType.ColorCartridge:
-				var mycart = (ColorCartridgeItem)paint_item.modItem;
-				mycart.ConsumePaint( amount );
+				var mycolorcart = (ColorCartridgeItem)paint_item.modItem;
+				mycolorcart.ConsumePaint( amount );
+				break;
+			case PaintType.GlowCartridge:
+				var myglowcart = (GlowCartridgeItem)paint_item.modItem;
+				myglowcart.ConsumeQuantity( amount );
 				break;
 			default:
 				throw new NotImplementedException();

@@ -14,7 +14,7 @@ namespace BetterPaint.Painting {
 			int tile_y = world_y / 16;
 
 			float uses = 0;
-
+			
 			for( int i = -iter_range; i <= iter_range; i++ ) {
 				for( int j = -iter_range; j <= iter_range; j++ ) {
 					float dist = (float)Math.Sqrt( (double)(( i * i ) + ( j * j )) );
@@ -22,8 +22,8 @@ namespace BetterPaint.Painting {
 					if( dist > radius ) {
 						continue;
 					}
-
-					uses += this.PaintAt( data, color, pressure_percent, ( ushort)(tile_x + i), (ushort)(tile_y + j) );
+					
+					uses += this.PaintAt( data, color, pressure_percent, (ushort)(tile_x + i), (ushort)(tile_y + j) );
 				}
 			}
 
@@ -38,7 +38,7 @@ namespace BetterPaint.Painting {
 
 			Color existing_color = data.GetColor( tile_x, tile_y );
 			Color lerped_color = Color.Lerp( existing_color, color, pressure_percent );
-
+			
 			data.SetColorAt( lerped_color, tile_x, tile_y );
 
 			if( PaintBrush.ComputeColorChangePercent( existing_color, lerped_color ) == 0 ) {

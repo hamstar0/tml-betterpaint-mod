@@ -91,11 +91,13 @@ namespace BetterPaint.Painting {
 		////
 
 		public float AddForegroundColorNoSync( BetterPaintMod mymod, PaintBrushType brush_type, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
-			return mymod.Modes[brush_type].Apply( this.Foreground, color, brush_size, pressure_percent, rand_seed, world_x, world_y );
+			var brush_mode = mymod.Modes[brush_type];
+			return brush_mode.Apply( this.Foreground, color, brush_size, pressure_percent, rand_seed, world_x, world_y );
 		}
 
 		public float AddBackgroundColorNoSync( BetterPaintMod mymod, PaintBrushType brush_type, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
-			return mymod.Modes[brush_type].Apply( this.Background, color, brush_size, pressure_percent, rand_seed, world_x, world_y );
+			var brush_mode = mymod.Modes[brush_type];
+			return brush_mode.Apply( this.Background, color, brush_size, pressure_percent, rand_seed, world_x, world_y );
 		}
 
 		public float AddAnygroundColorNoSync( BetterPaintMod mymod, PaintBrushType brush_type, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {

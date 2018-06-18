@@ -1,6 +1,5 @@
 ﻿using BetterPaint.Painting;
 using HamstarHelpers.ItemHelpers;
-using HamstarHelpers.TileHelpers;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
-			if( this.CurrentBrush != PaintBrushType.Erase && PaintLayer.GetPaintAmount(paint_item) <= 0 ) {
+			if( this.CurrentBrush != PaintBrushType.Erase && PaintHelpers.GetPaintAmount(paint_item) <= 0 ) {
 				return false;
 			}
 
@@ -79,7 +78,7 @@ namespace BetterPaint.Items {
 			ColorCartridgeItem cartridge = null;
 
 			if( paint_item != null ) {
-				color = PaintLayer.GetPaintColor( paint_item );
+				color = PaintHelpers.GetPaintColor( paint_item );
 
 				if( paint_item.modItem is ColorCartridgeItem ) {
 					cartridge = (ColorCartridgeItem)paint_item.modItem;
@@ -103,7 +102,7 @@ namespace BetterPaint.Items {
 			}
 
 			if( paint_item != null && uses > 0 ) {
-				PaintLayer.ConsumePaint( paint_item, uses );
+				PaintHelpers.ConsumePaint( paint_item, uses );
 			}
 
 			return uses;
