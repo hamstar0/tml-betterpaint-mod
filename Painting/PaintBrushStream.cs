@@ -1,4 +1,5 @@
 ﻿using HamstarHelpers.TileHelpers;
+using HamstarHelpers.XnaHelpers;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -41,6 +42,10 @@ namespace BetterPaint.Painting {
 			Color lerped_color = Color.Lerp( existing_color, color, pressure_percent );
 
 			data.SetColorAt( color, tile_x, tile_y );
+
+			if( PaintBrush.ComputeColorChangePercent( existing_color, lerped_color ) == 0 ) {
+				return 0;
+			}
 
 			return pressure_percent;
 			//return PaintBrush.ComputeColorChangePercent( existing_color, lerped_color );

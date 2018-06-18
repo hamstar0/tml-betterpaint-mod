@@ -27,8 +27,8 @@ namespace BetterPaint.Painting {
 
 	public abstract class PaintBrush {
 		public static float ComputeColorChangePercent( Color old_color, Color new_color ) {
-			Color diff_color = XnaColorHelpers.DifferenceRGBA( old_color, new_color );
-			float diff_value = XnaColorHelpers.AvgRGBA( diff_color );
+			Color diff_color = XnaColorHelpers.DifferenceRGB( old_color, new_color );
+			float diff_value = XnaColorHelpers.AvgRGB( diff_color );
 
 			return diff_value / 255f;
 		}

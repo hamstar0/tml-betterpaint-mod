@@ -1,7 +1,7 @@
 author = hamstar
 version = 1.2.0
 displayName = Better Paint
-modReferences = HamstarHelpers@1.6.1
+modReferences = HamstarHelpers@1.6.2
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
 includePDB = true
 languageVersion = 6

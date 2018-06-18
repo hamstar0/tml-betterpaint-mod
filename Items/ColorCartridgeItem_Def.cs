@@ -123,7 +123,7 @@ namespace BetterPaint.Items {
 			this.item.width = ColorCartridgeItem.Width;
 			this.item.height = ColorCartridgeItem.Height;
 			this.item.ammo = this.item.type;
-			this.item.value = Item.buyPrice( 0, 0, 5, 0 );
+			this.item.value = Item.buyPrice( 0, 0, 30, 0 );
 			this.item.rare = 1;
 		}
 

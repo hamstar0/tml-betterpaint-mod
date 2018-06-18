@@ -19,28 +19,17 @@ namespace BetterPaint.Items {
 			}
 
 			Tile tile = Main.tile[tile_x, tile_y];
-
+			
 			switch( this.Layer ) {
 			case PaintLayerType.Foreground:
-				if( !TileHelpers.IsSolid( tile, true, true ) ) {
-					return false;
-				}
-				break;
+				return myworld.Layers.Foreground.CanPaintAt( tile );
 			case PaintLayerType.Background:
-				if( TileHelpers.IsAir( tile ) || TileHelpers.IsSolid( tile, true, true ) ) {
-					return false;
-				}
-				break;
+				return myworld.Layers.Background.CanPaintAt( tile );
 			case PaintLayerType.Anyground:
-				if( TileHelpers.IsAir( tile ) ) {
-					return false;
-				}
-				break;
+				return myworld.Layers.Foreground.CanPaintAt( tile ) || myworld.Layers.Background.CanPaintAt( tile );
 			default:
 				throw new NotImplementedException();
 			}
-			
-			return true;
 		}
 
 
