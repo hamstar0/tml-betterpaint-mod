@@ -7,7 +7,7 @@ using Terraria;
 using Terraria.ID;
 
 
-namespace BetterPaint.Items {
+namespace BetterPaint.UI {
 	partial class PaintBlasterUI {
 		public const float SelectedScale = 0.925f;
 		public const float HoveredScale = 0.8f;

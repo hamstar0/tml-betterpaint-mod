@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Terraria;
 
 
-namespace BetterPaint.Items {
+namespace BetterPaint.UI {
 	partial class PaintBlasterUI {
 		private bool CheckUISettingsInteractions( Rectangle layer_rect, Rectangle size_rect, Rectangle copy_rect, Rectangle press_rect ) {
 			Player player = Main.LocalPlayer;

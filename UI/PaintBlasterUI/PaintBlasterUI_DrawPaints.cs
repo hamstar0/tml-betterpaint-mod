@@ -1,4 +1,5 @@
-﻿using HamstarHelpers.DebugHelpers;
+﻿using BetterPaint.Items;
+using HamstarHelpers.DebugHelpers;
 using HamstarHelpers.HudHelpers;
 using HamstarHelpers.ItemHelpers;
 using HamstarHelpers.Services.AnimatedColor;
@@ -9,7 +10,7 @@ using System.Collections.Generic;
 using Terraria;
 
 
-namespace BetterPaint.Items {
+namespace BetterPaint.UI {
 	partial class PaintBlasterUI {
 		public bool IsHoveringIcon( double palette_angle, double angle_step ) {
 			var screen_mid = new Vector2( Main.screenWidth / 2, Main.screenHeight / 2 );
@@ -30,7 +31,7 @@ namespace BetterPaint.Items {
 
 
 		public IDictionary<int, float> DrawColorPalette( BetterPaintMod mymod, SpriteBatch sb ) {
-			IDictionary<string, PaintInfo> info_set = ColorCartridgeItem.GetPaintsByColorKey( Main.LocalPlayer );
+			IDictionary<string, PaintDisplayInfo> info_set = PaintDisplayInfo.GetPaintsByColorKey( Main.LocalPlayer );
 			var angles = new Dictionary<int, float>( info_set.Count );
 			
 			double angle_step = 360d / (double)info_set.Count;

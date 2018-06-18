@@ -1,14 +1,13 @@
-﻿using BetterPaint.Painting;
-using HamstarHelpers.ItemHelpers;
+﻿using BetterPaint.Items;
+using BetterPaint.Painting;
 using HamstarHelpers.TmlHelpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Globalization;
 using Terraria;
 
 
-namespace BetterPaint.Items {
+namespace BetterPaint.UI {
 	class PaintBlasterHUD {
 		public static Texture2D AmmoCan { get; private set; }
 		public static Texture2D AmmoTop { get; private set; }

@@ -7,7 +7,7 @@ using Terraria;
 using Terraria.ID;
 
 
-namespace BetterPaint.Items {
+namespace BetterPaint.UI {
 	partial class PaintBlasterUI {
 		public void DrawOptionLayer( SpriteBatch sb, int origin_x, int origin_y, out Rectangle rect ) {
 			int options_dist = PaintBlasterUI.OptionsRingRadius;

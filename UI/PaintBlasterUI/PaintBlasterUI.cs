@@ -3,7 +3,7 @@ using HamstarHelpers.TmlHelpers;
 using Microsoft.Xna.Framework.Graphics;
 
 
-namespace BetterPaint.Items {
+namespace BetterPaint.UI {
 	partial class PaintBlasterUI {
 		public static Texture2D BrushStream { get; private set; }
 		public static Texture2D BrushSpray { get; private set; }

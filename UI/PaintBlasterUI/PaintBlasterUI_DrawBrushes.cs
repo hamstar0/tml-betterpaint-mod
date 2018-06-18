@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 
-namespace BetterPaint.Items {
+namespace BetterPaint.UI {
 	partial class PaintBlasterUI {
 		public void DrawBrushes( SpriteBatch sb, out Rectangle stream_rect, out Rectangle spray_rect, out Rectangle spatter_rect, out Rectangle eraser_rect ) {
 			int brushes_dist = PaintBlasterUI.BrushesRingRadius;
