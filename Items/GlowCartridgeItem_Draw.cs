@@ -8,9 +8,13 @@ namespace BetterPaint.Items {
 	partial class GlowCartridgeItem : ModItem {
 		public override void PostDrawInInventory( SpriteBatch sb, Vector2 pos, Rectangle frame, Color draw_color, Color item_color, Vector2 origin, float scale ) {
 			var mymod = (BetterPaintMod)this.mod;
-			Texture2D tex = ColorCartridgeItem.OverlayTex;
+			Texture2D color_tex = GlowCartridgeItem.OverlayTex;
+			Texture2D glow1_tex = GlowCartridgeItem.GlowMask1Tex;
+			Texture2D glow2_tex = GlowCartridgeItem.GlowMask2Tex;
 
-			sb.Draw( tex, pos, frame, this.MyColor, 0f, default(Vector2), scale, SpriteEffects.None, 0f );
+			sb.Draw( color_tex, pos, frame, this.MyColor, 0f, default(Vector2), scale, SpriteEffects.None, 0f );
+			sb.Draw( glow1_tex, pos, frame, this.MyColor * 0.5f, 0f, default( Vector2 ), scale, SpriteEffects.None, 0f );
+			sb.Draw( glow2_tex, pos, frame, this.MyColor * 0.25f, 0f, default( Vector2 ), scale, SpriteEffects.None, 0f );
 
 			int percent = (int)( 100 * ( (float)this.Quantity / (float)mymod.Config.PaintCartridgeCapacity ) );
 
@@ -19,10 +23,15 @@ namespace BetterPaint.Items {
 
 		public override void PostDrawInWorld( SpriteBatch sb, Color light_color, Color alpha_color, float rotation, float scale, int whoAmI ) {
 			var mymod = (BetterPaintMod)this.mod;
-			var pos = new Vector2( this.item.position.X - Main.screenPosition.X, this.item.position.Y - Main.screenPosition.Y );
-			Texture2D tex = ColorCartridgeItem.OverlayTex;
+			Texture2D color_tex = GlowCartridgeItem.OverlayTex;
+			Texture2D glow1_tex = GlowCartridgeItem.GlowMask1Tex;
+			Texture2D glow2_tex = GlowCartridgeItem.GlowMask2Tex;
 
-			sb.Draw( tex, pos, this.MyColor );
+			var pos = new Vector2( this.item.position.X - Main.screenPosition.X, this.item.position.Y - Main.screenPosition.Y );
+
+			sb.Draw( color_tex, pos, this.MyColor );
+			sb.Draw( glow1_tex, pos, this.MyColor * 0.5f );
+			sb.Draw( glow2_tex, pos, this.MyColor * 0.25f );
 		}
 	}
 }

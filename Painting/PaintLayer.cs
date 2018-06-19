@@ -84,7 +84,7 @@ namespace BetterPaint.Painting {
 					return this.Colors[tile_x][tile_y];
 				}
 			}
-			return PaintHelpers.UnlitBaseColor;
+			return Color.Transparent;
 		}
 
 		////////////////

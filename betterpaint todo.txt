@@ -12,6 +12,7 @@ v1.2
 -	Implement queued painting
 
 -	Glowing paints
+	-	Add glow mask to cartridge
 	-	Tweak brightness
 	-	Implement painting
 	-	Add to paint wheel

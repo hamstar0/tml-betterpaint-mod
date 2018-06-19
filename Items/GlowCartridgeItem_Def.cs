@@ -14,12 +14,17 @@ namespace BetterPaint.Items {
 		public const int Width = 12;
 		public const int Height = 16;
 
-		public static Texture2D OverlayTex { get; internal set; }
 		public static Texture2D CartridgeTex { get; internal set; }
+		public static Texture2D OverlayTex { get; internal set; }
+		public static Texture2D GlowMask1Tex { get; internal set; }
+		public static Texture2D GlowMask2Tex { get; internal set; }
+
 
 		static GlowCartridgeItem() {
-			GlowCartridgeItem.OverlayTex = null;
 			GlowCartridgeItem.CartridgeTex = null;
+			GlowCartridgeItem.OverlayTex = null;
+			GlowCartridgeItem.GlowMask1Tex = null;
+			GlowCartridgeItem.GlowMask2Tex = null;
 		}
 
 
@@ -51,12 +56,16 @@ namespace BetterPaint.Items {
 				"Craft with cartidges and glowing spores at a paint mixer" );
 
 			if( GlowCartridgeItem.OverlayTex == null ) {
-				GlowCartridgeItem.OverlayTex = this.mod.GetTexture( "Items/GlowCartridgeItem_Color" );
 				GlowCartridgeItem.CartridgeTex = this.mod.GetTexture( "Items/GlowCartridgeItem" );
+				GlowCartridgeItem.OverlayTex = this.mod.GetTexture( "Items/GlowCartridgeItem_Color" );
+				GlowCartridgeItem.GlowMask1Tex = this.mod.GetTexture( "Items/GlowCartridgeItem_Glow1" );
+				GlowCartridgeItem.GlowMask2Tex = this.mod.GetTexture( "Items/GlowCartridgeItem_Glow2" );
 
 				TmlLoadHelpers.AddModUnloadPromise( () => {
-					GlowCartridgeItem.OverlayTex = null;
 					GlowCartridgeItem.CartridgeTex = null;
+					GlowCartridgeItem.OverlayTex = null;
+					GlowCartridgeItem.GlowMask1Tex = null;
+					GlowCartridgeItem.GlowMask2Tex = null;
 				} );
 			}
 		}
