@@ -1,5 +1,4 @@
-﻿using HamstarHelpers.TileHelpers;
-using HamstarHelpers.XnaHelpers;
+﻿using HamstarHelpers.XnaHelpers;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -7,7 +6,7 @@ using Terraria;
 
 namespace BetterPaint.Painting.Brushes {
 	class PaintBrushErase : PaintBrush {
-		public override float Apply( PaintLayer data, Color _, bool __, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+		public override float Apply( PaintLayer data, Color _, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			var mymod = BetterPaintMod.Instance;
 
 			int diameter = brush_size == PaintBrushSize.Small ? 1 : 6;
@@ -27,7 +26,7 @@ namespace BetterPaint.Painting.Brushes {
 						continue;
 					}
 
-					this.EraseAt( data, pressure_percent, is_lit, (ushort)(tile_x + i), (ushort)(tile_y + j) );
+					this.EraseAt( data, pressure_percent, (ushort)(tile_x + i), (ushort)(tile_y + j) );
 				}
 			}
 
@@ -47,7 +46,7 @@ namespace BetterPaint.Painting.Brushes {
 					data.RemoveColorAt( tile_x, tile_y );
 				} else{
 					Color existing_color = data.GetColor( tile_x, tile_y );
-					Color lerped_color = Color.Lerp( existing_color, Color.White, pressure_percent );
+					Color lerped_color = Color.Lerp( existing_color, PaintHelpers.UnlitBaseColor, pressure_percent );
 
 					if( XnaColorHelpers.AvgRGBA(lerped_color) >= 240 ) {
 						data.RemoveColorAt( tile_x, tile_y );

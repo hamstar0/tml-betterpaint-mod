@@ -1,4 +1,5 @@
 ﻿using BetterPaint.Items;
+using BetterPaint.Painting;
 using HamstarHelpers.DebugHelpers;
 using HamstarHelpers.HudHelpers;
 using HamstarHelpers.ItemHelpers;
@@ -111,7 +112,7 @@ namespace BetterPaint.UI {
 				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, "Capacity:", Main.mouseX, Main.mouseY-16, label_color, bg_color, default( Vector2 ), 1f );
 				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, (int)( amount_percent * 100 ) + "%", Main.mouseX+72, Main.mouseY - 16, label_color, bg_color, default( Vector2 ), 1f );
 
-				string color_str = "R:"+color.R+" G:"+color.G+" B:"+color.B+" A:"+color.A;
+				string color_str = PaintHelpers.ColorString( color );
 
 				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, "Color:", Main.mouseX, Main.mouseY + 8, label_color, bg_color, default( Vector2 ), 1f );
 				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, color_str, Main.mouseX + 56, Main.mouseY + 8, color, bg_color, default( Vector2 ), 1f );

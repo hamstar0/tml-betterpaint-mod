@@ -15,6 +15,23 @@ namespace BetterPaint.Painting {
 
 
 	public static class PaintHelpers {
+		public static Color UnlitBaseColor { get; private set; }
+
+		static PaintHelpers() {
+			PaintHelpers.UnlitBaseColor = new Color( 255, 255, 255, 0 );
+		}
+
+
+		////////////////
+
+		public static string ColorString( Color color ) {
+			return "R:"+color.R+", G:"+color.G+", B:"+color.B;
+		}
+
+		public static Color FullColor( Color color ) {
+			return new Color( color.R, color.G, color.B, 255 );
+		}
+
 		public static bool IsPaint( Item item ) {
 			if( item == null || item.IsAir ) { return false; }
 
@@ -58,7 +75,7 @@ namespace BetterPaint.Painting {
 				return paint_item.stack;
 			case PaintType.ColorCartridge:
 				var mycolorcart = (ColorCartridgeItem)paint_item.modItem;
-				return mycolorcart.PaintQuantity;
+				return mycolorcart.Quantity;
 			case PaintType.GlowCartridge:
 				var myglowcart = (GlowCartridgeItem)paint_item.modItem;
 				return myglowcart.Quantity;
@@ -69,18 +86,24 @@ namespace BetterPaint.Painting {
 
 		public static Color GetPaintColor( Item paint_item ) {
 			PaintType paint_type = PaintHelpers.GetPaintType( paint_item );
+			Color color;
 
 			switch( paint_type ) {
 			case PaintType.Can:
-				return WorldGen.paintColor( paint_item.paint );
+				color = WorldGen.paintColor( paint_item.paint );
+				break;
 			case PaintType.ColorCartridge:
-				var mycart = (ColorCartridgeItem)paint_item.modItem;
-				return mycart.MyColor;
+				var mycolorcart = (ColorCartridgeItem)paint_item.modItem;
+				color = mycolorcart.MyColor;
+				break;
 			case PaintType.GlowCartridge:
-				return Color.White;
+				var myglowcart = (GlowCartridgeItem)paint_item.modItem;
+				color = myglowcart.MyColor;
+				break;
 			default:
 				throw new NotImplementedException();
 			}
+			return color;
 		}
 
 
@@ -100,7 +123,7 @@ namespace BetterPaint.Painting {
 				break;
 			case PaintType.GlowCartridge:
 				var myglowcart = (GlowCartridgeItem)paint_item.modItem;
-				myglowcart.ConsumeQuantity( amount );
+				myglowcart.ConsumePaint( amount );
 				break;
 			default:
 				throw new NotImplementedException();

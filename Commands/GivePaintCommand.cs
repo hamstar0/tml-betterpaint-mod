@@ -5,6 +5,7 @@ using BetterPaint.Items;
 using System;
 using Terraria;
 using Terraria.ModLoader;
+using BetterPaint.Painting;
 
 
 namespace BetterPaint.Commands {
@@ -36,12 +37,12 @@ namespace BetterPaint.Commands {
 			}
 
 			Func<byte> rand = () => (byte)Main.rand.Next( 0, 255 );
-			var rand_clr = new Color( rand(), rand(), rand(), 255 );
+			var rand_clr = new Color( rand(), rand(), rand(), 0 );
 
 			var myitem = (ColorCartridgeItem)paint_item.modItem;
 			myitem.SetPaint( rand_clr, mymod.Config.PaintCartridgeCapacity );
-
-			caller.Reply( "Random color cartridge created: " + rand_clr, rand_clr );
+			
+			caller.Reply( "Random color cartridge created: " + PaintHelpers.ColorString(rand_clr), PaintHelpers.FullColor(rand_clr) );
 		}
 	}
 }

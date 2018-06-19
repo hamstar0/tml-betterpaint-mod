@@ -1,4 +1,5 @@
 ﻿using BetterPaint.Painting;
+using BetterPaint.Painting.Brushes;
 using HamstarHelpers.ItemHelpers;
 using Microsoft.Xna.Framework;
 using System;
@@ -72,17 +73,15 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 			float uses = 0;
-			Color color = Color.White;
-			bool is_lit = false;
+			Color color = PaintHelpers.UnlitBaseColor;
 
 			Item paint_item = this.GetCurrentPaintItem();
 
 			if( paint_item != null ) {	// Eraser doesn't need paint
 				color = PaintHelpers.GetPaintColor( paint_item );
-				is_lit = PaintHelpers.GetPaintType( paint_item ) == PaintType.GlowCartridge;
 			}
 			
-			uses = myworld.Layers.ApplyColorAt( mymod, this.Layer, this.CurrentBrush, color, is_lit, this.BrushSize, this.PressurePercent, world_x, world_y );
+			uses = myworld.Layers.ApplyColorAt( mymod, this.Layer, this.CurrentBrush, color, this.BrushSize, this.PressurePercent, world_x, world_y );
 			
 			if( paint_item != null && uses > 0 ) {
 				PaintHelpers.ConsumePaint( paint_item, uses );

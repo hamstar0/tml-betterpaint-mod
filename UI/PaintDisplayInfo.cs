@@ -20,11 +20,7 @@ namespace BetterPaint.UI {
 				Item item = inv[i];
 				if( item == null || item.IsAir ) { continue; }
 
-				if( item.type == color_cartridge_type ) {
-					paint_idxs.Add( i );
-				} else if( item.type == glow_cartridge_type ) {
-					paint_idxs.Add( i );
-				} else if( ItemIdentityHelpers.Paints.Item2.Contains( item.type ) ) {
+				if( PaintHelpers.IsPaint(item) ) {
 					paint_idxs.Add( i );
 				}
 			}
@@ -67,13 +63,13 @@ namespace BetterPaint.UI {
 			if( this.PaintItem.modItem is ColorCartridgeItem ) {
 				var color_cart = (ColorCartridgeItem)this.PaintItem.modItem;
 
-				color = color_cart.MyColor;
-				percent = color_cart.PaintQuantity / (float)mymod.Config.PaintCartridgeCapacity;
+				color = PaintHelpers.FullColor( color_cart.MyColor );
+				percent = color_cart.Quantity / (float)mymod.Config.PaintCartridgeCapacity;
 				stack = this.Copies;
 			} else if( this.PaintItem.modItem is GlowCartridgeItem ) {
 				var glow_cart = (GlowCartridgeItem)this.PaintItem.modItem;
 
-				color = Color.SpringGreen;
+				color = PaintHelpers.FullColor( glow_cart.MyColor );
 				percent = glow_cart.Quantity / (float)mymod.Config.PaintCartridgeCapacity;
 				stack = this.Copies;
 			} else if( ItemIdentityHelpers.Paints.Item2.Contains(this.PaintItem.type) ) {

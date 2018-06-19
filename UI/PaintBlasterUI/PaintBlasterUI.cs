@@ -1,4 +1,4 @@
-﻿using BetterPaint.Painting;
+﻿using BetterPaint.Painting.Brushes;
 using HamstarHelpers.TmlHelpers;
 using Microsoft.Xna.Framework.Graphics;
 

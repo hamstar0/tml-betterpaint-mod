@@ -1,4 +1,5 @@
 ﻿using BetterPaint.Tiles;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,7 +17,8 @@ namespace BetterPaint.Items {
 
 
 	class GlowCartridgeRecipe : ModRecipe {
-		private ColorCartridgeItem BaseCartridge = null;
+		private Color BaseColor;
+		private float Quantity;
 
 
 		////////////////
@@ -48,8 +50,12 @@ namespace BetterPaint.Items {
 			for( int i = 0; i < inv.Length; i++ ) {
 				if( inv[i] == null || inv[i].IsAir ) { continue; }
 				if( inv[i].type != cart_type ) { continue; }
-				
-				this.BaseCartridge = (ColorCartridgeItem)inv[i].modItem;
+
+				var cart = (ColorCartridgeItem)inv[i].modItem;
+
+				this.Quantity = cart.Quantity;
+				this.BaseColor = cart.MyColor;
+				this.BaseColor.A = 255;
 				break;
 			}
 
@@ -58,12 +64,10 @@ namespace BetterPaint.Items {
 
 
 		public override void OnCraft( Item item ) {
-			if( this.BaseCartridge == null ) { return; }
-
 			var mymod = (BetterPaintMod)this.mod;
 			var myitem = (GlowCartridgeItem)item.modItem;
 
-			myitem.SetQuantity( this.BaseCartridge.PaintQuantity );
+			myitem.SetPaint( this.BaseColor, this.Quantity );
 		}
 	}
 }

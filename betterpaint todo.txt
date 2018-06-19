@@ -10,9 +10,10 @@ v1.3
 -	@Implement URL parsing from inbox messages
 v1.2
 -	Implement queued painting
--	Glowing paints
-	-	Implement painting
 
+-	Glowing paints
+	-	Tweak brightness
+	-	Implement painting
 	-	Add to paint wheel
 	-	Create item
 -	Fix UI opacity

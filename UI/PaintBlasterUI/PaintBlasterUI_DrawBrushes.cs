@@ -1,4 +1,5 @@
 ﻿using BetterPaint.Painting;
+using BetterPaint.Painting.Brushes;
 using HamstarHelpers.HudHelpers;
 using HamstarHelpers.Services.AnimatedColor;
 using Microsoft.Xna.Framework;

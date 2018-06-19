@@ -80,8 +80,8 @@ namespace BetterPaint.Items {
 			var mycart1 = (ColorCartridgeItem)item.modItem;
 			var mycart2 = (ColorCartridgeItem)Main.item[ item2_idx ].modItem;
 
-			float volume = (this.First.PaintQuantity + this.Second.PaintQuantity) / 2f;
-			float shift = this.Second.PaintQuantity / (this.First.PaintQuantity + this.Second.PaintQuantity);
+			float volume = (this.First.Quantity + this.Second.Quantity) / 2f;
+			float shift = this.Second.Quantity / (this.First.Quantity + this.Second.Quantity);
 
 			Color mix = Color.Lerp( this.First.MyColor, this.Second.MyColor, shift );
 
@@ -156,7 +156,7 @@ namespace BetterPaint.Items {
 				}
 			}
 
-			this.CraftColor = new Color( r / max_paints, g / max_paints, b / max_paints, a / max_paints );
+			this.CraftColor = new Color( r / max_paints, g / max_paints, b / max_paints, 0 );
 
 			return base.ConsumeItem( item_type, num_required );
 		}

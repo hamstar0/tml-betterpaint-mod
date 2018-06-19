@@ -29,15 +29,15 @@ namespace BetterPaint {
 			if( mymod.Config.PainterSellsRGBCartridges && next_slot < (max - 3) ) {
 				shop.item[next_slot] = new Item();
 				shop.item[next_slot].SetDefaults( mymod.ItemType<ColorCartridgeItem>() );
-				( (ColorCartridgeItem)shop.item[next_slot].modItem ).SetPaint( new Color(255, 0, 0), mymod.Config.PaintCartridgeCapacity );
+				( (ColorCartridgeItem)shop.item[next_slot].modItem ).SetPaint( new Color(255, 0, 0, 0), mymod.Config.PaintCartridgeCapacity );
 				next_slot++;
 				shop.item[next_slot] = new Item();
 				shop.item[next_slot].SetDefaults( mymod.ItemType<ColorCartridgeItem>() );
-				( (ColorCartridgeItem)shop.item[next_slot].modItem ).SetPaint( new Color(0, 255, 0), mymod.Config.PaintCartridgeCapacity );
+				( (ColorCartridgeItem)shop.item[next_slot].modItem ).SetPaint( new Color(0, 255, 0, 0), mymod.Config.PaintCartridgeCapacity );
 				next_slot++;
 				shop.item[next_slot] = new Item();
 				shop.item[next_slot].SetDefaults( mymod.ItemType<ColorCartridgeItem>() );
-				( (ColorCartridgeItem)shop.item[next_slot].modItem ).SetPaint( new Color(0, 0, 255), mymod.Config.PaintCartridgeCapacity );
+				( (ColorCartridgeItem)shop.item[next_slot].modItem ).SetPaint( new Color(0, 0, 255, 0), mymod.Config.PaintCartridgeCapacity );
 				next_slot++;
 			}
 

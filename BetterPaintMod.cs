@@ -1,5 +1,5 @@
 ﻿using BetterPaint.Items;
-using BetterPaint.Painting;
+using BetterPaint.Painting.Brushes;
 using HamstarHelpers.Components.Config;
 using HamstarHelpers.DebugHelpers;
 using HamstarHelpers.Services.Messages;

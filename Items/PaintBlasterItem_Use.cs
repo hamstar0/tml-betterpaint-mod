@@ -1,4 +1,5 @@
 ﻿using BetterPaint.Painting;
+using BetterPaint.Painting.Brushes;
 using HamstarHelpers.DebugHelpers;
 using HamstarHelpers.PlayerHelpers;
 using HamstarHelpers.Services.Timers;
@@ -75,7 +76,7 @@ namespace BetterPaint.Items {
 						Color paint_color = PaintHelpers.GetPaintColor( paint_item );
 
 						if( this.HasMatchingPaintAt( paint_color, tile_x, tile_y ) ) {
-							dust_color = paint_color;
+							dust_color = PaintHelpers.FullColor( paint_color );
 						}
 					}
 				}

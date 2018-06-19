@@ -1,4 +1,5 @@
 ﻿using BetterPaint.Painting;
+using BetterPaint.Painting.Brushes;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;

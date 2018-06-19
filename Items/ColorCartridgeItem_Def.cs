@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using BetterPaint.Painting;
 using HamstarHelpers.TmlHelpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,7 +25,7 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public float PaintQuantity { get; private set; }
+		public float Quantity { get; private set; }
 		public Color MyColor { get; private set; }
 
 
@@ -34,7 +35,7 @@ namespace BetterPaint.Items {
 
 		public override ModItem Clone() {
 			var clone = (ColorCartridgeItem)base.Clone();
-			clone.PaintQuantity = this.PaintQuantity;
+			clone.Quantity = this.Quantity;
 			clone.MyColor = this.MyColor;
 			return clone;
 		}
@@ -63,8 +64,8 @@ namespace BetterPaint.Items {
 		public override void SetDefaults() {
 			var mymod = (BetterPaintMod)this.mod;
 
-			this.PaintQuantity = mymod.Config.PaintCartridgeCapacity;
-			this.MyColor = Color.White;
+			this.Quantity = mymod.Config.PaintCartridgeCapacity;
+			this.MyColor = PaintHelpers.UnlitBaseColor;
 
 			this.item.width = ColorCartridgeItem.Width;
 			this.item.height = ColorCartridgeItem.Height;
@@ -76,9 +77,9 @@ namespace BetterPaint.Items {
 
 		public override void ModifyTooltips( List<TooltipLine> tooltips ) {
 			var mymod = (BetterPaintMod)this.mod;
-			float percent = this.PaintQuantity / mymod.Config.PaintCartridgeCapacity;
+			float percent = this.Quantity / mymod.Config.PaintCartridgeCapacity;
 
-			var tip1 = new TooltipLine( this.mod, "BetterPaint: Color Indicator", "Color value: " + this.MyColor.ToString() ) {
+			var tip1 = new TooltipLine( this.mod, "BetterPaint: Color Indicator", "Color value: " + PaintHelpers.ColorString(this.MyColor) ) {
 				overrideColor = this.MyColor
 			};
 			var tip2 = new TooltipLine( this.mod, "BetterPaint: Capacity", "Capacity: " + (int)( percent * 100 ) + "%" ) {
@@ -99,14 +100,14 @@ namespace BetterPaint.Items {
 				this.MyColor = new Color( bytes[0], bytes[1], bytes[2], bytes[3] );
 			}
 			if( tag.ContainsKey( "paint_quantity" ) ) {
-				this.PaintQuantity = tag.GetFloat( "paint_quantity" );
+				this.Quantity = tag.GetFloat( "paint_quantity" );
 			}
 		}
 
 		public override TagCompound Save() {
 			return new TagCompound {
 				{ "color", new byte[] { this.MyColor.R, this.MyColor.G, this.MyColor.B, this.MyColor.A } },
-				{ "paint_quantity", this.PaintQuantity }
+				{ "paint_quantity", this.Quantity }
 			};
 		}
 
@@ -117,12 +118,12 @@ namespace BetterPaint.Items {
 			writer.Write( (byte)this.MyColor.G );
 			writer.Write( (byte)this.MyColor.B );
 			writer.Write( (byte)this.MyColor.A );
-			writer.Write( (float)this.PaintQuantity );
+			writer.Write( (float)this.Quantity );
 		}
 
 		public override void NetRecieve( BinaryReader reader ) {
 			this.MyColor = new Color( reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), reader.ReadByte() );
-			this.PaintQuantity = reader.ReadSingle();
+			this.Quantity = reader.ReadSingle();
 		}
 
 
@@ -130,13 +131,13 @@ namespace BetterPaint.Items {
 		
 		public void SetPaint( Color color, float amount ) {
 			this.MyColor = color;
-			this.PaintQuantity = amount;
+			this.Quantity = amount;
 		}
 
 
 		public void ConsumePaint( float amount ) {
-			this.PaintQuantity = this.PaintQuantity - amount;
-			if( this.PaintQuantity < 0 ) { this.PaintQuantity = 0; }
+			this.Quantity = this.Quantity - amount;
+			if( this.Quantity < 0 ) { this.Quantity = 0; }
 		}
 	}
 }
