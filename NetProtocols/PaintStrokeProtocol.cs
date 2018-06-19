@@ -7,10 +7,11 @@ using Terraria;
 
 namespace BetterPaint.NetProtocols {
 	class PaintStrokeProtocol : PacketProtocol {
-		public static void SyncToAll( PaintLayerType layer, PaintBrushType brush_type, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+		public static void SyncToAll( PaintLayerType layer, PaintBrushType brush_type, Color color, bool is_lit,
+				PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			if( Main.netMode != 1 ) { throw new Exception( "Not client" ); }
 
-			var protocol = new PaintStrokeProtocol( layer, brush_type, color, brush_size, pressure_percent, rand_seed, world_x, world_y );
+			var protocol = new PaintStrokeProtocol( layer, brush_type, color, is_lit, brush_size, pressure_percent, rand_seed, world_x, world_y );
 			protocol.SendToServer( true );
 		}
 
@@ -21,6 +22,7 @@ namespace BetterPaint.NetProtocols {
 		public int Layer = (int)PaintLayerType.Foreground;
 		public int BrushType = (int)PaintBrushType.Stream;
 		public Color MyColor = Color.White;
+		public bool IsLit = false;
 		public int BrushSize = (int)PaintBrushSize.Small;
 		public float PressurePercent = 1;
 		public int RandSeed = -1;
@@ -32,10 +34,12 @@ namespace BetterPaint.NetProtocols {
 
 		public PaintStrokeProtocol() { }
 
-		private PaintStrokeProtocol( PaintLayerType layer, PaintBrushType brush_type, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+		private PaintStrokeProtocol( PaintLayerType layer, PaintBrushType brush_type, Color color, bool is_lit,
+				PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			this.Layer = (int)layer;
 			this.BrushType = (int)brush_type;
 			this.MyColor = color;
+			this.IsLit = is_lit;
 			this.BrushSize = (int)brush_size;
 			this.PressurePercent = pressure_percent;
 			this.WorldX = world_x;
@@ -54,19 +58,8 @@ namespace BetterPaint.NetProtocols {
 			var layer = (PaintLayerType)this.Layer;
 			var brush_type = (PaintBrushType)this.BrushType;
 
-			switch( layer ) {
-			case PaintLayerType.Foreground:
-				myworld.Layers.AddForegroundColorNoSync( mymod, brush_type, this.MyColor, (PaintBrushSize)this.BrushSize, this.PressurePercent, this.RandSeed, this.WorldX, this.WorldY );
-				break;
-			case PaintLayerType.Background:
-				myworld.Layers.AddBackgroundColorNoSync( mymod, brush_type, this.MyColor, (PaintBrushSize)this.BrushSize, this.PressurePercent, this.RandSeed, this.WorldX, this.WorldY );
-				break;
-			case PaintLayerType.Anyground:
-				myworld.Layers.AddAnygroundColorNoSync( mymod, brush_type, this.MyColor, (PaintBrushSize)this.BrushSize, this.PressurePercent, this.RandSeed, this.WorldX, this.WorldY );
-				break;
-			default:
-				throw new NotImplementedException();
-			}
+			myworld.Layers.ApplyColorAtNoSync( mymod, layer, brush_type, this.MyColor, this.IsLit, (PaintBrushSize)this.BrushSize,
+				this.PressurePercent, this.RandSeed, this.WorldX, this.WorldY );
 		}
 
 

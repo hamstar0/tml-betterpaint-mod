@@ -5,9 +5,9 @@ using System;
 using Terraria;
 
 
-namespace BetterPaint.Painting {
+namespace BetterPaint.Painting.Brushes {
 	class PaintBrushSpatter : PaintBrush {
-		public override float Apply( PaintLayer data, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+		public override float Apply( PaintLayer data, Color color, bool is_lit, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			var mymod = BetterPaintMod.Instance;
 			var rand = new Random( rand_seed );
 
@@ -36,7 +36,7 @@ namespace BetterPaint.Painting {
 				float rand_percent = pressure_percent * (1f - (float)rand.NextDouble());
 
 				if( rand_percent >= 0.01f ) {
-					uses += this.PaintAt( data, color, rand_percent, (ushort)( tile_x + x_off ), (ushort)( tile_y + y_off ) );
+					uses += this.PaintAt( data, color, is_lit, rand_percent, (ushort)( tile_x + x_off ), (ushort)( tile_y + y_off ) );
 				}
 			}
 

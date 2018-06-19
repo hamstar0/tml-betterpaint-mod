@@ -88,11 +88,11 @@
     <Compile Include="NetProtocols\ModSettingsProtocol.cs" />
     <Compile Include="NetProtocols\PaintStrokeProtocol.cs" />
     <Compile Include="Painting\PaintLayer.cs" />
-    <Compile Include="Painting\PaintBrush.cs" />
-    <Compile Include="Painting\PaintBrushSpray.cs" />
-    <Compile Include="Painting\PaintBrushSpatter.cs" />
-    <Compile Include="Painting\PaintBrushErase.cs" />
-    <Compile Include="Painting\PaintBrushStream.cs" />
+    <Compile Include="Painting\Brushes\PaintBrush.cs" />
+    <Compile Include="Painting\Brushes\PaintBrushSpray.cs" />
+    <Compile Include="Painting\Brushes\PaintBrushSpatter.cs" />
+    <Compile Include="Painting\Brushes\PaintBrushErase.cs" />
+    <Compile Include="Painting\Brushes\PaintBrushStream.cs" />
     <Compile Include="Painting\PaintLayerTypes.cs" />
     <Compile Include="Painting\WorldPaintLayers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -72,35 +72,18 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 			float uses = 0;
-			Color color;
+			Color color = Color.White;
+			bool is_lit = false;
 
 			Item paint_item = this.GetCurrentPaintItem();
-			ColorCartridgeItem cartridge = null;
 
-			if( paint_item != null ) {
+			if( paint_item != null ) {	// Eraser doesn't need paint
 				color = PaintHelpers.GetPaintColor( paint_item );
-
-				if( paint_item.modItem is ColorCartridgeItem ) {
-					cartridge = (ColorCartridgeItem)paint_item.modItem;
-				}
-			} else {
-				color = Color.White;
+				is_lit = PaintHelpers.GetPaintType( paint_item ) == PaintType.GlowCartridge;
 			}
-
-			switch( this.Layer ) {
-			case PaintLayerType.Foreground:
-				uses = myworld.Layers.ApplyForegroundColor( mymod, this.CurrentBrush, color, this.BrushSize, this.PressurePercent, world_x, world_y );
-				break;
-			case PaintLayerType.Background:
-				uses = myworld.Layers.ApplyBackgroundColor( mymod, this.CurrentBrush, color, this.BrushSize, this.PressurePercent, world_x, world_y );
-				break;
-			case PaintLayerType.Anyground:
-				uses = myworld.Layers.ApplyAnygroundColor( mymod, this.CurrentBrush, color, this.BrushSize, this.PressurePercent, world_x, world_y );
-				break;
-			default:
-				throw new NotImplementedException();
-			}
-
+			
+			uses = myworld.Layers.ApplyColorAt( mymod, this.Layer, this.CurrentBrush, color, is_lit, this.BrushSize, this.PressurePercent, world_x, world_y );
+			
 			if( paint_item != null && uses > 0 ) {
 				PaintHelpers.ConsumePaint( paint_item, uses );
 			}

@@ -5,9 +5,9 @@ using System;
 using Terraria;
 
 
-namespace BetterPaint.Painting {
+namespace BetterPaint.Painting.Brushes {
 	class PaintBrushErase : PaintBrush {
-		public override float Apply( PaintLayer data, Color _, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+		public override float Apply( PaintLayer data, Color _, bool __, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			var mymod = BetterPaintMod.Instance;
 
 			int diameter = brush_size == PaintBrushSize.Small ? 1 : 6;
@@ -27,7 +27,7 @@ namespace BetterPaint.Painting {
 						continue;
 					}
 
-					this.EraseAt( data, pressure_percent, (ushort)(tile_x + i), (ushort)(tile_y + j) );
+					this.EraseAt( data, pressure_percent, is_lit, (ushort)(tile_x + i), (ushort)(tile_y + j) );
 				}
 			}
 

@@ -3,9 +3,9 @@ using System;
 using Terraria;
 
 
-namespace BetterPaint.Painting {
+namespace BetterPaint.Painting.Brushes {
 	class PaintBrushStream : PaintBrush {
-		public override float Apply( PaintLayer data, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+		public override float Apply( PaintLayer data, Color color, bool is_lit, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			var mymod = BetterPaintMod.Instance;
 			int iter_range = (int)((brush_size == PaintBrushSize.Small ? 1 : 3) * mymod.Config.BrushSizeMultiplier);
 			float radius = (brush_size == PaintBrushSize.Small ? 0.5f : 3f) * mymod.Config.BrushSizeMultiplier;
@@ -23,7 +23,7 @@ namespace BetterPaint.Painting {
 						continue;
 					}
 					
-					uses += this.PaintAt( data, color, pressure_percent, (ushort)(tile_x + i), (ushort)(tile_y + j) );
+					uses += this.PaintAt( data, color, is_lit, pressure_percent, (ushort)(tile_x + i), (ushort)(tile_y + j) );
 				}
 			}
 
