@@ -12,9 +12,9 @@ using Terraria.ModLoader;
 
 namespace BetterPaint.Items {
 	partial class PaintBlasterItem : ModItem {
-		private bool DryFireAvailable = true;
-		private float BufferedPaintUses = 0f;
 		private IDictionary<ushort, ushort> BufferedPaintedTiles = new Dictionary<ushort, ushort>();
+		private float BufferedPaintUses = 0f;
+		private bool DryFireAvailable = true;
 
 
 		////////////////
@@ -99,7 +99,7 @@ namespace BetterPaint.Items {
 						Color paint_color = PaintHelpers.GetPaintColor( paint_item );
 
 						if( this.HasMatchingPaintAt( paint_color, tile_x, tile_y ) ) {
-							dust_color = PaintHelpers.FullColor( paint_color );
+							dust_color = paint_color;
 						}
 					}
 				}

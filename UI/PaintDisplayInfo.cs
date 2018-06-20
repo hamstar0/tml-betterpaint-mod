@@ -63,13 +63,13 @@ namespace BetterPaint.UI {
 			if( this.PaintItem.modItem is ColorCartridgeItem ) {
 				var color_cart = (ColorCartridgeItem)this.PaintItem.modItem;
 
-				color = PaintHelpers.FullColor( color_cart.MyColor );
+				color = color_cart.MyColor;
 				percent = color_cart.Quantity / (float)mymod.Config.PaintCartridgeCapacity;
 				stack = this.Copies;
 			} else if( this.PaintItem.modItem is GlowCartridgeItem ) {
 				var glow_cart = (GlowCartridgeItem)this.PaintItem.modItem;
 
-				color = PaintHelpers.FullColor( glow_cart.MyColor );
+				color = glow_cart.MyColor;
 				percent = glow_cart.Quantity / (float)mymod.Config.PaintCartridgeCapacity;
 				stack = this.Copies;
 			} else if( ItemIdentityHelpers.Paints.Item2.Contains(this.PaintItem.type) ) {

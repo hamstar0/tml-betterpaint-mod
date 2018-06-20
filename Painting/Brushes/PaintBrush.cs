@@ -36,6 +36,6 @@ namespace BetterPaint.Painting.Brushes {
 
 		////////////////
 
-		public abstract float Apply( PaintLayer data, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y );
+		public abstract float Apply( PaintLayer data, Color color, byte glow, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y );
 	}
 }

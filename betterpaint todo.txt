@@ -8,6 +8,13 @@ v1.3
 -	Implement API
 -	Implement loading paint on server join
 -	@Implement URL parsing from inbox messages
+v1.2.2
+-	Fix auto cartridge switching + add sound effect
+-	Fix dust spew
+-	Fix cartridge % indicator for paint buckets (use max stack size)
+v1.2.1
+-	Add glow cart -> copy cart recipe
+-	Fix excessive flow
 
 v1.2
 -	Implement queued painting

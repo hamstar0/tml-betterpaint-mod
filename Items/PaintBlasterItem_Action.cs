@@ -73,15 +73,17 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 			float uses = 0;
-			Color color = PaintHelpers.UnlitBaseColor;
+			Color color = Color.White;
+			byte glow = 0;
 
 			Item paint_item = this.GetCurrentPaintItem();
 
 			if( paint_item != null ) {	// Eraser doesn't need paint
 				color = PaintHelpers.GetPaintColor( paint_item );
+				glow = PaintHelpers.GetPaintGlow( paint_item );
 			}
 			
-			uses = myworld.Layers.ApplyColorAt( mymod, this.Layer, this.CurrentBrush, color, this.BrushSize, this.PressurePercent, world_x, world_y );
+			uses = myworld.Layers.ApplyColorAt( mymod, this.Layer, this.CurrentBrush, color, glow, this.BrushSize, this.PressurePercent, world_x, world_y );
 			
 			if( paint_item != null && uses > 0 ) {
 				PaintHelpers.ConsumePaint( paint_item, uses );
@@ -125,7 +127,6 @@ namespace BetterPaint.Items {
 			}
 
 			Color color_at = data.GetRawColorAt( tile_x, tile_y );
-			color_at.A = 255;
 
 			CopyCartridgeItem.SetWithColor( player, player.inventory[copy_item_idx], color_at );
 

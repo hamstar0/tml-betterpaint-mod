@@ -20,11 +20,11 @@ namespace BetterPaint.Helpers.XnaHelpers {
 			return (float)XnaColorHelpers.SumRGB( c ) / 3f;
 		}
 
-		public static Color GetWhiteBase( Color c ) {
-			byte space = c.R > c.G ?
-				(c.R > c.B ? c.R : c.B) :
-				(c.G > c.B ? c.G : c.B);
-			return new Color( c.R + 255 - space, c.G + 255 - space, c.B + 255 - space, c.A );
+
+		public static Color FlattenColor( Color c ) {
+			Color lerped = Color.Lerp( Color.White, c, c.A / 255f );
+			lerped.A = 255;
+			return lerped;
 		}
 	}
 }

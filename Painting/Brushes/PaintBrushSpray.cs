@@ -6,7 +6,7 @@ using Terraria;
 
 namespace BetterPaint.Painting.Brushes {
 	class PaintBrushSpray : PaintBrush {
-		public override float Apply( PaintLayer data, Color color, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+		public override float Apply( PaintLayer data, Color color, byte glow, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			var mymod = BetterPaintMod.Instance;
 			int diameter = brush_size == PaintBrushSize.Small ? 3 : 8;
 			diameter = (int)((float)diameter * mymod.Config.BrushSizeMultiplier);
@@ -34,7 +34,7 @@ namespace BetterPaint.Painting.Brushes {
 					ushort x = (ushort)( tile_x + i );
 					ushort y = (ushort)( tile_y + j );
 
-					uses += this.PaintAt( data, color, pressure_percent, max_range, dist, x, y );
+					uses += this.PaintAt( data, color, glow, pressure_percent, max_range, dist, x, y );
 				}
 			}
 
@@ -42,7 +42,7 @@ namespace BetterPaint.Painting.Brushes {
 		}
 
 		
-		public float PaintAt( PaintLayer data, Color color, float pressure_percent, float brush_radius, float dist, ushort tile_x, ushort tile_y ) {
+		public float PaintAt( PaintLayer data, Color color, byte glow, float pressure_percent, float brush_radius, float dist, ushort tile_x, ushort tile_y ) {
 			if( !data.CanPaintAt( Main.tile[tile_x, tile_y] ) ) {
 				return 0f;
 			}
@@ -51,7 +51,11 @@ namespace BetterPaint.Painting.Brushes {
 			Color existing_color = data.GetRawColorAt( tile_x, tile_y );
 			Color lerped_color = Color.Lerp( existing_color, color, dist_pressure_percent );
 
-			data.SetColorAt( lerped_color, tile_x, tile_y );
+			byte existing_glow = data.GetGlowAt( tile_x, tile_y );
+			byte lerped_glow = (byte)MathHelper.Lerp( (float)existing_glow, (float)glow, dist_pressure_percent );
+
+			data.SetRawColorAt( lerped_color, tile_x, tile_y );
+			data.SetGlowAt( lerped_glow, tile_x, tile_y );
 
 			return dist_pressure_percent;
 			//return PaintBrush.ComputeColorChangePercent( existing_color, lerped_color );

@@ -55,7 +55,6 @@ namespace BetterPaint.Items {
 
 				this.Quantity = cart.Quantity;
 				this.BaseColor = cart.MyColor;
-				this.BaseColor.A = 255;
 				break;
 			}
 

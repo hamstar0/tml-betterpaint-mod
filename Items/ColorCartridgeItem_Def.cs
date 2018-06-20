@@ -65,7 +65,7 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 
 			this.Quantity = mymod.Config.PaintCartridgeCapacity;
-			this.MyColor = PaintHelpers.UnlitBaseColor;
+			this.MyColor = Color.White;
 
 			this.item.width = ColorCartridgeItem.Width;
 			this.item.height = ColorCartridgeItem.Height;

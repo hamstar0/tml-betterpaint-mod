@@ -156,7 +156,7 @@ namespace BetterPaint.Items {
 				}
 			}
 
-			this.CraftColor = new Color( r / max_paints, g / max_paints, b / max_paints, 0 );
+			this.CraftColor = new Color( r / max_paints, g / max_paints, b / max_paints );
 
 			return base.ConsumeItem( item_type, num_required );
 		}

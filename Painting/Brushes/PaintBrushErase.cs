@@ -6,7 +6,7 @@ using Terraria;
 
 namespace BetterPaint.Painting.Brushes {
 	class PaintBrushErase : PaintBrush {
-		public override float Apply( PaintLayer data, Color _, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+		public override float Apply( PaintLayer data, Color _, byte __, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			var mymod = BetterPaintMod.Instance;
 
 			int diameter = brush_size == PaintBrushSize.Small ? 1 : 6;
@@ -46,12 +46,12 @@ namespace BetterPaint.Painting.Brushes {
 					data.RemoveColorAt( tile_x, tile_y );
 				} else{
 					Color existing_color = data.GetRawColorAt( tile_x, tile_y );
-					Color lerped_color = Color.Lerp( existing_color, PaintHelpers.UnlitBaseColor, pressure_percent );
+					Color lerped_color = Color.Lerp( existing_color, Color.White, pressure_percent );
 
 					if( XnaColorHelpers.AvgRGBA(lerped_color) >= 240 ) {
 						data.RemoveColorAt( tile_x, tile_y );
 					} else {
-						data.SetColorAt( lerped_color, tile_x, tile_y );
+						data.SetRawColorAt( lerped_color, tile_x, tile_y );
 					}
 				}
 			}

@@ -15,15 +15,6 @@ namespace BetterPaint.Painting {
 
 
 	public static class PaintHelpers {
-		public static Color UnlitBaseColor { get; private set; }
-
-		static PaintHelpers() {
-			PaintHelpers.UnlitBaseColor = new Color( 255, 255, 255, 0 );
-		}
-
-
-		////////////////
-
 		public static string ColorString( Color color ) {
 			return "R:"+color.R+", G:"+color.G+", B:"+color.B;
 		}
@@ -91,7 +82,6 @@ namespace BetterPaint.Painting {
 			switch( paint_type ) {
 			case PaintType.Can:
 				color = WorldGen.paintColor( paint_item.paint );
-				color.A = 0;
 				break;
 			case PaintType.ColorCartridge:
 				var mycolorcart = (ColorCartridgeItem)paint_item.modItem;
@@ -105,6 +95,27 @@ namespace BetterPaint.Painting {
 				throw new NotImplementedException();
 			}
 			return color;
+		}
+		
+		public static byte GetPaintGlow( Item paint_item ) {
+			PaintType paint_type = PaintHelpers.GetPaintType( paint_item );
+			byte glow;
+
+			switch( paint_type ) {
+			case PaintType.Can:
+				glow = 0;
+				break;
+			case PaintType.ColorCartridge:
+				glow = 0;
+				break;
+			case PaintType.GlowCartridge:
+				glow = 255;
+				break;
+			default:
+				throw new NotImplementedException();
+			}
+
+			return glow;
 		}
 
 
