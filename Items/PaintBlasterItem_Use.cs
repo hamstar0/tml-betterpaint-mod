@@ -5,6 +5,7 @@ using HamstarHelpers.PlayerHelpers;
 using HamstarHelpers.Services.Timers;
 using HamstarHelpers.UIHelpers;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -12,8 +13,11 @@ using Terraria.ModLoader;
 namespace BetterPaint.Items {
 	partial class PaintBlasterItem : ModItem {
 		private bool DryFireAvailable = true;
+		private float BufferedPaintUses = 0f;
+		private IDictionary<ushort, ushort> BufferedPaintedTiles = new Dictionary<ushort, ushort>();
 
 
+		////////////////
 
 		public override bool CanUseItem( Player player ) {
 			if( this.IsUsingUI ) {
@@ -39,9 +43,19 @@ namespace BetterPaint.Items {
 				return false;
 			}
 
-			Vector2 tile_pos = UIHelpers.GetWorldMousePosition() / 16f;
-			
-			return this.CanPaintAt( paint_item, (ushort)tile_pos.X, (ushort)tile_pos.Y );
+			Vector2 world_pos = UIHelpers.GetWorldMousePosition();
+			Vector2 tile_pos = world_pos / 16f;
+			ushort tile_x = (ushort)tile_pos.X;
+			ushort tile_y = (ushort)tile_pos.Y;
+
+			bool can_paint_at = this.CanPaintAt( paint_item, tile_x, tile_y );
+			if( can_paint_at ) {
+				if( this.CanUseBlasterAt( tile_x, tile_y ) ) {
+					this.BufferedPaintUses += this.BlastPaintAt( world_pos );
+				}
+			}
+
+			return can_paint_at;
 		}
 
 
@@ -52,7 +66,6 @@ namespace BetterPaint.Items {
 			ushort tile_x = (ushort)( world_x / 16 );
 			ushort tile_y = (ushort)( world_y / 16 );
 			Color? dust_color = null;
-			float uses = 0f;
 			
 			if( this.IsCopying ) {
 				if( !this.AttemptCopyColorAt( player, tile_x, tile_y ) ) {
@@ -80,18 +93,43 @@ namespace BetterPaint.Items {
 						}
 					}
 				}
-				
-				uses = this.ApplyBrushAt( world_x, world_y );
 			}
 
-			if( uses > 0 && dust_color != null ) {
+			if( this.BufferedPaintUses > 0 && dust_color != null ) {
+				this.BufferedPaintUses = 0f;
+
 				pos = PlayerItemHelpers.TipOfHeldItem( player ) - Main.screenPosition;
 				Dust.NewDust( pos, 8, 8, 2, vel_x, vel_y, 0, (Color)dust_color, 1f );
 			}
-
+			
 			return false;
 		}
 
+
+		////////////////
+
+		public bool CanUseBlasterAt( ushort tile_x, ushort tile_y ) {
+			if( this.BufferedPaintedTiles.ContainsKey( tile_x ) ) {
+				if( this.BufferedPaintedTiles[tile_x] == tile_y ) {
+					return false;
+				}
+			}
+			this.BufferedPaintedTiles[tile_x] = tile_y;
+
+			return true;
+		}
+
+		public float BlastPaintAt( Vector2 world_pos ) {
+			if( Timers.GetTimerTickDuration( "PaintBlasterFlowReset" ) <= 0 ) {
+				Timers.SetTimer( "PaintBlasterFlowReset", 30, () => {
+					this.BufferedPaintedTiles.Clear();
+					return false;
+				} );
+			}
+			
+			return this.ApplyBrushAt( (int)world_pos.X, (int)world_pos.Y );
+		}
+		
 
 		////////////////
 

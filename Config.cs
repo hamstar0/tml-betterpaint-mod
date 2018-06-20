@@ -28,7 +28,7 @@ namespace BetterPaint {
 		public int CopyPaintRecipeNanites = 5;
 
 		public bool GlowPaintRecipeEnabled = true;
-		public int GlowPaintRecipeSpores = 1;
+		public int GlowPaintRecipeSpores = 5;
 
 		public bool PaintBlasterRecipeEnabled = true;
 		public bool PaintBlasterRecipeClentaminator = true;

@@ -8,9 +8,9 @@ v1.3
 -	Implement API
 -	Implement loading paint on server join
 -	@Implement URL parsing from inbox messages
+
 v1.2
 -	Implement queued painting
-
 -	Glowing paints
 	-	Add glow mask to cartridge
 	-	Tweak brightness
