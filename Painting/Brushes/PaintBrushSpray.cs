@@ -47,7 +47,7 @@ namespace BetterPaint.Painting.Brushes {
 				return 0f;
 			}
 			
-			float dist_pressure_percent = pressure_percent * (1f - (dist / brush_radius));
+			float dist_pressure_percent = MathHelper.Clamp( pressure_percent * (1f - (dist / brush_radius)), 0f, 1f );
 			Color existing_color = data.GetRawColorAt( tile_x, tile_y );
 			Color lerped_color = Color.Lerp( existing_color, color, dist_pressure_percent );
 

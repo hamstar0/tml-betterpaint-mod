@@ -106,7 +106,7 @@ namespace BetterPaint.Items {
 				this.Quantity = tag.GetFloat( "paint_quantity" );
 			}
 			if( tag.ContainsKey("is_init") ) {
-				this.IsInitialized = tag.GetBool();
+				this.IsInitialized = tag.GetBool( "is_init" );
 			}
 		}
 
