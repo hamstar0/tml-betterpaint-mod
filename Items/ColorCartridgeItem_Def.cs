@@ -27,6 +27,7 @@ namespace BetterPaint.Items {
 
 		public float Quantity { get; private set; }
 		public Color MyColor { get; private set; }
+		private bool IsInitialized = false;
 
 
 		////////////////
@@ -76,6 +77,8 @@ namespace BetterPaint.Items {
 
 
 		public override void ModifyTooltips( List<TooltipLine> tooltips ) {
+			if( !this.IsInitialized ) { return; }
+
 			var mymod = (BetterPaintMod)this.mod;
 			float percent = this.Quantity / mymod.Config.PaintCartridgeCapacity;
 
@@ -102,12 +105,16 @@ namespace BetterPaint.Items {
 			if( tag.ContainsKey( "paint_quantity" ) ) {
 				this.Quantity = tag.GetFloat( "paint_quantity" );
 			}
+			if( tag.ContainsKey("is_init") ) {
+				this.IsInitialized = tag.GetBool();
+			}
 		}
 
 		public override TagCompound Save() {
 			return new TagCompound {
 				{ "color", new byte[] { this.MyColor.R, this.MyColor.G, this.MyColor.B, this.MyColor.A } },
-				{ "paint_quantity", this.Quantity }
+				{ "paint_quantity", this.Quantity },
+				{ "is_init", this.IsInitialized }
 			};
 		}
 
@@ -119,11 +126,13 @@ namespace BetterPaint.Items {
 			writer.Write( (byte)this.MyColor.B );
 			writer.Write( (byte)this.MyColor.A );
 			writer.Write( (float)this.Quantity );
+			writer.Write( (bool)this.IsInitialized );
 		}
 
 		public override void NetRecieve( BinaryReader reader ) {
 			this.MyColor = new Color( reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), reader.ReadByte() );
 			this.Quantity = reader.ReadSingle();
+			this.IsInitialized = reader.ReadBoolean();
 		}
 
 
@@ -132,6 +141,7 @@ namespace BetterPaint.Items {
 		public void SetPaint( Color color, float amount ) {
 			this.MyColor = color;
 			this.Quantity = amount;
+			this.IsInitialized = true;
 		}
 
 

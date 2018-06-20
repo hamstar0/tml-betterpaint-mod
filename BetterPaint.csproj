@@ -114,7 +114,6 @@
     <Content Include="Items\ColorCartridgeItem.png" />
     <Content Include="Items\ColorCartridgeItem_Color.png" />
     <Content Include="Items\GlowCartridgeItem_Glow1.png" />
-    <Content Include="Items\GlowCartridgeItem_Glow2.png" />
     <Content Include="UI\PaintBlasterHUD\PaintAmmoBottom.png" />
     <Content Include="UI\PaintBlasterHUD\PaintAmmoContainer.png" />
     <Content Include="UI\PaintBlasterHUD\PaintAmmoTop.png" />

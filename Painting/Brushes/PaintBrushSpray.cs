@@ -57,8 +57,12 @@ namespace BetterPaint.Painting.Brushes {
 			data.SetRawColorAt( lerped_color, tile_x, tile_y );
 			data.SetGlowAt( lerped_glow, tile_x, tile_y );
 
+			float diff = PaintBrush.ComputeChangePercent( existing_color, lerped_color, existing_glow, lerped_glow );
+			if( diff <= 0.01f ) {
+				dist_pressure_percent = 0f;
+			}
+
 			return dist_pressure_percent;
-			//return PaintBrush.ComputeColorChangePercent( existing_color, lerped_color );
 		}
 	}
 }

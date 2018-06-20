@@ -17,14 +17,12 @@ namespace BetterPaint.Items {
 		public static Texture2D CartridgeTex { get; internal set; }
 		public static Texture2D OverlayTex { get; internal set; }
 		public static Texture2D GlowMask1Tex { get; internal set; }
-		public static Texture2D GlowMask2Tex { get; internal set; }
 
 
 		static GlowCartridgeItem() {
 			GlowCartridgeItem.CartridgeTex = null;
 			GlowCartridgeItem.OverlayTex = null;
 			GlowCartridgeItem.GlowMask1Tex = null;
-			GlowCartridgeItem.GlowMask2Tex = null;
 		}
 
 
@@ -33,6 +31,7 @@ namespace BetterPaint.Items {
 		
 		public float Quantity { get; private set; }
 		public Color MyColor { get; private set; }
+		private bool IsInitialized = false;
 
 
 		////////////////
@@ -59,13 +58,11 @@ namespace BetterPaint.Items {
 				GlowCartridgeItem.CartridgeTex = this.mod.GetTexture( "Items/GlowCartridgeItem" );
 				GlowCartridgeItem.OverlayTex = this.mod.GetTexture( "Items/GlowCartridgeItem_Color" );
 				GlowCartridgeItem.GlowMask1Tex = this.mod.GetTexture( "Items/GlowCartridgeItem_Glow1" );
-				GlowCartridgeItem.GlowMask2Tex = this.mod.GetTexture( "Items/GlowCartridgeItem_Glow2" );
 
 				TmlLoadHelpers.AddModUnloadPromise( () => {
 					GlowCartridgeItem.CartridgeTex = null;
 					GlowCartridgeItem.OverlayTex = null;
 					GlowCartridgeItem.GlowMask1Tex = null;
-					GlowCartridgeItem.GlowMask2Tex = null;
 				} );
 			}
 		}
@@ -86,6 +83,8 @@ namespace BetterPaint.Items {
 
 
 		public override void ModifyTooltips( List<TooltipLine> tooltips ) {
+			if( !this.IsInitialized ) { return; }
+
 			var mymod = (BetterPaintMod)this.mod;
 			float percent = this.Quantity / mymod.Config.PaintCartridgeCapacity;
 
@@ -104,13 +103,16 @@ namespace BetterPaint.Items {
 		////////////////
 
 		public override void Load( TagCompound tag ) {
-			if( tag.ContainsKey( "quantity" ) ) {
-				this.Quantity = tag.GetFloat( "quantity" );
-			}
 			if( tag.ContainsKey( "color" ) ) {
 				byte[] bytes = tag.GetByteArray( "color" );
 
 				this.MyColor = new Color( bytes[0], bytes[1], bytes[2], bytes[3] );
+			}
+			if( tag.ContainsKey( "quantity" ) ) {
+				this.Quantity = tag.GetFloat( "quantity" );
+			}
+			if( tag.ContainsKey( "is_init" ) ) {
+				this.IsInitialized = tag.GetBool("is_init");
 			}
 		}
 
@@ -118,9 +120,9 @@ namespace BetterPaint.Items {
 			return new TagCompound {
 				{ "quantity", this.Quantity },
 				{ "color", new byte[] { this.MyColor.R, this.MyColor.G, this.MyColor.B, this.MyColor.A } },
+				{ "is_init", this.IsInitialized }
 			};
 		}
-
 
 		////////////////
 
@@ -130,11 +132,13 @@ namespace BetterPaint.Items {
 			writer.Write( (byte)this.MyColor.B );
 			writer.Write( (byte)this.MyColor.A );
 			writer.Write( (float)this.Quantity );
+			writer.Write( (bool)this.IsInitialized );
 		}
 
 		public override void NetRecieve( BinaryReader reader ) {
 			this.MyColor = new Color( reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), reader.ReadByte() );
 			this.Quantity = reader.ReadSingle();
+			this.IsInitialized = reader.ReadBoolean();
 		}
 
 
@@ -143,6 +147,7 @@ namespace BetterPaint.Items {
 		public void SetPaint( Color color, float amount ) {
 			this.MyColor = color;
 			this.Quantity = amount;
+			this.IsInitialized = true;
 		}
 
 

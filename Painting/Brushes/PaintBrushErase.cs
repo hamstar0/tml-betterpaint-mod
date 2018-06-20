@@ -38,22 +38,26 @@ namespace BetterPaint.Painting.Brushes {
 			if( !data.CanPaintAt( Main.tile[tile_x, tile_y] ) ) {
 				return;
 			}
+			if( !data.HasColorAt( tile_x, tile_y ) ) {
+				return;
+			}
 
-			if( data.HasColorAt(tile_x, tile_y) ) {
-				int tolerance = (int)( pressure_percent * 255f );
+			int tolerance = (int)( pressure_percent * 255f );
+				
+			Color existing_color = data.GetRawColorAt( tile_x, tile_y );
+			Color lerped_color = Color.Lerp( existing_color, Color.Transparent, pressure_percent );
 
-				if( pressure_percent == 1f ) {
-					data.RemoveColorAt( tile_x, tile_y );
-				} else{
-					Color existing_color = data.GetRawColorAt( tile_x, tile_y );
-					Color lerped_color = Color.Lerp( existing_color, Color.White, pressure_percent );
+			byte existing_glow = data.GetGlowAt( tile_x, tile_y );
+			byte lerped_glow = (byte)MathHelper.Lerp( (float)existing_glow, 0f, pressure_percent );
 
-					if( XnaColorHelpers.AvgRGBA(lerped_color) >= 240 ) {
-						data.RemoveColorAt( tile_x, tile_y );
-					} else {
-						data.SetRawColorAt( lerped_color, tile_x, tile_y );
-					}
-				}
+			float diff = PaintBrush.ComputeChangePercent( existing_color, lerped_color, existing_glow, lerped_glow );
+
+			if( diff <= 0.01f ) {
+				data.RemoveColorAt( tile_x, tile_y );
+				data.RemoveGlowAt( tile_x, tile_y );
+			} else {
+				data.SetRawColorAt( lerped_color, tile_x, tile_y );
+				data.SetGlowAt( lerped_glow, tile_x, tile_y );
 			}
 		}
 	}

@@ -9,12 +9,10 @@ using Terraria;
 
 namespace BetterPaint.UI {
 	class PaintDisplayInfo {
-		public static IDictionary<string, PaintDisplayInfo> GetPaintInfo( Player player ) {
+		public static IDictionary<string, PaintDisplayInfo> GetPaintSelection( Player player ) {
 			var mymod = BetterPaintMod.Instance;
 			IList<int> paint_idxs = new List<int>();
 			Item[] inv = player.inventory;
-			int color_cartridge_type = mymod.ItemType<ColorCartridgeItem>();
-			int glow_cartridge_type = mymod.ItemType<GlowCartridgeItem>();
 
 			for( int i = 0; i < inv.Length; i++ ) {
 				Item item = inv[i];
@@ -26,18 +24,17 @@ namespace BetterPaint.UI {
 			}
 
 			var paint_info = new Dictionary<string, PaintDisplayInfo>( paint_idxs.Count );
-			var angles = new Dictionary<int, float>( paint_idxs.Count );
 
 			foreach( int idx in paint_idxs ) {
 				Item item = Main.LocalPlayer.inventory[idx];
 				if( PaintHelpers.GetPaintAmount( item ) <= 0 ) { continue; }
 
-				string color_key = PaintHelpers.GetPaintColor( item ).ToString();
+				string key = PaintHelpers.GetPaintColor( item ).ToString()+"_"+PaintHelpers.GetPaintType(item);
 
-				if( !paint_info.ContainsKey( color_key ) ) {
-					paint_info[color_key] = new PaintDisplayInfo( idx, item );
+				if( !paint_info.ContainsKey( key ) ) {
+					paint_info[key] = new PaintDisplayInfo( idx, item );
 				} else {
-					paint_info[color_key].Copies++;
+					paint_info[key].Copies++;
 				}
 			}
 

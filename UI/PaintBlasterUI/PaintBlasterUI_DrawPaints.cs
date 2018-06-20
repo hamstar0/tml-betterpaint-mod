@@ -32,7 +32,7 @@ namespace BetterPaint.UI {
 
 
 		public IDictionary<int, float> DrawColorPalette( BetterPaintMod mymod, SpriteBatch sb ) {
-			IDictionary<string, PaintDisplayInfo> info_set = PaintDisplayInfo.GetPaintInfo( Main.LocalPlayer );
+			IDictionary<string, PaintDisplayInfo> info_set = PaintDisplayInfo.GetPaintSelection( Main.LocalPlayer );
 			var angles = new Dictionary<int, float>( info_set.Count );
 			
 			double angle_step = 360d / (double)info_set.Count;

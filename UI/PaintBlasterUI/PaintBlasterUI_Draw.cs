@@ -25,7 +25,7 @@ namespace BetterPaint.UI {
 			int x = Main.screenWidth / 2;
 			int y = Main.screenHeight / 2;
 
-			sb.Draw( Main.magicPixel, new Rectangle( x, y, 160, 160 ), null, Color.LightPink * 0.2f, (float)( 45d * ( Math.PI / 180d ) ), new Vector2( 0.5f, 512f ), SpriteEffects.None, 1f );
+			sb.Draw( Main.magicPixel, new Rectangle( x, y, 160, 160 ), null, Color.LightPink * 0.3f, (float)( 45d * ( Math.PI / 180d ) ), new Vector2( 0.5f, 512f ), SpriteEffects.None, 1f );
 			HudHelpers.DrawBorderedRect( sb, Color.DarkOliveGreen * 0.5f, Color.OliveDrab * 0.5f, new Rectangle( x - 48, y - 48, 96, 96 ), 4 );
 
 			this.DrawBrushes( sb, out stream_rect, out spray_rect, out bucket_rect, out scrape_rect );

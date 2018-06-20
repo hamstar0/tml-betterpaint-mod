@@ -62,6 +62,12 @@ namespace BetterPaint.Painting {
 			this.Glows[tile_x][tile_y] = glow;
 		}
 
+		public void RemoveGlowAt( ushort tile_x, ushort tile_y ) {
+			if( this.Glows.ContainsKey( tile_x ) ) {
+				this.Glows[tile_x].Remove( tile_y );
+			}
+		}
+
 
 		////////////////
 
