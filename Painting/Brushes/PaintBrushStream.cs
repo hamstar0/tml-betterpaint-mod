@@ -36,7 +36,7 @@ namespace BetterPaint.Painting.Brushes {
 				return 0f;
 			}
 
-			Color existing_color = data.GetColor( tile_x, tile_y );
+			Color existing_color = data.GetRawColorAt( tile_x, tile_y );
 			Color lerped_color = Color.Lerp( existing_color, color, pressure_percent );
 
 			data.SetColorAt( lerped_color, tile_x, tile_y );

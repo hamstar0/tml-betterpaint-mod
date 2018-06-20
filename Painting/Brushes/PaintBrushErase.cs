@@ -39,13 +39,13 @@ namespace BetterPaint.Painting.Brushes {
 				return;
 			}
 
-			if( data.HasColor(tile_x, tile_y) ) {
+			if( data.HasColorAt(tile_x, tile_y) ) {
 				int tolerance = (int)( pressure_percent * 255f );
 
 				if( pressure_percent == 1f ) {
 					data.RemoveColorAt( tile_x, tile_y );
 				} else{
-					Color existing_color = data.GetColor( tile_x, tile_y );
+					Color existing_color = data.GetRawColorAt( tile_x, tile_y );
 					Color lerped_color = Color.Lerp( existing_color, PaintHelpers.UnlitBaseColor, pressure_percent );
 
 					if( XnaColorHelpers.AvgRGBA(lerped_color) >= 240 ) {

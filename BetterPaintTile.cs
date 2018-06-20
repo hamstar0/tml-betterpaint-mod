@@ -1,8 +1,6 @@
-﻿using BetterPaint.Painting;
-using HamstarHelpers.DebugHelpers;
+﻿using HamstarHelpers.DebugHelpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,13 +12,8 @@ namespace BetterPaint {
 			ushort tile_x = (ushort)i;
 			ushort tile_y = (ushort)j;
 			
-			if( myworld.Layers.Foreground.HasColor(tile_x, tile_y) ) {
-				Color paint_data = myworld.Layers.Foreground.GetColor( tile_x, tile_y );
-				Color full_color = PaintHelpers.FullColor( paint_data );
-				Color env_color = Lighting.GetColor( i, j, full_color );
-				float lit_scale = (float)paint_data.A / 255f;
-
-				draw_color = Color.Lerp( env_color, full_color, lit_scale );
+			if( myworld.Layers.Foreground.HasColorAt(tile_x, tile_y) ) {
+				draw_color = myworld.Layers.Foreground.ComputeTileColor( tile_x, tile_y );
 			}
 		}
 
@@ -32,7 +25,7 @@ namespace BetterPaint {
 			ushort tile_x = (ushort)i;
 			ushort tile_y = (ushort)j;
 
-			if( myworld.Layers.Foreground.HasColor( tile_x, tile_y ) ) {
+			if( myworld.Layers.Foreground.HasColorAt( tile_x, tile_y ) ) {
 				myworld.Layers.Foreground.RemoveColorAt( tile_x, tile_y );
 			}
 		}
@@ -42,21 +35,13 @@ namespace BetterPaint {
 
 
 	class BetterPaintWall : GlobalWall {
-		public static IDictionary<int, IDictionary<int, Color>> Colors = new Dictionary<int, IDictionary<int, Color>>();
-
-
 		public override bool PreDraw( int i, int j, int type, SpriteBatch sb ) {
 			var myworld = this.mod.GetModWorld<BetterPaintWorld>();
 			ushort tile_x = (ushort)i;
 			ushort tile_y = (ushort)j;
 
-			if( myworld.Layers.Background.HasColor( tile_x, tile_y ) ) {
-				Color paint_data = myworld.Layers.Background.GetColor( tile_x, tile_y );
-				Color full_color = PaintHelpers.FullColor( paint_data );
-				Color env_color = Lighting.GetColor( i, j, full_color );
-				float lit_scale = (float)paint_data.A / 255f;
-
-				Color draw_color = Color.Lerp( env_color, full_color, lit_scale );
+			if( myworld.Layers.Background.HasColorAt( tile_x, tile_y ) ) {
+				Color draw_color = myworld.Layers.Background.ComputeTileColor( tile_x, tile_y );
 
 				Vector2 zero = new Vector2( (float)Main.offScreenRange, (float)Main.offScreenRange );
 				if( Main.drawToScreen ) {
@@ -82,7 +67,7 @@ namespace BetterPaint {
 			ushort tile_x = (ushort)i;
 			ushort tile_y = (ushort)j;
 
-			if( myworld.Layers.Background.HasColor( tile_x, tile_y ) ) {
+			if( myworld.Layers.Background.HasColorAt( tile_x, tile_y ) ) {
 				myworld.Layers.Background.RemoveColorAt( tile_x, tile_y );
 			}
 		}

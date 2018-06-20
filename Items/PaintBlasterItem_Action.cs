@@ -39,22 +39,22 @@ namespace BetterPaint.Items {
 
 			switch( this.Layer ) {
 			case PaintLayerType.Foreground:
-				if( myworld.Layers.Foreground.GetColor( tile_x, tile_y ) == color ) {
+				if( myworld.Layers.Foreground.GetRawColorAt( tile_x, tile_y ) == color ) {
 					return true;
 				}
 				break;
 			case PaintLayerType.Background:
-				if( myworld.Layers.Background.GetColor( tile_x, tile_y ) == color ) {
+				if( myworld.Layers.Background.GetRawColorAt( tile_x, tile_y ) == color ) {
 					return true;
 				}
 				break;
 			case PaintLayerType.Anyground:
-				if( myworld.Layers.Foreground.HasColor(tile_x, tile_y) ) {
-					if( myworld.Layers.Foreground.GetColor( tile_x, tile_y ) == color ) {
+				if( myworld.Layers.Foreground.HasColorAt(tile_x, tile_y) ) {
+					if( myworld.Layers.Foreground.GetRawColorAt( tile_x, tile_y ) == color ) {
 						return true;
 					}
-				} else if( myworld.Layers.Background.HasColor( tile_x, tile_y ) ) {
-					if( myworld.Layers.Background.GetColor( tile_x, tile_y ) == color ) {
+				} else if( myworld.Layers.Background.HasColorAt( tile_x, tile_y ) ) {
+					if( myworld.Layers.Background.GetRawColorAt( tile_x, tile_y ) == color ) {
 						return true;
 					}
 				}
@@ -110,7 +110,7 @@ namespace BetterPaint.Items {
 				data = myworld.Layers.Background;
 				break;
 			case PaintLayerType.Anyground:
-				if( myworld.Layers.Foreground.HasColor( tile_x, tile_y ) ) {
+				if( myworld.Layers.Foreground.HasColorAt( tile_x, tile_y ) ) {
 					data = myworld.Layers.Foreground;
 				} else {
 					data = myworld.Layers.Background;
@@ -120,11 +120,11 @@ namespace BetterPaint.Items {
 				throw new NotImplementedException();
 			}
 
-			if( !data.HasColor(tile_x, tile_y) ) {
+			if( !data.HasColorAt(tile_x, tile_y) ) {
 				return false;
 			}
 
-			Color color_at = data.GetColor( tile_x, tile_y );
+			Color color_at = data.GetRawColorAt( tile_x, tile_y );
 			color_at.A = 255;
 
 			CopyCartridgeItem.SetWithColor( player, player.inventory[copy_item_idx], color_at );

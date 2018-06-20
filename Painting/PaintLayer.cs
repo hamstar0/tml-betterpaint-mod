@@ -1,4 +1,5 @@
-﻿using HamstarHelpers.DebugHelpers;
+﻿using BetterPaint.Helpers.XnaHelpers;
+using HamstarHelpers.DebugHelpers;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using Terraria.ModLoader.IO;
 
 
 namespace BetterPaint.Painting {
-	public abstract class PaintLayer {
+	public abstract partial class PaintLayer {
 		public IDictionary<ushort, IDictionary<ushort, Color>> Colors { get; private set; }
 
 
@@ -50,9 +51,9 @@ namespace BetterPaint.Painting {
 
 
 		public void Save( TagCompound tags, string prefix ) {
-			int[] x_arr = this.Colors.Keys.Select( i => (int)i ).ToArray();
+			int[] clr_x_arr = this.Colors.Keys.Select( i => (int)i ).ToArray();
 
-			tags.Set( prefix + "_x", x_arr );
+			tags.Set( prefix + "_x", clr_x_arr );
 
 			foreach( var kv in this.Colors ) {
 				ushort tile_x = kv.Key;
@@ -68,40 +69,6 @@ namespace BetterPaint.Painting {
 
 					tags.Set( prefix + "_" + tile_x + "_" + tile_y, clr_bytes );
 				}
-			}
-		}
-
-
-		////////////////
-
-		public bool HasColor( ushort tile_x, ushort tile_y ) {
-			return this.Colors.ContainsKey( tile_x ) && this.Colors[tile_x].ContainsKey( tile_y );
-		}
-
-		public Color GetColor( ushort tile_x, ushort tile_y ) {
-			if( this.Colors.ContainsKey( tile_x ) ) {
-				if( this.Colors[tile_x].ContainsKey( tile_y ) ) {
-					return this.Colors[tile_x][tile_y];
-				}
-			}
-			return Color.Transparent;
-		}
-
-		////////////////
-
-		public abstract bool CanPaintAt( Tile tile );
-
-
-		public void SetColorAt( Color color, ushort tile_x, ushort tile_y ) {
-			if( !this.Colors.ContainsKey(tile_x) ) {
-				this.Colors[tile_x] = new Dictionary<ushort, Color>();
-			}
-			this.Colors[tile_x][tile_y] = color;
-		}
-
-		public void RemoveColorAt( ushort tile_x, ushort tile_y ) {
-			if( this.Colors.ContainsKey( tile_x ) ) {
-				this.Colors[tile_x].Remove( tile_y );
 			}
 		}
 	}

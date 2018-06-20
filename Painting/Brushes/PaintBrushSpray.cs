@@ -19,7 +19,7 @@ namespace BetterPaint.Painting.Brushes {
 			int tile_y = world_y / 16;
 			double tile_x_offset = (double)( world_x % 16 ) / 16f;
 			double tile_y_offset = (double)( world_y % 16 ) / 16f;
-
+			
 			for( int i = -iter_range; i <= iter_range; i++ ) {
 				for( int j = -iter_range; j <= iter_range; j++ ) {
 					double i_off = i + tile_x_offset;
@@ -46,9 +46,9 @@ namespace BetterPaint.Painting.Brushes {
 			if( !data.CanPaintAt( Main.tile[tile_x, tile_y] ) ) {
 				return 0f;
 			}
-
+			
 			float dist_pressure_percent = pressure_percent * (1f - (dist / brush_radius));
-			Color existing_color = data.GetColor( tile_x, tile_y );
+			Color existing_color = data.GetRawColorAt( tile_x, tile_y );
 			Color lerped_color = Color.Lerp( existing_color, color, dist_pressure_percent );
 
 			data.SetColorAt( lerped_color, tile_x, tile_y );

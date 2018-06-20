@@ -23,24 +23,29 @@ namespace BetterPaint.Items {
 			if( this.IsUsingUI ) {
 				return false;
 			}
-			if( this.CurrentBrush == PaintBrushType.Erase || this.IsCopying ) {
+			if( this.IsCopying ) {
 				return true;
 			}
 
-			Item paint_item = this.GetCurrentPaintItem();
+			bool can_paint_at = true;
+			Item paint_item = null;
 
-			if( paint_item == null ) {
-				if( this.DryFireAvailable ) {
-					this.DryFireAvailable = false;
+			if( this.CurrentBrush != PaintBrushType.Erase ) {
+				paint_item = this.GetCurrentPaintItem();
 
-					Timers.SetTimer( "BetterPaintDryFire", 1 * 60, () => {
-						this.DryFireAvailable = true;
-						return false;
-					} );
+				if( paint_item == null ) {
+					if( this.DryFireAvailable ) {
+						this.DryFireAvailable = false;
 
-					Main.NewText( "Select a paint first.", Color.Yellow );
+						Timers.SetTimer( "BetterPaintDryFire", 1 * 60, () => {
+							this.DryFireAvailable = true;
+							return false;
+						} );
+
+						Main.NewText( "Select a paint first.", Color.Yellow );
+					}
+					return false;
 				}
-				return false;
 			}
 
 			Vector2 world_pos = UIHelpers.GetWorldMousePosition();
@@ -48,7 +53,12 @@ namespace BetterPaint.Items {
 			ushort tile_x = (ushort)tile_pos.X;
 			ushort tile_y = (ushort)tile_pos.Y;
 
-			bool can_paint_at = this.CanPaintAt( paint_item, tile_x, tile_y );
+			if( paint_item == null ) {
+				can_paint_at = true;
+			} else {
+				can_paint_at = this.CanPaintAt( paint_item, tile_x, tile_y );
+			}
+			
 			if( can_paint_at ) {
 				if( this.CanUseBlasterAt( tile_x, tile_y ) ) {
 					this.BufferedPaintUses += this.BlastPaintAt( world_pos );

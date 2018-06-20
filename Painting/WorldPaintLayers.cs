@@ -53,7 +53,7 @@ namespace BetterPaint.Painting {
 		public float ApplyColorAt( BetterPaintMod mymod, PaintLayerType layer, PaintBrushType brush_type,
 				Color color, PaintBrushSize brush_size, float pressure_precent, int world_x, int world_y ) {
 			if( Main.netMode == 2 ) { throw new Exception( "No server." ); }
-
+			
 			int rand_seed = DateTime.Now.Millisecond;
 			float paints_used = this.ApplyColorAtNoSync( mymod, layer, brush_type, color, brush_size, pressure_precent, rand_seed, world_x, world_y );
 
@@ -71,7 +71,7 @@ namespace BetterPaint.Painting {
 			
 			PaintBrush brush = mymod.Modes[ brush_type ];
 			float paints_used = 0f;
-
+			
 			switch( layer ) {
 			case PaintLayerType.Background:
 				paints_used += brush.Apply( this.Background, color, brush_size, pressure_precent, rand_seed, world_x, world_y );

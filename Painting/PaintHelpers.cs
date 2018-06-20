@@ -91,6 +91,7 @@ namespace BetterPaint.Painting {
 			switch( paint_type ) {
 			case PaintType.Can:
 				color = WorldGen.paintColor( paint_item.paint );
+				color.A = 0;
 				break;
 			case PaintType.ColorCartridge:
 				var mycolorcart = (ColorCartridgeItem)paint_item.modItem;
