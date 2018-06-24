@@ -3,14 +3,14 @@ Future
 -	Add paint tarps
 -	Implement richer painting
 -	Brush shape?
-v1.3
+v2
 -	@Test MP
 -	Implement API
 -	Implement loading paint on server join
 -	@Implement URL parsing from inbox messages
--	Fix auto cartridge switch fail + add sound effect
+-	Add auto cartridge switch sound effect
 -	Fix dust spew
--	Experiment opacity adding
+-	Experiment with glows having additive opacity
 
 v1.2.1
 -	Fix cartridge % indicator for paint buckets (use max stack size)

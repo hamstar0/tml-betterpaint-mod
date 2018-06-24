@@ -5,7 +5,7 @@ using Terraria;
 namespace BetterPaint.Painting {
 	class ForegroundPaintLayer : PaintLayer {
 		public override bool CanPaintAt( Tile tile ) {
-			return TileHelpers.IsSolid( tile, true, true ) || Main.tileTable[ tile.type ];
+			return tile.active();	//TileHelpers.IsSolid( tile, true, true ) || Main.tileTable[ tile.type ];
 		}
 	}
 
