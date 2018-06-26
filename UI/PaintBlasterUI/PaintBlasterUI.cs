@@ -1,5 +1,5 @@
 ﻿using BetterPaint.Painting.Brushes;
-using HamstarHelpers.TmlHelpers;
+using HamstarHelpers.Services.Promises;
 using Microsoft.Xna.Framework.Graphics;
 
 
@@ -55,7 +55,7 @@ namespace BetterPaint.UI {
 				PaintBlasterUI.PressureMidTex = mymod.GetTexture( "UI/PaintBlasterUI/PressureMid" );
 				PaintBlasterUI.PressureHiTex = mymod.GetTexture( "UI/PaintBlasterUI/PressureHi" );
 
-				TmlLoadHelpers.AddModUnloadPromise( () => {
+				Promises.AddModUnloadPromise( () => {
 					PaintBlasterUI.BrushStream = null;
 					PaintBlasterUI.BrushSpray = null;
 					PaintBlasterUI.BrushSpatter = null;

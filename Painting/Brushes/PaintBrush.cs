@@ -1,6 +1,7 @@
-﻿using BetterPaint.Helpers.XnaHelpers;
+﻿using HamstarHelpers.XnaHelpers;
 using Microsoft.Xna.Framework;
 using System;
+
 
 namespace BetterPaint.Painting.Brushes {
 	public enum PaintLayerType : int {

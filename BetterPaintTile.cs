@@ -43,7 +43,7 @@ namespace BetterPaint {
 			if( myworld.Layers.Background.HasColorAt( tile_x, tile_y ) ) {
 				Color draw_color = myworld.Layers.Background.ComputeTileColor( tile_x, tile_y );
 
-				Vector2 zero = new Vector2( (float)Main.offScreenRange, (float)Main.offScreenRange );
+				var zero = new Vector2( (float)Main.offScreenRange, (float)Main.offScreenRange );
 				if( Main.drawToScreen ) {
 					zero = Vector2.Zero;
 				}

@@ -3,7 +3,7 @@ using BetterPaint.Painting.Brushes;
 using HamstarHelpers.Components.Config;
 using HamstarHelpers.DebugHelpers;
 using HamstarHelpers.Services.Messages;
-using HamstarHelpers.TmlHelpers;
+using HamstarHelpers.Services.Promises;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -67,7 +67,7 @@ namespace BetterPaint {
 
 			this.LoadConfig();
 
-			TmlLoadHelpers.AddPostWorldLoadEachPromise( () => {
+			Promises.AddPostWorldLoadEachPromise( () => {
 				string intro1 = "1 of 5 - Eager to try out better painting? You'll need a Paint Blaster, crafted via " + (this.Config.PaintBlasterRecipeClentaminator ? "Clentaminator" : "Illegal Gun Parts") + " and Paint Sprayer at a Tinkerer's Workshop.";
 				string intro2 = "2 of 5 - To make paint, you'll need a Paint Mixer, crafted via Dye Vat" + ( this.Config.PaintMixerRecipeBlendOMatic ? ", Blend-O-Matic, " : " " ) + "and Extractinator at a Tinkerer's Workshop.";
 				string intro3 = "3 of 5 - To paint, you'll need Color Cartridges, crafted via colored Paints (any " + this.Config.PaintRecipePaints + ") and Gel (" + this.Config.PaintRecipeGels + ") at a Paint Mixer.";

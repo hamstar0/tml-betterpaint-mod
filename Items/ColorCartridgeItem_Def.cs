@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using BetterPaint.Painting;
-using HamstarHelpers.TmlHelpers;
+using HamstarHelpers.Services.Promises;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -54,7 +54,7 @@ namespace BetterPaint.Items {
 				ColorCartridgeItem.OverlayTex = this.mod.GetTexture( "Items/ColorCartridgeItem_Color" );
 				ColorCartridgeItem.CartridgeTex = this.mod.GetTexture( "Items/ColorCartridgeItem" );
 
-				TmlLoadHelpers.AddModUnloadPromise( () => {
+				Promises.AddModUnloadPromise( () => {
 					ColorCartridgeItem.OverlayTex = null;
 					ColorCartridgeItem.CartridgeTex = null;
 				} );

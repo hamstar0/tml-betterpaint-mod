@@ -1,6 +1,6 @@
 ﻿using BetterPaint.Items;
 using BetterPaint.Painting;
-using HamstarHelpers.TmlHelpers;
+using HamstarHelpers.Services.Promises;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Globalization;
@@ -26,7 +26,7 @@ namespace BetterPaint.UI {
 				PaintBlasterHUD.AmmoTop = mymod.GetTexture( "UI/PaintBlasterHUD/PaintAmmoTop" );
 				PaintBlasterHUD.AmmoBot = mymod.GetTexture( "UI/PaintBlasterHUD/PaintAmmoBottom" );
 
-				TmlLoadHelpers.AddModUnloadPromise( () => {
+				Promises.AddModUnloadPromise( () => {
 					PaintBlasterHUD.AmmoCan = null;
 					PaintBlasterHUD.AmmoTop = null;
 					PaintBlasterHUD.AmmoBot = null;

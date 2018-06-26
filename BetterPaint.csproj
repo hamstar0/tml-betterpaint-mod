@@ -58,7 +58,6 @@
     <Compile Include="BetterPaintNPC.cs" />
     <Compile Include="BetterPaintWorld.cs" />
     <Compile Include="Commands\ClearAllPaintCommand.cs" />
-    <Compile Include="Helpers\XnaHelpers\XnaColorHelpers.cs" />
     <Compile Include="Items\GlowCartridgeItem_Draw.cs" />
     <Compile Include="Items\GlowCartridgeItem_Recipe.cs" />
     <Compile Include="Items\GlowCartridgeItem_Def.cs" />
