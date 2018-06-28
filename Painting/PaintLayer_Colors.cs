@@ -17,13 +17,13 @@ namespace BetterPaint.Painting {
 		}
 
 
-		public Color GetRawColorAt( ushort tile_x, ushort tile_y ) {
+		public Color? GetRawColorAt( ushort tile_x, ushort tile_y ) {
 			if( this.Colors.ContainsKey( tile_x ) ) {
 				if( this.Colors[tile_x].ContainsKey( tile_y ) ) {
-					return this.Colors[tile_x][tile_y];
+					return (Color?)this.Colors[tile_x][tile_y];
 				}
 			}
-			return Color.Transparent;
+			return null;
 		}
 
 
@@ -76,29 +76,31 @@ namespace BetterPaint.Painting {
 		////////////////
 
 		public Color ComputeTileColor( ushort tile_x, ushort tile_y ) {
-			Color end_color;
-			Color paint_data = this.GetRawColorAt( tile_x, tile_y );
-			Color flattened = XnaColorHelpers.FlattenColor( paint_data );
+			Color? raw_color = this.GetRawColorAt( tile_x, tile_y );
+			if( raw_color == null ) { return Color.Transparent; }
 
+			Color computed;
+			Color color = (Color)raw_color;
+			Color flattened = XnaColorHelpers.FlattenColor( Color.White, color );
 			Color env_color = Lighting.GetColor( tile_x, tile_y, flattened );
 
 			float lit_scale = (float)this.GetGlowAt( tile_x, tile_y ) / 255f;
 
 			if( lit_scale > 0 ) {
-				float r_scale = (float)paint_data.R / 255f;
-				float g_scale = (float)paint_data.G / 255f;
-				float b_scale = (float)paint_data.B / 255f;
+				float r_scale = (float)color.R / 255f;
+				float g_scale = (float)color.G / 255f;
+				float b_scale = (float)color.B / 255f;
 
 				int r = env_color.R + (int)( ( 255 - env_color.R ) * r_scale );
 				int g = env_color.G + (int)( ( 255 - env_color.G ) * g_scale );
 				int b = env_color.B + (int)( ( 255 - env_color.B ) * b_scale );
 
-				end_color = new Color( r, g, b );
+				computed = new Color( r, g, b );
 			} else {
-				end_color = env_color;
+				computed = env_color;
 			}
 
-			return end_color;
+			return computed;
 		}
 	}
 }

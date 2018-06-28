@@ -126,7 +126,7 @@ namespace BetterPaint.Items {
 				return false;
 			}
 
-			Color color_at = data.GetRawColorAt( tile_x, tile_y );
+			Color color_at = (Color)data.GetRawColorAt( tile_x, tile_y );
 
 			CopyCartridgeItem.SetWithColor( player, player.inventory[copy_item_idx], color_at );
 

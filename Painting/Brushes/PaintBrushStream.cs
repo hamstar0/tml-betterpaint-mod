@@ -5,7 +5,7 @@ using Terraria;
 
 namespace BetterPaint.Painting.Brushes {
 	class PaintBrushStream : PaintBrush {
-		public override float Apply( PaintLayer data, Color color, byte glow, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+		public override float Apply( PaintLayer layer, Color color, byte glow, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			var mymod = BetterPaintMod.Instance;
 			int iter_range = (int)((brush_size == PaintBrushSize.Small ? 1 : 3) * mymod.Config.BrushSizeMultiplier);
 			float radius = (brush_size == PaintBrushSize.Small ? 0.5f : 3f) * mymod.Config.BrushSizeMultiplier;
@@ -23,7 +23,7 @@ namespace BetterPaint.Painting.Brushes {
 						continue;
 					}
 					
-					uses += this.PaintAt( data, color, glow, pressure_percent, (ushort)(tile_x + i), (ushort)(tile_y + j) );
+					uses += this.PaintAt( layer, color, glow, pressure_percent, (ushort)(tile_x + i), (ushort)(tile_y + j) );
 				}
 			}
 
@@ -31,21 +31,21 @@ namespace BetterPaint.Painting.Brushes {
 		}
 
 
-		public float PaintAt( PaintLayer data, Color color, byte glow, float pressure_percent, ushort tile_x, ushort tile_y ) {
-			if( !data.CanPaintAt( Main.tile[tile_x, tile_y] ) ) {
+		public float PaintAt( PaintLayer layer, Color color, byte glow, float pressure_percent, ushort tile_x, ushort tile_y ) {
+			if( !layer.CanPaintAt( Main.tile[tile_x, tile_y] ) ) {
 				return 0f;
 			}
+			
+			Color? old_color;
+			byte old_glow;
 
-			Color existing_color = data.GetRawColorAt( tile_x, tile_y );
-			Color lerped_color = Color.Lerp( existing_color, color, pressure_percent );
+			Color blended_color = PaintBrush.GetBlendedColor( layer, color, pressure_percent, tile_x, tile_y, out old_color );
+			byte blended_glow = PaintBrush.GetBlendedGlow( layer, glow, pressure_percent, tile_x, tile_y, out old_glow );
 
-			byte existing_glow = data.GetGlowAt( tile_x, tile_y );
-			byte lerped_glow = (byte)MathHelper.Lerp( (float)existing_glow, (float)glow, pressure_percent );
+			layer.SetRawColorAt( blended_color, tile_x, tile_y );
+			layer.SetGlowAt( blended_glow, tile_x, tile_y );
 
-			data.SetRawColorAt( lerped_color, tile_x, tile_y );
-			data.SetGlowAt( lerped_glow, tile_x, tile_y );
-
-			float diff = PaintBrush.ComputeChangePercent( existing_color, lerped_color, existing_glow, lerped_glow );
+			float diff = PaintBrush.ComputeChangePercent( old_color, blended_color, old_glow, blended_glow );
 			if( diff <= 0.01f ) {
 				pressure_percent = 0f;
 			}
