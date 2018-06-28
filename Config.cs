@@ -4,7 +4,7 @@ using System;
 
 namespace BetterPaint {
 	public class BetterPaintConfigData : ConfigurationDataBase {
-		public readonly static Version ConfigVersion = new Version( 1, 2, 0 );
+		public readonly static Version ConfigVersion = new Version( 1, 2, 2 );
 		public readonly static string ConfigFileName = "Better Paint Config.json";
 
 
@@ -44,6 +44,8 @@ namespace BetterPaint {
 		public bool PainterSellsRGBCartridges = true;
 		public bool PainterSellsCopyCartridge = false;
 		public bool PainterSellsPaintMixer = false;
+
+		public bool ShowPaintOnMap = true;
 
 
 		////////////////

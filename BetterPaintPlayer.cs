@@ -11,8 +11,8 @@ namespace BetterPaint {
 			var mymod = (BetterPaintMod)this.mod;
 
 			if( Main.netMode == 0 ) {
-				if( !mymod.JsonConfig.LoadFile() ) {
-					mymod.JsonConfig.SaveFile();
+				if( !mymod.ConfigJson.LoadFile() ) {
+					mymod.ConfigJson.SaveFile();
 				}
 			} else if( Main.netMode == 1 ) {
 				PacketProtocol.QuickRequestToServer<ModSettingsProtocol>();

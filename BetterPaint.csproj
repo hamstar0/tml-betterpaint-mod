@@ -64,6 +64,7 @@
     <Compile Include="Items\CopyCartridgeItem_Def.cs" />
     <Compile Include="Painting\PaintHelpers.cs" />
     <Compile Include="Painting\PaintLayer_Colors.cs" />
+    <Compile Include="Painting\PaintLayer_Map.cs" />
     <Compile Include="UI\PaintBlasterHUD\PaintBlasterHUD.cs" />
     <Compile Include="Items\PaintBlasterItem_Recipe.cs" />
     <Compile Include="Items\PaintBlasterItem_UI.cs" />

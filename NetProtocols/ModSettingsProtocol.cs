@@ -12,7 +12,7 @@ namespace BetterPaint.NetProtocols {
 		}
 
 		protected override void ReceiveWithClient() {
-			BetterPaintMod.Instance.JsonConfig.SetData( this.Data );
+			BetterPaintMod.Instance.ConfigJson.SetData( this.Data );
 		}
 	}
 }

@@ -9,9 +9,9 @@ namespace BetterPaint.Painting {
 	public abstract partial class PaintLayer {
 		public abstract bool CanPaintAt( Tile tile );
 
+
 		////////////////
-
-
+		
 		public bool HasColorAt( ushort tile_x, ushort tile_y ) {
 			return this.Colors.ContainsKey( tile_x ) && this.Colors[tile_x].ContainsKey( tile_y );
 		}
@@ -44,11 +44,15 @@ namespace BetterPaint.Painting {
 				this.Colors[tile_x] = new Dictionary<ushort, Color>();
 			}
 			this.Colors[tile_x][tile_y] = color;
+
+			this.SetMapColorAt( color, tile_x, tile_y );
 		}
 		
-		public void RemoveColorAt( ushort tile_x, ushort tile_y ) {
-			if( this.Colors.ContainsKey( tile_x ) ) {
-				this.Colors[tile_x].Remove( tile_y );
+		public void RemoveRawColorAt( ushort tile_x, ushort tile_y ) {
+			if( !this.Colors.ContainsKey( tile_x ) ) { return; }
+
+			if( this.Colors[tile_x].Remove( tile_y ) ) {
+				this.RemoveMapColorAt( tile_x, tile_y );
 			}
 		}
 

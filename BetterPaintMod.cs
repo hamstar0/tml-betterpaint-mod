@@ -26,16 +26,23 @@ namespace BetterPaint {
 			if( Main.netMode != 0 ) {
 				throw new Exception( "Cannot reload configs outside of single player." );
 			}
-			if( !BetterPaintMod.Instance.JsonConfig.LoadFile() ) {
-				BetterPaintMod.Instance.JsonConfig.SaveFile();
+			if( !BetterPaintMod.Instance.ConfigJson.LoadFile() ) {
+				BetterPaintMod.Instance.ConfigJson.SaveFile();
 			}
+		}
+		public static void ResetConfigFromDefaults() {
+			if( Main.netMode != 0 ) {
+				throw new Exception( "Cannot reset to default configs outside of single player." );
+			}
+			BetterPaintMod.Instance.ConfigJson.SetData( new BetterPaintConfigData() );
+			BetterPaintMod.Instance.ConfigJson.SaveFile();
 		}
 
 
 		////////////////
 
-		public JsonConfig<BetterPaintConfigData> JsonConfig { get; private set; }
-		public BetterPaintConfigData Config { get { return this.JsonConfig.Data; } }
+		public JsonConfig<BetterPaintConfigData> ConfigJson { get; private set; }
+		public BetterPaintConfigData Config { get { return this.ConfigJson.Data; } }
 
 		public IDictionary<PaintBrushType, PaintBrush> Modes { get; private set; }
 
@@ -56,7 +63,7 @@ namespace BetterPaint {
 				{ PaintBrushType.Erase, new PaintBrushErase() }
 			};
 
-			this.JsonConfig = new JsonConfig<BetterPaintConfigData>( BetterPaintConfigData.ConfigFileName,
+			this.ConfigJson = new JsonConfig<BetterPaintConfigData>( BetterPaintConfigData.ConfigFileName,
 					ConfigurationDataBase.RelativePath, new BetterPaintConfigData() );
 		}
 
@@ -87,14 +94,14 @@ namespace BetterPaint {
 		}
 
 		private void LoadConfig() {
-			if( !this.JsonConfig.LoadFile() ) {
-				this.JsonConfig.SaveFile();
+			if( !this.ConfigJson.LoadFile() ) {
+				this.ConfigJson.SaveFile();
 				ErrorLogger.Log( "Better Paint config " + BetterPaintConfigData.ConfigVersion.ToString() + " created." );
 			}
 
 			if( this.Config.UpdateToLatestVersion() ) {
 				ErrorLogger.Log( "Better Paint updated to " + BetterPaintConfigData.ConfigVersion.ToString() );
-				this.JsonConfig.SaveFile();
+				this.ConfigJson.SaveFile();
 			}
 		}
 

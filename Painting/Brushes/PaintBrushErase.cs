@@ -53,7 +53,7 @@ namespace BetterPaint.Painting.Brushes {
 			float diff = PaintBrush.ComputeChangePercent( existing_color, lerped_color, existing_glow, lerped_glow );
 
 			if( diff <= 0.01f ) {
-				data.RemoveColorAt( tile_x, tile_y );
+				data.RemoveRawColorAt( tile_x, tile_y );
 				data.RemoveGlowAt( tile_x, tile_y );
 			} else {
 				data.SetRawColorAt( lerped_color, tile_x, tile_y );

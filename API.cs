@@ -8,7 +8,7 @@ namespace BetterPaint {
 		}
 
 		public static void SaveModSettingsChanges() {
-			BetterPaintMod.Instance.JsonConfig.SaveFile();
+			BetterPaintMod.Instance.ConfigJson.SaveFile();
 		}
 
 

@@ -26,7 +26,7 @@ namespace BetterPaint {
 			ushort tile_y = (ushort)j;
 
 			if( myworld.Layers.Foreground.HasColorAt( tile_x, tile_y ) ) {
-				myworld.Layers.Foreground.RemoveColorAt( tile_x, tile_y );
+				myworld.Layers.Foreground.RemoveRawColorAt( tile_x, tile_y );
 			}
 		}
 	}
@@ -68,7 +68,7 @@ namespace BetterPaint {
 			ushort tile_y = (ushort)j;
 
 			if( myworld.Layers.Background.HasColorAt( tile_x, tile_y ) ) {
-				myworld.Layers.Background.RemoveColorAt( tile_x, tile_y );
+				myworld.Layers.Background.RemoveRawColorAt( tile_x, tile_y );
 			}
 		}
 	}
