@@ -14,15 +14,15 @@ namespace BetterPaint.Items {
 		public const int Width = 12;
 		public const int Height = 16;
 
-		public static Texture2D CartridgeTex { get; internal set; }
-		public static Texture2D OverlayTex { get; internal set; }
-		public static Texture2D GlowMask1Tex { get; internal set; }
+		public static Texture2D GlowCartridgeTex { get; internal set; }
+		public static Texture2D ColorOverlayTex { get; internal set; }
+		public static Texture2D GlowMaskTex { get; internal set; }
 
 
 		static GlowCartridgeItem() {
-			GlowCartridgeItem.CartridgeTex = null;
-			GlowCartridgeItem.OverlayTex = null;
-			GlowCartridgeItem.GlowMask1Tex = null;
+			GlowCartridgeItem.GlowCartridgeTex = null;
+			GlowCartridgeItem.ColorOverlayTex = null;
+			GlowCartridgeItem.GlowMaskTex = null;
 		}
 
 
@@ -54,15 +54,15 @@ namespace BetterPaint.Items {
 				"Produces glow-in-the-dark paint" + '\n' +
 				"Craft with cartidges and glowing spores at a paint mixer" );
 
-			if( GlowCartridgeItem.OverlayTex == null ) {
-				GlowCartridgeItem.CartridgeTex = this.mod.GetTexture( "Items/GlowCartridgeItem" );
-				GlowCartridgeItem.OverlayTex = this.mod.GetTexture( "Items/GlowCartridgeItem_Color" );
-				GlowCartridgeItem.GlowMask1Tex = this.mod.GetTexture( "Items/GlowCartridgeItem_Glow1" );
+			if( GlowCartridgeItem.GlowCartridgeTex == null ) {
+				GlowCartridgeItem.GlowCartridgeTex = this.mod.GetTexture( "Items/GlowCartridgeItem" );
+				GlowCartridgeItem.ColorOverlayTex = this.mod.GetTexture( "Items/GlowCartridgeItem_Color" );
+				GlowCartridgeItem.GlowMaskTex = this.mod.GetTexture( "Items/GlowCartridgeItem_Glow1" );
 
 				Promises.AddModUnloadPromise( () => {
-					GlowCartridgeItem.CartridgeTex = null;
-					GlowCartridgeItem.OverlayTex = null;
-					GlowCartridgeItem.GlowMask1Tex = null;
+					GlowCartridgeItem.GlowCartridgeTex = null;
+					GlowCartridgeItem.ColorOverlayTex = null;
+					GlowCartridgeItem.GlowMaskTex = null;
 				} );
 			}
 		}

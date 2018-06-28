@@ -14,12 +14,12 @@ namespace BetterPaint.Items {
 		public const int Width = 12;
 		public const int Height = 16;
 
-		public static Texture2D OverlayTex { get; internal set; }
-		public static Texture2D CartridgeTex { get; internal set; }
+		public static Texture2D ColorOverlayTex { get; internal set; }
+		public static Texture2D ColorCartridgeTex { get; internal set; }
 
 		static ColorCartridgeItem() {
-			ColorCartridgeItem.OverlayTex = null;
-			ColorCartridgeItem.CartridgeTex = null;
+			ColorCartridgeItem.ColorOverlayTex = null;
+			ColorCartridgeItem.ColorCartridgeTex = null;
 		}
 
 
@@ -50,13 +50,13 @@ namespace BetterPaint.Items {
 				"Make cartridges with paint at a paint mixer" + '\n' +
 				"Blend cartidges together at a paint mixer" );
 
-			if( ColorCartridgeItem.OverlayTex == null ) {
-				ColorCartridgeItem.OverlayTex = this.mod.GetTexture( "Items/ColorCartridgeItem_Color" );
-				ColorCartridgeItem.CartridgeTex = this.mod.GetTexture( "Items/ColorCartridgeItem" );
+			if( ColorCartridgeItem.ColorCartridgeTex == null ) {
+				ColorCartridgeItem.ColorCartridgeTex = this.mod.GetTexture( "Items/ColorCartridgeItem" );
+				ColorCartridgeItem.ColorOverlayTex = this.mod.GetTexture( "Items/ColorCartridgeItem_Color" );
 
 				Promises.AddModUnloadPromise( () => {
-					ColorCartridgeItem.OverlayTex = null;
-					ColorCartridgeItem.CartridgeTex = null;
+					ColorCartridgeItem.ColorOverlayTex = null;
+					ColorCartridgeItem.ColorCartridgeTex = null;
 				} );
 			}
 		}

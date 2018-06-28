@@ -64,9 +64,9 @@ namespace BetterPaint.UI {
 
 		public Texture2D GetPaintTexture( BetterPaintMod mymod, int item_type ) {
 			if( item_type == mymod.ItemType<ColorCartridgeItem>() ) {
-				return ColorCartridgeItem.CartridgeTex;
+				return ColorCartridgeItem.ColorCartridgeTex;
 			} else if( item_type == mymod.ItemType<GlowCartridgeItem>() ) {
-				return GlowCartridgeItem.CartridgeTex;
+				return GlowCartridgeItem.GlowCartridgeTex;
 			} else if( ItemIdentityHelpers.Paints.Item2.Contains( item_type ) ) {
 				return Main.itemTexture[item_type];
 			} else {
@@ -74,12 +74,15 @@ namespace BetterPaint.UI {
 			}
 		}
 
-		public Texture2D GetPaintOverlayTexture( BetterPaintMod mymod, int item_type ) {
+		public Texture2D GetPaintOverlayTexture( BetterPaintMod mymod, int item_type, out bool has_glow ) {
 			if( item_type == mymod.ItemType<ColorCartridgeItem>() ) {
-				return ColorCartridgeItem.OverlayTex;
+				has_glow = false;
+				return ColorCartridgeItem.ColorOverlayTex;
 			} else if( item_type == mymod.ItemType<GlowCartridgeItem>() ) {
-				return GlowCartridgeItem.OverlayTex;
+				has_glow = true;
+				return GlowCartridgeItem.ColorOverlayTex;
 			} else if( ItemIdentityHelpers.Paints.Item2.Contains( item_type ) ) {
+				has_glow = false;
 				return null;
 			} else {
 				throw new NotImplementedException();
@@ -90,8 +93,9 @@ namespace BetterPaint.UI {
 		////////////////
 
 		public Rectangle DrawColorIcon( BetterPaintMod mymod, SpriteBatch sb, int item_type, Color color, float amount_percent, int stack, int x, int y, double palette_angle, double angle_step, bool is_selected ) {
+			bool has_glow;
 			Texture2D cart_tex = this.GetPaintTexture( mymod, item_type );
-			Texture2D over_tex = this.GetPaintOverlayTexture( mymod, item_type );
+			Texture2D over_tex = this.GetPaintOverlayTexture( mymod, item_type, out has_glow );
 
 			bool is_hover = this.IsHoveringIcon( palette_angle, angle_step );
 
@@ -101,12 +105,13 @@ namespace BetterPaint.UI {
 
 			sb.Draw( cart_tex, rect, Color.White * color_mul );
 			if( over_tex != null ) {
-				sb.Draw( over_tex, rect, color * color_mul );
+				sb.Draw( over_tex, rect, (has_glow ? color : color * color_mul) );
 			}
 
 			if( is_hover ) {
 				Color text_color = ColorCartridgeItem.GetCapacityColor( amount_percent );
-				Color label_color = Color.White * PaintBlasterUI.HoveredScale;
+				Color label_color = has_glow ? Color.GreenYellow * PaintBlasterUI.HoveredScale
+					: Color.White * PaintBlasterUI.HoveredScale;
 				Color bg_color = Color.Black * PaintBlasterUI.HoveredScale;
 
 				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, "Capacity:", Main.mouseX, Main.mouseY-16, label_color, bg_color, default( Vector2 ), 1f );
