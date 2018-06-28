@@ -84,16 +84,16 @@ namespace BetterPaint.Painting {
 			Color flattened = XnaColorHelpers.FlattenColor( Color.White, color );
 			Color env_color = Lighting.GetColor( tile_x, tile_y, flattened );
 
-			float lit_scale = (float)this.GetGlowAt( tile_x, tile_y ) / 255f;
+			float lit_percent = (float)this.GetGlowAt( tile_x, tile_y ) / 255f;
 
-			if( lit_scale > 0 ) {
+			if( lit_percent > 0 ) {
 				float r_scale = (float)color.R / 255f;
 				float g_scale = (float)color.G / 255f;
 				float b_scale = (float)color.B / 255f;
 
-				int r = env_color.R + (int)( ( 255 - env_color.R ) * r_scale );
-				int g = env_color.G + (int)( ( 255 - env_color.G ) * g_scale );
-				int b = env_color.B + (int)( ( 255 - env_color.B ) * b_scale );
+				int r = env_color.R + (int)( (float)( 255 - env_color.R ) * r_scale * lit_percent );
+				int g = env_color.G + (int)( (float)( 255 - env_color.G ) * g_scale * lit_percent );
+				int b = env_color.B + (int)( (float)( 255 - env_color.B ) * b_scale * lit_percent );
 
 				computed = new Color( r, g, b );
 			} else {

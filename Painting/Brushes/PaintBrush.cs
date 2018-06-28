@@ -1,7 +1,7 @@
 ﻿using HamstarHelpers.XnaHelpers;
 using Microsoft.Xna.Framework;
 using System;
-using Terraria;
+
 
 namespace BetterPaint.Painting.Brushes {
 	public enum PaintLayerType : int {

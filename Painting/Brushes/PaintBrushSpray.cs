@@ -52,7 +52,7 @@ namespace BetterPaint.Painting.Brushes {
 			byte old_glow;
 
 			Color blended_color = PaintBrush.GetBlendedColor( layer, color, dist_pressure_percent, tile_x, tile_y, out old_color );
-			byte blended_glow = PaintBrush.GetBlendedGlow( layer, glow, pressure_percent, tile_x, tile_y, out old_glow );
+			byte blended_glow = PaintBrush.GetBlendedGlow( layer, glow, dist_pressure_percent, tile_x, tile_y, out old_glow );
 
 			layer.SetRawColorAt( blended_color, tile_x, tile_y );
 			layer.SetGlowAt( blended_glow, tile_x, tile_y );

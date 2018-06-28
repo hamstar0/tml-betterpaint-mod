@@ -10,8 +10,13 @@ v2
 -	@Implement URL parsing from inbox messages
 -	Add auto cartridge switch sound effect
 -	Fix dust spew
--	Experiment with glows having additive opacity
+-	Fix popup UI text layering
+-	Prevent opening UI when inventory open
+v1.3.0
+-	Fix glow paint overlay in UI
 
+-	Set colors to internally store intensity in alpha channel only
+-	Fix minimap
 v1.2.1
 -	Fix cartridge % indicator for paint buckets (use max stack size)
 -	Add glow cartridge sprite LED
