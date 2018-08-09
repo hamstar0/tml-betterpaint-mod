@@ -1,4 +1,4 @@
-﻿using HamstarHelpers.DebugHelpers;
+﻿using HamstarHelpers.Helpers.DebugHelpers;
 using HamstarHelpers.Services.Promises;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -31,7 +31,7 @@ namespace BetterPaint.Painting {
 
 		////////////////
 		
-		public void Load( BetterPaintMod mymod, TagCompound tags, string prefix ) {
+		internal void Load( BetterPaintMod mymod, TagCompound tags, string prefix ) {
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
 			this.Colors.Clear();
@@ -82,7 +82,7 @@ namespace BetterPaint.Painting {
 		}
 
 
-		public void Save( TagCompound tags, string prefix ) {
+		internal void Save( TagCompound tags, string prefix ) {
 			int[] clr_x_arr = this.Colors.Keys.Select( i => (int)i ).ToArray();
 			int[] glow_x_arr = this.Glows.Keys.Select( i => (int)i ).ToArray();
 

@@ -1,5 +1,6 @@
 ﻿using BetterPaint.Painting.Brushes;
 using HamstarHelpers.Components.Network;
+using HamstarHelpers.Components.Network.Data;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -32,7 +33,7 @@ namespace BetterPaint.NetProtocols {
 
 		////////////////
 
-		public PaintStrokeProtocol() { }
+		private PaintStrokeProtocol( PacketProtocolDataConstructorLock ctor_lock ) { }
 
 		private PaintStrokeProtocol( PaintLayerType layer, PaintBrushType brush_type, Color color, byte glow,
 				PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
@@ -48,7 +49,8 @@ namespace BetterPaint.NetProtocols {
 
 		////////////////
 
-		public override void SetServerDefaults() { }
+		protected override void SetServerDefaults() { }
+
 
 		////////////////
 

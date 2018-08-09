@@ -1,8 +1,8 @@
 ﻿using BetterPaint.Items;
 using BetterPaint.Painting;
-using HamstarHelpers.DebugHelpers;
-using HamstarHelpers.HudHelpers;
-using HamstarHelpers.ItemHelpers;
+using HamstarHelpers.Helpers.DebugHelpers;
+using HamstarHelpers.Helpers.HudHelpers;
+using HamstarHelpers.Helpers.ItemHelpers;
 using HamstarHelpers.Services.AnimatedColor;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

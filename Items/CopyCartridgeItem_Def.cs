@@ -1,5 +1,5 @@
 ﻿using BetterPaint.Tiles;
-using HamstarHelpers.ItemHelpers;
+using HamstarHelpers.Helpers.ItemHelpers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

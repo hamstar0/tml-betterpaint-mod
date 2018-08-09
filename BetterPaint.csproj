@@ -34,6 +34,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Helpers\HamstarHelpers\bin\Release\HamstarHelpers.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\Reference\tModLoader Patcher\references\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -55,6 +58,7 @@
   <ItemGroup>
     <Compile Include="API.cs" />
     <Compile Include="API_Call.cs" />
+    <Compile Include="BetterPaintMod_Meta.cs" />
     <Compile Include="BetterPaintNPC.cs" />
     <Compile Include="BetterPaintWorld.cs" />
     <Compile Include="Commands\ClearAllPaintCommand.cs" />

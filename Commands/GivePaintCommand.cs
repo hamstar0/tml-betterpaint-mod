@@ -1,5 +1,5 @@
-﻿using HamstarHelpers.DebugHelpers;
-using HamstarHelpers.ItemHelpers;
+﻿using HamstarHelpers.Helpers.DebugHelpers;
+using HamstarHelpers.Helpers.ItemHelpers;
 using Microsoft.Xna.Framework;
 using BetterPaint.Items;
 using System;
@@ -12,14 +12,14 @@ namespace BetterPaint.Commands {
 	class GivePaintCommand : ModCommand {
 		public override CommandType Type {
 			get {
-				if( Main.netMode == 0 ) {
+				if( Main.netMode == 0 && !Main.dedServ ) {
 					return CommandType.World;
 				}
 				return CommandType.Console;
 			}
 		}
 		public override string Command { get { return "paintgive"; } }
-		public override string Usage { get { return "/paintgive"; } }
+		public override string Usage { get { return "/"+this.Command; } }
 		public override string Description { get { return "Gives player a random-hued color cartridge."; } }
 
 

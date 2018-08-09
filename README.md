@@ -1,4 +1,5 @@
-# tml-betterpaint-mod
+# Better Paint
+
 Improves the paint function of the game by adding a spray applicator, letting you paint with smooth, fast, full-RGB color across your world. Configurable.
 
 Additional credits:

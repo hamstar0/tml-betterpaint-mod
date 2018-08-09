@@ -1,6 +1,6 @@
 ﻿using BetterPaint.NetProtocols;
 using BetterPaint.Painting.Brushes;
-using HamstarHelpers.TileHelpers;
+using HamstarHelpers.Helpers.TileHelpers;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;

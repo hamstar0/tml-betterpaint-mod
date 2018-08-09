@@ -1,9 +1,9 @@
 ﻿using BetterPaint.Painting;
 using BetterPaint.Painting.Brushes;
-using HamstarHelpers.DebugHelpers;
-using HamstarHelpers.PlayerHelpers;
+using HamstarHelpers.Helpers.DebugHelpers;
+using HamstarHelpers.Helpers.PlayerHelpers;
+using HamstarHelpers.Helpers.UIHelpers;
 using HamstarHelpers.Services.Timers;
-using HamstarHelpers.UIHelpers;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;

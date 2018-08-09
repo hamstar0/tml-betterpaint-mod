@@ -12,6 +12,7 @@ v2
 -	Fix dust spew
 -	Fix popup UI text layering
 -	Prevent opening UI when inventory open
+-	Implement illuminant paint
 v1.3.0
 -	Fix glow paint overlay in UI
 

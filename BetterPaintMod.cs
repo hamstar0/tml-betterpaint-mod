@@ -1,42 +1,20 @@
 ﻿using BetterPaint.Items;
 using BetterPaint.Painting.Brushes;
 using HamstarHelpers.Components.Config;
-using HamstarHelpers.DebugHelpers;
+using HamstarHelpers.Helpers.DebugHelpers;
 using HamstarHelpers.Services.Messages;
 using HamstarHelpers.Services.Promises;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 
 
 namespace BetterPaint {
-    public class BetterPaintMod : Mod {
+    partial class BetterPaintMod : Mod {
 		public static BetterPaintMod Instance { get; private set; }
-
-		public static string GithubUserName { get { return "hamstar0"; } }
-		public static string GithubProjectName { get { return "tml-betterpaint-mod"; } }
-
-		public static string ConfigFileRelativePath {
-			get { return ConfigurationDataBase.RelativePath + Path.DirectorySeparatorChar + BetterPaintConfigData.ConfigFileName; }
-		}
-		public static void ReloadConfigFromFile() {
-			if( Main.netMode != 0 ) {
-				throw new Exception( "Cannot reload configs outside of single player." );
-			}
-			if( !BetterPaintMod.Instance.ConfigJson.LoadFile() ) {
-				BetterPaintMod.Instance.ConfigJson.SaveFile();
-			}
-		}
-		public static void ResetConfigFromDefaults() {
-			if( Main.netMode != 0 ) {
-				throw new Exception( "Cannot reset to default configs outside of single player." );
-			}
-			BetterPaintMod.Instance.ConfigJson.SetData( new BetterPaintConfigData() );
-			BetterPaintMod.Instance.ConfigJson.SaveFile();
-		}
+		
 
 
 		////////////////
