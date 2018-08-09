@@ -8,8 +8,8 @@ using Terraria.ModLoader;
 namespace BetterPaint {
 	partial class BetterPaintPlayer : ModPlayer {
 		public override void OnEnterWorld( Player player ) {
-			if( player.whoAmI == Main.myPlayer ) { return; }
-			if( this.player.whoAmI == Main.myPlayer ) { return; }
+			if( player.whoAmI != Main.myPlayer ) { return; }
+			if( this.player.whoAmI != Main.myPlayer ) { return; }
 
 			var mymod = (BetterPaintMod)this.mod;
 

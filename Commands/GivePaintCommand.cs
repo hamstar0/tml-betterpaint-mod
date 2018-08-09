@@ -18,7 +18,7 @@ namespace BetterPaint.Commands {
 				return CommandType.Console;
 			}
 		}
-		public override string Command { get { return "paintgive"; } }
+		public override string Command { get { return "bp-paint-give"; } }
 		public override string Usage { get { return "/"+this.Command; } }
 		public override string Description { get { return "Gives player a random-hued color cartridge."; } }
 

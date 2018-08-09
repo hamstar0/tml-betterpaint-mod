@@ -12,9 +12,9 @@ namespace BetterPaint.Commands {
 				return CommandType.Console;
 			}
 		}
-		public override string Command { get { return "paintclearall"; } }
-		public override string Usage { get { return "/paintclearall"; } }
-		public override string Description { get { return "Gives player a random-hued color cartridge."; } }
+		public override string Command { get { return "bp-clear-all"; } }
+		public override string Usage { get { return "/"+this.Command; } }
+		public override string Description { get { return "Clears all paint from the map."; } }
 
 
 		////////////////
