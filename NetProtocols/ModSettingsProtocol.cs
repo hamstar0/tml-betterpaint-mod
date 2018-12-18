@@ -3,21 +3,21 @@ using HamstarHelpers.Components.Network.Data;
 
 
 namespace BetterPaint.NetProtocols {
-	class ModSettingsProtocol : PacketProtocol {
+	class ModSettingsProtocol : PacketProtocolRequestToServer {
 		public BetterPaintConfigData Data;
 
 
 		////////////////
 
-		private ModSettingsProtocol( PacketProtocolDataConstructorLock ctor_lock ) { }
+		protected ModSettingsProtocol( PacketProtocolDataConstructorLock ctor_lock ) : base( ctor_lock ) { }
 
-		protected override void SetServerDefaults() {
+		protected override void InitializeServerSendData( int to_who ) {
 			this.Data = BetterPaintMod.Instance.Config;
 		}
 
 		////////////////
 
-		protected override void ReceiveWithClient() {
+		protected override void ReceiveReply() {
 			BetterPaintMod.Instance.ConfigJson.SetData( this.Data );
 		}
 	}

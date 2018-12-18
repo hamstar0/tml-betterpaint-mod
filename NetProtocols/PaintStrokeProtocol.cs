@@ -7,12 +7,53 @@ using Terraria;
 
 
 namespace BetterPaint.NetProtocols {
-	class PaintStrokeProtocol : PacketProtocol {
+	class PaintStrokeProtocol : PacketProtocolSentToEither {
+		protected class MyFactory : Factory<PaintStrokeProtocol> {
+			public int Layer = (int)PaintLayerType.Foreground;
+			public int BrushType = (int)PaintBrushType.Stream;
+			public Color MyColor = Color.White;
+			public byte Glow = 0;
+			public int BrushSize = (int)PaintBrushSize.Small;
+			public float PressurePercent = 1;
+			public int RandSeed = -1;
+			public int WorldX = 0;
+			public int WorldY = 0;
+
+			public MyFactory( PaintLayerType layer, PaintBrushType brush_type, Color color, byte glow,
+				PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+				this.Layer = (int)layer;
+				this.BrushType = (int)brush_type;
+				this.MyColor = color;
+				this.Glow = glow;
+				this.BrushSize = (int)brush_size;
+				this.PressurePercent = pressure_percent;
+				this.WorldX = world_x;
+				this.WorldY = world_y;
+			}
+
+			protected override void Initialize( PaintStrokeProtocol data ) {
+				data.Layer = this.Layer;
+				data.BrushType = this.BrushType;
+				data.MyColor = this.MyColor;
+				data.Glow = this.Glow;
+				data.BrushSize = this.BrushSize;
+				data.PressurePercent = this.PressurePercent;
+				data.WorldX = this.WorldX;
+				data.WorldY = this.WorldY;
+			}
+		}
+
+
+
+		////////////////
+
 		public static void SyncToAll( PaintLayerType layer, PaintBrushType brush_type, Color color, byte glow,
 				PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
 			if( Main.netMode != 1 ) { throw new Exception( "Not client" ); }
 
-			var protocol = new PaintStrokeProtocol( layer, brush_type, color, glow, brush_size, pressure_percent, rand_seed, world_x, world_y );
+			var factory = new MyFactory( layer, brush_type, color, glow, brush_size, pressure_percent, rand_seed, world_x, world_y );
+			PaintStrokeProtocol protocol = factory.Create();
+
 			protocol.SendToServer( true );
 		}
 
@@ -33,23 +74,11 @@ namespace BetterPaint.NetProtocols {
 
 		////////////////
 
-		private PaintStrokeProtocol( PacketProtocolDataConstructorLock ctor_lock ) { }
-
-		private PaintStrokeProtocol( PaintLayerType layer, PaintBrushType brush_type, Color color, byte glow,
-				PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
-			this.Layer = (int)layer;
-			this.BrushType = (int)brush_type;
-			this.MyColor = color;
-			this.Glow = glow;
-			this.BrushSize = (int)brush_size;
-			this.PressurePercent = pressure_percent;
-			this.WorldX = world_x;
-			this.WorldY = world_y;
-		}
+		protected PaintStrokeProtocol( PacketProtocolDataConstructorLock ctor_lock ) : base( ctor_lock ) { }
 
 		////////////////
 
-		protected override void SetServerDefaults() { }
+		protected override void SetServerDefaults( int to_who ) { }
 
 
 		////////////////
@@ -65,11 +94,11 @@ namespace BetterPaint.NetProtocols {
 		}
 
 
-		protected override void ReceiveWithServer( int from_who ) {
+		protected override void ReceiveOnServer( int from_who ) {
 			this.Receive();
 		}
 
-		protected override void ReceiveWithClient() {
+		protected override void ReceiveOnClient() {
 			this.Receive();
 		}
 	}
