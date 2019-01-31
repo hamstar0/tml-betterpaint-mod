@@ -8,73 +8,73 @@ using Terraria;
 
 namespace BetterPaint.UI {
 	partial class PaintBlasterUI {
-		private bool CheckUISettingsInteractions( Rectangle layer_rect, Rectangle size_rect, Rectangle copy_rect, Rectangle press_rect ) {
+		private bool CheckUISettingsInteractions( Rectangle layerRect, Rectangle sizeRect, Rectangle copyRect, Rectangle pressRect ) {
 			Player player = Main.LocalPlayer;
-			bool has_interacted = false;
+			bool hasInteracted = false;
 
-			if( layer_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+			if( layerRect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CycleLayer();
-				has_interacted = true;
+				hasInteracted = true;
 			} else
-			if( size_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+			if( sizeRect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CycleBrushSize();
-				has_interacted = true;
+				hasInteracted = true;
 			} else
-			if( copy_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+			if( copyRect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.IsCopying = !this.IsCopying;
-				has_interacted = true;
+				hasInteracted = true;
 			} else
-			if( press_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+			if( pressRect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CyclePressure();
-				has_interacted = true;
+				hasInteracted = true;
 			}
 
-			return has_interacted;
+			return hasInteracted;
 		}
 
 
-		private bool CheckUIBrushInteractions( Rectangle brush_rect, Rectangle spray_rect, Rectangle bucket_rect, Rectangle scrape_rect ) {
+		private bool CheckUIBrushInteractions( Rectangle brushRect, Rectangle sprayRect, Rectangle bucketRect, Rectangle scrapeRect ) {
 			Player player = Main.LocalPlayer;
-			bool has_interacted = false;
+			bool hasInteracted = false;
 
-			if( this.CurrentBrush != PaintBrushType.Stream && brush_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+			if( this.CurrentBrush != PaintBrushType.Stream && brushRect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CurrentBrush = PaintBrushType.Stream;
-				has_interacted = true;
+				hasInteracted = true;
 			} else
-			if( this.CurrentBrush != PaintBrushType.Spray && spray_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+			if( this.CurrentBrush != PaintBrushType.Spray && sprayRect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CurrentBrush = PaintBrushType.Spray;
-				has_interacted = true;
+				hasInteracted = true;
 			} else
-			if( this.CurrentBrush != PaintBrushType.Spatter && bucket_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+			if( this.CurrentBrush != PaintBrushType.Spatter && bucketRect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CurrentBrush = PaintBrushType.Spatter;
-				has_interacted = true;
+				hasInteracted = true;
 			} else
-			if( this.CurrentBrush != PaintBrushType.Erase && scrape_rect.Contains( Main.mouseX, Main.mouseY ) ) {
+			if( this.CurrentBrush != PaintBrushType.Erase && scrapeRect.Contains( Main.mouseX, Main.mouseY ) ) {
 				this.CurrentBrush = PaintBrushType.Erase;
-				has_interacted = true;
+				hasInteracted = true;
 			}
 
-			return has_interacted;
+			return hasInteracted;
 		}
 
 
-		private bool CheckUIColorInteractions( IDictionary<int, float> palette_angles ) {
-			int inv_idx = -1;
-			bool has_interacted = false;
+		private bool CheckUIColorInteractions( IDictionary<int, float> paletteAngles ) {
+			int invIdx = -1;
+			bool hasInteracted = false;
 			
-			foreach( var kv in palette_angles ) {
-				if( this.IsHoveringIcon( kv.Value, 360 / palette_angles.Count ) ) {
-					inv_idx = kv.Key;
+			foreach( var kv in paletteAngles ) {
+				if( this.IsHoveringIcon( kv.Value, 360 / paletteAngles.Count ) ) {
+					invIdx = kv.Key;
 					break;
 				}
 			}
 			
-			if( inv_idx != -1 ) {
-				has_interacted = true;
-				this.CurrentPaintItemInventoryIndex = inv_idx;
+			if( invIdx != -1 ) {
+				hasInteracted = true;
+				this.CurrentPaintItemInventoryIndex = invIdx;
 			}
 
-			return has_interacted;
+			return hasInteracted;
 		}
 
 

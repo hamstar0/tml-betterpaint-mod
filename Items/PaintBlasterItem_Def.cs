@@ -94,9 +94,9 @@ namespace BetterPaint.Items {
 
 			if( this.IsCopying ) {
 				var set = new HashSet<int> { mymod.ItemType<CopyCartridgeItem>() };
-				var copy_cart_item = PlayerItemFinderHelpers.FindFirstOfItemFor( player, set );
+				var copyCartItem = PlayerItemFinderHelpers.FindFirstOfItemFor( player, set );
 
-				if( copy_cart_item == null ) {
+				if( copyCartItem == null ) {
 					Main.NewText( "Copy Cartridges needed.", Color.Red );
 					this.IsCopying = false;
 				}
@@ -118,14 +118,14 @@ namespace BetterPaint.Items {
 				return null;
 			}
 
-			Item paint_item = Main.LocalPlayer.inventory[ this.CurrentPaintItemInventoryIndex ];
+			Item paintItem = Main.LocalPlayer.inventory[ this.CurrentPaintItemInventoryIndex ];
 
-			if( !PaintHelpers.IsPaint(paint_item) ) {
+			if( !PaintHelpers.IsPaint(paintItem) ) {
 				this.CurrentPaintItemInventoryIndex = -1;
 				return null;
 			}
 
-			return paint_item;
+			return paintItem;
 		}
 	}
 }

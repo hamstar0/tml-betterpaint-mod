@@ -10,11 +10,11 @@ using Terraria.ModLoader;
 namespace BetterPaint.Items {
 	partial class ColorCartridgeItem : ModItem {
 		public override void AddRecipes() {
-			var paint_recipe = new ColorCartridgePaintRecipe( (BetterPaintMod)this.mod, this );
-			paint_recipe.AddRecipe();
+			var paintRecipe = new ColorCartridgePaintRecipe( (BetterPaintMod)this.mod, this );
+			paintRecipe.AddRecipe();
 
-			var blend_recipe = new ColorCartridgeBlendRecipe( (BetterPaintMod)this.mod, this );
-			blend_recipe.AddRecipe();
+			var blendRecipe = new ColorCartridgeBlendRecipe( (BetterPaintMod)this.mod, this );
+			blendRecipe.AddRecipe();
 		}
 	}
 
@@ -41,18 +41,18 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public override int ConsumeItem( int item_type, int num_required ) {
+		public override int ConsumeItem( int itemType, int numRequired ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var inv = Main.LocalPlayer.inventory;
-			int cart_type = mymod.ItemType<ColorCartridgeItem>();
+			int cartType = mymod.ItemType<ColorCartridgeItem>();
 
-			if( item_type != cart_type ) {	// Won't be invoked, but future-proofing won't hurt
-				return base.ConsumeItem( item_type, num_required );
+			if( itemType != cartType ) {	// Won't be invoked, but future-proofing won't hurt
+				return base.ConsumeItem( itemType, numRequired );
 			}
 
 			for( int i = 0; i < inv.Length; i++ ) {
 				if( inv[i] == null || inv[i].IsAir ) { continue; }
-				if( inv[i].type != cart_type ) { continue; }
+				if( inv[i].type != cartType ) { continue; }
 
 				if( this.First == null ) {
 					this.First = (ColorCartridgeItem)inv[i].modItem;
@@ -68,17 +68,17 @@ namespace BetterPaint.Items {
 				this.First = null;
 			}
 
-			return base.ConsumeItem( item_type, num_required );
+			return base.ConsumeItem( itemType, numRequired );
 		}
 
 
 		public override void OnCraft( Item item ) {
 			var mymod = (BetterPaintMod)this.mod;
 
-			int item2_idx = ItemHelpers.CreateItem( Main.LocalPlayer.position, item.type, 1, ColorCartridgeItem.Width, ColorCartridgeItem.Height );
+			int item2Idx = ItemHelpers.CreateItem( Main.LocalPlayer.position, item.type, 1, ColorCartridgeItem.Width, ColorCartridgeItem.Height );
 
 			var mycart1 = (ColorCartridgeItem)item.modItem;
-			var mycart2 = (ColorCartridgeItem)Main.item[ item2_idx ].modItem;
+			var mycart2 = (ColorCartridgeItem)Main.item[ item2Idx ].modItem;
 
 			float volume = (this.First.Quantity + this.Second.Quantity) / 2f;
 			float shift = this.Second.Quantity / (this.First.Quantity + this.Second.Quantity);
@@ -116,14 +116,14 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public override int ConsumeItem( int item_type, int num_required ) {
-			if( !ItemIdentityHelpers.Paints.Item2.Contains( item_type ) ) {   // Not paint
-				return base.ConsumeItem( item_type, num_required );
+		public override int ConsumeItem( int itemType, int numRequired ) {
+			if( !ItemIdentityHelpers.Paints.Item2.Contains( itemType ) ) {   // Not paint
+				return base.ConsumeItem( itemType, numRequired );
 			}
 
 			var mymod = (BetterPaintMod)this.mod;
 			var inv = Main.LocalPlayer.inventory;
-			int max_paints = mymod.Config.PaintRecipePaints;
+			int maxPaints = mymod.Config.PaintRecipePaints;
 			ISet<int> paints = ItemIdentityHelpers.Paints.Item2;
 			int count = 0;
 
@@ -136,29 +136,29 @@ namespace BetterPaint.Items {
 				if( inv[i] == null || inv[i].IsAir ) { continue; }
 
 				if( paints.Contains( inv[i].type ) ) {
-					Color paint_clr = WorldGen.paintColor( inv[i].paint );
+					Color paintClr = WorldGen.paintColor( inv[i].paint );
 					int stack = inv[i].stack;
 
 					count += stack;
 
-					if( count >= max_paints ) {
-						stack -= count - max_paints;
+					if( count >= maxPaints ) {
+						stack -= count - maxPaints;
 					}
 
-					r += paint_clr.R * stack;
-					g += paint_clr.G * stack;
-					b += paint_clr.B * stack;
-					a += paint_clr.A * stack;
+					r += paintClr.R * stack;
+					g += paintClr.G * stack;
+					b += paintClr.B * stack;
+					a += paintClr.A * stack;
 
-					if( count >= max_paints ) {
+					if( count >= maxPaints ) {
 						break;
 					}
 				}
 			}
 
-			this.CraftColor = new Color( r / max_paints, g / max_paints, b / max_paints );
+			this.CraftColor = new Color( r / maxPaints, g / maxPaints, b / maxPaints );
 
-			return base.ConsumeItem( item_type, num_required );
+			return base.ConsumeItem( itemType, numRequired );
 		}
 
 

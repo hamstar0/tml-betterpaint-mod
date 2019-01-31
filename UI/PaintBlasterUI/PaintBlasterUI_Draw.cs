@@ -21,32 +21,32 @@ namespace BetterPaint.UI {
 		////////////////
 
 		public void DrawUI( BetterPaintMod mymod, SpriteBatch sb ) {
-			Rectangle stream_rect, spray_rect, bucket_rect, scrape_rect;
-			Rectangle bg_rect, size_rect, copy_rect, press_rect;
+			Rectangle streamRect, sprayRect, bucketRect, scrapeRect;
+			Rectangle bgRect, sizeRect, copyRect, pressRect;
 			int x = Main.screenWidth / 2;
 			int y = Main.screenHeight / 2;
 
 			sb.Draw( Main.magicPixel, new Rectangle( x, y, 160, 160 ), null, Color.LightPink * 0.3f, (float)( 45d * DotNetHelpers.RadDeg ), new Vector2( 0.5f, 512f ), SpriteEffects.None, 1f );
 			HudHelpers.DrawBorderedRect( sb, Color.DarkOliveGreen * 0.5f, Color.OliveDrab * 0.5f, new Rectangle( x - 48, y - 48, 96, 96 ), 4 );
 
-			this.DrawBrushes( sb, out stream_rect, out spray_rect, out bucket_rect, out scrape_rect );
-			this.DrawOptionLayer( sb, x, y, out bg_rect );
-			this.DrawOptionSize( sb, x, y, out size_rect );
-			this.DrawOptionCopy( sb, x, y, out copy_rect );
-			this.DrawOptionPressure( sb, x, y, out press_rect );
-			IDictionary<int, float> palette_angles = this.DrawColorPalette( mymod, sb );
+			this.DrawBrushes( sb, out streamRect, out sprayRect, out bucketRect, out scrapeRect );
+			this.DrawOptionLayer( sb, x, y, out bgRect );
+			this.DrawOptionSize( sb, x, y, out sizeRect );
+			this.DrawOptionCopy( sb, x, y, out copyRect );
+			this.DrawOptionPressure( sb, x, y, out pressRect );
+			IDictionary<int, float> paletteAngles = this.DrawColorPalette( mymod, sb );
 
 			if( Main.mouseLeft ) {
 				if( !this.IsInteractingWithUI ) {
 					this.IsInteractingWithUI = true;
 
-					bool has_interacted = false;
+					bool hasInteracted = false;
 
-					has_interacted = this.CheckUISettingsInteractions( bg_rect, size_rect, copy_rect, press_rect );
-					has_interacted |= this.CheckUIBrushInteractions( stream_rect, spray_rect, bucket_rect, scrape_rect );
-					has_interacted |= this.CheckUIColorInteractions( palette_angles );
+					hasInteracted = this.CheckUISettingsInteractions( bgRect, sizeRect, copyRect, pressRect );
+					hasInteracted |= this.CheckUIBrushInteractions( streamRect, sprayRect, bucketRect, scrapeRect );
+					hasInteracted |= this.CheckUIColorInteractions( paletteAngles );
 
-					if( has_interacted ) {
+					if( hasInteracted ) {
 						Main.PlaySound( SoundID.MenuTick );
 					}
 				}
@@ -58,10 +58,10 @@ namespace BetterPaint.UI {
 
 		public void DrawScreen( BetterPaintMod mymod, SpriteBatch sb ) {
 			if( this.IsCopying ) {
-				Texture2D copy_tex = Main.itemTexture[ItemID.EmptyDropper];
-				var mouse_pos = new Vector2( Main.mouseX, Main.mouseY );
+				Texture2D copyTex = Main.itemTexture[ItemID.EmptyDropper];
+				var mousePos = new Vector2( Main.mouseX, Main.mouseY );
 
-				sb.Draw( copy_tex, mouse_pos, Color.White );
+				sb.Draw( copyTex, mousePos, Color.White );
 			}
 		}
 	}

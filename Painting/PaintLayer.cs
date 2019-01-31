@@ -38,43 +38,43 @@ namespace BetterPaint.Painting {
 			this.Glows.Clear();
 
 			if( tags.ContainsKey( prefix + "_x" ) ) {
-				int[] fg_x = tags.GetIntArray( prefix + "_x" );
+				int[] fgX = tags.GetIntArray( prefix + "_x" );
 
-				for( int i = 0; i < fg_x.Length; i++ ) {
-					ushort tile_x = (ushort)fg_x[i];
-					int[] fg_y = tags.GetIntArray( prefix + "_" + tile_x + "_y" );
+				for( int i = 0; i < fgX.Length; i++ ) {
+					ushort tileX = (ushort)fgX[i];
+					int[] fgY = tags.GetIntArray( prefix + "_" + tileX + "_y" );
 
-					for( int j = 0; j < fg_y.Length; j++ ) {
-						ushort tile_y = (ushort)fg_y[j];
+					for( int j = 0; j < fgY.Length; j++ ) {
+						ushort tileY = (ushort)fgY[j];
 
-						byte[] clr_arr = tags.GetByteArray( prefix + "_" + tile_x + "_" + tile_y );
-						Color color = new Color( clr_arr[0], clr_arr[1], clr_arr[2], clr_arr[3] );
+						byte[] clrArr = tags.GetByteArray( prefix + "_" + tileX + "_" + tileY );
+						Color color = new Color( clrArr[0], clrArr[1], clrArr[2], clrArr[3] );
 
-						Tile tile = Main.tile[tile_x, tile_y];
+						Tile tile = Main.tile[tileX, tileY];
 
 						if( this.CanPaintAt(tile) ) {
-							this.SetRawColorAt( color, tile_x, tile_y );
+							this.SetRawColorAt( color, tileX, tileY );
 						}
 					}
 				}
 			}
 
 			if( tags.ContainsKey( prefix + "_g_x" ) ) {
-				int[] fg_x = tags.GetIntArray( prefix + "_g_x" );
+				int[] fgX = tags.GetIntArray( prefix + "_g_x" );
 
-				for( int i = 0; i < fg_x.Length; i++ ) {
-					ushort tile_x = (ushort)fg_x[i];
-					int[] fg_y = tags.GetIntArray( prefix + "_g_" + tile_x + "_y" );
+				for( int i = 0; i < fgX.Length; i++ ) {
+					ushort tileX = (ushort)fgX[i];
+					int[] fgY = tags.GetIntArray( prefix + "_g_" + tileX + "_y" );
 
-					for( int j = 0; j < fg_y.Length; j++ ) {
-						ushort tile_y = (ushort)fg_y[j];
+					for( int j = 0; j < fgY.Length; j++ ) {
+						ushort tileY = (ushort)fgY[j];
 
-						byte glow = tags.GetByte( prefix + "_g_" + tile_x + "_" + tile_y );
+						byte glow = tags.GetByte( prefix + "_g_" + tileX + "_" + tileY );
 
-						Tile tile = Main.tile[tile_x, tile_y];
+						Tile tile = Main.tile[tileX, tileY];
 
 						if( this.CanPaintAt( tile ) ) {
-							this.SetGlowAt( glow, tile_x, tile_y );
+							this.SetGlowAt( glow, tileX, tileY );
 						}
 					}
 				}
@@ -83,41 +83,41 @@ namespace BetterPaint.Painting {
 
 
 		internal void Save( TagCompound tags, string prefix ) {
-			int[] clr_x_arr = this.Colors.Keys.Select( i => (int)i ).ToArray();
-			int[] glow_x_arr = this.Glows.Keys.Select( i => (int)i ).ToArray();
+			int[] clrArrX = this.Colors.Keys.Select( i => (int)i ).ToArray();
+			int[] glowArrX = this.Glows.Keys.Select( i => (int)i ).ToArray();
 
-			tags.Set( prefix + "_x", clr_x_arr );
+			tags.Set( prefix + "_x", clrArrX );
 
 			foreach( var kv in this.Colors ) {
-				ushort tile_x = kv.Key;
-				IDictionary<ushort, Color> y_col = kv.Value;
-				int[] y_arr = y_col.Keys.Select( i => (int)i ).ToArray();
+				ushort tileX = kv.Key;
+				IDictionary<ushort, Color> yCol = kv.Value;
+				int[] yArr = yCol.Keys.Select( i => (int)i ).ToArray();
 
-				tags.Set( prefix + "_" + tile_x + "_y", y_arr );
+				tags.Set( prefix + "_" + tileX + "_y", yArr );
 
-				foreach( var kv2 in y_col ) {
-					ushort tile_y = kv2.Key;
+				foreach( var kv2 in yCol ) {
+					ushort tileY = kv2.Key;
 					Color clr = kv2.Value;
-					byte[] clr_bytes = new byte[] { clr.R, clr.G, clr.B, clr.A };
+					byte[] clrBytes = new byte[] { clr.R, clr.G, clr.B, clr.A };
 
-					tags.Set( prefix + "_" + tile_x + "_" + tile_y, clr_bytes );
+					tags.Set( prefix + "_" + tileX + "_" + tileY, clrBytes );
 				}
 			}
 			
-			tags.Set( prefix + "_g_x", glow_x_arr );
+			tags.Set( prefix + "_g_x", glowArrX );
 
 			foreach( var kv in this.Glows ) {
-				ushort tile_x = kv.Key;
-				IDictionary<ushort, byte> y_col = kv.Value;
-				int[] y_arr = y_col.Keys.Select( i => (int)i ).ToArray();
+				ushort tileX = kv.Key;
+				IDictionary<ushort, byte> yCol = kv.Value;
+				int[] yArr = yCol.Keys.Select( i => (int)i ).ToArray();
 
-				tags.Set( prefix + "_g_" + tile_x + "_y", y_arr );
+				tags.Set( prefix + "_g_" + tileX + "_y", yArr );
 
-				foreach( var kv2 in y_col ) {
-					ushort tile_y = kv2.Key;
+				foreach( var kv2 in yCol ) {
+					ushort tileY = kv2.Key;
 					byte glow = kv2.Value;
 
-					tags.Set( prefix + "_g_" + tile_x + "_" + tile_y, glow );
+					tags.Set( prefix + "_g_" + tileX + "_" + tileY, glow );
 				}
 			}
 		}

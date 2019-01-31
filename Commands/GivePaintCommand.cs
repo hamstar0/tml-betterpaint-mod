@@ -27,22 +27,22 @@ namespace BetterPaint.Commands {
 
 		public override void Action( CommandCaller caller, string input, string[] args ) {
 			var mymod = (BetterPaintMod)this.mod;
-			int paint_type = this.mod.ItemType<ColorCartridgeItem>();
+			int paintType = this.mod.ItemType<ColorCartridgeItem>();
 
-			int item_idx = ItemHelpers.CreateItem( Main.LocalPlayer.position, paint_type, 1, ColorCartridgeItem.Width, ColorCartridgeItem.Height );
-			Item paint_item = Main.item[item_idx];
+			int itemIdx = ItemHelpers.CreateItem( Main.LocalPlayer.position, paintType, 1, ColorCartridgeItem.Width, ColorCartridgeItem.Height );
+			Item paintItem = Main.item[itemIdx];
 
-			if( paint_item == null || paint_item.IsAir ) {
+			if( paintItem == null || paintItem.IsAir ) {
 				throw new Exception( "Could not create cheaty paint." );
 			}
 
 			Func<byte> rand = () => (byte)Main.rand.Next( 0, 255 );
-			var rand_clr = new Color( rand(), rand(), rand() );
+			var randClr = new Color( rand(), rand(), rand() );
 
-			var myitem = (ColorCartridgeItem)paint_item.modItem;
-			myitem.SetPaint( rand_clr, mymod.Config.PaintCartridgeCapacity );
+			var myitem = (ColorCartridgeItem)paintItem.modItem;
+			myitem.SetPaint( randClr, mymod.Config.PaintCartridgeCapacity );
 			
-			caller.Reply( "Random color cartridge created: " + PaintHelpers.ColorString(rand_clr), rand_clr );
+			caller.Reply( "Random color cartridge created: " + PaintHelpers.ColorString(randClr), randClr );
 		}
 	}
 }

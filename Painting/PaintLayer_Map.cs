@@ -6,28 +6,28 @@ using Terraria.Map;
 
 namespace BetterPaint.Painting {
 	public abstract partial class PaintLayer {
-		public void SetMapColorAt( Color color, ushort tile_x, ushort tile_y ) {
-			MapTile map_tile = Main.Map[tile_x, tile_y];
+		public void SetMapColorAt( Color color, ushort tileX, ushort tileY ) {
+			MapTile mapTile = Main.Map[tileX, tileY];
 			//Color tile_color = MapHelper.GetMapTileXnaColor( ref map_tile );
 			//Color lerped_color = Color.Lerp( tile_color, color, (float)color.A / 255f );
 
-			map_tile.Color = HamstarHelpers.Helpers.MiscHelpers.PaintHelpers.GetNearestPaintType( color );
+			mapTile.Color = HamstarHelpers.Helpers.MiscHelpers.PaintHelpers.GetNearestPaintType( color );
 
-			Main.Map.SetTile( tile_x, tile_y, ref map_tile );
+			Main.Map.SetTile( tileX, tileY, ref mapTile );
 		}
 		
-		public void RemoveMapColorAt( ushort tile_x, ushort tile_y ) {
-			MapTile map_tile = Main.Map[tile_x, tile_y];
+		public void RemoveMapColorAt( ushort tileX, ushort tileY ) {
+			MapTile mapTile = Main.Map[tileX, tileY];
 
-			map_tile.Color = Main.tile[tile_x, tile_y].color();
+			mapTile.Color = Main.tile[tileX, tileY].color();
 
-			Main.Map.SetTile( tile_x, tile_y, ref map_tile );
+			Main.Map.SetTile( tileX, tileY, ref mapTile );
 		}
 
 
 		////////////////
 
-		private void RefreshTilesOnMap( GameTime game_time ) {
+		private void RefreshTilesOnMap( GameTime gameTime ) {
 			if( !BetterPaintMod.Instance.Config.ShowPaintOnMap ) { return; }
 
 			//if( LoadHelpers.IsWorldSafelyBeingPlayed() ) {

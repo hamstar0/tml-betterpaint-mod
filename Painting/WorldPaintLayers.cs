@@ -50,44 +50,44 @@ namespace BetterPaint.Painting {
 
 		////////////////
 
-		public float ApplyColorAt( BetterPaintMod mymod, PaintLayerType layer, PaintBrushType brush_type,
-				Color color, byte glow, PaintBrushSize brush_size, float pressure_precent, int world_x, int world_y ) {
+		public float ApplyColorAt( BetterPaintMod mymod, PaintLayerType layer, PaintBrushType brushType,
+				Color color, byte glow, PaintBrushSize brushSize, float pressurePrecent, int worldX, int worldY ) {
 			if( Main.netMode == 2 ) { throw new Exception( "No server." ); }
 			
-			int rand_seed = DateTime.Now.Millisecond;
-			float paints_used = this.ApplyColorAtNoSync( mymod, layer, brush_type, color, glow, brush_size, pressure_precent, rand_seed, world_x, world_y );
+			int randSeed = DateTime.Now.Millisecond;
+			float paintsUsed = this.ApplyColorAtNoSync( mymod, layer, brushType, color, glow, brushSize, pressurePrecent, randSeed, worldX, worldY );
 
 			if( Main.netMode == 1 ) {
-				PaintStrokeProtocol.SyncToAll( layer, brush_type, color, glow, brush_size, pressure_precent, rand_seed, world_x, world_y );
+				PaintStrokeProtocol.SyncToAll( layer, brushType, color, glow, brushSize, pressurePrecent, randSeed, worldX, worldY );
 			}
 
-			return paints_used;
+			return paintsUsed;
 		}
 
-		internal float ApplyColorAtNoSync( BetterPaintMod mymod, PaintLayerType layer, PaintBrushType brush_type,
-				Color color, byte glow, PaintBrushSize brush_size, float pressure_precent,
-				int rand_seed, int world_x, int world_y ) {
+		internal float ApplyColorAtNoSync( BetterPaintMod mymod, PaintLayerType layer, PaintBrushType brushType,
+				Color color, byte glow, PaintBrushSize brushSize, float pressurePrecent,
+				int randSeed, int worldX, int worldY ) {
 			if( Main.netMode == 2 ) { throw new Exception( "No server." ); }
 			
-			PaintBrush brush = mymod.Modes[ brush_type ];
-			float paints_used = 0f;
+			PaintBrush brush = mymod.Modes[ brushType ];
+			float paintsUsed = 0f;
 			
 			switch( layer ) {
 			case PaintLayerType.Background:
-				paints_used += brush.Apply( this.Background, color, glow, brush_size, pressure_precent, rand_seed, world_x, world_y );
+				paintsUsed += brush.Apply( this.Background, color, glow, brushSize, pressurePrecent, randSeed, worldX, worldY );
 				break;
 			case PaintLayerType.Foreground:
-				paints_used += brush.Apply( this.Foreground, color, glow, brush_size, pressure_precent, rand_seed, world_x, world_y );
+				paintsUsed += brush.Apply( this.Foreground, color, glow, brushSize, pressurePrecent, randSeed, worldX, worldY );
 				break;
 			case PaintLayerType.Anyground:
-				paints_used += brush.Apply( this.Background, color, glow, brush_size, pressure_precent, rand_seed, world_x, world_y );
-				paints_used += brush.Apply( this.Foreground, color, glow, brush_size, pressure_precent, rand_seed, world_x, world_y );
+				paintsUsed += brush.Apply( this.Background, color, glow, brushSize, pressurePrecent, randSeed, worldX, worldY );
+				paintsUsed += brush.Apply( this.Foreground, color, glow, brushSize, pressurePrecent, randSeed, worldX, worldY );
 				break;
 			default:
 				throw new NotImplementedException();
 			}
 
-			return paints_used;
+			return paintsUsed;
 		}
 	}
 }

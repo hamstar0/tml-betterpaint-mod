@@ -7,26 +7,26 @@ using Terraria.ModLoader;
 
 namespace BetterPaint {
 	class BetterPaintTile : GlobalTile {
-		public override void DrawEffects( int i, int j, int type, SpriteBatch sb, ref Color draw_color, ref int next_special_draw_idx ) {
+		public override void DrawEffects( int i, int j, int type, SpriteBatch sb, ref Color drawColor, ref int nextSpecialDrawIdx ) {
 			var myworld = this.mod.GetModWorld<BetterPaintWorld>();
-			ushort tile_x = (ushort)i;
-			ushort tile_y = (ushort)j;
+			ushort tileX = (ushort)i;
+			ushort tileY = (ushort)j;
 			
-			if( myworld.Layers.Foreground.HasColorAt(tile_x, tile_y) ) {
-				draw_color = myworld.Layers.Foreground.ComputeTileColor( tile_x, tile_y );
+			if( myworld.Layers.Foreground.HasColorAt(tileX, tileY) ) {
+				drawColor = myworld.Layers.Foreground.ComputeTileColor( tileX, tileY );
 			}
 		}
 
 
-		public override void KillTile( int i, int j, int type, ref bool fail, ref bool effect_only, ref bool no_item ) {
-			if( effect_only ) { return; }
+		public override void KillTile( int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem ) {
+			if( effectOnly ) { return; }
 
 			var myworld = this.mod.GetModWorld<BetterPaintWorld>();
-			ushort tile_x = (ushort)i;
-			ushort tile_y = (ushort)j;
+			ushort tileX = (ushort)i;
+			ushort tileY = (ushort)j;
 
-			if( myworld.Layers.Foreground.HasColorAt( tile_x, tile_y ) ) {
-				myworld.Layers.Foreground.RemoveRawColorAt( tile_x, tile_y );
+			if( myworld.Layers.Foreground.HasColorAt( tileX, tileY ) ) {
+				myworld.Layers.Foreground.RemoveRawColorAt( tileX, tileY );
 			}
 		}
 	}
@@ -37,11 +37,11 @@ namespace BetterPaint {
 	class BetterPaintWall : GlobalWall {
 		public override bool PreDraw( int i, int j, int type, SpriteBatch sb ) {
 			var myworld = this.mod.GetModWorld<BetterPaintWorld>();
-			ushort tile_x = (ushort)i;
-			ushort tile_y = (ushort)j;
+			ushort tileX = (ushort)i;
+			ushort tileY = (ushort)j;
 
-			if( myworld.Layers.Background.HasColorAt( tile_x, tile_y ) ) {
-				Color draw_color = myworld.Layers.Background.ComputeTileColor( tile_x, tile_y );
+			if( myworld.Layers.Background.HasColorAt( tileX, tileY ) ) {
+				Color drawDolor = myworld.Layers.Background.ComputeTileColor( tileX, tileY );
 
 				var zero = new Vector2( (float)Main.offScreenRange, (float)Main.offScreenRange );
 				if( Main.drawToScreen ) {
@@ -51,10 +51,10 @@ namespace BetterPaint {
 				var pos = (new Vector2( (i * 16) - 8, (j * 16) - 8 ) - Main.screenPosition) + zero;
 
 				Tile tile = Main.tile[i, j];
-				int y_offset = (int)( Main.wallFrame[type] * 180 );
-				var frame = new Rectangle( tile.wallFrameX(), tile.wallFrameY() + y_offset, 32, 32 );
+				int yOffset = (int)( Main.wallFrame[type] * 180 );
+				var frame = new Rectangle( tile.wallFrameX(), tile.wallFrameY() + yOffset, 32, 32 );
 
-				Main.spriteBatch.Draw( Main.wallTexture[type], pos, frame, draw_color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f );
+				Main.spriteBatch.Draw( Main.wallTexture[type], pos, frame, drawDolor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f );
 				return false;
 			}
 
@@ -64,11 +64,11 @@ namespace BetterPaint {
 
 		public override void KillWall( int i, int j, int type, ref bool fail ) {
 			var myworld = this.mod.GetModWorld<BetterPaintWorld>();
-			ushort tile_x = (ushort)i;
-			ushort tile_y = (ushort)j;
+			ushort tileX = (ushort)i;
+			ushort tileY = (ushort)j;
 
-			if( myworld.Layers.Background.HasColorAt( tile_x, tile_y ) ) {
-				myworld.Layers.Background.RemoveRawColorAt( tile_x, tile_y );
+			if( myworld.Layers.Background.HasColorAt( tileX, tileY ) ) {
+				myworld.Layers.Background.RemoveRawColorAt( tileX, tileY );
 			}
 		}
 	}

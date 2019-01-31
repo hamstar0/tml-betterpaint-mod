@@ -28,10 +28,10 @@ namespace BetterPaint {
 		public override void PreUpdate() {
 			if( this.player.whoAmI != Main.myPlayer ) { return; }
 
-			Item held_item = this.player.HeldItem;
+			Item heldItem = this.player.HeldItem;
 
-			if( held_item != null && !held_item.IsAir && held_item.type == this.mod.ItemType<PaintBlasterItem>() ) {
-				var myblaster = (PaintBlasterItem)held_item.modItem;
+			if( heldItem != null && !heldItem.IsAir && heldItem.type == this.mod.ItemType<PaintBlasterItem>() ) {
+				var myblaster = (PaintBlasterItem)heldItem.modItem;
 
 				myblaster.CheckMenu();
 				myblaster.CheckSettings( this.player );

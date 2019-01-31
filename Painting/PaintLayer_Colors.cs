@@ -12,25 +12,25 @@ namespace BetterPaint.Painting {
 
 		////////////////
 		
-		public bool HasColorAt( ushort tile_x, ushort tile_y ) {
-			return this.Colors.ContainsKey( tile_x ) && this.Colors[tile_x].ContainsKey( tile_y );
+		public bool HasColorAt( ushort tileX, ushort tileY ) {
+			return this.Colors.ContainsKey( tileX ) && this.Colors[tileX].ContainsKey( tileY );
 		}
 
 
-		public Color? GetRawColorAt( ushort tile_x, ushort tile_y ) {
-			if( this.Colors.ContainsKey( tile_x ) ) {
-				if( this.Colors[tile_x].ContainsKey( tile_y ) ) {
-					return (Color?)this.Colors[tile_x][tile_y];
+		public Color? GetRawColorAt( ushort tileX, ushort tileY ) {
+			if( this.Colors.ContainsKey( tileX ) ) {
+				if( this.Colors[tileX].ContainsKey( tileY ) ) {
+					return (Color?)this.Colors[tileX][tileY];
 				}
 			}
 			return null;
 		}
 
 
-		public byte GetGlowAt( ushort tile_x, ushort tile_y ) {
-			if( this.Glows.ContainsKey( tile_x ) ) {
-				if( this.Glows[tile_x].ContainsKey( tile_y ) ) {
-					return this.Glows[tile_x][tile_y];
+		public byte GetGlowAt( ushort tileX, ushort tileY ) {
+			if( this.Glows.ContainsKey( tileX ) ) {
+				if( this.Glows[tileX].ContainsKey( tileY ) ) {
+					return this.Glows[tileX][tileY];
 				}
 			}
 			return 0;
@@ -39,65 +39,65 @@ namespace BetterPaint.Painting {
 
 		////////////////
 		
-		public void SetRawColorAt( Color color, ushort tile_x, ushort tile_y ) {
-			if( !this.Colors.ContainsKey(tile_x) ) {
-				this.Colors[tile_x] = new Dictionary<ushort, Color>();
+		public void SetRawColorAt( Color color, ushort tileX, ushort tileY ) {
+			if( !this.Colors.ContainsKey(tileX) ) {
+				this.Colors[tileX] = new Dictionary<ushort, Color>();
 			}
-			this.Colors[tile_x][tile_y] = color;
+			this.Colors[tileX][tileY] = color;
 
-			this.SetMapColorAt( color, tile_x, tile_y );
+			this.SetMapColorAt( color, tileX, tileY );
 		}
 		
-		public void RemoveRawColorAt( ushort tile_x, ushort tile_y ) {
-			if( !this.Colors.ContainsKey( tile_x ) ) { return; }
+		public void RemoveRawColorAt( ushort tileX, ushort tileY ) {
+			if( !this.Colors.ContainsKey( tileX ) ) { return; }
 
-			if( this.Colors[tile_x].Remove( tile_y ) ) {
-				this.RemoveMapColorAt( tile_x, tile_y );
+			if( this.Colors[tileX].Remove( tileY ) ) {
+				this.RemoveMapColorAt( tileX, tileY );
 			}
 		}
 
 
 		////////////////
 
-		public void SetGlowAt( byte glow, ushort tile_x, ushort tile_y ) {
-			if( !this.Glows.ContainsKey( tile_x ) ) {
-				this.Glows[tile_x] = new Dictionary<ushort, byte>();
+		public void SetGlowAt( byte glow, ushort tileX, ushort tileY ) {
+			if( !this.Glows.ContainsKey( tileX ) ) {
+				this.Glows[tileX] = new Dictionary<ushort, byte>();
 			}
-			this.Glows[tile_x][tile_y] = glow;
+			this.Glows[tileX][tileY] = glow;
 		}
 
-		public void RemoveGlowAt( ushort tile_x, ushort tile_y ) {
-			if( this.Glows.ContainsKey( tile_x ) ) {
-				this.Glows[tile_x].Remove( tile_y );
+		public void RemoveGlowAt( ushort tileX, ushort tileY ) {
+			if( this.Glows.ContainsKey( tileX ) ) {
+				this.Glows[tileX].Remove( tileY );
 			}
 		}
 
 
 		////////////////
 
-		public Color ComputeTileColor( ushort tile_x, ushort tile_y ) {
-			Color? raw_color = this.GetRawColorAt( tile_x, tile_y );
-			if( raw_color == null ) { return Color.Transparent; }
+		public Color ComputeTileColor( ushort tileX, ushort tileY ) {
+			Color? rawColor = this.GetRawColorAt( tileX, tileY );
+			if( rawColor == null ) { return Color.Transparent; }
 
 			Color computed;
-			Color color = (Color)raw_color;
+			Color color = (Color)rawColor;
 			Color flattened = XnaColorHelpers.FlattenColor( Color.White, color );
-			Color env_color = Lighting.GetColor( tile_x, tile_y, flattened );
+			Color envColor = Lighting.GetColor( tileX, tileY, flattened );
 
-			float lit_percent = (float)this.GetGlowAt( tile_x, tile_y ) / 255f;
+			float litPercent = (float)this.GetGlowAt( tileX, tileY ) / 255f;
 
-			if( lit_percent > 0 ) {
-				float r_scale = (float)color.R / 255f;
-				float g_scale = (float)color.G / 255f;
-				float b_scale = (float)color.B / 255f;
+			if( litPercent > 0 ) {
+				float rScale = (float)color.R / 255f;
+				float gScale = (float)color.G / 255f;
+				float bScale = (float)color.B / 255f;
 
-				int r = env_color.R + (int)( (float)( 255 - env_color.R ) * r_scale * lit_percent );
-				int g = env_color.G + (int)( (float)( 255 - env_color.G ) * g_scale * lit_percent );
-				int b = env_color.B + (int)( (float)( 255 - env_color.B ) * b_scale * lit_percent );
+				int r = envColor.R + (int)( (float)( 255 - envColor.R ) * rScale * litPercent );
+				int g = envColor.G + (int)( (float)( 255 - envColor.G ) * gScale * litPercent );
+				int b = envColor.B + (int)( (float)( 255 - envColor.B ) * bScale * litPercent );
 
 				computed = new Color( r, g, b );
 			} else {
-				computed = env_color;
+				computed = envColor;
 			}
 
 			return computed;

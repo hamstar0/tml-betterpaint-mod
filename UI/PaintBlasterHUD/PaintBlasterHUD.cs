@@ -47,22 +47,22 @@ namespace BetterPaint.UI {
 
 			sb.Draw( PaintBlasterHUD.AmmoCan, new Vector2( x, y ), Color.White );
 
-			Item paint_item = myblaster.GetCurrentPaintItem();
+			Item paintItem = myblaster.GetCurrentPaintItem();
 
-			if( paint_item != null ) {
-				PaintType paint_type = PaintHelpers.GetPaintType( paint_item );
-				Color paint_color = PaintHelpers.GetPaintColor( paint_item );
-				float quantity = PaintHelpers.GetPaintAmount( paint_item );
-				float capacity = paint_type == PaintType.Can ?
-					(float)paint_item.maxStack :
+			if( paintItem != null ) {
+				PaintType paintType = PaintHelpers.GetPaintType( paintItem );
+				Color paintColor = PaintHelpers.GetPaintColor( paintItem );
+				float quantity = PaintHelpers.GetPaintAmount( paintItem );
+				float capacity = paintType == PaintType.Can ?
+					(float)paintItem.maxStack :
 					(float)mymod.Config.PaintCartridgeCapacity;
 
-				float capacity_percent = quantity / capacity;
+				float capacityPercent = quantity / capacity;
 
-				int height = (int)( capacity_percent * 50f ) * 2;
+				int height = (int)( capacityPercent * 50f ) * 2;
 				int top = 100 - height;
 
-				Color color = capacity_percent >= 0.01f ? paint_color : paint_color * 0.25f;
+				Color color = capacityPercent >= 0.01f ? paintColor : paintColor * 0.25f;
 
 				sb.Draw( PaintBlasterHUD.AmmoTop, new Vector2( x, y + 16 + top ), color );
 				sb.Draw( PaintBlasterHUD.AmmoBot, new Vector2( x, y + 124 ), color );
@@ -70,9 +70,9 @@ namespace BetterPaint.UI {
 
 				if( Main.mouseX >= x && Main.mouseX < ( x + PaintBlasterHUD.AmmoCan.Width ) ) {
 					if( Main.mouseY >= y && Main.mouseY < ( y + PaintBlasterHUD.AmmoCan.Height ) ) {
-						string percent_str = capacity_percent.ToString( "P", CultureInfo.InvariantCulture );
+						string percentStr = capacityPercent.ToString( "P", CultureInfo.InvariantCulture );
 
-						Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, percent_str, Main.mouseX-40, Main.mouseY+16, Color.White, Color.Black, default(Vector2), 1f );
+						Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, percentStr, Main.mouseX-40, Main.mouseY+16, Color.White, Color.Black, default(Vector2), 1f );
 					}
 				}
 			} else {

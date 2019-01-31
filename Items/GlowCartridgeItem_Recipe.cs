@@ -8,8 +8,8 @@ using Terraria.ModLoader;
 namespace BetterPaint.Items {
 	partial class GlowCartridgeItem : ModItem {
 		public override void AddRecipes() {
-			var paint_recipe = new GlowCartridgeRecipe( (BetterPaintMod)this.mod, this );
-			paint_recipe.AddRecipe();
+			var paintRecipe = new GlowCartridgeRecipe( (BetterPaintMod)this.mod, this );
+			paintRecipe.AddRecipe();
 		}
 	}
 
@@ -38,18 +38,18 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public override int ConsumeItem( int item_type, int num_required ) {
+		public override int ConsumeItem( int itemType, int numRequired ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var inv = Main.LocalPlayer.inventory;
-			int cart_type = mymod.ItemType<ColorCartridgeItem>();
+			int cartType = mymod.ItemType<ColorCartridgeItem>();
 
-			if( item_type != cart_type ) {
-				return base.ConsumeItem( item_type, num_required );
+			if( itemType != cartType ) {
+				return base.ConsumeItem( itemType, numRequired );
 			}
 
 			for( int i = 0; i < inv.Length; i++ ) {
 				if( inv[i] == null || inv[i].IsAir ) { continue; }
-				if( inv[i].type != cart_type ) { continue; }
+				if( inv[i].type != cartType ) { continue; }
 
 				var cart = (ColorCartridgeItem)inv[i].modItem;
 
@@ -58,7 +58,7 @@ namespace BetterPaint.Items {
 				break;
 			}
 
-			return base.ConsumeItem( item_type, num_required );
+			return base.ConsumeItem( itemType, numRequired );
 		}
 
 

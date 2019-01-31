@@ -10,15 +10,15 @@ using Terraria.ModLoader;
 
 namespace BetterPaint.Items {
 	partial class PaintBlasterItem : ModItem {
-		public bool CanPaintAt( Item paint_item, ushort tile_x, ushort tile_y ) {
+		public bool CanPaintAt( Item paintItem, ushort tileX, ushort tileY ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
-			if( this.CurrentBrush != PaintBrushType.Erase && PaintHelpers.GetPaintAmount(paint_item) <= 0 ) {
+			if( this.CurrentBrush != PaintBrushType.Erase && PaintHelpers.GetPaintAmount(paintItem) <= 0 ) {
 				return false;
 			}
 
-			Tile tile = Main.tile[tile_x, tile_y];
+			Tile tile = Main.tile[tileX, tileY];
 			
 			switch( this.Layer ) {
 			case PaintLayerType.Foreground:
@@ -33,28 +33,28 @@ namespace BetterPaint.Items {
 		}
 
 
-		public bool HasMatchingPaintAt( Color color, ushort tile_x, ushort tile_y ) {
+		public bool HasMatchingPaintAt( Color color, ushort tileX, ushort tileY ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
 			switch( this.Layer ) {
 			case PaintLayerType.Foreground:
-				if( myworld.Layers.Foreground.GetRawColorAt( tile_x, tile_y ) == color ) {
+				if( myworld.Layers.Foreground.GetRawColorAt( tileX, tileY ) == color ) {
 					return true;
 				}
 				break;
 			case PaintLayerType.Background:
-				if( myworld.Layers.Background.GetRawColorAt( tile_x, tile_y ) == color ) {
+				if( myworld.Layers.Background.GetRawColorAt( tileX, tileY ) == color ) {
 					return true;
 				}
 				break;
 			case PaintLayerType.Anyground:
-				if( myworld.Layers.Foreground.HasColorAt(tile_x, tile_y) ) {
-					if( myworld.Layers.Foreground.GetRawColorAt( tile_x, tile_y ) == color ) {
+				if( myworld.Layers.Foreground.HasColorAt(tileX, tileY) ) {
+					if( myworld.Layers.Foreground.GetRawColorAt( tileX, tileY ) == color ) {
 						return true;
 					}
-				} else if( myworld.Layers.Background.HasColorAt( tile_x, tile_y ) ) {
-					if( myworld.Layers.Background.GetRawColorAt( tile_x, tile_y ) == color ) {
+				} else if( myworld.Layers.Background.HasColorAt( tileX, tileY ) ) {
+					if( myworld.Layers.Background.GetRawColorAt( tileX, tileY ) == color ) {
 						return true;
 					}
 				}
@@ -69,38 +69,38 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public float ApplyBrushAt( int world_x, int world_y ) {
+		public float ApplyBrushAt( int worldX, int worldY ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 			float uses = 0;
 			Color color = Color.White;
 			byte glow = 0;
 
-			Item paint_item = this.GetCurrentPaintItem();
+			Item paintItem = this.GetCurrentPaintItem();
 
-			if( paint_item != null ) {	// Eraser doesn't need paint
-				color = PaintHelpers.GetPaintColor( paint_item );
-				glow = PaintHelpers.GetPaintGlow( paint_item );
+			if( paintItem != null ) {	// Eraser doesn't need paint
+				color = PaintHelpers.GetPaintColor( paintItem );
+				glow = PaintHelpers.GetPaintGlow( paintItem );
 			}
 			
-			uses = myworld.Layers.ApplyColorAt( mymod, this.Layer, this.CurrentBrush, color, glow, this.BrushSize, this.PressurePercent, world_x, world_y );
+			uses = myworld.Layers.ApplyColorAt( mymod, this.Layer, this.CurrentBrush, color, glow, this.BrushSize, this.PressurePercent, worldX, worldY );
 			
-			if( paint_item != null && uses > 0 ) {
-				PaintHelpers.ConsumePaint( paint_item, uses );
+			if( paintItem != null && uses > 0 ) {
+				PaintHelpers.ConsumePaint( paintItem, uses );
 			}
 
 			return uses;
 		}
 
 		
-		public bool AttemptCopyColorAt( Player player, ushort tile_x, ushort tile_y ) {
+		public bool AttemptCopyColorAt( Player player, ushort tileX, ushort tileY ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 			PaintLayer data;
 
-			int copy_type = this.mod.ItemType<CopyCartridgeItem>();
-			int copy_item_idx = ItemFinderHelpers.FindIndexOfFirstOfItemInCollection( player.inventory, new HashSet<int> { copy_type } );
-			if( copy_item_idx == -1 ) {
+			int copyType = this.mod.ItemType<CopyCartridgeItem>();
+			int copyItemIdx = ItemFinderHelpers.FindIndexOfFirstOfItemInCollection( player.inventory, new HashSet<int> { copyType } );
+			if( copyItemIdx == -1 ) {
 				return false;
 			}
 
@@ -112,7 +112,7 @@ namespace BetterPaint.Items {
 				data = myworld.Layers.Background;
 				break;
 			case PaintLayerType.Anyground:
-				if( myworld.Layers.Foreground.HasColorAt( tile_x, tile_y ) ) {
+				if( myworld.Layers.Foreground.HasColorAt( tileX, tileY ) ) {
 					data = myworld.Layers.Foreground;
 				} else {
 					data = myworld.Layers.Background;
@@ -122,13 +122,13 @@ namespace BetterPaint.Items {
 				throw new NotImplementedException();
 			}
 
-			if( !data.HasColorAt(tile_x, tile_y) ) {
+			if( !data.HasColorAt(tileX, tileY) ) {
 				return false;
 			}
 
-			Color color_at = (Color)data.GetRawColorAt( tile_x, tile_y );
+			Color colorAt = (Color)data.GetRawColorAt( tileX, tileY );
 
-			CopyCartridgeItem.SetWithColor( player, player.inventory[copy_item_idx], color_at );
+			CopyCartridgeItem.SetWithColor( player, player.inventory[copyItemIdx], colorAt );
 
 			return true;
 		}

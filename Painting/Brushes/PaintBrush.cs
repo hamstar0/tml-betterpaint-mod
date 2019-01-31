@@ -27,81 +27,83 @@ namespace BetterPaint.Painting.Brushes {
 
 
 	public abstract class PaintBrush {
-		public static float ComputeChangePercent( Color? old_color, Color new_color, byte old_glow, byte new_glow ) {
-			return PaintBrush.ComputeColorChangePercent( old_color, new_color ) +
-				(PaintBrush.ComputeGlowChangePercent( old_glow, new_glow ) / 4);
+		public static float ComputeChangePercent( Color? oldColor, Color newColor, byte oldGlow, byte newGlow ) {
+			return PaintBrush.ComputeColorChangePercent( oldColor, newColor ) +
+				(PaintBrush.ComputeGlowChangePercent( oldGlow, newGlow ) / 4);
 		}
 
-		public static float ComputeColorChangePercent( Color? old_color, Color new_color ) {
-			Color base_color = old_color != null ? (Color)old_color : Color.Transparent;
+		public static float ComputeColorChangePercent( Color? oldColor, Color newColor ) {
+			Color baseColor = oldColor != null ? (Color)oldColor : Color.Transparent;
 
-			Color diff_color = XnaColorHelpers.DifferenceRGB( base_color, new_color );
-			float diff_value = XnaColorHelpers.AvgRGB( diff_color );
+			Color diffColor = XnaColorHelpers.DifferenceRGB( baseColor, newColor );
+			float diffValue = XnaColorHelpers.AvgRGB( diffColor );
 
-			return diff_value / 255f;
+			return diffValue / 255f;
 		}
 
-		public static float ComputeGlowChangePercent( byte old_glow, byte new_glow ) {
-			int diff = Math.Abs( new_glow - old_glow );
+		public static float ComputeGlowChangePercent( byte oldGlow, byte newGlow ) {
+			int diff = Math.Abs( newGlow - oldGlow );
 
 			return (float)diff / 255f;
 		}
 		
 		////////////////
 
-		public static Color GetBlendedColor( PaintLayer layer, Color rgb_color, float pressure_percent, ushort tile_x, ushort tile_y, out Color? old_color ) {
-			Color blended_color;
-			float old_pressure_percent;
-			old_color = layer.GetRawColorAt( tile_x, tile_y );
+		public static Color GetBlendedColor( PaintLayer layer, Color rgbColor, float pressurePercent, ushort tileX, ushort tileY,
+				out Color? oldColor ) {
+			Color blendedColor;
+			float oldPressurePercent;
+			oldColor = layer.GetRawColorAt( tileX, tileY );
 
-			if( old_color != null ) {
-				Color old_rgb_color = (Color)old_color;
+			if( oldColor != null ) {
+				Color oldRgbColor = (Color)oldColor;
 
-				old_pressure_percent = old_rgb_color.A / 255f;
-				float old_pressure_percent_offset = (1f - pressure_percent) * old_pressure_percent;
+				oldPressurePercent = oldRgbColor.A / 255f;
+				float oldPressurePercentOffset = (1f - pressurePercent) * oldPressurePercent;
 				
-				blended_color = Color.Lerp( rgb_color, old_rgb_color, old_pressure_percent_offset );
+				blendedColor = Color.Lerp( rgbColor, oldRgbColor, oldPressurePercentOffset );
 			} else {
-				old_pressure_percent = 0f;
-				blended_color = rgb_color;
+				oldPressurePercent = 0f;
+				blendedColor = rgbColor;
 			}
 
-			blended_color.A = (byte)(MathHelper.Lerp( old_pressure_percent, 1f, pressure_percent ) * 255f);
+			blendedColor.A = (byte)(MathHelper.Lerp( oldPressurePercent, 1f, pressurePercent ) * 255f);
 
-			return blended_color;
+			return blendedColor;
 		}
 
 
-		public static Color GetErasedColor( PaintLayer layer, float pressure_percent, ushort tile_x, ushort tile_y, out Color? old_color ) {
-			old_color = layer.GetRawColorAt( tile_x, tile_y );
-			if( old_color == null ) { return Color.Transparent; }
+		public static Color GetErasedColor( PaintLayer layer, float pressurePercent, ushort tileX, ushort tileY, out Color? oldColor ) {
+			oldColor = layer.GetRawColorAt( tileX, tileY );
+			if( oldColor == null ) { return Color.Transparent; }
 
-			Color blended_color = (Color)old_color;
-			blended_color.A = (byte)( MathHelper.Lerp( blended_color.A, 0f, pressure_percent ) * 255f );
+			Color blendedColor = (Color)oldColor;
+			blendedColor.A = (byte)( MathHelper.Lerp( blendedColor.A, 0f, pressurePercent ) * 255f );
 
-			return blended_color;
+			return blendedColor;
 		}
 
 
-		public static byte GetBlendedGlow( PaintLayer layer, byte glow, float pressure_percent, ushort tile_x, ushort tile_y, out byte old_glow ) {
-			byte blended_glow;
+		public static byte GetBlendedGlow( PaintLayer layer, byte glow, float pressurePercent, ushort tileX, ushort tileY, out byte oldGlow ) {
+			byte blendedGlow;
 			
-			old_glow = layer.GetGlowAt( tile_x, tile_y );
+			oldGlow = layer.GetGlowAt( tileX, tileY );
 
 			if( glow != 0 ) {
-				byte pressured_glow = (byte)( (float)glow * pressure_percent );
+				byte pressuredGlow = (byte)( (float)glow * pressurePercent );
 
-				blended_glow = (byte)MathHelper.Lerp( (float)old_glow, 255f, (float)pressured_glow / 255f );
+				blendedGlow = (byte)MathHelper.Lerp( (float)oldGlow, 255f, (float)pressuredGlow / 255f );
 			} else {
-				blended_glow = (byte)MathHelper.Lerp( (float)old_glow, 0f, pressure_percent );
+				blendedGlow = (byte)MathHelper.Lerp( (float)oldGlow, 0f, pressurePercent );
 			}
 
-			return blended_glow;
+			return blendedGlow;
 		}
 
 
 		////////////////
 
-		public abstract float Apply( PaintLayer layer, Color color, byte glow, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y );
+		public abstract float Apply( PaintLayer layer, Color color, byte glow, PaintBrushSize brushSize, float pressurePercent,
+			int randSeed, int worldX, int worldY );
 	}
 }

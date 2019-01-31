@@ -5,35 +5,36 @@ using Terraria;
 
 namespace BetterPaint.Painting.Brushes {
 	class PaintBrushSpray : PaintBrush {
-		public override float Apply( PaintLayer layer, Color color, byte glow, PaintBrushSize brush_size, float pressure_percent, int rand_seed, int world_x, int world_y ) {
+		public override float Apply( PaintLayer layer, Color color, byte glow, PaintBrushSize brushSize, float pressurePercent,
+				int randSeed, int worldX, int worldY ) {
 			var mymod = BetterPaintMod.Instance;
-			int diameter = brush_size == PaintBrushSize.Small ? 3 : 8;
+			int diameter = brushSize == PaintBrushSize.Small ? 3 : 8;
 			diameter = (int)((float)diameter * mymod.Config.BrushSizeMultiplier);
 
-			int iter_range = diameter / 2;
-			float max_range = (float)diameter / 2f;
+			int iterRange = diameter / 2;
+			float maxRange = (float)diameter / 2f;
 			float uses = 0;
 
-			int tile_x = world_x / 16;
-			int tile_y = world_y / 16;
-			double tile_x_offset = (double)( world_x % 16 ) / 16f;
-			double tile_y_offset = (double)( world_y % 16 ) / 16f;
+			int tileX = worldX / 16;
+			int tileY = worldY / 16;
+			double tileOffsetX = (double)( worldX % 16 ) / 16f;
+			double tileOffsetY = (double)( worldY % 16 ) / 16f;
 			
-			for( int i = -iter_range; i <= iter_range; i++ ) {
-				for( int j = -iter_range; j <= iter_range; j++ ) {
-					double i_off = i + tile_x_offset;
-					double j_off = j + tile_y_offset;
+			for( int i = -iterRange; i <= iterRange; i++ ) {
+				for( int j = -iterRange; j <= iterRange; j++ ) {
+					double iOff = i + tileOffsetX;
+					double jOff = j + tileOffsetY;
 
-					float dist = (float)Math.Sqrt( (i_off * i_off) + (j_off * j_off) );
+					float dist = (float)Math.Sqrt( (iOff * iOff) + (jOff * jOff) );
 
-					if( dist > max_range ) {
+					if( dist > maxRange ) {
 						continue;
 					}
 
-					ushort x = (ushort)( tile_x + i );
-					ushort y = (ushort)( tile_y + j );
+					ushort x = (ushort)( tileX + i );
+					ushort y = (ushort)( tileY + j );
 
-					uses += this.PaintAt( layer, color, glow, pressure_percent, max_range, dist, x, y );
+					uses += this.PaintAt( layer, color, glow, pressurePercent, maxRange, dist, x, y );
 				}
 			}
 
@@ -41,28 +42,29 @@ namespace BetterPaint.Painting.Brushes {
 		}
 
 		
-		public float PaintAt( PaintLayer layer, Color color, byte glow, float pressure_percent, float brush_radius, float dist, ushort tile_x, ushort tile_y ) {
-			if( !layer.CanPaintAt( Main.tile[tile_x, tile_y] ) ) {
+		public float PaintAt( PaintLayer layer, Color color, byte glow, float pressurePercent, float brushRadius, float dist,
+				ushort tileX, ushort tileY ) {
+			if( !layer.CanPaintAt( Main.tile[tileX, tileY] ) ) {
 				return 0f;
 			}
 			
-			float dist_pressure_percent = MathHelper.Clamp( pressure_percent * (1f - (dist / brush_radius)), 0f, 1f );
+			float distPressurePercent = MathHelper.Clamp( pressurePercent * (1f - (dist / brushRadius)), 0f, 1f );
 			
-			Color? old_color;
-			byte old_glow;
+			Color? oldColor;
+			byte oldGlow;
 
-			Color blended_color = PaintBrush.GetBlendedColor( layer, color, dist_pressure_percent, tile_x, tile_y, out old_color );
-			byte blended_glow = PaintBrush.GetBlendedGlow( layer, glow, dist_pressure_percent, tile_x, tile_y, out old_glow );
+			Color blendedColor = PaintBrush.GetBlendedColor( layer, color, distPressurePercent, tileX, tileY, out oldColor );
+			byte blendedGlow = PaintBrush.GetBlendedGlow( layer, glow, distPressurePercent, tileX, tileY, out oldGlow );
 
-			layer.SetRawColorAt( blended_color, tile_x, tile_y );
-			layer.SetGlowAt( blended_glow, tile_x, tile_y );
+			layer.SetRawColorAt( blendedColor, tileX, tileY );
+			layer.SetGlowAt( blendedGlow, tileX, tileY );
 
-			float diff = PaintBrush.ComputeChangePercent( old_color, blended_color, old_glow, blended_glow );
+			float diff = PaintBrush.ComputeChangePercent( oldColor, blendedColor, oldGlow, blendedGlow );
 			if( diff <= 0.01f ) {
-				dist_pressure_percent = 0f;
+				distPressurePercent = 0f;
 			}
 
-			return dist_pressure_percent;
+			return distPressurePercent;
 		}
 	}
 }

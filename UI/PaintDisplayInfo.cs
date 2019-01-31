@@ -11,7 +11,7 @@ namespace BetterPaint.UI {
 	class PaintDisplayInfo {
 		public static IDictionary<string, PaintDisplayInfo> GetPaintSelection( Player player ) {
 			var mymod = BetterPaintMod.Instance;
-			IList<int> paint_idxs = new List<int>();
+			IList<int> paintIdxs = new List<int>();
 			Item[] inv = player.inventory;
 
 			for( int i = 0; i < inv.Length; i++ ) {
@@ -19,26 +19,26 @@ namespace BetterPaint.UI {
 				if( item == null || item.IsAir ) { continue; }
 
 				if( PaintHelpers.IsPaint(item) ) {
-					paint_idxs.Add( i );
+					paintIdxs.Add( i );
 				}
 			}
 
-			var paint_info = new Dictionary<string, PaintDisplayInfo>( paint_idxs.Count );
+			var paintInfo = new Dictionary<string, PaintDisplayInfo>( paintIdxs.Count );
 
-			foreach( int idx in paint_idxs ) {
+			foreach( int idx in paintIdxs ) {
 				Item item = Main.LocalPlayer.inventory[idx];
 				if( PaintHelpers.GetPaintAmount( item ) <= 0 ) { continue; }
 
 				string key = PaintHelpers.GetPaintColor( item ).ToString()+"_"+PaintHelpers.GetPaintType(item);
 
-				if( !paint_info.ContainsKey( key ) ) {
-					paint_info[key] = new PaintDisplayInfo( idx, item );
+				if( !paintInfo.ContainsKey( key ) ) {
+					paintInfo[key] = new PaintDisplayInfo( idx, item );
 				} else {
-					paint_info[key].Copies++;
+					paintInfo[key].Copies++;
 				}
 			}
 
-			return paint_info;
+			return paintInfo;
 		}
 
 
@@ -58,16 +58,16 @@ namespace BetterPaint.UI {
 
 		public void GetDrawInfo( BetterPaintMod mymod, int x, int y, out Color color, out float percent, out int stack ) {
 			if( this.PaintItem.modItem is ColorCartridgeItem ) {
-				var color_cart = (ColorCartridgeItem)this.PaintItem.modItem;
+				var colorCart = (ColorCartridgeItem)this.PaintItem.modItem;
 
-				color = color_cart.MyColor;
-				percent = color_cart.Quantity / (float)mymod.Config.PaintCartridgeCapacity;
+				color = colorCart.MyColor;
+				percent = colorCart.Quantity / (float)mymod.Config.PaintCartridgeCapacity;
 				stack = this.Copies;
 			} else if( this.PaintItem.modItem is GlowCartridgeItem ) {
-				var glow_cart = (GlowCartridgeItem)this.PaintItem.modItem;
+				var glowCart = (GlowCartridgeItem)this.PaintItem.modItem;
 
-				color = glow_cart.MyColor;
-				percent = glow_cart.Quantity / (float)mymod.Config.PaintCartridgeCapacity;
+				color = glowCart.MyColor;
+				percent = glowCart.Quantity / (float)mymod.Config.PaintCartridgeCapacity;
 				stack = this.Copies;
 			} else if( ItemIdentityHelpers.Paints.Item2.Contains(this.PaintItem.type) ) {
 				color = WorldGen.paintColor( this.PaintItem.paint );

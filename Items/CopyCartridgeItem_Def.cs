@@ -8,13 +8,13 @@ using Terraria.ModLoader;
 
 namespace BetterPaint.Items {
 	class CopyCartridgeItem : ModItem {
-		public static void SetWithColor( Player player, Item copy_cart_item, Color color ) {
-			ItemHelpers.ReduceStack( copy_cart_item, 1 );
+		public static void SetWithColor( Player player, Item copyCartItem, Color color ) {
+			ItemHelpers.ReduceStack( copyCartItem, 1 );
 
-			int cart_idx = ItemHelpers.CreateItem( player.position, BetterPaintMod.Instance.ItemType<ColorCartridgeItem>(), 1,
+			int cartIdx = ItemHelpers.CreateItem( player.position, BetterPaintMod.Instance.ItemType<ColorCartridgeItem>(), 1,
 				ColorCartridgeItem.Width, ColorCartridgeItem.Height );
 
-			var mycart = (ColorCartridgeItem)Main.item[ cart_idx ].modItem;
+			var mycart = (ColorCartridgeItem)Main.item[ cartIdx ].modItem;
 
 			mycart.SetPaint( color, BetterPaintMod.Instance.Config.PaintCartridgeCapacity );
 		}
@@ -47,13 +47,13 @@ namespace BetterPaint.Items {
 
 		public override void AddRecipes() {
 			var mymod = (BetterPaintMod)this.mod;
-			var anew1_recipe = new CopyCartridgeRecipe( mymod, mymod.GetItem<ColorCartridgeItem>(), this );
-			var anew2_recipe = new CopyCartridgeRecipe( mymod, mymod.GetItem<GlowCartridgeItem>(), this );
-			var copy_recipe = new CopyCartridgeCopyRecipe( mymod );
+			var anew1Recipe = new CopyCartridgeRecipe( mymod, mymod.GetItem<ColorCartridgeItem>(), this );
+			var anew2Recipe = new CopyCartridgeRecipe( mymod, mymod.GetItem<GlowCartridgeItem>(), this );
+			var copyRecipe = new CopyCartridgeCopyRecipe( mymod );
 
-			anew1_recipe.AddRecipe();
-			anew2_recipe.AddRecipe();
-			copy_recipe.AddRecipe();
+			anew1Recipe.AddRecipe();
+			anew2Recipe.AddRecipe();
+			copyRecipe.AddRecipe();
 		}
 	}
 
@@ -62,17 +62,17 @@ namespace BetterPaint.Items {
 
 	class CopyCartridgeRecipe : ModRecipe {
 		public CopyCartridgeRecipe( BetterPaintMod mymod, ModItem basecart, CopyCartridgeItem copycart ) : base( mymod ) {
-			int mana_pot_qt = mymod.Config.CopyPaintRecipeManaPotions;
-			int nanite_qt = mymod.Config.CopyPaintRecipeNanites;
+			int manaPotQt = mymod.Config.CopyPaintRecipeManaPotions;
+			int naniteQt = mymod.Config.CopyPaintRecipeNanites;
 
 			this.AddTile( mymod.TileType<PaintMixerTile>() );
 
 			this.AddIngredient( basecart, 1 );
 
-			if( mana_pot_qt > 0 ) {
+			if( manaPotQt > 0 ) {
 				this.AddIngredient( ItemID.GreaterManaPotion, mymod.Config.CopyPaintRecipeManaPotions );
 			}
-			if( nanite_qt > 0 ) {
+			if( naniteQt > 0 ) {
 				this.AddIngredient( ItemID.Nanites, mymod.Config.CopyPaintRecipeNanites );
 			}
 
@@ -102,14 +102,14 @@ namespace BetterPaint.Items {
 		}
 
 
-		public override int ConsumeItem( int item_type, int num_required ) {
+		public override int ConsumeItem( int itemType, int numRequired ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var inv = Main.LocalPlayer.inventory;
-			int cart_type = mymod.ItemType<ColorCartridgeItem>();
+			int cartType = mymod.ItemType<ColorCartridgeItem>();
 
 			for( int i = 0; i < inv.Length; i++ ) {
 				if( inv[i] == null || inv[i].IsAir ) { continue; }
-				if( inv[i].type != cart_type ) { continue; }
+				if( inv[i].type != cartType ) { continue; }
 
 				var mycart = (ColorCartridgeItem)inv[i].modItem;
 
@@ -117,14 +117,14 @@ namespace BetterPaint.Items {
 				break;
 			}
 
-			return base.ConsumeItem( item_type, num_required );
+			return base.ConsumeItem( itemType, numRequired );
 		}
 
 
 		public override void OnCraft( Item item ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var mycart1 = (ColorCartridgeItem)item.modItem;
-			int cart_type = mymod.ItemType<ColorCartridgeItem>();
+			int cartType = mymod.ItemType<ColorCartridgeItem>();
 
 			//int item_idx = ItemHelpers.CreateItem( Main.LocalPlayer.position, cart_type, 1, ColorCartridgeItem.Width, ColorCartridgeItem.Height );
 			//var mycart2 = (ColorCartridgeItem)Main.item[ item_idx ].modItem;

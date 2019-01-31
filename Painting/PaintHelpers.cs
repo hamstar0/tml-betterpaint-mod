@@ -27,68 +27,68 @@ namespace BetterPaint.Painting {
 			if( item == null || item.IsAir ) { return false; }
 
 			var mymod = BetterPaintMod.Instance;
-			int paint_type = item.type;
+			int paintType = item.type;
 
-			if( paint_type == mymod.ItemType<ColorCartridgeItem>() ) {
+			if( paintType == mymod.ItemType<ColorCartridgeItem>() ) {
 				return true;
 			}
-			if( paint_type == mymod.ItemType<GlowCartridgeItem>() ) {
+			if( paintType == mymod.ItemType<GlowCartridgeItem>() ) {
 				return true;
 			}
-			if( ItemIdentityHelpers.Paints.Item2.Contains( paint_type ) ) {
+			if( ItemIdentityHelpers.Paints.Item2.Contains( paintType ) ) {
 				return true;
 			}
 			return false;
 		}
 
-		public static PaintType GetPaintType( Item paint_item ) {
+		public static PaintType GetPaintType( Item paintItem ) {
 			var mymod = BetterPaintMod.Instance;
-			int paint_type = paint_item.type;
+			int paintType = paintItem.type;
 
-			if( paint_type == mymod.ItemType<ColorCartridgeItem>() ) {
+			if( paintType == mymod.ItemType<ColorCartridgeItem>() ) {
 				return PaintType.ColorCartridge;
 			}
-			if( paint_type == mymod.ItemType<GlowCartridgeItem>() ) {
+			if( paintType == mymod.ItemType<GlowCartridgeItem>() ) {
 				return PaintType.GlowCartridge;
 			}
-			if( ItemIdentityHelpers.Paints.Item2.Contains( paint_type ) ) {
+			if( ItemIdentityHelpers.Paints.Item2.Contains( paintType ) ) {
 				return PaintType.Can;
 			} else {
 				throw new NotImplementedException();
 			}
 		}
 
-		public static float GetPaintAmount( Item paint_item ) {
-			PaintType paint_type = PaintHelpers.GetPaintType( paint_item );
+		public static float GetPaintAmount( Item paintItem ) {
+			PaintType paintType = PaintHelpers.GetPaintType( paintItem );
 
-			switch( paint_type ) {
+			switch( paintType ) {
 			case PaintType.Can:
-				return paint_item.stack;
+				return paintItem.stack;
 			case PaintType.ColorCartridge:
-				var mycolorcart = (ColorCartridgeItem)paint_item.modItem;
+				var mycolorcart = (ColorCartridgeItem)paintItem.modItem;
 				return mycolorcart.Quantity;
 			case PaintType.GlowCartridge:
-				var myglowcart = (GlowCartridgeItem)paint_item.modItem;
+				var myglowcart = (GlowCartridgeItem)paintItem.modItem;
 				return myglowcart.Quantity;
 			default:
 				throw new NotImplementedException();
 			}
 		}
 
-		public static Color GetPaintColor( Item paint_item ) {
-			PaintType paint_type = PaintHelpers.GetPaintType( paint_item );
+		public static Color GetPaintColor( Item paintItem ) {
+			PaintType paintType = PaintHelpers.GetPaintType( paintItem );
 			Color color;
 
-			switch( paint_type ) {
+			switch( paintType ) {
 			case PaintType.Can:
-				color = WorldGen.paintColor( paint_item.paint );
+				color = WorldGen.paintColor( paintItem.paint );
 				break;
 			case PaintType.ColorCartridge:
-				var mycolorcart = (ColorCartridgeItem)paint_item.modItem;
+				var mycolorcart = (ColorCartridgeItem)paintItem.modItem;
 				color = mycolorcart.MyColor;
 				break;
 			case PaintType.GlowCartridge:
-				var myglowcart = (GlowCartridgeItem)paint_item.modItem;
+				var myglowcart = (GlowCartridgeItem)paintItem.modItem;
 				color = myglowcart.MyColor;
 				break;
 			default:
@@ -97,11 +97,11 @@ namespace BetterPaint.Painting {
 			return color;
 		}
 		
-		public static byte GetPaintGlow( Item paint_item ) {
-			PaintType paint_type = PaintHelpers.GetPaintType( paint_item );
+		public static byte GetPaintGlow( Item paintItem ) {
+			PaintType paintType = PaintHelpers.GetPaintType( paintItem );
 			byte glow;
 
-			switch( paint_type ) {
+			switch( paintType ) {
 			case PaintType.Can:
 				glow = 0;
 				break;
@@ -121,20 +121,20 @@ namespace BetterPaint.Painting {
 
 		////////////////
 
-		public static void ConsumePaint( Item paint_item, float amount ) {
-			PaintType paint_type = PaintHelpers.GetPaintType( paint_item );
+		public static void ConsumePaint( Item paintItem, float amount ) {
+			PaintType paintType = PaintHelpers.GetPaintType( paintItem );
 
-			switch( paint_type ) {
+			switch( paintType ) {
 			case PaintType.Can:
-				paint_item.stack -= (int)amount;
-				if( paint_item.stack < 0 ) { paint_item.stack = 0; }
+				paintItem.stack -= (int)amount;
+				if( paintItem.stack < 0 ) { paintItem.stack = 0; }
 				break;
 			case PaintType.ColorCartridge:
-				var mycolorcart = (ColorCartridgeItem)paint_item.modItem;
+				var mycolorcart = (ColorCartridgeItem)paintItem.modItem;
 				mycolorcart.ConsumePaint( amount );
 				break;
 			case PaintType.GlowCartridge:
-				var myglowcart = (GlowCartridgeItem)paint_item.modItem;
+				var myglowcart = (GlowCartridgeItem)paintItem.modItem;
 				myglowcart.ConsumePaint( amount );
 				break;
 			default:

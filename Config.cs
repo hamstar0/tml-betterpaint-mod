@@ -51,12 +51,12 @@ namespace BetterPaint {
 		////////////////
 
 		public bool UpdateToLatestVersion() {
-			var new_config = new BetterPaintConfigData();
-			var vers_since = this.VersionSinceUpdate != "" ?
+			var newConfig = new BetterPaintConfigData();
+			var versSince = this.VersionSinceUpdate != "" ?
 				new Version( this.VersionSinceUpdate ) :
 				new Version();
 
-			if( vers_since >= BetterPaintConfigData.ConfigVersion ) {
+			if( versSince >= BetterPaintConfigData.ConfigVersion ) {
 				return false;
 			}
 

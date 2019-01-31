@@ -27,13 +27,13 @@ namespace BetterPaint.Items {
 				return true;
 			}
 
-			bool can_paint_at = true;
-			Item paint_item = null;
+			bool canPaintAt = true;
+			Item paintItem = null;
 
 			if( this.CurrentBrush != PaintBrushType.Erase ) {
-				paint_item = this.GetCurrentPaintItem();
+				paintItem = this.GetCurrentPaintItem();
 
-				if( paint_item == null ) {
+				if( paintItem == null ) {
 					if( this.DryFireAvailable ) {
 						this.DryFireAvailable = false;
 
@@ -48,68 +48,69 @@ namespace BetterPaint.Items {
 				}
 			}
 
-			Vector2 world_pos = UIHelpers.GetWorldMousePosition();
-			Vector2 tile_pos = world_pos / 16f;
-			ushort tile_x = (ushort)tile_pos.X;
-			ushort tile_y = (ushort)tile_pos.Y;
+			Vector2 worldPos = UIHelpers.GetWorldMousePosition();
+			Vector2 tilePos = worldPos / 16f;
+			ushort tileX = (ushort)tilePos.X;
+			ushort tileY = (ushort)tilePos.Y;
 
-			if( paint_item == null ) {
-				can_paint_at = true;
+			if( paintItem == null ) {
+				canPaintAt = true;
 			} else {
-				can_paint_at = this.CanPaintAt( paint_item, tile_x, tile_y );
+				canPaintAt = this.CanPaintAt( paintItem, tileX, tileY );
 			}
 			
-			if( can_paint_at ) {
-				if( this.CanUseBlasterAt( tile_x, tile_y ) ) {
-					this.BufferedPaintUses += this.BlastPaintAt( world_pos );
+			if( canPaintAt ) {
+				if( this.CanUseBlasterAt( tileX, tileY ) ) {
+					this.BufferedPaintUses += this.BlastPaintAt( worldPos );
 				}
 			}
 
-			return can_paint_at;
+			return canPaintAt;
 		}
 
 
-		public override bool Shoot( Player player, ref Vector2 pos, ref float vel_x, ref float vel_y, ref int type, ref int dmg, ref float kb ) {
-			Vector2 world_mouse_pos = new Vector2( Main.mouseX, Main.mouseY ) + Main.screenPosition;
-			int world_x = (int)world_mouse_pos.X;
-			int world_y = (int)world_mouse_pos.Y;
-			ushort tile_x = (ushort)( world_x / 16 );
-			ushort tile_y = (ushort)( world_y / 16 );
-			Color? dust_color = null;
+		public override bool Shoot( Player player, ref Vector2 pos, ref float velX, ref float velY, ref int type, ref int dmg,
+				ref float kb ) {
+			Vector2 worldMousePos = new Vector2( Main.mouseX, Main.mouseY ) + Main.screenPosition;
+			int worldX = (int)worldMousePos.X;
+			int worldY = (int)worldMousePos.Y;
+			ushort tileX = (ushort)( worldX / 16 );
+			ushort tileY = (ushort)( worldY / 16 );
+			Color? dustColor = null;
 			
 			if( this.IsCopying ) {
-				if( !this.AttemptCopyColorAt( player, tile_x, tile_y ) ) {
+				if( !this.AttemptCopyColorAt( player, tileX, tileY ) ) {
 					Main.NewText( "No color found to copy from.", Color.Yellow );
 				}
 
 				this.IsCopying = false;
 			} else {
-				Item paint_item = this.GetCurrentPaintItem();
+				Item paintItem = this.GetCurrentPaintItem();
 
-				if( paint_item != null ) {
-					if( PaintHelpers.GetPaintAmount(paint_item) <= 0 ) {
+				if( paintItem != null ) {
+					if( PaintHelpers.GetPaintAmount(paintItem) <= 0 ) {
 						if( this.SwitchToNextMatchingNonemptyPaint() ) {
-							paint_item = this.GetCurrentPaintItem();
+							paintItem = this.GetCurrentPaintItem();
 						} else {
-							paint_item = null;
+							paintItem = null;
 						}
 					}
 
-					if( paint_item != null ) {
-						Color paint_color = PaintHelpers.GetPaintColor( paint_item );
+					if( paintItem != null ) {
+						Color paintColor = PaintHelpers.GetPaintColor( paintItem );
 
-						if( this.HasMatchingPaintAt( paint_color, tile_x, tile_y ) ) {
-							dust_color = paint_color;
+						if( this.HasMatchingPaintAt( paintColor, tileX, tileY ) ) {
+							dustColor = paintColor;
 						}
 					}
 				}
 			}
 
-			if( this.BufferedPaintUses > 0 && dust_color != null ) {
+			if( this.BufferedPaintUses > 0 && dustColor != null ) {
 				this.BufferedPaintUses = 0f;
 
 				pos = PlayerItemHelpers.TipOfHeldItem( player ) - Main.screenPosition;
-				Dust.NewDust( pos, 8, 8, 2, vel_x, vel_y, 0, (Color)dust_color, 1f );
+				Dust.NewDust( pos, 8, 8, 2, velX, velY, 0, (Color)dustColor, 1f );
 			}
 			
 			return false;
@@ -118,18 +119,18 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public bool CanUseBlasterAt( ushort tile_x, ushort tile_y ) {
-			if( this.BufferedPaintedTiles.ContainsKey( tile_x ) ) {
-				if( this.BufferedPaintedTiles[tile_x] == tile_y ) {
+		public bool CanUseBlasterAt( ushort tileX, ushort tileY ) {
+			if( this.BufferedPaintedTiles.ContainsKey( tileX ) ) {
+				if( this.BufferedPaintedTiles[tileX] == tileY ) {
 					return false;
 				}
 			}
-			this.BufferedPaintedTiles[tile_x] = tile_y;
+			this.BufferedPaintedTiles[tileX] = tileY;
 
 			return true;
 		}
 
-		public float BlastPaintAt( Vector2 world_pos ) {
+		public float BlastPaintAt( Vector2 worldPos ) {
 			if( Timers.GetTimerTickDuration( "PaintBlasterFlowReset" ) <= 0 ) {
 				Timers.SetTimer( "PaintBlasterFlowReset", 30, () => {
 					this.BufferedPaintedTiles.Clear();
@@ -137,20 +138,20 @@ namespace BetterPaint.Items {
 				} );
 			}
 			
-			return this.ApplyBrushAt( (int)world_pos.X, (int)world_pos.Y );
+			return this.ApplyBrushAt( (int)worldPos.X, (int)worldPos.Y );
 		}
 		
 
 		////////////////
 
 		public bool SwitchToNextMatchingNonemptyPaint() {
-			Item paint_item = this.GetCurrentPaintItem();
-			if( paint_item == null ) { return false; }
+			Item paintItem = this.GetCurrentPaintItem();
+			if( paintItem == null ) { return false; }
 
-			Color curr_color = PaintHelpers.GetPaintColor( paint_item );
+			Color currColor = PaintHelpers.GetPaintColor( paintItem );
 			
 			Item[] inv = Main.LocalPlayer.inventory;
-			int cart_type = this.mod.ItemType<ColorCartridgeItem>();
+			int cartType = this.mod.ItemType<ColorCartridgeItem>();
 			bool found = false;
 
 			for( int i=0; i<inv.Length; i++ ) {
@@ -161,7 +162,7 @@ namespace BetterPaint.Items {
 
 				if( PaintHelpers.IsPaint(item) ) {
 					if( PaintHelpers.GetPaintAmount(item) <= 0 ) { continue; }
-					if( PaintHelpers.GetPaintColor(item) != curr_color ) { continue; }
+					if( PaintHelpers.GetPaintColor(item) != currColor ) { continue; }
 
 					this.CurrentPaintItemInventoryIndex = i;
 					found = true;

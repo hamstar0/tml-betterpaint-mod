@@ -28,7 +28,7 @@ namespace BetterPaint.Tiles {
 		}
 
 
-		public override void AnimateTile( ref int frame, ref int frame_counter ) {
+		public override void AnimateTile( ref int frame, ref int frameCounter ) {
 			if( ++Main.tileFrameCounter[ this.Type ] >= 2 ) {
 				Main.tileFrameCounter[ this.Type ] = 0;
 

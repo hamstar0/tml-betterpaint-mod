@@ -1,5 +1,4 @@
 ﻿using HamstarHelpers.Components.Network;
-using HamstarHelpers.Components.Network.Data;
 
 
 namespace BetterPaint.NetProtocols {
@@ -9,9 +8,9 @@ namespace BetterPaint.NetProtocols {
 
 		////////////////
 
-		protected ModSettingsProtocol( PacketProtocolDataConstructorLock ctor_lock ) : base( ctor_lock ) { }
+		private ModSettingsProtocol() { }
 
-		protected override void InitializeServerSendData( int to_who ) {
+		protected override void InitializeServerSendData( int toWho ) {
 			this.Data = BetterPaintMod.Instance.Config;
 		}
 

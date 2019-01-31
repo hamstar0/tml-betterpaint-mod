@@ -8,8 +8,8 @@ using Terraria.ID;
 
 namespace BetterPaint.UI {
 	partial class PaintBlasterUI {
-		public void DrawOptionLayer( SpriteBatch sb, int origin_x, int origin_y, out Rectangle rect ) {
-			int options_dist = PaintBlasterUI.OptionsRingRadius;
+		public void DrawOptionLayer( SpriteBatch sb, int originX, int originY, out Rectangle rect ) {
+			int optionsDist = PaintBlasterUI.OptionsRingRadius;
 			float hilit = PaintBlasterUI.SelectedScale;
 			float lit = PaintBlasterUI.HoveredScale;
 			//float unlit = PaintBlasterUI.IdleScale;
@@ -32,8 +32,8 @@ namespace BetterPaint.UI {
 
 			var offset = new Vector2( tex.Width, tex.Height ) * 0.5f;
 
-			int x = ( origin_x - options_dist ) - (int)offset.X;
-			int y = ( origin_y - options_dist ) - (int)offset.Y;
+			int x = ( originX - optionsDist ) - (int)offset.X;
+			int y = ( originY - optionsDist ) - (int)offset.Y;
 			rect = new Rectangle( x, y, tex.Width, tex.Height );
 
 			bool hover = rect.Contains( Main.mouseX, Main.mouseY );
@@ -67,8 +67,8 @@ namespace BetterPaint.UI {
 		}
 
 
-		public void DrawOptionSize( SpriteBatch sb, int origin_x, int origin_y, out Rectangle rect ) {
-			int options_dist = PaintBlasterUI.OptionsRingRadius;
+		public void DrawOptionSize( SpriteBatch sb, int originX, int originY, out Rectangle rect ) {
+			int optionsDist = PaintBlasterUI.OptionsRingRadius;
 			float hilit = PaintBlasterUI.SelectedScale;
 			float lit = PaintBlasterUI.HoveredScale;
 			//float unlit = PaintBlasterUI.IdleScale;
@@ -88,8 +88,8 @@ namespace BetterPaint.UI {
 
 			var offset = new Vector2( tex.Width, tex.Height ) * 0.5f;
 
-			int x = ( origin_x + options_dist ) - (int)offset.X;
-			int y = ( origin_y + options_dist ) - (int)offset.Y;
+			int x = ( originX + optionsDist ) - (int)offset.X;
+			int y = ( originY + optionsDist ) - (int)offset.Y;
 			rect = new Rectangle( x, y, tex.Width, tex.Height );
 
 			bool hover = rect.Contains( Main.mouseX, Main.mouseY );
@@ -120,8 +120,8 @@ namespace BetterPaint.UI {
 		}
 		
 
-		public void DrawOptionCopy( SpriteBatch sb, int origin_x, int origin_y, out Rectangle rect ) {
-			int options_dist = PaintBlasterUI.OptionsRingRadius;
+		public void DrawOptionCopy( SpriteBatch sb, int originX, int originY, out Rectangle rect ) {
+			int optionsDist = PaintBlasterUI.OptionsRingRadius;
 			//float hilit = PaintBlasterUI.SelectedScale;
 			float lit = PaintBlasterUI.HoveredScale;
 			float unlit = PaintBlasterUI.IdleScale;
@@ -130,8 +130,8 @@ namespace BetterPaint.UI {
 
 			var offset = new Vector2( tex.Width, tex.Height ) * 0.5f;
 
-			int x = ( origin_x + options_dist ) - (int)offset.X;
-			int y = ( origin_y - options_dist ) - (int)offset.Y;
+			int x = ( originX + optionsDist ) - (int)offset.X;
+			int y = ( originY - optionsDist ) - (int)offset.Y;
 			rect = new Rectangle( x, y, tex.Width, tex.Height );
 
 			bool hover = rect.Contains( Main.mouseX, Main.mouseY );
@@ -151,8 +151,8 @@ namespace BetterPaint.UI {
 		}
 
 
-		public void DrawOptionPressure( SpriteBatch sb, int origin_x, int origin_y, out Rectangle rect ) {
-			int options_dist = PaintBlasterUI.OptionsRingRadius;
+		public void DrawOptionPressure( SpriteBatch sb, int originX, int originY, out Rectangle rect ) {
+			int optionsDist = PaintBlasterUI.OptionsRingRadius;
 			float hilit = PaintBlasterUI.SelectedScale;
 			float lit = PaintBlasterUI.HoveredScale;
 			//float unlit = PaintBlasterUI.IdleScale;
@@ -162,8 +162,8 @@ namespace BetterPaint.UI {
 
 			var offset = new Vector2( tex.Width, tex.Height ) * 0.5f;
 
-			int x = ( origin_x - options_dist ) - (int)offset.X;
-			int y = ( origin_y + options_dist ) - (int)offset.Y;
+			int x = ( originX - optionsDist ) - (int)offset.X;
+			int y = ( originY + optionsDist ) - (int)offset.Y;
 			rect = new Rectangle( x, y, tex.Width, tex.Height );
 
 			bool hover = rect.Contains( Main.mouseX, Main.mouseY );
