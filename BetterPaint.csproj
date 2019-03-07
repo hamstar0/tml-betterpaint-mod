@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BetterPaint</RootNamespace>
     <AssemblyName>BetterPaint</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,7 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API.cs" />
-    <Compile Include="API_Call.cs" />
     <Compile Include="BetterPaintMod_Meta.cs" />
     <Compile Include="BetterPaintNPC.cs" />
     <Compile Include="BetterPaintWorld.cs" />
@@ -64,6 +64,7 @@
     <Compile Include="Items\GlowCartridgeItem_Recipe.cs" />
     <Compile Include="Items\GlowCartridgeItem_Def.cs" />
     <Compile Include="Items\CopyCartridgeItem_Def.cs" />
+    <Compile Include="NetProtocols\WorldPaintDataProtocol.cs" />
     <Compile Include="Painting\PaintHelpers.cs" />
     <Compile Include="Painting\PaintLayer_Colors.cs" />
     <Compile Include="Painting\PaintLayer_Map.cs" />

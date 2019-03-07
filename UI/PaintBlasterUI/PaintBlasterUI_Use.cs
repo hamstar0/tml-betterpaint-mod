@@ -1,5 +1,6 @@
 ﻿using BetterPaint.Painting;
 using BetterPaint.Painting.Brushes;
+using HamstarHelpers.Components.Errors;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -92,7 +93,7 @@ namespace BetterPaint.UI {
 				this.Layer = PaintLayerType.Foreground;
 				break;
 			default:
-				throw new NotImplementedException();
+				throw new HamstarException( "Not implemented." );
 			}
 		}
 
@@ -105,7 +106,7 @@ namespace BetterPaint.UI {
 				this.BrushSize = PaintBrushSize.Small;
 				break;
 			default:
-				throw new NotImplementedException();
+				throw new HamstarException( "Not implemented." );
 			}
 		}
 

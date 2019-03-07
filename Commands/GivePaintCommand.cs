@@ -6,7 +6,7 @@ using System;
 using Terraria;
 using Terraria.ModLoader;
 using BetterPaint.Painting;
-
+using HamstarHelpers.Components.Errors;
 
 namespace BetterPaint.Commands {
 	class GivePaintCommand : ModCommand {
@@ -18,9 +18,9 @@ namespace BetterPaint.Commands {
 				return CommandType.Console;
 			}
 		}
-		public override string Command { get { return "bp-paint-give"; } }
-		public override string Usage { get { return "/"+this.Command; } }
-		public override string Description { get { return "Gives player a random-hued color cartridge."; } }
+		public override string Command => "bp-paint-give";
+		public override string Usage => "/"+this.Command;
+		public override string Description => "Gives player a random-hued color cartridge.";
 
 
 		////////////////
@@ -33,7 +33,7 @@ namespace BetterPaint.Commands {
 			Item paintItem = Main.item[itemIdx];
 
 			if( paintItem == null || paintItem.IsAir ) {
-				throw new Exception( "Could not create cheaty paint." );
+				throw new HamstarException( "Could not create cheaty paint." );
 			}
 
 			Func<byte> rand = () => (byte)Main.rand.Next( 0, 255 );

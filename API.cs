@@ -2,7 +2,7 @@
 
 
 namespace BetterPaint {
-	public static partial class MagicPaintAPI {
+	public static partial class BetterPaintAPI {
 		public static BetterPaintConfigData GetModSettings() {
 			return BetterPaintMod.Instance.Config;
 		}

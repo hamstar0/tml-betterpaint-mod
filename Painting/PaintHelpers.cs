@@ -1,4 +1,5 @@
 ﻿using BetterPaint.Items;
+using HamstarHelpers.Components.Errors;
 using HamstarHelpers.Helpers.ItemHelpers;
 using Microsoft.Xna.Framework;
 using System;
@@ -54,7 +55,7 @@ namespace BetterPaint.Painting {
 			if( ItemIdentityHelpers.Paints.Item2.Contains( paintType ) ) {
 				return PaintType.Can;
 			} else {
-				throw new NotImplementedException();
+				throw new HamstarException( "Not implemented." );
 			}
 		}
 
@@ -71,7 +72,7 @@ namespace BetterPaint.Painting {
 				var myglowcart = (GlowCartridgeItem)paintItem.modItem;
 				return myglowcart.Quantity;
 			default:
-				throw new NotImplementedException();
+				throw new HamstarException( "Not implemented." );
 			}
 		}
 
@@ -92,7 +93,7 @@ namespace BetterPaint.Painting {
 				color = myglowcart.MyColor;
 				break;
 			default:
-				throw new NotImplementedException();
+				throw new HamstarException( "Not implemented." );
 			}
 			return color;
 		}
@@ -112,7 +113,7 @@ namespace BetterPaint.Painting {
 				glow = 255;
 				break;
 			default:
-				throw new NotImplementedException();
+				throw new HamstarException( "Not implemented." );
 			}
 
 			return glow;
@@ -138,7 +139,7 @@ namespace BetterPaint.Painting {
 				myglowcart.ConsumePaint( amount );
 				break;
 			default:
-				throw new NotImplementedException();
+				throw new HamstarException( "Not implemented." );
 			}
 		}
 	}

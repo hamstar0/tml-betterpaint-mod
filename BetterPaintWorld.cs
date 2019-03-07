@@ -5,7 +5,7 @@ using Terraria.ModLoader.IO;
 
 namespace BetterPaint {
 	class BetterPaintWorld : ModWorld {
-		public WorldPaintLayers Layers { get; private set; }
+		public WorldPaintLayers Layers { get; internal set; }
 
 
 		////////////////

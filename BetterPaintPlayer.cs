@@ -7,6 +7,14 @@ using Terraria.ModLoader;
 
 namespace BetterPaint {
 	partial class BetterPaintPlayer : ModPlayer {
+		public override void SyncPlayer( int toWho, int fromWho, bool newPlayer ) {
+			if( Main.netMode == 2 ) {
+				if( toWho == -1 && fromWho == this.player.whoAmI ) {
+					WorldPaintDataProtocol.SendToClient( toWho, -1 );
+				}
+			}
+		}
+
 		public override void OnEnterWorld( Player player ) {
 			if( player.whoAmI != Main.myPlayer ) { return; }
 			if( this.player.whoAmI != Main.myPlayer ) { return; }
@@ -20,7 +28,7 @@ namespace BetterPaint {
 			}
 
 			if( Main.netMode == 1 ) {
-				PacketProtocol.QuickRequestToServer<ModSettingsProtocol>();
+				PacketProtocol.QuickRequestToServer<ModSettingsProtocol>( -1 );
 			}
 		}
 

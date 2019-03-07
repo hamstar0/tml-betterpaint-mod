@@ -12,9 +12,9 @@ namespace BetterPaint.Commands {
 				return CommandType.Console;
 			}
 		}
-		public override string Command { get { return "bp-clear-all"; } }
-		public override string Usage { get { return "/"+this.Command; } }
-		public override string Description { get { return "Clears all paint from the map."; } }
+		public override string Command => "bp-clear-all";
+		public override string Usage => "/"+this.Command;
+		public override string Description => "Clears all paint from the map.";
 
 
 		////////////////

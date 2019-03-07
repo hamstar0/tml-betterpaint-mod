@@ -32,7 +32,7 @@ namespace BetterPaint.Items {
 
 		////////////////
 
-		public override bool CloneNewInstances { get { return true; } }
+		public override bool CloneNewInstances => true;
 
 		public override ModItem Clone() {
 			var clone = (ColorCartridgeItem)base.Clone();

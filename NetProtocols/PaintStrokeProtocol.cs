@@ -1,6 +1,6 @@
 ﻿using BetterPaint.Painting.Brushes;
+using HamstarHelpers.Components.Errors;
 using HamstarHelpers.Components.Network;
-using HamstarHelpers.Components.Network.Data;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -8,52 +8,11 @@ using Terraria;
 
 namespace BetterPaint.NetProtocols {
 	class PaintStrokeProtocol : PacketProtocolSentToEither {
-		protected class MyFactory : Factory<PaintStrokeProtocol> {
-			public int Layer = (int)PaintLayerType.Foreground;
-			public int BrushType = (int)PaintBrushType.Stream;
-			public Color MyColor = Color.White;
-			public byte Glow = 0;
-			public int BrushSize = (int)PaintBrushSize.Small;
-			public float PressurePercent = 1;
-			public int RandSeed = -1;
-			public int WorldX = 0;
-			public int WorldY = 0;
-
-			public MyFactory( PaintLayerType layer, PaintBrushType brushType, Color color, byte glow,
-					PaintBrushSize brushSize, float pressurePercent, int randSeed, int worldX, int worldY ) {
-				this.Layer = (int)layer;
-				this.BrushType = (int)brushType;
-				this.MyColor = color;
-				this.Glow = glow;
-				this.BrushSize = (int)brushSize;
-				this.PressurePercent = pressurePercent;
-				this.WorldX = worldX;
-				this.WorldY = worldY;
-			}
-
-			protected override void Initialize( PaintStrokeProtocol data ) {
-				data.Layer = this.Layer;
-				data.BrushType = this.BrushType;
-				data.MyColor = this.MyColor;
-				data.Glow = this.Glow;
-				data.BrushSize = this.BrushSize;
-				data.PressurePercent = this.PressurePercent;
-				data.WorldX = this.WorldX;
-				data.WorldY = this.WorldY;
-			}
-		}
-
-
-
-		////////////////
-
 		public static void SyncToAll( PaintLayerType layer, PaintBrushType brushType, Color color, byte glow,
 				PaintBrushSize brushSize, float pressurePercent, int randSeed, int worldX, int worldY ) {
-			if( Main.netMode != 1 ) { throw new Exception( "Not client" ); }
+			if( Main.netMode != 1 ) { throw new HamstarException( "Not client" ); }
 
-			var factory = new MyFactory( layer, brushType, color, glow, brushSize, pressurePercent, randSeed, worldX, worldY );
-			PaintStrokeProtocol protocol = factory.Create();
-
+			var protocol = new PaintStrokeProtocol( layer, brushType, color, glow, brushSize, pressurePercent, randSeed, worldX, worldY );
 			protocol.SendToServer( true );
 		}
 
@@ -72,9 +31,23 @@ namespace BetterPaint.NetProtocols {
 		public int WorldY = 0;
 
 
+
 		////////////////
 
 		private PaintStrokeProtocol() { }
+
+		private PaintStrokeProtocol( PaintLayerType layer, PaintBrushType brushType, Color color, byte glow,
+					PaintBrushSize brushSize, float pressurePercent, int randSeed, int worldX, int worldY ) {
+			this.Layer = (int)layer;
+			this.BrushType = (int)brushType;
+			this.MyColor = color;
+			this.Glow = glow;
+			this.BrushSize = (int)brushSize;
+			this.PressurePercent = pressurePercent;
+			this.WorldX = worldX;
+			this.WorldY = worldY;
+		}
+
 
 		////////////////
 

@@ -1,5 +1,6 @@
 ﻿using BetterPaint.Items;
 using BetterPaint.Painting;
+using HamstarHelpers.Components.Errors;
 using HamstarHelpers.Helpers.DebugHelpers;
 using HamstarHelpers.Helpers.HudHelpers;
 using HamstarHelpers.Helpers.ItemHelpers;
@@ -70,7 +71,7 @@ namespace BetterPaint.UI {
 			} else if( ItemIdentityHelpers.Paints.Item2.Contains( itemType ) ) {
 				return Main.itemTexture[itemType];
 			} else {
-				throw new NotImplementedException();
+				throw new HamstarException( "Not implemented." );
 			}
 		}
 
@@ -85,7 +86,7 @@ namespace BetterPaint.UI {
 				hasGlow = false;
 				return null;
 			} else {
-				throw new NotImplementedException();
+				throw new HamstarException( "Not implemented." );
 			}
 		}
 

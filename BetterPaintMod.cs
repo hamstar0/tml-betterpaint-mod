@@ -2,6 +2,7 @@
 using BetterPaint.Painting.Brushes;
 using HamstarHelpers.Components.Config;
 using HamstarHelpers.Helpers.DebugHelpers;
+using HamstarHelpers.Helpers.TmlHelpers.ModHelpers;
 using HamstarHelpers.Services.Messages;
 using HamstarHelpers.Services.Promises;
 using System;
@@ -91,15 +92,7 @@ namespace BetterPaint {
 		////////////////
 
 		public override object Call( params object[] args ) {
-			if( args.Length == 0 ) { throw new Exception( "Undefined call type." ); }
-
-			string callType = args[0] as string;
-			if( args == null ) { throw new Exception( "Invalid call type." ); }
-
-			var newArgs = new object[args.Length - 1];
-			Array.Copy( args, 1, newArgs, 0, args.Length - 1 );
-
-			return MagicPaintAPI.Call( callType, newArgs );
+			return ModBoilerplateHelpers.HandleModCall( typeof(BetterPaintAPI), args );
 		}
 
 

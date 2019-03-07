@@ -1,5 +1,6 @@
 ﻿using BetterPaint.Painting;
 using BetterPaint.Painting.Brushes;
+using HamstarHelpers.Components.Errors;
 using HamstarHelpers.Helpers.ItemHelpers;
 using Microsoft.Xna.Framework;
 using System;
@@ -28,7 +29,7 @@ namespace BetterPaint.Items {
 			case PaintLayerType.Anyground:
 				return myworld.Layers.Foreground.CanPaintAt( tile ) || myworld.Layers.Background.CanPaintAt( tile );
 			default:
-				throw new NotImplementedException();
+				throw new HamstarException( "Not implemented." );
 			}
 		}
 
@@ -60,7 +61,7 @@ namespace BetterPaint.Items {
 				}
 				break;
 			default:
-				throw new NotImplementedException();
+				throw new HamstarException( "Not implemented." );
 			}
 
 			return false;
@@ -119,7 +120,7 @@ namespace BetterPaint.Items {
 				}
 				break;
 			default:
-				throw new NotImplementedException();
+				throw new HamstarException( "Not implemented." );
 			}
 
 			if( !data.HasColorAt(tileX, tileY) ) {

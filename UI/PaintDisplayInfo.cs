@@ -1,5 +1,6 @@
 ﻿using BetterPaint.Items;
 using BetterPaint.Painting;
+using HamstarHelpers.Components.Errors;
 using HamstarHelpers.Helpers.ItemHelpers;
 using Microsoft.Xna.Framework;
 using System;
@@ -74,7 +75,7 @@ namespace BetterPaint.UI {
 				percent = (float)this.PaintItem.stack / 999f;
 				stack = this.PaintItem.stack;
 			} else {
-				throw new NotImplementedException();
+				throw new HamstarException( "Not implemented." );
 			}
 		}
 	}
