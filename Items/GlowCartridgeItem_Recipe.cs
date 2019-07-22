@@ -26,7 +26,9 @@ namespace BetterPaint.Items {
 		public GlowCartridgeRecipe( BetterPaintMod mymod, GlowCartridgeItem myitem ) : base( mymod ) {
 			this.AddTile( mymod.TileType<PaintMixerTile>() );
 			this.AddIngredient( mymod.GetItem<ColorCartridgeItem>(), 1 );
-			this.AddIngredient( ItemID.JungleSpores, mymod.Config.GlowPaintRecipeSpores );
+			if( mymod.Config.GlowPaintRecipeSpores > 0 ) {
+				this.AddIngredient( ItemID.JungleSpores, mymod.Config.GlowPaintRecipeSpores );
+			}
 			this.SetResult( myitem, 1 );
 		}
 		

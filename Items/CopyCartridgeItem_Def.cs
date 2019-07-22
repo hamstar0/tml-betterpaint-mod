@@ -70,10 +70,10 @@ namespace BetterPaint.Items {
 			this.AddIngredient( basecart, 1 );
 
 			if( manaPotQt > 0 ) {
-				this.AddIngredient( ItemID.GreaterManaPotion, mymod.Config.CopyPaintRecipeManaPotions );
+				this.AddIngredient( ItemID.GreaterManaPotion, manaPotQt );
 			}
 			if( naniteQt > 0 ) {
-				this.AddIngredient( ItemID.Nanites, mymod.Config.CopyPaintRecipeNanites );
+				this.AddIngredient( ItemID.Nanites, naniteQt );
 			}
 
 			this.SetResult( copycart );
