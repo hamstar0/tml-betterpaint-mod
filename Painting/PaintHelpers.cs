@@ -1,6 +1,6 @@
 ﻿using BetterPaint.Items;
 using HamstarHelpers.Components.Errors;
-using HamstarHelpers.Helpers.ItemHelpers;
+using HamstarHelpers.Helpers.Items;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;

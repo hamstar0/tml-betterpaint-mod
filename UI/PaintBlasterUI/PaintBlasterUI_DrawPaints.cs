@@ -1,9 +1,8 @@
 ﻿using BetterPaint.Items;
 using BetterPaint.Painting;
 using HamstarHelpers.Components.Errors;
-using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.HudHelpers;
-using HamstarHelpers.Helpers.ItemHelpers;
+using HamstarHelpers.Helpers.HUD;
+using HamstarHelpers.Helpers.Items;
 using HamstarHelpers.Services.AnimatedColor;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -132,7 +131,7 @@ namespace BetterPaint.UI {
 				selRect.Width += 6;
 				selRect.Height += 6;
 
-				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, selRect, 2 );
+				HUDHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, selRect, 2 );
 			}
 
 			Utils.DrawBorderStringFourWay( sb, Main.fontItemStack, stack + "", (rect.X+cartTex.Width)-4, (rect.Y+cartTex.Height)-12, Color.White, Color.Black, default( Vector2 ), 1f );

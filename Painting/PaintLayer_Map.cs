@@ -1,5 +1,4 @@
-﻿using HamstarHelpers.Helpers.DebugHelpers;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Map;
 
@@ -11,7 +10,7 @@ namespace BetterPaint.Painting {
 			//Color tile_color = MapHelper.GetMapTileXnaColor( ref map_tile );
 			//Color lerped_color = Color.Lerp( tile_color, color, (float)color.A / 255f );
 
-			mapTile.Color = HamstarHelpers.Helpers.MiscHelpers.PaintHelpers.GetNearestPaintType( color );
+			mapTile.Color = HamstarHelpers.Helpers.Misc.PaintHelpers.GetNearestPaintType( color );
 
 			Main.Map.SetTile( tileX, tileY, ref mapTile );
 		}

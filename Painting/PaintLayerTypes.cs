@@ -1,4 +1,4 @@
-﻿using HamstarHelpers.Helpers.TileHelpers;
+﻿using HamstarHelpers.Helpers.Tiles;
 using Terraria;
 
 

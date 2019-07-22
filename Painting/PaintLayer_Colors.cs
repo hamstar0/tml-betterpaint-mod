@@ -1,5 +1,4 @@
-﻿using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.XnaHelpers;
+﻿using HamstarHelpers.Helpers.XNA;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
@@ -81,7 +80,7 @@ namespace BetterPaint.Painting {
 
 			Color computed;
 			Color color = (Color)rawColor;
-			Color flattened = XnaColorHelpers.FlattenColor( Color.White, color );
+			Color flattened = XNAColorHelpers.FlattenColor( Color.White, color );
 			Color envColor = Lighting.GetColor( tileX, tileY, flattened );
 
 			float litPercent = (float)this.GetGlowAt( tileX, tileY ) / 255f;

@@ -1,5 +1,4 @@
-﻿using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.ItemHelpers;
+﻿using HamstarHelpers.Helpers.Items;
 using Microsoft.Xna.Framework;
 using BetterPaint.Items;
 using System;
@@ -7,6 +6,7 @@ using Terraria;
 using Terraria.ModLoader;
 using BetterPaint.Painting;
 using HamstarHelpers.Components.Errors;
+
 
 namespace BetterPaint.Commands {
 	class GivePaintCommand : ModCommand {

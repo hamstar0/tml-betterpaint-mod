@@ -1,7 +1,7 @@
 ﻿using BetterPaint.Painting;
 using BetterPaint.Painting.Brushes;
 using BetterPaint.UI;
-using HamstarHelpers.Helpers.PlayerHelpers;
+using HamstarHelpers.Helpers.Players;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
@@ -94,7 +94,7 @@ namespace BetterPaint.Items {
 
 			if( this.IsCopying ) {
 				var set = new HashSet<int> { mymod.ItemType<CopyCartridgeItem>() };
-				var copyCartItem = PlayerItemFinderHelpers.FindFirstOfItemFor( player, set );
+				var copyCartItem = PlayerItemFinderHelpers.FindFirstOfPossessedItemFor( player, set, false );
 
 				if( copyCartItem == null ) {
 					Main.NewText( "Copy Cartridges needed.", Color.Red );

@@ -33,9 +33,14 @@
   <ItemGroup>
     <Reference Include="HamstarHelpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Helpers\HamstarHelpers\bin\Release\HamstarHelpers.dll</HintPath>
+      <HintPath>..\..\Mod Helpers\v5 (tML11)\HamstarHelpers\bin\Release\HamstarHelpers.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\..\..\..\..\My Games\Terraria\ModLoader\references\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ReLogic">
+      <HintPath>..\..\..\..\..\My Games\Terraria\ModLoader\references\ReLogic.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,9 +54,6 @@
     <Reference Include="Microsoft.Xna.Framework.Graphics" />
     <Reference Include="Terraria">
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Terraria\Terraria.exe</HintPath>
-    </Reference>
-    <Reference Include="Terraria.Libraries.ReLogic.ReLogic">
-      <HintPath>..\..\..\Reference\Terraria.Libraries.ReLogic.ReLogic.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -89,7 +91,6 @@
     <Compile Include="Items\PaintMixerItem_Def.cs" />
     <Compile Include="Items\ColorCartridgeItem_Def.cs" />
     <Compile Include="BetterPaintMod.cs" />
-    <Compile Include="NetProtocols\ModSettingsProtocol.cs" />
     <Compile Include="NetProtocols\PaintStrokeProtocol.cs" />
     <Compile Include="Painting\PaintLayer.cs" />
     <Compile Include="Painting\Brushes\PaintBrush.cs" />

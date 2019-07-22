@@ -1,5 +1,4 @@
-﻿using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Services.Promises;
+﻿using HamstarHelpers.Services.Hooks.LoadHooks;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +19,10 @@ namespace BetterPaint.Painting {
 			this.Colors = new Dictionary<ushort, IDictionary<ushort, Color>>();
 			this.Glows = new Dictionary<ushort, IDictionary<ushort, byte>>();
 
-			Promises.AddWorldLoadEachPromise( () => {
+			LoadHooks.AddWorldLoadEachHook( () => {
 				Main.OnPreDraw += this.RefreshTilesOnMap;
 			} );
-			Promises.AddWorldUnloadEachPromise( () => {
+			LoadHooks.AddWorldUnloadEachHook( () => {
 				Main.OnPreDraw -= this.RefreshTilesOnMap;
 			} );
 		}

@@ -1,5 +1,5 @@
 ﻿using BetterPaint.Painting;
-using HamstarHelpers.Components.Network;
+using HamstarHelpers.Components.Protocols.Packet.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

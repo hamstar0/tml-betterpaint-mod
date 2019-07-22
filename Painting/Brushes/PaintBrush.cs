@@ -1,4 +1,4 @@
-﻿using HamstarHelpers.Helpers.XnaHelpers;
+﻿using HamstarHelpers.Helpers.XNA;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -35,8 +35,8 @@ namespace BetterPaint.Painting.Brushes {
 		public static float ComputeColorChangePercent( Color? oldColor, Color newColor ) {
 			Color baseColor = oldColor != null ? (Color)oldColor : Color.Transparent;
 
-			Color diffColor = XnaColorHelpers.DifferenceRGB( baseColor, newColor );
-			float diffValue = XnaColorHelpers.AvgRGB( diffColor );
+			Color diffColor = XNAColorHelpers.DifferenceRGB( baseColor, newColor );
+			float diffValue = XNAColorHelpers.AvgRGB( diffColor );
 
 			return diffValue / 255f;
 		}

@@ -1,10 +1,8 @@
 ﻿using BetterPaint.Items;
 using BetterPaint.Painting.Brushes;
-using HamstarHelpers.Components.Config;
-using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.TmlHelpers.ModHelpers;
+using HamstarHelpers.Helpers.TModLoader.Mods;
 using HamstarHelpers.Services.Messages;
-using HamstarHelpers.Services.Promises;
+using HamstarHelpers.Services.Hooks.LoadHooks;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -20,8 +18,7 @@ namespace BetterPaint {
 
 		////////////////
 
-		public JsonConfig<BetterPaintConfigData> ConfigJson { get; private set; }
-		public BetterPaintConfigData Config { get { return this.ConfigJson.Data; } }
+		public BetterPaintConfig Config { get; private set; }
 
 		public IDictionary<PaintBrushType, PaintBrush> Modes { get; private set; }
 
@@ -42,8 +39,7 @@ namespace BetterPaint {
 				{ PaintBrushType.Erase, new PaintBrushErase() }
 			};
 
-			this.ConfigJson = new JsonConfig<BetterPaintConfigData>( BetterPaintConfigData.ConfigFileName,
-					ConfigurationDataBase.RelativePath, new BetterPaintConfigData() );
+			this.Config = new BetterPaintConfig();
 		}
 
 		////////////////
@@ -51,9 +47,7 @@ namespace BetterPaint {
 		public override void Load() {
 			BetterPaintMod.Instance = this;
 
-			this.LoadConfig();
-
-			Promises.AddPostWorldLoadEachPromise( () => {
+			LoadHooks.AddPostWorldLoadEachHook( () => {
 				string intro1 = "1 of 5 - Eager to try out better painting? You'll need a Paint Blaster, crafted via " + (this.Config.PaintBlasterRecipeClentaminator ? "Clentaminator" : "Illegal Gun Parts") + " and Paint Sprayer at a Tinkerer's Workshop.";
 				string intro2 = "2 of 5 - To make paint, you'll need a Paint Mixer, crafted via Dye Vat" + ( this.Config.PaintMixerRecipeBlendOMatic ? ", Blend-O-Matic, " : " " ) + "and Extractinator at a Tinkerer's Workshop.";
 				string intro3 = "3 of 5 - To paint, you'll need Color Cartridges, crafted via colored Paints (any " + this.Config.PaintRecipePaints + ") and Gel (" + this.Config.PaintRecipeGels + ") at a Paint Mixer.";
@@ -70,18 +64,6 @@ namespace BetterPaint {
 					InboxMessages.SetMessage( "BetterPaintNoMuliYet", "Better Paint (as of v1.2.0) is not yet compatible with multiplayer.", true );
 				}
 			} );
-		}
-
-		private void LoadConfig() {
-			if( !this.ConfigJson.LoadFile() ) {
-				this.ConfigJson.SaveFile();
-				ErrorLogger.Log( "Better Paint config " + BetterPaintConfigData.ConfigVersion.ToString() + " created." );
-			}
-
-			if( this.Config.UpdateToLatestVersion() ) {
-				ErrorLogger.Log( "Better Paint updated to " + BetterPaintConfigData.ConfigVersion.ToString() );
-				this.ConfigJson.SaveFile();
-			}
 		}
 
 		public override void Unload() {

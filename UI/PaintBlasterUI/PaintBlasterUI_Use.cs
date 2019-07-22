@@ -10,7 +10,6 @@ using Terraria;
 namespace BetterPaint.UI {
 	partial class PaintBlasterUI {
 		private bool CheckUISettingsInteractions( Rectangle layerRect, Rectangle sizeRect, Rectangle copyRect, Rectangle pressRect ) {
-			Player player = Main.LocalPlayer;
 			bool hasInteracted = false;
 
 			if( layerRect.Contains( Main.mouseX, Main.mouseY ) ) {
@@ -35,7 +34,6 @@ namespace BetterPaint.UI {
 
 
 		private bool CheckUIBrushInteractions( Rectangle brushRect, Rectangle sprayRect, Rectangle bucketRect, Rectangle scrapeRect ) {
-			Player player = Main.LocalPlayer;
 			bool hasInteracted = false;
 
 			if( this.CurrentBrush != PaintBrushType.Stream && brushRect.Contains( Main.mouseX, Main.mouseY ) ) {

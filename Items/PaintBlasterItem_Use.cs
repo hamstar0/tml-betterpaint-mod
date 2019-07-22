@@ -1,8 +1,7 @@
 ﻿using BetterPaint.Painting;
 using BetterPaint.Painting.Brushes;
-using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.PlayerHelpers;
-using HamstarHelpers.Helpers.UIHelpers;
+using HamstarHelpers.Helpers.Players;
+using HamstarHelpers.Helpers.UI;
 using HamstarHelpers.Services.Timers;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;

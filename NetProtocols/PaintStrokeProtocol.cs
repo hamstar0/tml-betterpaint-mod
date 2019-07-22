@@ -1,6 +1,6 @@
 ﻿using BetterPaint.Painting.Brushes;
 using HamstarHelpers.Components.Errors;
-using HamstarHelpers.Components.Network;
+using HamstarHelpers.Components.Protocols.Packet.Interfaces;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;

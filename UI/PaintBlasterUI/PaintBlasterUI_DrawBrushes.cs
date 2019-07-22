@@ -1,5 +1,5 @@
 ﻿using BetterPaint.Painting.Brushes;
-using HamstarHelpers.Helpers.HudHelpers;
+using HamstarHelpers.Helpers.HUD;
 using HamstarHelpers.Services.AnimatedColor;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -62,16 +62,16 @@ namespace BetterPaint.UI {
 
 			switch( this.CurrentBrush ) {
 			case PaintBrushType.Stream:
-				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, streamRect, 2 );
+				HUDHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, streamRect, 2 );
 				break;
 			case PaintBrushType.Spray:
-				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, sprayRect, 2 );
+				HUDHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, sprayRect, 2 );
 				break;
 			case PaintBrushType.Spatter:
-				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, spatterRect, 2 );
+				HUDHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, spatterRect, 2 );
 				break;
 			case PaintBrushType.Erase:
-				HudHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, eraserRect, 2 );
+				HUDHelpers.DrawBorderedRect( sb, Color.Transparent, AnimatedColors.Air.CurrentColor * 0.5f, eraserRect, 2 );
 				break;
 			}
 		}

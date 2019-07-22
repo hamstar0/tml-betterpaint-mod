@@ -1,5 +1,4 @@
-﻿using HamstarHelpers.Helpers.XnaHelpers;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 
