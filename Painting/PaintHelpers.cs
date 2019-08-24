@@ -1,5 +1,5 @@
 ﻿using BetterPaint.Items;
-using HamstarHelpers.Components.Errors;
+using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Helpers.Items;
 using Microsoft.Xna.Framework;
 using System;
@@ -36,7 +36,7 @@ namespace BetterPaint.Painting {
 			if( paintType == mymod.ItemType<GlowCartridgeItem>() ) {
 				return true;
 			}
-			if( ItemIdentityHelpers.Paints.Item2.Contains( paintType ) ) {
+			if( ItemGroupIdentityHelpers.Paints.Group.Contains( paintType ) ) {
 				return true;
 			}
 			return false;
@@ -52,10 +52,10 @@ namespace BetterPaint.Painting {
 			if( paintType == mymod.ItemType<GlowCartridgeItem>() ) {
 				return PaintType.GlowCartridge;
 			}
-			if( ItemIdentityHelpers.Paints.Item2.Contains( paintType ) ) {
+			if( ItemGroupIdentityHelpers.Paints.Group.Contains( paintType ) ) {
 				return PaintType.Can;
 			} else {
-				throw new HamstarException( "Not implemented." );
+				throw new ModHelpersException( "Not implemented." );
 			}
 		}
 
@@ -72,7 +72,7 @@ namespace BetterPaint.Painting {
 				var myglowcart = (GlowCartridgeItem)paintItem.modItem;
 				return myglowcart.Quantity;
 			default:
-				throw new HamstarException( "Not implemented." );
+				throw new ModHelpersException( "Not implemented." );
 			}
 		}
 
@@ -93,7 +93,7 @@ namespace BetterPaint.Painting {
 				color = myglowcart.MyColor;
 				break;
 			default:
-				throw new HamstarException( "Not implemented." );
+				throw new ModHelpersException( "Not implemented." );
 			}
 			return color;
 		}
@@ -113,7 +113,7 @@ namespace BetterPaint.Painting {
 				glow = 255;
 				break;
 			default:
-				throw new HamstarException( "Not implemented." );
+				throw new ModHelpersException( "Not implemented." );
 			}
 
 			return glow;
@@ -139,7 +139,7 @@ namespace BetterPaint.Painting {
 				myglowcart.ConsumePaint( amount );
 				break;
 			default:
-				throw new HamstarException( "Not implemented." );
+				throw new ModHelpersException( "Not implemented." );
 			}
 		}
 	}

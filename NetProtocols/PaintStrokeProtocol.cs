@@ -1,6 +1,6 @@
 ﻿using BetterPaint.Painting.Brushes;
-using HamstarHelpers.Components.Errors;
-using HamstarHelpers.Components.Protocols.Packet.Interfaces;
+using HamstarHelpers.Classes.Errors;
+using HamstarHelpers.Classes.Protocols.Packet.Interfaces;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -10,7 +10,7 @@ namespace BetterPaint.NetProtocols {
 	class PaintStrokeProtocol : PacketProtocolSentToEither {
 		public static void SyncToAll( PaintLayerType layer, PaintBrushType brushType, Color color, byte glow,
 				PaintBrushSize brushSize, float pressurePercent, int randSeed, int worldX, int worldY ) {
-			if( Main.netMode != 1 ) { throw new HamstarException( "Not client" ); }
+			if( Main.netMode != 1 ) { throw new ModHelpersException( "Not client" ); }
 
 			var protocol = new PaintStrokeProtocol( layer, brushType, color, glow, brushSize, pressurePercent, randSeed, worldX, worldY );
 			protocol.SendToServer( true );

@@ -1,145 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="C:\Users\Spinach\Documents\My Games\Terraria\ModLoader\references\tModLoader.targets" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8EDFD162-8CD8-46A8-8E80-6208432B7223}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BetterPaint</RootNamespace>
     <AssemblyName>BetterPaint</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <TargetFramework>net452</TargetFramework>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+  <Target Name="BuildMod" AfterTargets="Build">
+    <Exec Command="&quot;$(tMLBuildServerPath)&quot; -build $(ProjectDir) -eac $(TargetPath) -define $(DefineConstants) -unsafe $(AllowUnsafeBlocks)" />
+  </Target>
   <ItemGroup>
-    <Reference Include="HamstarHelpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Mod Helpers\v5 (tML11)\HamstarHelpers\bin\Release\HamstarHelpers.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-      <HintPath>..\..\..\..\..\My Games\Terraria\ModLoader\references\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="ReLogic">
-      <HintPath>..\..\..\..\..\My Games\Terraria\ModLoader\references\ReLogic.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.Xna.Framework" />
-    <Reference Include="Microsoft.Xna.Framework.Game" />
-    <Reference Include="Microsoft.Xna.Framework.Graphics" />
-    <Reference Include="Terraria">
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Terraria\Terraria.exe</HintPath>
-    </Reference>
+    <None Remove=".gitattributes" />
+    <None Remove=".gitignore" />
+    <None Remove="copy_sources.bat" />
+    <None Remove="desktop.ini" />
+    <None Remove="icon.pdn" />
+    <None Remove="UI\PaintBlasterHUD\PaintAmmo.pdn" />
+    <None Remove="UI\PaintBlasterUI\Brushes.pdn" />
+    <None Remove="UI\PaintBlasterUI\PressureMid.pdn" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API.cs" />
-    <Compile Include="BetterPaintMod_Meta.cs" />
-    <Compile Include="BetterPaintNPC.cs" />
-    <Compile Include="BetterPaintWorld.cs" />
-    <Compile Include="Commands\ClearAllPaintCommand.cs" />
-    <Compile Include="Items\GlowCartridgeItem_Draw.cs" />
-    <Compile Include="Items\GlowCartridgeItem_Recipe.cs" />
-    <Compile Include="Items\GlowCartridgeItem_Def.cs" />
-    <Compile Include="Items\CopyCartridgeItem_Def.cs" />
-    <Compile Include="NetProtocols\WorldPaintDataProtocol.cs" />
-    <Compile Include="Painting\PaintHelpers.cs" />
-    <Compile Include="Painting\PaintLayer_Colors.cs" />
-    <Compile Include="Painting\PaintLayer_Map.cs" />
-    <Compile Include="UI\PaintBlasterHUD\PaintBlasterHUD.cs" />
-    <Compile Include="Items\PaintBlasterItem_Recipe.cs" />
-    <Compile Include="Items\PaintBlasterItem_UI.cs" />
-    <Compile Include="Items\PaintBlasterItem_Action.cs" />
-    <Compile Include="UI\PaintBlasterUI\PaintBlasterUI_DrawPaints.cs" />
-    <Compile Include="UI\PaintBlasterUI\PaintBlasterUI_DrawOptions.cs" />
-    <Compile Include="UI\PaintBlasterUI\PaintBlasterUI_DrawBrushes.cs" />
-    <Compile Include="UI\PaintBlasterUI\PaintBlasterUI_Use.cs" />
-    <Compile Include="UI\PaintBlasterUI\PaintBlasterUI_Draw.cs" />
-    <Compile Include="UI\PaintBlasterUI\PaintBlasterUI.cs" />
-    <Compile Include="BetterPaintPlayer.cs" />
-    <Compile Include="BetterPaintTile.cs" />
-    <Compile Include="Commands\GivePaintCommand.cs" />
-    <Compile Include="Config.cs" />
-    <Compile Include="Items\PaintBlasterItem_Use.cs" />
-    <Compile Include="Items\ColorCartridgeItem_Draw.cs" />
-    <Compile Include="Items\ColorCartridgeItem_Recipe.cs" />
-    <Compile Include="Items\PaintBlasterItem_Def.cs" />
-    <Compile Include="Items\PaintMixerItem_Def.cs" />
-    <Compile Include="Items\ColorCartridgeItem_Def.cs" />
-    <Compile Include="BetterPaintMod.cs" />
-    <Compile Include="NetProtocols\PaintStrokeProtocol.cs" />
-    <Compile Include="Painting\PaintLayer.cs" />
-    <Compile Include="Painting\Brushes\PaintBrush.cs" />
-    <Compile Include="Painting\Brushes\PaintBrushSpray.cs" />
-    <Compile Include="Painting\Brushes\PaintBrushSpatter.cs" />
-    <Compile Include="Painting\Brushes\PaintBrushErase.cs" />
-    <Compile Include="Painting\Brushes\PaintBrushStream.cs" />
-    <Compile Include="Painting\PaintLayerTypes.cs" />
-    <Compile Include="Painting\WorldPaintLayers.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tiles\PaintMixerTile.cs" />
-    <Compile Include="UI\PaintDisplayInfo.cs" />
+    <Reference Include="HamstarHelpers">
+      <HintPath>..\..\Mod Helpers\v5 (tML11)\HamstarHelpers\bin\Release\net452\HamstarHelpers.dll</HintPath>
+    </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="LICENSE" />
-    <None Include="README.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="build.txt" />
-    <Content Include="description.txt" />
-    <Content Include="icon.png" />
-    <Content Include="Items\GlowCartridgeItem.png" />
-    <Content Include="Items\GlowCartridgeItem_Color.png" />
-    <Content Include="Items\CopyCartridgeItem.png" />
-    <Content Include="Items\ColorCartridgeItem.png" />
-    <Content Include="Items\ColorCartridgeItem_Color.png" />
-    <Content Include="Items\GlowCartridgeItem_Glow1.png" />
-    <Content Include="UI\PaintBlasterHUD\PaintAmmoBottom.png" />
-    <Content Include="UI\PaintBlasterHUD\PaintAmmoContainer.png" />
-    <Content Include="UI\PaintBlasterHUD\PaintAmmoTop.png" />
-    <Content Include="UI\PaintBlasterUI\BrushEraser.png" />
-    <Content Include="UI\PaintBlasterUI\BrushSpatter.png" />
-    <Content Include="UI\PaintBlasterUI\BrushSpray.png" />
-    <Content Include="UI\PaintBlasterUI\BrushStream.png" />
-    <Content Include="UI\PaintBlasterUI\LayerBoth.png" />
-    <Content Include="UI\PaintBlasterUI\LayerFg.png" />
-    <Content Include="UI\PaintBlasterUI\LayerBg.png" />
-    <Content Include="UI\PaintBlasterUI\SizeLarge.png" />
-    <Content Include="UI\PaintBlasterUI\SizeSmall.png" />
-    <Content Include="UI\PaintBlasterUI\PressureHi.png" />
-    <Content Include="UI\PaintBlasterUI\PressureLow.png" />
-    <Content Include="UI\PaintBlasterUI\PressureMid.png" />
-    <Content Include="Items\PaintMixerItem.png" />
-    <Content Include="Items\PaintBlasterItem.png" />
-    <Content Include="Tiles\PaintMixerTile.png" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Steam\steamapps\common\Terraria\tModLoaderServer.exe" -build "$(ProjectDir)\"</PostBuildEvent>
-  </PropertyGroup>
 </Project>

@@ -1,5 +1,4 @@
-﻿using HamstarHelpers.Components.Errors;
-using HamstarHelpers.Helpers.Debug;
+﻿using HamstarHelpers.Helpers.Debug;
 using System;
 using Terraria;
 using Terraria.ModLoader;

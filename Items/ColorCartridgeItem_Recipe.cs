@@ -121,14 +121,14 @@ namespace BetterPaint.Items {
 		////////////////
 
 		public override int ConsumeItem( int itemType, int numRequired ) {
-			if( !ItemIdentityHelpers.Paints.Item2.Contains( itemType ) ) {   // Not paint
+			if( !ItemGroupIdentityHelpers.Paints.Group.Contains( itemType ) ) {   // Not paint
 				return base.ConsumeItem( itemType, numRequired );
 			}
 
 			var mymod = (BetterPaintMod)this.mod;
 			var inv = Main.LocalPlayer.inventory;
 			int maxPaints = mymod.Config.PaintRecipePaints;
-			ISet<int> paints = ItemIdentityHelpers.Paints.Item2;
+			ISet<int> paints = ItemGroupIdentityHelpers.Paints.Group;
 			int count = 0;
 
 			int r = 0;

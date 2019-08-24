@@ -1,6 +1,6 @@
 ﻿using BetterPaint.Items;
 using BetterPaint.Painting;
-using HamstarHelpers.Components.Errors;
+using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Helpers.HUD;
 using HamstarHelpers.Helpers.Items;
 using HamstarHelpers.Services.AnimatedColor;
@@ -67,10 +67,10 @@ namespace BetterPaint.UI {
 				return ColorCartridgeItem.ColorCartridgeTex;
 			} else if( itemType == mymod.ItemType<GlowCartridgeItem>() ) {
 				return GlowCartridgeItem.GlowCartridgeTex;
-			} else if( ItemIdentityHelpers.Paints.Item2.Contains( itemType ) ) {
+			} else if( ItemGroupIdentityHelpers.Paints.Group.Contains( itemType ) ) {
 				return Main.itemTexture[itemType];
 			} else {
-				throw new HamstarException( "Not implemented." );
+				throw new ModHelpersException( "Not implemented." );
 			}
 		}
 
@@ -81,11 +81,11 @@ namespace BetterPaint.UI {
 			} else if( itemType == mymod.ItemType<GlowCartridgeItem>() ) {
 				hasGlow = true;
 				return GlowCartridgeItem.ColorOverlayTex;
-			} else if( ItemIdentityHelpers.Paints.Item2.Contains( itemType ) ) {
+			} else if( ItemGroupIdentityHelpers.Paints.Group.Contains( itemType ) ) {
 				hasGlow = false;
 				return null;
 			} else {
-				throw new HamstarException( "Not implemented." );
+				throw new ModHelpersException( "Not implemented." );
 			}
 		}
 

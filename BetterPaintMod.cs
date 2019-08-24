@@ -1,8 +1,8 @@
 ﻿using BetterPaint.Items;
 using BetterPaint.Painting.Brushes;
 using HamstarHelpers.Helpers.TModLoader.Mods;
-using HamstarHelpers.Services.Messages;
 using HamstarHelpers.Services.Hooks.LoadHooks;
+using HamstarHelpers.Services.Messages.Inbox;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -13,12 +13,12 @@ using Terraria.UI;
 namespace BetterPaint {
     partial class BetterPaintMod : Mod {
 		public static BetterPaintMod Instance { get; private set; }
-		
+
 
 
 		////////////////
 
-		public BetterPaintConfig Config { get; private set; }
+		public BetterPaintConfig Config => this.GetConfig<BetterPaintConfig>();
 
 		public IDictionary<PaintBrushType, PaintBrush> Modes { get; private set; }
 
@@ -38,8 +38,6 @@ namespace BetterPaint {
 				{ PaintBrushType.Spatter, new PaintBrushSpatter() },
 				{ PaintBrushType.Erase, new PaintBrushErase() }
 			};
-
-			this.Config = new BetterPaintConfig();
 		}
 
 		////////////////

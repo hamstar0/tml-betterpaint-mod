@@ -1,11 +1,11 @@
-﻿using HamstarHelpers.Helpers.Items;
+﻿using HamstarHelpers.Classes.Errors;
+using HamstarHelpers.Helpers.Items;
 using Microsoft.Xna.Framework;
 using BetterPaint.Items;
 using System;
 using Terraria;
 using Terraria.ModLoader;
 using BetterPaint.Painting;
-using HamstarHelpers.Components.Errors;
 
 
 namespace BetterPaint.Commands {
@@ -33,7 +33,7 @@ namespace BetterPaint.Commands {
 			Item paintItem = Main.item[itemIdx];
 
 			if( paintItem == null || paintItem.IsAir ) {
-				throw new HamstarException( "Could not create cheaty paint." );
+				throw new ModHelpersException( "Could not create cheaty paint." );
 			}
 
 			Func<byte> rand = () => (byte)Main.rand.Next( 0, 255 );

@@ -1,5 +1,5 @@
 ﻿using BetterPaint.Painting.Brushes;
-using HamstarHelpers.Components.Errors;
+using HamstarHelpers.Classes.Errors;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -28,7 +28,7 @@ namespace BetterPaint.UI {
 				tex = PaintBlasterUI.LayerBothTex;
 				break;
 			default:
-				throw new HamstarException( "Not implemented." );
+				throw new ModHelpersException( "Not implemented." );
 			}
 
 			var offset = new Vector2( tex.Width, tex.Height ) * 0.5f;
@@ -55,7 +55,7 @@ namespace BetterPaint.UI {
 					str = "All layers";
 					break;
 				default:
-					throw new HamstarException( "Not implemented." );
+					throw new ModHelpersException( "Not implemented." );
 				}
 				
 				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, str, rect.X, rect.Y - 16, Color.White, Color.Black, default( Vector2 ), 1f );
@@ -84,7 +84,7 @@ namespace BetterPaint.UI {
 				tex = PaintBlasterUI.SizeLargeTex;
 				break;
 			default:
-				throw new HamstarException( "Not implemented." );
+				throw new ModHelpersException( "Not implemented." );
 			}
 
 			var offset = new Vector2( tex.Width, tex.Height ) * 0.5f;
@@ -108,7 +108,7 @@ namespace BetterPaint.UI {
 					str = "Large brush";
 					break;
 				default:
-					throw new HamstarException( "Not implemented." );
+					throw new ModHelpersException( "Not implemented." );
 				}
 				
 				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, str, rect.X, rect.Y + rect.Height, Color.White, Color.Black, default( Vector2 ), 1f );

@@ -1,6 +1,6 @@
 ﻿using BetterPaint.Items;
 using BetterPaint.Painting;
-using HamstarHelpers.Components.Errors;
+using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Helpers.Items;
 using Microsoft.Xna.Framework;
 using System;
@@ -70,12 +70,12 @@ namespace BetterPaint.UI {
 				color = glowCart.MyColor;
 				percent = glowCart.Quantity / (float)mymod.Config.PaintCartridgeCapacity;
 				stack = this.Copies;
-			} else if( ItemIdentityHelpers.Paints.Item2.Contains(this.PaintItem.type) ) {
+			} else if( ItemGroupIdentityHelpers.Paints.Group.Contains(this.PaintItem.type) ) {
 				color = WorldGen.paintColor( this.PaintItem.paint );
 				percent = (float)this.PaintItem.stack / 999f;
 				stack = this.PaintItem.stack;
 			} else {
-				throw new HamstarException( "Not implemented." );
+				throw new ModHelpersException( "Not implemented." );
 			}
 		}
 	}

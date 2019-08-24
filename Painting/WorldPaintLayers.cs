@@ -1,6 +1,6 @@
 ﻿using BetterPaint.NetProtocols;
 using BetterPaint.Painting.Brushes;
-using HamstarHelpers.Components.Errors;
+using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Helpers.Tiles;
 using Microsoft.Xna.Framework;
 using System;
@@ -55,7 +55,7 @@ namespace BetterPaint.Painting {
 
 		public float ApplyColorAt( BetterPaintMod mymod, PaintLayerType layer, PaintBrushType brushType,
 				Color color, byte glow, PaintBrushSize brushSize, float pressurePrecent, int worldX, int worldY ) {
-			if( Main.netMode == 2 ) { throw new HamstarException( "No server." ); }
+			if( Main.netMode == 2 ) { throw new ModHelpersException( "No server." ); }
 			
 			int randSeed = DateTime.Now.Millisecond;
 			float paintsUsed = this.ApplyColorAtNoSync( mymod, layer, brushType, color, glow, brushSize, pressurePrecent, randSeed, worldX, worldY );
@@ -70,7 +70,7 @@ namespace BetterPaint.Painting {
 		internal float ApplyColorAtNoSync( BetterPaintMod mymod, PaintLayerType layer, PaintBrushType brushType,
 				Color color, byte glow, PaintBrushSize brushSize, float pressurePrecent,
 				int randSeed, int worldX, int worldY ) {
-			if( Main.netMode == 2 ) { throw new HamstarException( "No server." ); }
+			if( Main.netMode == 2 ) { throw new ModHelpersException( "No server." ); }
 			
 			PaintBrush brush = mymod.Modes[ brushType ];
 			float paintsUsed = 0f;
@@ -87,7 +87,7 @@ namespace BetterPaint.Painting {
 				paintsUsed += brush.Apply( this.Foreground, color, glow, brushSize, pressurePrecent, randSeed, worldX, worldY );
 				break;
 			default:
-				throw new HamstarException( "Not implemented." );
+				throw new ModHelpersException( "Not implemented." );
 			}
 
 			return paintsUsed;
