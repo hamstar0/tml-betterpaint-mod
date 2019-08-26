@@ -1,4 +1,5 @@
 ﻿using BetterPaint.Tiles;
+using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.Items;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -95,20 +96,24 @@ namespace BetterPaint.Items {
 
 
 
+
 	class ColorCartridgePaintRecipe : ModRecipe {
 		private Color CraftColor;
+
 
 
 		////////////////
 
 		public ColorCartridgePaintRecipe( BetterPaintMod mymod, ColorCartridgeItem myitem ) : base ( mymod ) {
 			this.AddTile( mymod.TileType<PaintMixerTile>() );
+
 			if( mymod.Config.PaintRecipeGels > 0 ) {
 				this.AddIngredient( ItemID.Gel, mymod.Config.PaintRecipeGels );
 			}
 			if( mymod.Config.PaintRecipePaints > 0 ) {
-				this.AddRecipeGroup( "HamstarHelpers:Paints", mymod.Config.PaintRecipePaints );
+				this.AddRecipeGroup( "ModHelpers:Paints", mymod.Config.PaintRecipePaints );
 			}
+
 			this.SetResult( myitem, 1 );
 		}
 
