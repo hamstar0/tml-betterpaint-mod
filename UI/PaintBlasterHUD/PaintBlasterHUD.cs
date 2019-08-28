@@ -21,7 +21,7 @@ namespace BetterPaint.UI {
 		}
 
 		public static void InitializeStatic( BetterPaintMod mymod ) {
-			if( PaintBlasterHUD.AmmoCan == null ) {
+			if( !Main.dedServ && PaintBlasterHUD.AmmoCan == null ) {
 				PaintBlasterHUD.AmmoCan = mymod.GetTexture( "UI/PaintBlasterHUD/PaintAmmoContainer" );
 				PaintBlasterHUD.AmmoTop = mymod.GetTexture( "UI/PaintBlasterHUD/PaintAmmoTop" );
 				PaintBlasterHUD.AmmoBot = mymod.GetTexture( "UI/PaintBlasterHUD/PaintAmmoBottom" );

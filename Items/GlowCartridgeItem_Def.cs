@@ -54,7 +54,7 @@ namespace BetterPaint.Items {
 				"Produces glow-in-the-dark paint" + '\n' +
 				"Craft with cartidges and glowing spores at a paint mixer" );
 
-			if( GlowCartridgeItem.GlowCartridgeTex == null ) {
+			if( !Main.dedServ && GlowCartridgeItem.GlowCartridgeTex == null ) {
 				GlowCartridgeItem.GlowCartridgeTex = this.mod.GetTexture( "Items/GlowCartridgeItem" );
 				GlowCartridgeItem.ColorOverlayTex = this.mod.GetTexture( "Items/GlowCartridgeItem_Color" );
 				GlowCartridgeItem.GlowMaskTex = this.mod.GetTexture( "Items/GlowCartridgeItem_Glow1" );

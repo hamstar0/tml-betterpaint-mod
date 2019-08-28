@@ -14,13 +14,8 @@ namespace BetterPaint.Items {
 		public const int Width = 12;
 		public const int Height = 16;
 
-		public static Texture2D ColorOverlayTex { get; internal set; }
-		public static Texture2D ColorCartridgeTex { get; internal set; }
-
-		static ColorCartridgeItem() {
-			ColorCartridgeItem.ColorOverlayTex = null;
-			ColorCartridgeItem.ColorCartridgeTex = null;
-		}
+		public static Texture2D ColorOverlayTex { get; internal set; } = null;
+		public static Texture2D ColorCartridgeTex { get; internal set; } = null;
 
 
 		////////////////
@@ -50,7 +45,7 @@ namespace BetterPaint.Items {
 				"Make cartridges with paint at a paint mixer" + '\n' +
 				"Blend cartidges together at a paint mixer" );
 
-			if( ColorCartridgeItem.ColorCartridgeTex == null ) {
+			if( !Main.dedServ && ColorCartridgeItem.ColorCartridgeTex == null ) {
 				ColorCartridgeItem.ColorCartridgeTex = this.mod.GetTexture( "Items/ColorCartridgeItem" );
 				ColorCartridgeItem.ColorOverlayTex = this.mod.GetTexture( "Items/ColorCartridgeItem_Color" );
 

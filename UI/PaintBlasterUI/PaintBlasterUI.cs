@@ -1,44 +1,29 @@
 ﻿using BetterPaint.Painting.Brushes;
 using HamstarHelpers.Services.Hooks.LoadHooks;
 using Microsoft.Xna.Framework.Graphics;
-
+using Terraria;
 
 namespace BetterPaint.UI {
 	partial class PaintBlasterUI {
-		public static Texture2D BrushStream { get; private set; }
-		public static Texture2D BrushSpray { get; private set; }
-		public static Texture2D BrushSpatter { get; private set; }
-		public static Texture2D BrushEraser { get; private set; }
+		public static Texture2D BrushStream { get; private set; } = null;
+		public static Texture2D BrushSpray { get; private set; } = null;
+		public static Texture2D BrushSpatter { get; private set; } = null;
+		public static Texture2D BrushEraser { get; private set; } = null;
 
-		public static Texture2D LayerFgTex { get; private set; }
-		public static Texture2D LayerBgTex { get; private set; }
-		public static Texture2D LayerBothTex { get; private set; }
+		public static Texture2D LayerFgTex { get; private set; } = null;
+		public static Texture2D LayerBgTex { get; private set; } = null;
+		public static Texture2D LayerBothTex { get; private set; } = null;
 
-		public static Texture2D SizeSmallTex { get; private set; }
-		public static Texture2D SizeLargeTex { get; private set; }
+		public static Texture2D SizeSmallTex { get; private set; } = null;
+		public static Texture2D SizeLargeTex { get; private set; } = null;
 
-		public static Texture2D PressureLowTex { get; private set; }
-		public static Texture2D PressureMidTex { get; private set; }
-		public static Texture2D PressureHiTex { get; private set; }
+		public static Texture2D PressureLowTex { get; private set; } = null;
+		public static Texture2D PressureMidTex { get; private set; } = null;
+		public static Texture2D PressureHiTex { get; private set; } = null;
 
-
-		static PaintBlasterUI() {
-			PaintBlasterUI.BrushStream = null;
-			PaintBlasterUI.BrushSpray = null;
-			PaintBlasterUI.BrushSpatter = null;
-			PaintBlasterUI.BrushEraser = null;
-			PaintBlasterUI.LayerFgTex = null;
-			PaintBlasterUI.LayerBgTex = null;
-			PaintBlasterUI.LayerBothTex = null;
-			PaintBlasterUI.SizeSmallTex = null;
-			PaintBlasterUI.SizeLargeTex = null;
-			PaintBlasterUI.PressureLowTex = null;
-			PaintBlasterUI.PressureMidTex = null;
-			PaintBlasterUI.PressureHiTex = null;
-		}
 
 		public static void InitializeStatic( BetterPaintMod mymod ) {
-			if( PaintBlasterUI.BrushStream == null ) {
+			if( !Main.dedServ && PaintBlasterUI.BrushStream == null ) {
 				PaintBlasterUI.BrushStream = mymod.GetTexture( "UI/PaintBlasterUI/BrushStream" );
 				PaintBlasterUI.BrushSpray = mymod.GetTexture( "UI/PaintBlasterUI/BrushSpray" );
 				PaintBlasterUI.BrushSpatter = mymod.GetTexture( "UI/PaintBlasterUI/BrushSpatter" );
