@@ -14,72 +14,72 @@ namespace BetterPaint {
 		////////////////
 
 		[Header("Debug modes")]
-		[Label( "Debug Mode Info" )]
+		[Label( "Debug mode: Info display" )]
 		public bool DebugModeInfo = false;
 
-		[Label( "Debug Mode Cheats" )]
+		[Label( "Debug mode: Cheat mode" )]
 		public bool DebugModeCheats = false;
 
 
 		[Header("Paint settings")]
-		[Label( "Paint Mixer Recipe Enabled" )]
+		[Label( "Paint Mixer recipe enabled" )]
 		[DefaultValue(true)]
 		public bool PaintMixerRecipeEnabled = true;
 
-		[Label( "Paint Mixer Recipe Blend-O-Matic" )]
+		[Label( "Paint Mixer recipe requires Blend-O-Matic" )]
 		[DefaultValue( true )]
 		public bool PaintMixerRecipeBlendOMatic = true;
 
 
-		[Label( "Paint Recipe Enabled" )]
+		[Label( "Paint cartridge recipe enabled" )]
 		[DefaultValue( true )]
 		public bool PaintRecipeEnabled = true;
 
-		[Label( "Paint Recipe Gels" )]
-		[Range( 0, Int32.MaxValue )]
+		[Label( "Paint cartridge recipe's needed Gels" )]
+		[Range( 0, 999 )]
 		[DefaultValue( 10 )]
 		public int PaintRecipeGels = 10;
 
-		[Label( "Paint Recipe Paints" )]
-		[Range( 0, Int32.MaxValue )]
+		[Label( "Paint cartridge recipe's needed Paint Cans" )]
+		[Range( 0, 9999 )]
 		[DefaultValue( 100 )]
 		public int PaintRecipePaints = 100;
 
-		[Label( "Paint Cartridge Capacity" )]
-		[Range( 1, Int32.MaxValue)]
+		[Label( "Paint cartridge capacity" )]
+		[Range( 1, 9999999 )]
 		[DefaultValue( 2000 )]
 		public int PaintCartridgeCapacity = 2000;
 
 
-		[Label( "Copy Paint Recipe Enabled" )]
+		[Label( "Copy Paint Cartridge recipe enabled" )]
 		[DefaultValue( true )]
 		public bool CopyPaintRecipeEnabled = true;
 
-		[Label( "Copy Paint Recipe Mana Potions" )]
-		[Range( 0, Int32.MaxValue )]
+		[Label( "Copy Paint Cartridge recipe's needed Mana Potions" )]
+		[Range( 0, 999 )]
 		[DefaultValue( 10 )]
 		public int CopyPaintRecipeManaPotions = 10;
 
-		[Label( "Copy Paint Recipe Nanites" )]
-		[Range( 0, Int32.MaxValue )]
+		[Label( "Copy Paint Cartridge recipe's needed Nanites" )]
+		[Range( 0, 999 )]
 		[DefaultValue( 5 )]
 		public int CopyPaintRecipeNanites = 5;
 
-		[Label( "Glow Paint Recipe Enabled" )]
+		[Label( "Glow Paint Cartridge recipe enabled" )]
 		[DefaultValue( true )]
 		public bool GlowPaintRecipeEnabled = true;
 
-		[Label( "Glow Paint Recipe Spores" )]
-		[Range( 0, Int32.MaxValue )]
+		[Label( "Glow Paint Cartridge recipe's needed Jungle Spores" )]
+		[Range( 0, 999 )]
 		[DefaultValue( 5 )]
 		public int GlowPaintRecipeSpores = 5;
 
 
-		[Label( "Paint Blaster Recipe Enabled" )]
+		[Label( "Paint Blaster recipe enabled" )]
 		[DefaultValue( true )]
 		public bool PaintBlasterRecipeEnabled = true;
 
-		[Label( "Paint Blaster Recipe Clentaminator" )]
+		[Label( "Paint Blaster recipe requires Clentaminator" )]
 		[DefaultValue( true )]
 		public bool PaintBlasterRecipeClentaminator = true;
 
@@ -97,7 +97,7 @@ namespace BetterPaint {
 
 		[Header("UI settings")]
 		[Label( "Hud Paint Ammo Offset X" )]
-		[Range( -4096, 4096)]
+		[Range( -4096, 4096 )]
 		[DefaultValue( -32 )]
 		public int HudPaintAmmoOffsetX = -32;
 
@@ -113,6 +113,7 @@ namespace BetterPaint {
 
 		[Header("Painter shop settings")]
 		[Label( "Painter Sells Blaster" )]
+		[DefaultValue( false )]
 		public bool PainterSellsBlaster = false;
 
 		[Label( "Painter Sells RGB Cartridges" )]
@@ -120,9 +121,11 @@ namespace BetterPaint {
 		public bool PainterSellsRGBCartridges = true;
 
 		[Label( "Painter Sells Copy Cartridge" )]
+		[DefaultValue( false )]
 		public bool PainterSellsCopyCartridge = false;
 
 		[Label( "Painter Sells Paint Mixer" )]
+		[DefaultValue( false )]
 		public bool PainterSellsPaintMixer = false;
 
 

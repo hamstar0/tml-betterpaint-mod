@@ -35,7 +35,7 @@ namespace BetterPaint.Painting.Brushes {
 		public static float ComputeColorChangePercent( Color? oldColor, Color newColor ) {
 			Color baseColor = oldColor != null ? (Color)oldColor : Color.Transparent;
 
-			Color diffColor = XNAColorHelpers.DifferenceRGB( baseColor, newColor );
+			Color diffColor = XNAColorHelpers.DistanceRGB( baseColor, newColor );
 			float diffValue = XNAColorHelpers.AvgRGB( diffColor );
 
 			return diffValue / 255f;
