@@ -1,6 +1,6 @@
 author = hamstar
-version = 2.1.0.1
+version = 2.1.0.2
 displayName = Better Paint
-modReferences = HamstarHelpers@5.0.0
+modReferences = HamstarHelpers@5.0.1
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
 homepage = https://forums.terraria.org/index.php?threads/better-paint-make-the-world-your-canvas.69884/

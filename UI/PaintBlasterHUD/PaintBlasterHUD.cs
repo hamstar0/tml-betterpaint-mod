@@ -50,10 +50,10 @@ namespace BetterPaint.UI {
 			Item paintItem = myblaster.GetCurrentPaintItem();
 
 			if( paintItem != null ) {
-				PaintType paintType = PaintHelpers.GetPaintType( paintItem );
-				Color paintColor = PaintHelpers.GetPaintColor( paintItem );
-				float quantity = PaintHelpers.GetPaintAmount( paintItem );
-				float capacity = paintType == PaintType.Can ?
+				BlasterPaintType paintType = PaintBlasterHelpers.GetPaintType( paintItem );
+				Color paintColor = PaintBlasterHelpers.GetPaintColor( paintItem );
+				float quantity = PaintBlasterHelpers.GetPaintAmount( paintItem );
+				float capacity = paintType == BlasterPaintType.Can ?
 					(float)paintItem.maxStack :
 					(float)mymod.Config.PaintCartridgeCapacity;
 

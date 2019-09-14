@@ -7,7 +7,7 @@ using Terraria;
 
 
 namespace BetterPaint.Painting {
-	public enum PaintType {
+	public enum BlasterPaintType {
 		Can,
 		ColorCartridge,
 		GlowCartridge
@@ -15,7 +15,7 @@ namespace BetterPaint.Painting {
 
 
 
-	public static class PaintHelpers {
+	public static class PaintBlasterHelpers {
 		public static string ColorString( Color color ) {
 			return "R:"+color.R+", G:"+color.G+", B:"+color.B;
 		}
@@ -42,33 +42,33 @@ namespace BetterPaint.Painting {
 			return false;
 		}
 
-		public static PaintType GetPaintType( Item paintItem ) {
+		public static BlasterPaintType GetPaintType( Item paintItem ) {
 			var mymod = BetterPaintMod.Instance;
 			int paintType = paintItem.type;
 
 			if( paintType == mymod.ItemType<ColorCartridgeItem>() ) {
-				return PaintType.ColorCartridge;
+				return BlasterPaintType.ColorCartridge;
 			}
 			if( paintType == mymod.ItemType<GlowCartridgeItem>() ) {
-				return PaintType.GlowCartridge;
+				return BlasterPaintType.GlowCartridge;
 			}
 			if( ItemGroupIdentityHelpers.Paints.Group.Contains( paintType ) ) {
-				return PaintType.Can;
+				return BlasterPaintType.Can;
 			} else {
 				throw new ModHelpersException( "Not implemented." );
 			}
 		}
 
 		public static float GetPaintAmount( Item paintItem ) {
-			PaintType paintType = PaintHelpers.GetPaintType( paintItem );
+			BlasterPaintType paintType = PaintBlasterHelpers.GetPaintType( paintItem );
 
 			switch( paintType ) {
-			case PaintType.Can:
+			case BlasterPaintType.Can:
 				return paintItem.stack;
-			case PaintType.ColorCartridge:
+			case BlasterPaintType.ColorCartridge:
 				var mycolorcart = (ColorCartridgeItem)paintItem.modItem;
 				return mycolorcart.Quantity;
-			case PaintType.GlowCartridge:
+			case BlasterPaintType.GlowCartridge:
 				var myglowcart = (GlowCartridgeItem)paintItem.modItem;
 				return myglowcart.Quantity;
 			default:
@@ -77,18 +77,18 @@ namespace BetterPaint.Painting {
 		}
 
 		public static Color GetPaintColor( Item paintItem ) {
-			PaintType paintType = PaintHelpers.GetPaintType( paintItem );
+			BlasterPaintType paintType = PaintBlasterHelpers.GetPaintType( paintItem );
 			Color color;
 
 			switch( paintType ) {
-			case PaintType.Can:
+			case BlasterPaintType.Can:
 				color = WorldGen.paintColor( paintItem.paint );
 				break;
-			case PaintType.ColorCartridge:
+			case BlasterPaintType.ColorCartridge:
 				var mycolorcart = (ColorCartridgeItem)paintItem.modItem;
 				color = mycolorcart.MyColor;
 				break;
-			case PaintType.GlowCartridge:
+			case BlasterPaintType.GlowCartridge:
 				var myglowcart = (GlowCartridgeItem)paintItem.modItem;
 				color = myglowcart.MyColor;
 				break;
@@ -99,17 +99,17 @@ namespace BetterPaint.Painting {
 		}
 		
 		public static byte GetPaintGlow( Item paintItem ) {
-			PaintType paintType = PaintHelpers.GetPaintType( paintItem );
+			BlasterPaintType paintType = PaintBlasterHelpers.GetPaintType( paintItem );
 			byte glow;
 
 			switch( paintType ) {
-			case PaintType.Can:
+			case BlasterPaintType.Can:
 				glow = 0;
 				break;
-			case PaintType.ColorCartridge:
+			case BlasterPaintType.ColorCartridge:
 				glow = 0;
 				break;
-			case PaintType.GlowCartridge:
+			case BlasterPaintType.GlowCartridge:
 				glow = 255;
 				break;
 			default:
@@ -123,18 +123,18 @@ namespace BetterPaint.Painting {
 		////////////////
 
 		public static void ConsumePaint( Item paintItem, float amount ) {
-			PaintType paintType = PaintHelpers.GetPaintType( paintItem );
+			BlasterPaintType paintType = PaintBlasterHelpers.GetPaintType( paintItem );
 
 			switch( paintType ) {
-			case PaintType.Can:
+			case BlasterPaintType.Can:
 				paintItem.stack -= (int)amount;
 				if( paintItem.stack < 0 ) { paintItem.stack = 0; }
 				break;
-			case PaintType.ColorCartridge:
+			case BlasterPaintType.ColorCartridge:
 				var mycolorcart = (ColorCartridgeItem)paintItem.modItem;
 				mycolorcart.ConsumePaint( amount );
 				break;
-			case PaintType.GlowCartridge:
+			case BlasterPaintType.GlowCartridge:
 				var myglowcart = (GlowCartridgeItem)paintItem.modItem;
 				myglowcart.ConsumePaint( amount );
 				break;

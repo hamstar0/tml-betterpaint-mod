@@ -120,7 +120,7 @@ namespace BetterPaint.Items {
 
 			Item paintItem = Main.LocalPlayer.inventory[ this.CurrentPaintItemInventoryIndex ];
 
-			if( !PaintHelpers.IsPaint(paintItem) ) {
+			if( !PaintBlasterHelpers.IsPaint(paintItem) ) {
 				this.CurrentPaintItemInventoryIndex = -1;
 				return null;
 			}

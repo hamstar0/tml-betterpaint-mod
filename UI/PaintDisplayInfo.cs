@@ -19,7 +19,7 @@ namespace BetterPaint.UI {
 				Item item = inv[i];
 				if( item == null || item.IsAir ) { continue; }
 
-				if( PaintHelpers.IsPaint(item) ) {
+				if( PaintBlasterHelpers.IsPaint(item) ) {
 					paintIdxs.Add( i );
 				}
 			}
@@ -28,9 +28,9 @@ namespace BetterPaint.UI {
 
 			foreach( int idx in paintIdxs ) {
 				Item item = Main.LocalPlayer.inventory[idx];
-				if( PaintHelpers.GetPaintAmount( item ) <= 0 ) { continue; }
+				if( PaintBlasterHelpers.GetPaintAmount( item ) <= 0 ) { continue; }
 
-				string key = PaintHelpers.GetPaintColor( item ).ToString()+"_"+PaintHelpers.GetPaintType(item);
+				string key = PaintBlasterHelpers.GetPaintColor( item ).ToString()+"_"+PaintBlasterHelpers.GetPaintType(item);
 
 				if( !paintInfo.ContainsKey( key ) ) {
 					paintInfo[key] = new PaintDisplayInfo( idx, item );

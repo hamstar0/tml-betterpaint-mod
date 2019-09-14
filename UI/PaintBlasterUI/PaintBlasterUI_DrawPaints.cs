@@ -118,7 +118,7 @@ namespace BetterPaint.UI {
 				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, "Capacity:", Main.mouseX, Main.mouseY-16, labelColor, bgColor, default( Vector2 ), 1f );
 				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, (int)( amountPercent * 100 ) + "%", Main.mouseX+72, Main.mouseY - 16, labelColor, bgColor, default( Vector2 ), 1f );
 
-				string colorStr = PaintHelpers.ColorString( color );
+				string colorStr = PaintBlasterHelpers.ColorString( color );
 
 				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, "Color:", Main.mouseX, Main.mouseY + 8, labelColor, bgColor, default( Vector2 ), 1f );
 				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, colorStr, Main.mouseX + 56, Main.mouseY + 8, color, bgColor, default( Vector2 ), 1f );

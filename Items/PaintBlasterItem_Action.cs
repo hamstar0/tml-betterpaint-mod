@@ -15,7 +15,7 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 			var myworld = mymod.GetModWorld<BetterPaintWorld>();
 
-			if( this.CurrentBrush != PaintBrushType.Erase && PaintHelpers.GetPaintAmount(paintItem) <= 0 ) {
+			if( this.CurrentBrush != PaintBrushType.Erase && PaintBlasterHelpers.GetPaintAmount(paintItem) <= 0 ) {
 				return false;
 			}
 
@@ -80,14 +80,14 @@ namespace BetterPaint.Items {
 			Item paintItem = this.GetCurrentPaintItem();
 
 			if( paintItem != null ) {	// Eraser doesn't need paint
-				color = PaintHelpers.GetPaintColor( paintItem );
-				glow = PaintHelpers.GetPaintGlow( paintItem );
+				color = PaintBlasterHelpers.GetPaintColor( paintItem );
+				glow = PaintBlasterHelpers.GetPaintGlow( paintItem );
 			}
 			
 			uses = myworld.Layers.ApplyColorAt( mymod, this.Layer, this.CurrentBrush, color, glow, this.BrushSize, this.PressurePercent, worldX, worldY );
 			
 			if( paintItem != null && uses > 0 ) {
-				PaintHelpers.ConsumePaint( paintItem, uses );
+				PaintBlasterHelpers.ConsumePaint( paintItem, uses );
 			}
 
 			return uses;

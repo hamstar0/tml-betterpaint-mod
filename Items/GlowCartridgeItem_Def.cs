@@ -88,7 +88,7 @@ namespace BetterPaint.Items {
 			var mymod = (BetterPaintMod)this.mod;
 			float percent = this.Quantity / mymod.Config.PaintCartridgeCapacity;
 
-			var tip1 = new TooltipLine( this.mod, "BetterPaint: Color Indicator", "Color value: " + PaintHelpers.ColorString( this.MyColor ) ) {
+			var tip1 = new TooltipLine( this.mod, "BetterPaint: Color Indicator", "Color value: " + PaintBlasterHelpers.ColorString( this.MyColor ) ) {
 				overrideColor = this.MyColor
 			};
 			var tip2 = new TooltipLine( this.mod, "BetterPaint: Capacity", "Capacity: " + (int)( percent * 100 ) + "%" ) {

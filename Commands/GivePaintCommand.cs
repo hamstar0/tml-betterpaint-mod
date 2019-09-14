@@ -42,7 +42,7 @@ namespace BetterPaint.Commands {
 			var myitem = (ColorCartridgeItem)paintItem.modItem;
 			myitem.SetPaint( randClr, mymod.Config.PaintCartridgeCapacity );
 			
-			caller.Reply( "Random color cartridge created: " + PaintHelpers.ColorString(randClr), randClr );
+			caller.Reply( "Random color cartridge created: " + PaintBlasterHelpers.ColorString(randClr), randClr );
 		}
 	}
 }

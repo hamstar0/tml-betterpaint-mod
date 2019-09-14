@@ -87,7 +87,7 @@ namespace BetterPaint.Items {
 				Item paintItem = this.GetCurrentPaintItem();
 
 				if( paintItem != null ) {
-					if( PaintHelpers.GetPaintAmount(paintItem) <= 0 ) {
+					if( PaintBlasterHelpers.GetPaintAmount(paintItem) <= 0 ) {
 						if( this.SwitchToNextMatchingNonemptyPaint() ) {
 							paintItem = this.GetCurrentPaintItem();
 						} else {
@@ -96,7 +96,7 @@ namespace BetterPaint.Items {
 					}
 
 					if( paintItem != null ) {
-						Color paintColor = PaintHelpers.GetPaintColor( paintItem );
+						Color paintColor = PaintBlasterHelpers.GetPaintColor( paintItem );
 
 						if( this.HasMatchingPaintAt( paintColor, tileX, tileY ) ) {
 							dustColor = paintColor;
@@ -147,7 +147,7 @@ namespace BetterPaint.Items {
 			Item paintItem = this.GetCurrentPaintItem();
 			if( paintItem == null ) { return false; }
 
-			Color currColor = PaintHelpers.GetPaintColor( paintItem );
+			Color currColor = PaintBlasterHelpers.GetPaintColor( paintItem );
 			
 			Item[] inv = Main.LocalPlayer.inventory;
 			int cartType = this.mod.ItemType<ColorCartridgeItem>();
@@ -159,9 +159,9 @@ namespace BetterPaint.Items {
 				Item item = inv[i];
 				if( item == null || item.IsAir ) { continue; }
 
-				if( PaintHelpers.IsPaint(item) ) {
-					if( PaintHelpers.GetPaintAmount(item) <= 0 ) { continue; }
-					if( PaintHelpers.GetPaintColor(item) != currColor ) { continue; }
+				if( PaintBlasterHelpers.IsPaint(item) ) {
+					if( PaintBlasterHelpers.GetPaintAmount(item) <= 0 ) { continue; }
+					if( PaintBlasterHelpers.GetPaintColor(item) != currColor ) { continue; }
 
 					this.CurrentPaintItemInventoryIndex = i;
 					found = true;
