@@ -47,7 +47,7 @@ namespace BetterPaint.Items {
 				}
 			}
 
-			Vector2 worldPos = new Vector2( Main.mouseX, Main.mouseY );//UIHelpers.GetWorldMousePosition();
+			Vector2 worldPos = Main.screenPosition + new Vector2( Main.mouseX, Main.mouseY );//UIHelpers.GetWorldMousePosition();
 			Vector2 tilePos = worldPos / 16f;
 			ushort tileX = (ushort)tilePos.X;
 			ushort tileY = (ushort)tilePos.Y;
