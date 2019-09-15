@@ -36,8 +36,26 @@ namespace BetterPaint.Painting {
 
 			foreach( ushort i in this.Colors.Keys ) {
 				foreach( ushort j in this.Colors[i].Keys ) {
-					if( Main.Map[i, j].IsChanged ) {
+					MapTile mapTile = Main.Map[i, j];
+
+					if( mapTile.IsChanged ) {
 						this.SetMapColorAt( this.Colors[i][j], i, j );
+					}
+				}
+			}
+		}
+
+
+		////////////////
+
+		private void ClearTilesOnMap() {
+			foreach( ushort i in this.Colors.Keys ) {
+				foreach( ushort j in this.Colors[i].Keys ) {
+					MapTile mapTile = Main.Map[i, j];
+
+					if( mapTile.IsChanged ) {
+						mapTile.Clear();
+						Main.Map.SetTile( i, j, ref mapTile );
 					}
 				}
 			}

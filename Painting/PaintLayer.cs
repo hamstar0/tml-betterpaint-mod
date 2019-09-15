@@ -24,6 +24,7 @@ namespace BetterPaint.Painting {
 			} );
 			LoadHooks.AddWorldUnloadEachHook( () => {
 				Main.OnPreDraw -= this.RefreshTilesOnMap;
+				this.ClearTilesOnMap();
 			} );
 		}
 
