@@ -18,7 +18,7 @@ namespace BetterPaint {
 
 		////////////////
 
-		public BetterPaintConfig Config => this.GetConfig<BetterPaintConfig>();
+		public BetterPaintConfig Config => ModContent.GetInstance<BetterPaintConfig>();
 
 		public IDictionary<PaintBrushType, PaintBrush> Modes { get; private set; }
 
@@ -86,7 +86,7 @@ namespace BetterPaint {
 				Player player = Main.LocalPlayer;
 				Item heldItem = player.HeldItem;
 
-				if( heldItem == null || heldItem.IsAir || heldItem.type != this.ItemType<PaintBlasterItem>() ) {
+				if( heldItem == null || heldItem.IsAir || heldItem.type != ModContent.ItemType<PaintBlasterItem>() ) {
 					return true;
 				}
 

@@ -12,8 +12,7 @@ using Terraria.ModLoader;
 namespace BetterPaint.Items {
 	partial class PaintBlasterItem : ModItem {
 		public bool CanPaintAt( Item paintItem, ushort tileX, ushort tileY ) {
-			var mymod = (BetterPaintMod)this.mod;
-			var myworld = mymod.GetModWorld<BetterPaintWorld>();
+			var myworld = ModContent.GetInstance<BetterPaintWorld>();
 
 			if( this.CurrentBrush != PaintBrushType.Erase && PaintBlasterHelpers.GetPaintAmount(paintItem) <= 0 ) {
 				return false;
@@ -36,7 +35,7 @@ namespace BetterPaint.Items {
 
 		public bool HasMatchingPaintAt( Color color, ushort tileX, ushort tileY ) {
 			var mymod = (BetterPaintMod)this.mod;
-			var myworld = mymod.GetModWorld<BetterPaintWorld>();
+			var myworld = ModContent.GetInstance<BetterPaintWorld>();
 
 			switch( this.Layer ) {
 			case PaintLayerType.Foreground:
@@ -72,7 +71,7 @@ namespace BetterPaint.Items {
 
 		public float ApplyBrushAt( int worldX, int worldY ) {
 			var mymod = (BetterPaintMod)this.mod;
-			var myworld = mymod.GetModWorld<BetterPaintWorld>();
+			var myworld = ModContent.GetInstance<BetterPaintWorld>();
 			float uses = 0;
 			Color color = Color.White;
 			byte glow = 0;
@@ -95,11 +94,10 @@ namespace BetterPaint.Items {
 
 		
 		public bool AttemptCopyColorAt( Player player, ushort tileX, ushort tileY ) {
-			var mymod = (BetterPaintMod)this.mod;
-			var myworld = mymod.GetModWorld<BetterPaintWorld>();
+			var myworld = ModContent.GetInstance<BetterPaintWorld>();
 			PaintLayer data;
 
-			int copyType = this.mod.ItemType<CopyCartridgeItem>();
+			int copyType = ModContent.ItemType<CopyCartridgeItem>();
 			int copyItemIdx = ItemFinderHelpers.FindIndexOfFirstOfItemInCollection( player.inventory, new HashSet<int> { copyType } );
 			if( copyItemIdx == -1 ) {
 				return false;

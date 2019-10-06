@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace BetterPaint {
 	class BetterPaintTile : GlobalTile {
 		public override void DrawEffects( int i, int j, int type, SpriteBatch sb, ref Color drawColor, ref int nextSpecialDrawIdx ) {
-			var myworld = this.mod.GetModWorld<BetterPaintWorld>();
+			var myworld = ModContent.GetInstance<BetterPaintWorld>();
 			ushort tileX = (ushort)i;
 			ushort tileY = (ushort)j;
 			
@@ -21,7 +21,7 @@ namespace BetterPaint {
 		public override void KillTile( int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem ) {
 			if( effectOnly ) { return; }
 
-			var myworld = this.mod.GetModWorld<BetterPaintWorld>();
+			var myworld = ModContent.GetInstance<BetterPaintWorld>();
 			ushort tileX = (ushort)i;
 			ushort tileY = (ushort)j;
 
@@ -36,7 +36,7 @@ namespace BetterPaint {
 
 	class BetterPaintWall : GlobalWall {
 		public override bool PreDraw( int i, int j, int type, SpriteBatch sb ) {
-			var myworld = this.mod.GetModWorld<BetterPaintWorld>();
+			var myworld = ModContent.GetInstance<BetterPaintWorld>();
 			ushort tileX = (ushort)i;
 			ushort tileY = (ushort)j;
 
@@ -63,7 +63,7 @@ namespace BetterPaint {
 
 
 		public override void KillWall( int i, int j, int type, ref bool fail ) {
-			var myworld = this.mod.GetModWorld<BetterPaintWorld>();
+			var myworld = ModContent.GetInstance<BetterPaintWorld>();
 			ushort tileX = (ushort)i;
 			ushort tileY = (ushort)j;
 

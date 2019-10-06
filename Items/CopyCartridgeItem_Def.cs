@@ -11,7 +11,7 @@ namespace BetterPaint.Items {
 		public static void SetWithColor( Player player, Item copyCartItem, Color color ) {
 			ItemHelpers.ReduceStack( copyCartItem, 1 );
 
-			int cartIdx = ItemHelpers.CreateItem( player.position, BetterPaintMod.Instance.ItemType<ColorCartridgeItem>(), 1,
+			int cartIdx = ItemHelpers.CreateItem( player.position, ModContent.ItemType<ColorCartridgeItem>(), 1,
 				ColorCartridgeItem.Width, ColorCartridgeItem.Height );
 
 			var mycart = (ColorCartridgeItem)Main.item[ cartIdx ].modItem;
@@ -47,8 +47,8 @@ namespace BetterPaint.Items {
 
 		public override void AddRecipes() {
 			var mymod = (BetterPaintMod)this.mod;
-			var anew1Recipe = new CopyCartridgeRecipe( mymod, mymod.GetItem<ColorCartridgeItem>(), this );
-			var anew2Recipe = new CopyCartridgeRecipe( mymod, mymod.GetItem<GlowCartridgeItem>(), this );
+			var anew1Recipe = new CopyCartridgeRecipe( mymod, ModContent.GetInstance<ColorCartridgeItem>(), this );
+			var anew2Recipe = new CopyCartridgeRecipe( mymod, ModContent.GetInstance<GlowCartridgeItem>(), this );
 			var copyRecipe = new CopyCartridgeCopyRecipe( mymod );
 
 			anew1Recipe.AddRecipe();
@@ -65,7 +65,7 @@ namespace BetterPaint.Items {
 			int manaPotQt = mymod.Config.CopyPaintRecipeManaPotions;
 			int naniteQt = mymod.Config.CopyPaintRecipeNanites;
 
-			this.AddTile( mymod.TileType<PaintMixerTile>() );
+			this.AddTile( ModContent.TileType<PaintMixerTile>() );
 
 			this.AddIngredient( basecart, 1 );
 
@@ -93,19 +93,18 @@ namespace BetterPaint.Items {
 
 
 		public CopyCartridgeCopyRecipe( BetterPaintMod mymod ) : base( mymod ) {
-			this.AddTile( mymod.TileType<PaintMixerTile>() );
+			this.AddTile( ModContent.TileType<PaintMixerTile>() );
 
-			this.AddIngredient( mymod.ItemType<CopyCartridgeItem>(), 1 );
-			this.AddIngredient( mymod.ItemType<ColorCartridgeItem>(), 1 );
+			this.AddIngredient( ModContent.ItemType<CopyCartridgeItem>(), 1 );
+			this.AddIngredient( ModContent.ItemType<ColorCartridgeItem>(), 1 );
 
-			this.SetResult( mymod.GetItem<ColorCartridgeItem>() );
+			this.SetResult( ModContent.GetInstance<ColorCartridgeItem>() );
 		}
 
 
 		public override int ConsumeItem( int itemType, int numRequired ) {
-			var mymod = (BetterPaintMod)this.mod;
 			var inv = Main.LocalPlayer.inventory;
-			int cartType = mymod.ItemType<ColorCartridgeItem>();
+			int cartType = ModContent.ItemType<ColorCartridgeItem>();
 
 			for( int i = 0; i < inv.Length; i++ ) {
 				if( inv[i] == null || inv[i].IsAir ) { continue; }
@@ -124,7 +123,7 @@ namespace BetterPaint.Items {
 		public override void OnCraft( Item item ) {
 			var mymod = (BetterPaintMod)this.mod;
 			var mycart1 = (ColorCartridgeItem)item.modItem;
-			int cartType = mymod.ItemType<ColorCartridgeItem>();
+			int cartType = ModContent.ItemType<ColorCartridgeItem>();
 
 			//int item_idx = ItemHelpers.CreateItem( Main.LocalPlayer.position, cart_type, 1, ColorCartridgeItem.Width, ColorCartridgeItem.Height );
 			//var mycart2 = (ColorCartridgeItem)Main.item[ item_idx ].modItem;

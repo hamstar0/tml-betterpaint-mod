@@ -90,10 +90,8 @@ namespace BetterPaint.Items {
 		////////////////
 
 		public void CheckSettings( Player player ) {
-			var mymod = (BetterPaintMod)this.mod;
-
 			if( this.IsCopying ) {
-				var set = new HashSet<int> { mymod.ItemType<CopyCartridgeItem>() };
+				var set = new HashSet<int> { ModContent.ItemType<CopyCartridgeItem>() };
 				var copyCartItem = PlayerItemFinderHelpers.FindFirstOfPossessedItemFor( player, set, false );
 
 				if( copyCartItem == null ) {

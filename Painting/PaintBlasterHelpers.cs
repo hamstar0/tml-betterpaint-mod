@@ -4,6 +4,7 @@ using HamstarHelpers.Helpers.Items;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.ModLoader;
 
 
 namespace BetterPaint.Painting {
@@ -27,13 +28,12 @@ namespace BetterPaint.Painting {
 		public static bool IsPaint( Item item ) {
 			if( item == null || item.IsAir ) { return false; }
 
-			var mymod = BetterPaintMod.Instance;
 			int paintType = item.type;
 
-			if( paintType == mymod.ItemType<ColorCartridgeItem>() ) {
+			if( paintType == ModContent.ItemType<ColorCartridgeItem>() ) {
 				return true;
 			}
-			if( paintType == mymod.ItemType<GlowCartridgeItem>() ) {
+			if( paintType == ModContent.ItemType<GlowCartridgeItem>() ) {
 				return true;
 			}
 			if( ItemGroupIdentityHelpers.Paints.Group.Contains( paintType ) ) {
@@ -43,13 +43,12 @@ namespace BetterPaint.Painting {
 		}
 
 		public static BlasterPaintType GetPaintType( Item paintItem ) {
-			var mymod = BetterPaintMod.Instance;
 			int paintType = paintItem.type;
 
-			if( paintType == mymod.ItemType<ColorCartridgeItem>() ) {
+			if( paintType == ModContent.ItemType<ColorCartridgeItem>() ) {
 				return BlasterPaintType.ColorCartridge;
 			}
-			if( paintType == mymod.ItemType<GlowCartridgeItem>() ) {
+			if( paintType == ModContent.ItemType<GlowCartridgeItem>() ) {
 				return BlasterPaintType.GlowCartridge;
 			}
 			if( ItemGroupIdentityHelpers.Paints.Group.Contains( paintType ) ) {

@@ -29,7 +29,7 @@ namespace BetterPaint.Items {
 
 
 		public ColorCartridgeBlendRecipe( BetterPaintMod mymod, ColorCartridgeItem myitem ) : base( mymod ) {
-			this.AddTile( mymod.TileType<PaintMixerTile>() );
+			this.AddTile( ModContent.TileType<PaintMixerTile>() );
 			this.AddIngredient( myitem, 2 );
 			this.SetResult( myitem, 1 );
 		}
@@ -43,9 +43,8 @@ namespace BetterPaint.Items {
 		////////////////
 
 		public override int ConsumeItem( int itemType, int numRequired ) {
-			var mymod = (BetterPaintMod)this.mod;
 			var inv = Main.LocalPlayer.inventory;
-			int cartType = mymod.ItemType<ColorCartridgeItem>();
+			int cartType = ModContent.ItemType<ColorCartridgeItem>();
 
 			if( itemType != cartType ) {	// Won't be invoked, but future-proofing won't hurt
 				return base.ConsumeItem( itemType, numRequired );
@@ -105,7 +104,7 @@ namespace BetterPaint.Items {
 		////////////////
 
 		public ColorCartridgePaintRecipe( BetterPaintMod mymod, ColorCartridgeItem myitem ) : base ( mymod ) {
-			this.AddTile( mymod.TileType<PaintMixerTile>() );
+			this.AddTile( ModContent.TileType<PaintMixerTile>() );
 
 			if( mymod.Config.PaintRecipeGels > 0 ) {
 				this.AddIngredient( ItemID.Gel, mymod.Config.PaintRecipeGels );

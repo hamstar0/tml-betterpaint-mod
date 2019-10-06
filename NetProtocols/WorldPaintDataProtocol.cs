@@ -3,6 +3,7 @@ using HamstarHelpers.Classes.Protocols.Packet.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using Terraria.ModLoader;
 
 
 namespace BetterPaint.NetProtocols {
@@ -49,7 +50,7 @@ namespace BetterPaint.NetProtocols {
 				json += segSet[i];
 			}
 
-			var myworld = BetterPaintMod.Instance.GetModWorld<BetterPaintWorld>();
+			var myworld = ModContent.GetInstance<BetterPaintWorld>();
 			myworld.Layers = (WorldPaintLayers)JsonConvert.DeserializeObject( json );
 			return true;
 		}
@@ -58,7 +59,7 @@ namespace BetterPaint.NetProtocols {
 		////////////////
 
 		public static void SendToClient( int toWho, int ignoreWho ) {
-			var myworld = BetterPaintMod.Instance.GetModWorld<BetterPaintWorld>();
+			var myworld = ModContent.GetInstance<BetterPaintWorld>();
 			string json = JsonConvert.SerializeObject( myworld.Layers );
 			int segSize = ( 64 * 1024 ) - 1;
 			IList<string> segs = new List<string>();

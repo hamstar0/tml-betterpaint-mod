@@ -4,6 +4,7 @@ using HamstarHelpers.Classes.Protocols.Packet.Interfaces;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.ModLoader;
 
 
 namespace BetterPaint.NetProtocols {
@@ -58,7 +59,7 @@ namespace BetterPaint.NetProtocols {
 
 		private void Receive() {
 			var mymod = BetterPaintMod.Instance;
-			var myworld = BetterPaintMod.Instance.GetModWorld<BetterPaintWorld>();
+			var myworld = ModContent.GetInstance<BetterPaintWorld>();
 			var layer = (PaintLayerType)this.Layer;
 			var brushType = (PaintBrushType)this.BrushType;
 

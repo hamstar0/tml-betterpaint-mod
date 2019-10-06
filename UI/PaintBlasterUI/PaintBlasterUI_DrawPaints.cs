@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ModLoader;
 
 
 namespace BetterPaint.UI {
@@ -48,7 +49,7 @@ namespace BetterPaint.UI {
 
 				info.GetDrawInfo( mymod, x, y, out color, out percent, out stack );
 				
-				this.DrawColorIcon( mymod, sb, info.PaintItem.type, color, percent, stack, x, y, angle, angleStep,
+				this.DrawColorIcon( sb, info.PaintItem.type, color, percent, stack, x, y, angle, angleStep,
 					(info.FirstInventoryIndex == this.CurrentPaintItemInventoryIndex) );
 
 				angles[ info.FirstInventoryIndex ] = (float)angle;
@@ -62,10 +63,10 @@ namespace BetterPaint.UI {
 
 		////////////////
 
-		public Texture2D GetPaintTexture( BetterPaintMod mymod, int itemType ) {
-			if( itemType == mymod.ItemType<ColorCartridgeItem>() ) {
+		public Texture2D GetPaintTexture( int itemType ) {
+			if( itemType == ModContent.ItemType<ColorCartridgeItem>() ) {
 				return ColorCartridgeItem.ColorCartridgeTex;
-			} else if( itemType == mymod.ItemType<GlowCartridgeItem>() ) {
+			} else if( itemType == ModContent.ItemType<GlowCartridgeItem>() ) {
 				return GlowCartridgeItem.GlowCartridgeTex;
 			} else if( ItemGroupIdentityHelpers.Paints.Group.Contains( itemType ) ) {
 				return Main.itemTexture[itemType];
@@ -74,11 +75,11 @@ namespace BetterPaint.UI {
 			}
 		}
 
-		public Texture2D GetPaintOverlayTexture( BetterPaintMod mymod, int itemType, out bool hasGlow ) {
-			if( itemType == mymod.ItemType<ColorCartridgeItem>() ) {
+		public Texture2D GetPaintOverlayTexture( int itemType, out bool hasGlow ) {
+			if( itemType == ModContent.ItemType<ColorCartridgeItem>() ) {
 				hasGlow = false;
 				return ColorCartridgeItem.ColorOverlayTex;
-			} else if( itemType == mymod.ItemType<GlowCartridgeItem>() ) {
+			} else if( itemType == ModContent.ItemType<GlowCartridgeItem>() ) {
 				hasGlow = true;
 				return GlowCartridgeItem.ColorOverlayTex;
 			} else if( ItemGroupIdentityHelpers.Paints.Group.Contains( itemType ) ) {
@@ -92,11 +93,11 @@ namespace BetterPaint.UI {
 
 		////////////////
 
-		public Rectangle DrawColorIcon( BetterPaintMod mymod, SpriteBatch sb, int itemType, Color color, float amountPercent,
+		public Rectangle DrawColorIcon( SpriteBatch sb, int itemType, Color color, float amountPercent,
 				int stack, int x, int y, double paletteAngle, double angleStep, bool isSelected ) {
 			bool hasGlow;
-			Texture2D cartTex = this.GetPaintTexture( mymod, itemType );
-			Texture2D overTex = this.GetPaintOverlayTexture( mymod, itemType, out hasGlow );
+			Texture2D cartTex = this.GetPaintTexture( itemType );
+			Texture2D overTex = this.GetPaintOverlayTexture( itemType, out hasGlow );
 
 			bool isHover = this.IsHoveringIcon( paletteAngle, angleStep );
 

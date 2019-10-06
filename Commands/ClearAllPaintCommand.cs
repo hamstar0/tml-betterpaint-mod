@@ -21,7 +21,7 @@ namespace BetterPaint.Commands {
 
 		public override void Action( CommandCaller caller, string input, string[] args ) {
 			var mymod = (BetterPaintMod)this.mod;
-			var myworld = mymod.GetModWorld<BetterPaintWorld>();
+			var myworld = ModContent.GetInstance<BetterPaintWorld>();
 
 			myworld.Layers.Background.Colors.Clear();
 			myworld.Layers.Foreground.Colors.Clear();

@@ -1,7 +1,6 @@
 ﻿using BetterPaint.Painting;
 using BetterPaint.Painting.Brushes;
 using HamstarHelpers.Helpers.Players;
-using HamstarHelpers.Helpers.UI;
 using HamstarHelpers.Services.Timers;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -150,7 +149,7 @@ namespace BetterPaint.Items {
 			Color currColor = PaintBlasterHelpers.GetPaintColor( paintItem );
 			
 			Item[] inv = Main.LocalPlayer.inventory;
-			int cartType = this.mod.ItemType<ColorCartridgeItem>();
+			int cartType = ModContent.ItemType<ColorCartridgeItem>();
 			bool found = false;
 
 			for( int i=0; i<inv.Length; i++ ) {

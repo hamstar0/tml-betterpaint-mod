@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 
@@ -32,7 +33,7 @@ namespace BetterPaint.Painting {
 		////////////////
 		
 		internal void Load( BetterPaintMod mymod, TagCompound tags, string prefix ) {
-			var myworld = mymod.GetModWorld<BetterPaintWorld>();
+			var myworld = ModContent.GetInstance<BetterPaintWorld>();
 
 			this.Colors.Clear();
 			this.Glows.Clear();

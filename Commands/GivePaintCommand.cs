@@ -27,7 +27,7 @@ namespace BetterPaint.Commands {
 
 		public override void Action( CommandCaller caller, string input, string[] args ) {
 			var mymod = (BetterPaintMod)this.mod;
-			int paintType = this.mod.ItemType<ColorCartridgeItem>();
+			int paintType = ModContent.ItemType<ColorCartridgeItem>();
 
 			int itemIdx = ItemHelpers.CreateItem( Main.LocalPlayer.position, paintType, 1, ColorCartridgeItem.Width, ColorCartridgeItem.Height );
 			Item paintItem = Main.item[itemIdx];

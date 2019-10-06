@@ -16,34 +16,34 @@ namespace BetterPaint {
 			
 			if( mymod.Config.PainterSellsBlaster && nextSlot < max ) {
 				shop.item[nextSlot] = new Item();
-				shop.item[nextSlot].SetDefaults( mymod.ItemType<PaintBlasterItem>() );
+				shop.item[nextSlot].SetDefaults( ModContent.ItemType<PaintBlasterItem>() );
 				nextSlot++;
 			}
 
 			if( mymod.Config.PainterSellsPaintMixer && nextSlot < max ) {
 				shop.item[nextSlot] = new Item();
-				shop.item[nextSlot].SetDefaults( mymod.ItemType<PaintMixerItem>() );
+				shop.item[nextSlot].SetDefaults( ModContent.ItemType<PaintMixerItem>() );
 				nextSlot++;
 			}
 
 			if( mymod.Config.PainterSellsRGBCartridges && nextSlot < (max - 3) ) {
 				shop.item[nextSlot] = new Item();
-				shop.item[nextSlot].SetDefaults( mymod.ItemType<ColorCartridgeItem>() );
+				shop.item[nextSlot].SetDefaults( ModContent.ItemType<ColorCartridgeItem>() );
 				( (ColorCartridgeItem)shop.item[nextSlot].modItem ).SetPaint( new Color(255, 0, 0), mymod.Config.PaintCartridgeCapacity );
 				nextSlot++;
 				shop.item[nextSlot] = new Item();
-				shop.item[nextSlot].SetDefaults( mymod.ItemType<ColorCartridgeItem>() );
+				shop.item[nextSlot].SetDefaults( ModContent.ItemType<ColorCartridgeItem>() );
 				( (ColorCartridgeItem)shop.item[nextSlot].modItem ).SetPaint( new Color(0, 255, 0), mymod.Config.PaintCartridgeCapacity );
 				nextSlot++;
 				shop.item[nextSlot] = new Item();
-				shop.item[nextSlot].SetDefaults( mymod.ItemType<ColorCartridgeItem>() );
+				shop.item[nextSlot].SetDefaults( ModContent.ItemType<ColorCartridgeItem>() );
 				( (ColorCartridgeItem)shop.item[nextSlot].modItem ).SetPaint( new Color(0, 0, 255), mymod.Config.PaintCartridgeCapacity );
 				nextSlot++;
 			}
 
 			if( mymod.Config.PainterSellsCopyCartridge && nextSlot < max ) {
 				shop.item[nextSlot] = new Item();
-				shop.item[nextSlot].SetDefaults( mymod.ItemType<CopyCartridgeItem>() );
+				shop.item[nextSlot].SetDefaults( ModContent.ItemType<CopyCartridgeItem>() );
 				nextSlot++;
 			}
 		}

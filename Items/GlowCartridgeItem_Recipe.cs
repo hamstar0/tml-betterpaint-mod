@@ -24,8 +24,8 @@ namespace BetterPaint.Items {
 		////////////////
 
 		public GlowCartridgeRecipe( BetterPaintMod mymod, GlowCartridgeItem myitem ) : base( mymod ) {
-			this.AddTile( mymod.TileType<PaintMixerTile>() );
-			this.AddIngredient( mymod.GetItem<ColorCartridgeItem>(), 1 );
+			this.AddTile( ModContent.TileType<PaintMixerTile>() );
+			this.AddIngredient( ModContent.GetInstance<ColorCartridgeItem>(), 1 );
 			if( mymod.Config.GlowPaintRecipeSpores > 0 ) {
 				this.AddIngredient( ItemID.JungleSpores, mymod.Config.GlowPaintRecipeSpores );
 			}
@@ -41,9 +41,8 @@ namespace BetterPaint.Items {
 		////////////////
 
 		public override int ConsumeItem( int itemType, int numRequired ) {
-			var mymod = (BetterPaintMod)this.mod;
 			var inv = Main.LocalPlayer.inventory;
-			int cartType = mymod.ItemType<ColorCartridgeItem>();
+			int cartType = ModContent.ItemType<ColorCartridgeItem>();
 
 			if( itemType != cartType ) {
 				return base.ConsumeItem( itemType, numRequired );

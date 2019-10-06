@@ -25,7 +25,7 @@ namespace BetterPaint {
 
 			Item heldItem = this.player.HeldItem;
 
-			if( heldItem != null && !heldItem.IsAir && heldItem.type == this.mod.ItemType<PaintBlasterItem>() ) {
+			if( heldItem != null && !heldItem.IsAir && heldItem.type == ModContent.ItemType<PaintBlasterItem>() ) {
 				var myblaster = (PaintBlasterItem)heldItem.modItem;
 
 				myblaster.CheckMenu();
