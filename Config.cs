@@ -7,6 +7,11 @@ using Terraria.ModLoader.Config;
 
 
 namespace BetterPaint {
+	class MyFloatInputElement : FloatInputElement { }
+
+
+
+
 	public class BetterPaintConfig : ModConfig {
 		public override ConfigScope Mode => ConfigScope.ServerSide;
 
@@ -88,13 +93,13 @@ namespace BetterPaint {
 		[Label( "Brush Size Multiplier" )]
 		[Range( 0f, 256f )]
 		[DefaultValue( 1 )]
-		[CustomModConfigItem( typeof( FloatInputElement ) )]
+		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
 		public float BrushSizeMultiplier = 1;
 
 		[Label( "Brush Spatter Density" )]
 		[Range( 0f, 256f )]
 		[DefaultValue( 0.15f )]
-		[CustomModConfigItem( typeof( FloatInputElement ) )]
+		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
 		public float BrushSpatterDensity = 0.15f;
 
 
