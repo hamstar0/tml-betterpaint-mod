@@ -1,4 +1,5 @@
-﻿using HamstarHelpers.Helpers.User;
+﻿using HamstarHelpers.Classes.UI.ModConfig;
+using HamstarHelpers.Helpers.User;
 using System;
 using System.ComponentModel;
 using Terraria;
@@ -46,7 +47,7 @@ namespace BetterPaint {
 		public int PaintRecipePaints = 100;
 
 		[Label( "Paint cartridge capacity" )]
-		[Range( 1, 9999999 )]
+		[Range( 1, 99999 )]
 		[DefaultValue( 2000 )]
 		public int PaintCartridgeCapacity = 2000;
 
@@ -87,11 +88,13 @@ namespace BetterPaint {
 		[Label( "Brush Size Multiplier" )]
 		[Range( 0f, 256f )]
 		[DefaultValue( 1 )]
+		[CustomModConfigItem( typeof( FloatInputElement ) )]
 		public float BrushSizeMultiplier = 1;
 
 		[Label( "Brush Spatter Density" )]
 		[Range( 0f, 256f )]
 		[DefaultValue( 0.15f )]
+		[CustomModConfigItem( typeof( FloatInputElement ) )]
 		public float BrushSpatterDensity = 0.15f;
 
 
